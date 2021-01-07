@@ -8,7 +8,7 @@ class home extends Component {
         return (
             <>
                <div className = "header__title">
-                    <Row>
+                    <Row className='row'>
                         <Col sm ={8} className="mainsection__row">
                             <h1 id="main_text">
                                 Have a Question?

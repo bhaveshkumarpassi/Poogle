@@ -14,9 +14,11 @@
 }
 
 .nav--sticky{
-    position:fixed;
+    position: fixed;
     top:0;
-    background-color: var(--color-grey-lightest);
+    /*background-color: var(--color-grey-lightest);*/
+    /*background-color: #0278ae;*/
+    background-color: rgb(49, 49, 49);
 }
 
 /* Company Branding Navbar */
@@ -30,7 +32,8 @@
     font-size: 1.4rem;
     display: inline-block;
     padding:2rem 1rem;
-    color: var(--color-primary-blue);
+    /*color: var(--color-primary-blue);*/
+    color: white;
 }
 
 @media screen and (max-width: 700px){
@@ -58,9 +61,12 @@
     margin-right: 8px;
     padding-bottom: 1rem;
     padding-top: 1rem;
+    border-radius: 0.75rem;
+    background-color: #d9e4dd;
+    border-bottom: 3px solid #1b262c;
 }
-.nav-link:hover,.navbar-brand:hover{
-    background-color: #d4f3ff;
+.nav-link:hover{
+    background-color: #a5ecd7;
     border-bottom: 3px solid var(--color-secondary-blue);
 }
 
@@ -91,10 +97,20 @@
 #basic-nav-dropdown{
     color:#4b4b4b;
     padding-left: .6rem;
-    font-size: 1.1rem;
+    font-size: 1.1rem
 }
 .dropdown-item:hover{
     background-color: #ddd;
+}
+.dropdown-item{
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+.dropdown_nav-link{
+    color: black
+}
+.dropdown_nav-link:hover{
+    color: black;
 }
 /******************************************/
 /*--    NAVBAR Finishes --*/
