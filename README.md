@@ -1,3 +1,13 @@
+# Understanding file structure
+All the colors are defined inside 'index.css' file
+As of now, all components are under paricular components folder
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
