@@ -1,0 +1,178 @@
+/*-----------------------------------------------------------------*/
+        /*--------------NAVBAR------------------------*/
+
+/* ------------------------------------- */
+/* ------------------------------------- */
+/* ----Navbar---- */
+/* Page Navigation menu */
+
+.page__Navigation{
+    width:100%;
+    z-index: 100;
+    padding-left:1rem;
+    padding-right:1rem;
+}
+
+.nav--sticky{
+    position:fixed;
+    top:0;
+    background-color: #f7f7f7;
+}
+
+/* Company Branding Navbar */
+#CompanyImage{
+    width:120px;
+    height:90px;
+
+}
+
+.brand__title__name{
+    font-size: 1.4rem;
+    display: inline-block;
+    padding:2rem 1rem;
+    color:#2599e3;
+}
+
+@media screen and (max-width: 700px){
+    #CompanyImage{
+        transform:scale(0.8);
+        margin-top: .6rem;
+        /* width:70px;
+        height:55px; */
+    } 
+    #CompanyTitle{
+        font-size: 80%;
+    }
+}
+@media screen and (max-width: 350px){
+    .brand__title__name{
+        padding:2rem 0rem;
+    }
+    .navbar-brand{
+        transform: scale(0.8);
+    }
+    
+}
+
+.nav-link{
+    height:58px;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+.nav-link:hover,.navbar-brand:hover{
+    background-color: #d4f3ff;
+    border-bottom: 3px solid #2599e3;
+}
+
+
+.NavLink{
+    margin-left: 5px;
+    margin-right: 8px;
+    font-size: 1.1rem;
+    color: #4b4b4b;
+    opacity: 1;
+}
+@media screen and (max-width: 1100px){
+    .NavLink{
+        font-size:1rem;
+        margin-left: 0px;
+        margin-right: 0px;
+
+    }
+}
+@media screen and (max-width: 992px){
+    .NavLink{
+        display: inline-block;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+
+    }
+}
+#basic-nav-dropdown{
+    color:#4b4b4b;
+    padding-left: .6rem;
+    font-size: 1.1rem;
+}
+.dropdown-item:hover{
+    background-color: #ddd;
+}
+/******************************************/
+/*--    NAVBAR Finishes --*/
+
+/******************************/
+/*--Footer--*/
+
+.footerSection
+{
+    background-color: rgb(49, 49, 49);
+    /* background-color: #f9f9f9; */
+    /*color:#bbb;*/
+    /* color:#5e5e5e; */
+    color: #dedede;
+    padding:2rem;
+    font-size: .9rem;   
+}
+.footerSectionInner{
+    margin-top:6rem;
+}
+.footerColumn{
+    padding:8px auto;
+    margin-bottom:1.5rem; 
+}
+.footerHeading{
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: 400;
+    color: var(--color-primary);
+    
+}
+.footerSection p{
+    text-align: center;
+    margin-top: 10px;
+}
+#address{
+margin-left: 1rem;
+padding-right:15px;
+}
+.contact_icons{
+    font-size:1.3rem;
+    margin-left:1rem;
+    margin-right:5px;
+}
+.social_icons{
+    font-size: 1.6rem;
+    margin-left: 1rem;
+    margin-bottom: 15px;
+    margin-right: 5px;
+
+    overflow: hidden;
+    padding-top: -10px;
+}
+.social_links{
+    text-decoration: none !important;
+    padding-bottom:7px;
+    padding-top:12px;
+    padding-right: 10px;
+    color: #ddd;
+}
+.social_links:hover{
+    background-color:#eee;
+    
+}
+
+.facebook{
+    color:#3b5998 ;
+}
+.linkedIn{
+    color: #0e76a8
+}
+.twitter{
+    color:#00acee;
+}
+
+.social_icons svg{
+    background-color: #ddd;
+    box-shadow: #aaa 1.5px -1.5px;
+}
