@@ -15,8 +15,8 @@ h1 {
     text-transform: uppercase;
     word-spacing: 102%;
     display: inline-block;
-    background-image: -webkit-gradient(linear, left top, right top, from(#4568dc), to(#b06ab3));
-    background-image: linear-gradient(to right, #4568dc, #b06ab3);
+    background-image: -webkit-gradient(linear, left top, right top, from(var(--color-blue-darker)), to(var(--color-primary-violet)));
+    background-image: linear-gradient(to right, var(--color-blue-darker), var(--color-primary-violet) );
     -webkit-background-clip: text;
     color: transparent;
 }
@@ -60,7 +60,7 @@ h4 {
     font-size: 1.2rem;
     font-family: inherit;
     font-weight: 500;
-    color: #0278ae;
+    color: var(--color-primary-blue);
     border: none;
     border-bottom: 1px solid currentColor;
     padding-bottom: 2px;
@@ -74,7 +74,7 @@ h4 {
       padding:10px;
   }
   .header__btn__link:hover{
-    background-color: #eee;
+    background-color: var(--color-grey);
   }
   .header__side__image{
       margin-top: 3rem;

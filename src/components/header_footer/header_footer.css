@@ -16,7 +16,7 @@
 .nav--sticky{
     position:fixed;
     top:0;
-    background-color: #f7f7f7;
+    background-color: var(--color-grey-lightest);
 }
 
 /* Company Branding Navbar */
@@ -30,15 +30,13 @@
     font-size: 1.4rem;
     display: inline-block;
     padding:2rem 1rem;
-    color:#2599e3;
+    color: var(--color-primary-blue);
 }
 
 @media screen and (max-width: 700px){
     #CompanyImage{
         transform:scale(0.8);
         margin-top: .6rem;
-        /* width:70px;
-        height:55px; */
     } 
     #CompanyTitle{
         font-size: 80%;
@@ -63,7 +61,7 @@
 }
 .nav-link:hover,.navbar-brand:hover{
     background-color: #d4f3ff;
-    border-bottom: 3px solid #2599e3;
+    border-bottom: 3px solid var(--color-secondary-blue);
 }
 
 
@@ -125,7 +123,10 @@
     font-size: 1.5rem;
     margin-bottom: 10px;
     font-weight: 400;
-    color: var(--color-primary);
+    background-image: -webkit-gradient(linear, left top, right top, from(var(--color-blue-violet-light)), to(var(--color-primary-violet)));
+    background-image: linear-gradient(to right, var(--color-blue-violet-light),var(--color-primary-violet));
+    -webkit-background-clip: text;
+    color: transparent;
     
 }
 .footerSection p{
@@ -158,7 +159,7 @@ padding-right:15px;
     color: #ddd;
 }
 .social_links:hover{
-    background-color:#eee;
+    background-color:var(--color-grey);
     
 }
 

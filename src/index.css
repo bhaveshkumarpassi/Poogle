@@ -1,5 +1,11 @@
 :root{
-  --color-primary:
+  --color-primary-blue:#0278ae;
+  --color-secondary-blue:#2599e3;
+  --color-primary-violet:#b06ab3;
+  --color-blue-violet-light:#a6acec;
+  --color-blue-darker:#4568dc;
+  --color-grey-lightest:#f7f7f7;
+  --color-grey:#eee;
 }
 body {
   margin: 0;
