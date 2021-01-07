@@ -11,7 +11,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText
+  Form, FormGroup, Input, Label
 } from 'reactstrap';
 
 class Header extends Component {
@@ -33,39 +33,56 @@ class Header extends Component {
 
       render() {
           return(
-                <div >
-                <Navbar color="light" light expand="md">
-                <NavbarBrand href="/">CollegeQuora</NavbarBrand>
-                <NavbarToggler onClick={this.toggleNav} />
-                <Collapse isOpen={this.state.isNavOpen} navbar>
-                <Nav className="mr-auto" navbar>
-                    <NavItem>
-                    <NavLink href="/components/">Components</NavLink>
-                    </NavItem>
-                    <NavItem>
-                    <NavLink href="https://github.com/bhaveshkumarpassi/CollegeQuora">GitHub</NavLink>
-                    </NavItem>
-                    <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret>
-                        Options
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                        <DropdownItem>
-                        Option 1
-                        </DropdownItem>
-                        <DropdownItem>
-                        Option 2
-                        </DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem>
-                        Reset
-                        </DropdownItem>
-                    </DropdownMenu>
-                    </UncontrolledDropdown>
-                </Nav>
-                <NavbarText>Simple Text</NavbarText>
-                </Collapse>
-            </Navbar>
+                <div>
+                <Navbar dark expand="md" className='navigation'>
+                        <NavbarBrand href="/">CollegeQuora</NavbarBrand>
+                        <NavbarToggler onClick={this.toggleNav} />
+                        <Collapse isOpen={this.state.isNavOpen} navbar>
+                        <div className='container'>
+                        <div className='row align-items-center justify-content-center'>
+                        <div className='col-sm-8'>
+                        <Nav navbar>
+                            <NavItem>
+                            <NavLink href="/Home/">Home</NavLink>
+                            </NavItem>
+                            <NavItem>
+                            <NavLink href="/Profile/">Profile</NavLink>
+                            </NavItem>
+                            <NavItem>
+                            <NavLink href="/Spaces/">Spaces</NavLink>
+                            </NavItem>
+                            <NavItem>
+                            <NavLink href="/Notifications/">Notifications</NavLink>
+                            </NavItem>
+                            <UncontrolledDropdown nav inNavbar>
+                            <DropdownToggle nav caret>
+                                Add
+                            </DropdownToggle>
+                            <DropdownMenu right>
+                                <DropdownItem>
+                                    Add Question
+                                </DropdownItem>
+                                <DropdownItem>
+                                    Add Answer
+                                </DropdownItem>
+                                <DropdownItem>
+                                    Add Blog
+                                </DropdownItem>
+                            </DropdownMenu>
+                            </UncontrolledDropdown>
+                        </Nav>
+                        </div>
+                        <div className='col-sm-4 mr-10'>
+                        <Form>
+                            <FormGroup>
+                                <Input type="search" name="search" id="search" placeholder="Search ..... "/>
+                            </FormGroup>
+                        </Form>
+                        </div>
+                        </div>
+                        </div>
+                        </Collapse>
+                </Navbar>
             </div>
           )
       }
