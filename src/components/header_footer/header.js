@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom';
 import {Container, Row, Col, Image, Navbar,Nav, NavDropdown} from 'react-bootstrap';
 import {FaHome} from 'react-icons/fa';
-import Logo from '../../Images/QnA.png'
+import Logo from '../../Images/logo.png'
 
 import './header_footer.css';
 
@@ -15,13 +15,13 @@ class header extends Component {
                 <Navbar collapseOnSelect expand="lg" className="page__Navigation nav--sticky">
                 <Navbar.Brand href="/">
                         <Image src={Logo} className="d-inline-block align-top" id ="CompanyImage" alt="company_logo"/>
-                        <span className="brand__title__name">PEC QnA</span>
+                        {/* <span className="brand__title__name">PEC QnA</span> */}
                 </Navbar.Brand>
                     
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="ml-auto RightNav">
-                            <Link to="/" className="nav-link"><span className="NavLink"><span className="fa fa-home fa-lg"></span>  Home</span></Link>
+                            <Link to="/home" className="nav-link"><span className="NavLink"><span className="fa fa-home fa-lg"></span>  Home</span></Link>
                             
                             <NavDropdown title="Add" id="basic-nav-dropdown">
                                 <NavDropdown.Item>
@@ -37,7 +37,7 @@ class header extends Component {
                             </NavDropdown>
                             
                             {/* <Link to="#" className="nav-link"><span className="NavLink">Categories</span></Link> */}
-                            <Link to="#" className="nav-link"><span className="NavLink"><span className="fa fa-sticky-note"></span>  Spaces</span></Link>
+                            <Link to="/spaces" className="nav-link"><span className="NavLink"><span className="fa fa-sticky-note"></span>  Spaces</span></Link>
                             <Link to="#" className="nav-link"><span className="NavLink"><span className="fa fa-bell"></span>  Notifications</span></Link>
                             <Link to="#" className="nav-link"><span className="NavLink"><span className="fa fa-address-card"></span>  Contact Us</span></Link>
                             <NavDropdown.Divider />

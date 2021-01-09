@@ -8,7 +8,6 @@ class footer extends Component{
     render(){
         return(
         <div>
-        
             <footer>
                 <div className="footerSection">
                     <Container>
@@ -49,9 +48,6 @@ class footer extends Component{
                         </div>    
                     </Container>
                 </div>
-                
-                
-            
             </footer>
         </div>
         );

@@ -1,0 +1,3 @@
+export const SPACES_LOADING = 'SPACES_LOADING';
+export const SPACES_FAILED = 'SPACES_FAILED';
+export const ADD_SPACES = 'ADD_SPACES';

@@ -1,0 +1,81 @@
+{
+	"spaces": [
+    {
+      "id": 0,
+      "name": "Web Development",
+      "image": "images/web-dev.jpeg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 1,
+      "name": "Android Development",
+      "image": "images/android-dev.jpg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 2,
+      "name": "Ios Development",
+      "image": "images/ios-dev.png",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 3,
+      "name": "Machine Learning",
+      "image": "images/ml.jpeg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 4,
+      "name": "Ethical Hacking",
+      "image": "images/ethical-hacking.jpg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 5,
+      "name": "BlockChain",
+      "image": "images/blockchain.jpg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 6,
+      "name": "Python",
+      "image": "images/python.jpg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 7,
+      "name": "Data Structures",
+      "image": "images/data-structures.png",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 8,
+      "name": "Algorithms",
+      "image": "images/algo.jpg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 9,
+      "name": "DBMS",
+      "image": "images/dbms.png",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 10,
+      "name": "Operating Systems",
+      "image": "images/os.png",
+      "followers": 50,
+      "questions": 70
+    }
+  ]
+}

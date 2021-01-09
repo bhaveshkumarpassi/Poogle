@@ -14,7 +14,7 @@
 }
 
 .nav--sticky{
-    position: fixed;
+    position: sticky;
     top:0;
     /*background-color: var(--color-grey-lightest);*/
     /*background-color: #0278ae;*/
@@ -119,7 +119,7 @@
 /*--Footer--*/
 
 .footerSection
-{
+{   
     background-color: rgb(49, 49, 49);
     /* background-color: #f9f9f9; */
     /*color:#bbb;*/
