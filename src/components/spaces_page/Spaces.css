@@ -1,3 +1,17 @@
 .space {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4)
 }
+
+.searchbtn {
+    height: 40px;
+    width: 40px;
+    border-top-left-radius: 5rem;
+    border-bottom-left-radius: 5rem;
+}
+
+.cancelbtn {
+    height: 40px;
+    width: 40px;
+    border-top-right-radius: 5rem;
+    border-bottom-right-radius: 5rem;
+}

@@ -37,7 +37,7 @@ h4 {
   
   /* buttons */
 
-  .btn {
+  /* .btn {
     display: inline-block;
     background-color: #cefff1;
     font-size: 1.6rem;
@@ -75,7 +75,7 @@ h4 {
   }
   .header__btn__link:hover{
     background-color: var(--color-grey);
-  }
+  } */
   .header__side__image{
       margin-top: 3rem;
       margin-left: -2rem;
