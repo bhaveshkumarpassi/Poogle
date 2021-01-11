@@ -139,5 +139,25 @@
       "date": "2012-5-16T17:57:28.556094Z",
       "dateNum": 280
     }
+  ],
+  "users":[
+    {
+      "user_id":"Jordanian",
+      "name":"Jordan Wills",
+      "about":{
+        "description":"I want to become Koala sleep all the day",
+        "job":"Software Engineer at Facebook",
+        "education":"Masters in Data Science, Standford University",
+        "field":"Computer Science and Engineering",
+        "graduation_year": 2012,
+        "fun_fact":"I am graduated from IIT Chandigarh"
+      },
+      "Interests":["Aritficial Intelligence", "Data Science", "Parallel Computing", "Cloud Computing",
+      "Computer Science", "Research", "Cricket", "Music", "Dancing"],
+      "answers":25,
+      "blogs":15,
+      "questions":6,
+      "upvotes":9
+    }
   ]
 }

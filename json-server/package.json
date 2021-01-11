@@ -1,0 +1,11 @@
+{
+    "name": "backend_server",
+    "version": "1.0.0",
+    "description": "temporary backend server",
+    "main": "index.js",
+    "scripts": {
+      "json__server": "json-server --watch db.json -p3001 -d2000"
+    },
+    "author": "team",
+    "license": "ISC"
+}

@@ -2,7 +2,7 @@
     row-gap: 3rem;
     align-content: center;
     justify-content: center;
-    padding:8rem;
+    padding:4rem 8rem;
     background-color: #fcfcfc;
 }
 
@@ -17,6 +17,7 @@ h1 {
     display: inline-block;
     background-image: -webkit-gradient(linear, left top, right top, from(var(--color-blue-darker)), to(var(--color-primary-violet)));
     background-image: linear-gradient(to right, var(--color-blue-darker), var(--color-primary-violet) );
+    background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
@@ -118,7 +119,7 @@ h4 {
 
 @media screen and (max-width:800px){
   .header__title{
-    padding:4rem;
+    padding:1rem 4rem 4rem 4rem;
   }
   .mainsection__row{
     transform: scale(0.8) translateX(-1rem);

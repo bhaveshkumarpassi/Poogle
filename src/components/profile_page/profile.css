@@ -1,0 +1,125 @@
+.user__info, .profile__header{
+    padding: 1.5rem 0.6rem;
+    background-color: #eee;
+    border-radius: 1rem;
+    text-align: left;
+    clear: both;
+}
+
+@media screen and (max-width: 425px)
+{
+    .profile__header__column{
+        flex: 0 0 60%;
+        max-width: 100%;
+        margin-left: 3rem;
+        padding:1rem;
+    }
+    
+}
+
+.user__profile__pic{
+    height: 9rem;
+    width: auto;
+    margin: auto 2rem; 
+}
+.user__profile__name{
+    margin-left: 1.3rem;
+    padding-left: 1rem;
+    margin-top: 1rem;
+}
+
+@media screen and (min-width: 425px)
+{
+    .user__profile__name{
+        padding-left: 2rem;
+    }
+    
+}
+
+
+.user__posts__details{
+    padding:1rem;
+    
+}
+.user__icon{
+    display: inline-block;
+    padding:1px;
+    color:var(--color-primary-blue);
+}
+.icon__title{
+    margin-left: 5px;
+    color: #666;
+}
+.user__btn{
+    display: inline-block;
+    padding: .6rem 1.5rem;
+    margin-bottom: .8rem;
+    border-radius: 1rem; 
+    transition:all .2s;
+    outline: none;
+    border:none;
+    color:#fff;
+}
+.userbtn--1{
+    background-color:#02ae8e ;
+}
+.userbtn--2{
+    background-color:#fd646e;
+}
+.userbtn--1:hover{
+    background-color:#029579;
+}
+.userbtn--2:hover{
+    background-color: #fd4e4b;
+    box-shadow: 2px solid #000;
+}
+
+.user__info{
+    margin: 2.3rem auto;
+    background-color: #f3f3f3;
+    padding:2rem;
+}
+/*-------------------*/
+.user__navigation{
+  padding:1rem;
+  margin: 1rem;
+  margin-bottom: 0;
+  border-top:2px solid #888;
+  border-bottom:2px solid #888;
+}
+.user__navigation--link{
+    margin:0.3rem .4rem;
+    color: #fd4e4b;
+    padding:.4rem .6rem;
+    transition: all .2s;
+    border-radius: .7rem;
+}
+.user__navigation--link:hover{
+    background-color: #eee;
+}
+/*-------------------*/
+/*--ABOUT PAGE--*/
+.user__info--each{
+    margin-bottom: 0.2rem;
+}
+.info__title{
+    margin-left: .8rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #666;
+    margin-right: 1rem;
+}
+
+/*-----------------------*/
+.interests__button{
+    background-color: var(--color-primary-blue);
+    margin: .5rem .5rem;
+    color:#fff;
+    padding:.8rem 1rem;
+    border-radius: 15px;
+}
+
+.interests__button:hover{
+    color:#efefef;
+    background-color: #0289c7;
+}
