@@ -154,9 +154,9 @@ class Questions extends Component {
             if(this.state.filter === 'Latest') {
                 return(
                     <div className='container questions'>
-                        <div className='row'>
+                        
+                        <div className='row col-12'>
                             <Breadcrumb className='mt-3 ml-3'>
-                                <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
                                 <BreadcrumbItem><Link to="/spaces">Spaces</Link></BreadcrumbItem>
                                 <BreadcrumbItem active>{this.props.space.name}</BreadcrumbItem>
                             </Breadcrumb>
@@ -165,8 +165,10 @@ class Questions extends Component {
                             
                             <Nav className='col-12' pills fill>
                                 <div className='row col-12'>
-                                    <h4 className='col-12 col-md-3 mb-4 all-ques-heading'>All Questions</h4>
-                                    <Button className='col-12 col-md-3 mb-4 add-ques-btn' color='primary'><span className='fa fa-lg fa-plus mr-3 ml-3' />ASK A QUESTION  </Button>
+                                    <h4 className='col-12 col-md-12 col-lg-3 mb-4 all-ques-heading'>All Questions</h4>
+                                    <Badge pill className='prop-main1 mt-0' color='light'><h6><span className='fa fa-question-circle fa-lg question-icon mr-2 mt-2'></span>{this.props.questions.length} questions</h6></Badge>
+                                    <Badge pill className='prop-main2 mt-0' color='light'><h6><span className='fa fa-users fa-lg follower-icon mr-2 mt-2'></span>{this.props.space.followers} followers</h6></Badge>
+                                    <Button className='col-12 col-md-12 col-lg-3 mb-4 add-ques-btn' color='primary'><span className='fa fa-lg fa-plus mr-3 ml-3' />ASK A QUESTION  </Button>
                                 </div>
                                 <div className='row col-12'>
                                     <NavItem className='mb-4'>
@@ -193,16 +195,17 @@ class Questions extends Component {
                     <div className='container questions'>
                         <div className='row'>
                             <Breadcrumb className='mt-3 ml-3'>
-                                <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
                                 <BreadcrumbItem><Link to="/spaces">Spaces</Link></BreadcrumbItem>
                                 <BreadcrumbItem active>{this.props.space.name}</BreadcrumbItem>
                             </Breadcrumb>
                         </div>
                         <div className='row category-div '>
                             <Nav className='col-12' pills fill>
-                                <div className='row col-12'>
-                                    <h4 className='col-12 col-md-3 mb-4 all-ques-heading'>All Questions</h4>
-                                    <Button className='col-12 col-md-3 mb-4 add-ques-btn' color='primary'><span className='fa fa-lg fa-plus mr-3 ml-3' />ASK A QUESTION  </Button>
+                                <div className='row col-12 '>
+                                    <h4 className='col-12 col-md-12 col-lg-3 mb-4 all-ques-heading'>All Questions</h4>
+                                    <Badge pill className='prop-main1 mt-0' color='light'><h6><span className='fa fa-question-circle fa-lg question-icon mr-2 mt-2'></span>{this.props.questions.length} questions</h6></Badge>
+                                    <Badge pill className='prop-main2 mt-0' color='light'><h6><span className='fa fa-users fa-lg follower-icon mr-2 mt-2'></span>{this.props.space.followers} followers</h6></Badge>
+                                    <Button className='col-12 col-md-12 col-lg-3 mb-4 add-ques-btn' color='primary'><span className='fa fa-lg fa-plus mr-3 ml-3' />ASK A QUESTION  </Button>
                                 </div>
                                 <div className='row col-12'>
                                     <NavItem className='mb-4'>
@@ -228,17 +231,18 @@ class Questions extends Component {
                     <div className='container questions'>
                         <div className='row'>
                             <Breadcrumb className='mt-3 ml-3'>
-                                <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
                                 <BreadcrumbItem><Link to="/spaces">Spaces</Link></BreadcrumbItem>
                                 <BreadcrumbItem active>{this.props.space.name}</BreadcrumbItem>
                             </Breadcrumb>
                         </div>
-                        <div className='category-div '>
+                        <div className='row category-div '>
 
                             <Nav className='col-12' pills fill>
                                 <div className='row col-12'>
-                                    <h4 className='col-12 col-md-3 mb-4 all-ques-heading'>All Questions</h4>
-                                    <Button className='col-12 col-md-3 mb-4 add-ques-btn' color='primary'><span className='fa fa-lg fa-plus mr-3 ml-3' />ASK A QUESTION  </Button>
+                                    <h4 className='col-12 col-md-12 col-lg-3 mb-4 all-ques-heading'>All Questions</h4>
+                                    <Badge pill className='prop-main1 mt-0' color='light'><h6><span className='fa fa-question-circle fa-lg question-icon mr-2 mt-2'></span>{this.props.questions.length} questions</h6></Badge>
+                                    <Badge pill className='prop-main2 mt-0' color='light'><h6><span className='fa fa-users fa-lg follower-icon mr-2 mt-2'></span>{this.props.space.followers} followers</h6></Badge>
+                                    <Button className='col-12 col-md-12 col-lg-3 mb-4 add-ques-btn' color='primary'><span className='fa fa-lg fa-plus mr-3 ml-3' />ASK A QUESTION  </Button>
                                 </div>
                                 <div className='row col-12'>
                                     <NavItem className='mb-4'>
