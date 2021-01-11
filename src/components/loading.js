@@ -1,11 +1,20 @@
 import React from 'react';
-import { Spinner } from 'reactstrap';
+import ReactLoading from 'react-loading';
+ 
+const Loading = ({ type, color }) => (
 
-export const Loading = () => {
-    return(
-        <div className="col-12">
-            <Spinner style={{ width: '5rem', height: '5rem', marginLeft: '50%', marginRight: '50%'}} color="secondary" />
-            <p style={{fontSize: 30, textAlign: 'center'}}>Loading . . .</p>
+        <div className='container'>
+            <div className="row justify-content-center" >
+                <div className='col-7 col-md-3' style={{ marginTop: '10%'}}>
+                    <ReactLoading type={type} color={color} height={200} width={200}/>
+                </div>
+                <div className='col-12' style={{marginBottom: '10%'}}>
+                    <h4 style={{ textAlign: 'center', color: 'rgb(49, 49, 49)'}}>Loading .... </h4>
+                </div>
+            </div> 
         </div>
-    );
-};
+    
+    
+);
+ 
+export default Loading;

@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import { Route, Router, Switch, Redirect, withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
-import { fetchSpaces } from '../redux/ActionCreators';
+import { fetchSpaces, fetchQuestions } from '../redux/ActionCreators';
 import history from '../history'
 import Header from './header_footer/header';
 import Footer from './header_footer/footer';
 import Home from './home_page/home';
 import Spaces from './spaces_page/Spaces';
+import Questions from './all_ques_page/questions';
 
 const mapStateToProps = state => {
     return {
-      spaces: state.spaces
+      spaces: state.spaces,
+      questions: state.questions
     }
   }
 
 const mapDispatchToProps = dispatch => ({
 
-    fetchSpaces: () => { dispatch(fetchSpaces())}
+    fetchSpaces: () => { dispatch(fetchSpaces())},
+    fetchQuestions: () => { dispatch(fetchQuestions())}
 });
 
 class Main extends Component {
@@ -27,21 +30,36 @@ class Main extends Component {
 
     componentDidMount() {
         this.props.fetchSpaces();
+        this.props.fetchQuestions();
     }
 
-    const 
     render() {
+
+        const SpaceWithId = ({match}) => {
+            return(
+            <Questions 
+                space={this.props.spaces.spaces.filter((space) => space.id === parseInt(match.params.spaceId,10))[0]}
+                questions={this.props.questions.questions.filter((question) => question.tagIds.indexOf(parseInt(match.params.spaceId,10)) > -1)}
+                questionsErrMess={this.props.questions.errMess}
+                questionsIsLoading={this.props.questions.isLoading}
+                errMess={this.props.spaces.errMess}
+                isLoading={this.props.spaces.isLoading}
+            />
+            );
+        }
+
         return(
             <div>
-                {/* <Router history={history}> */}
+                <Router history={history}>
                     <Header/>
                     <Switch>
                         <Route path ='/home' component={() => <Home/>}/>
-                        <Route path ='/spaces' component={() => <Spaces spaces={this.props.spaces}/>}/>
+                        <Route exact path ='/spaces' component={() => <Spaces spaces={this.props.spaces}/>}/>
+                        <Route path ='/spaces/:spaceId' component={SpaceWithId}/>
                         <Redirect to="/home" />
                     </Switch>
                     <Footer/>
-                {/* </Router> */}
+                </Router>
             </div>
         );
     }

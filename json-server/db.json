@@ -16,7 +16,7 @@
     },
     {
       "id": 2,
-      "name": "Ios Development",
+      "name": "IOS Development",
       "image": "images/ios-dev.png",
       "followers": 50,
       "questions": 70
@@ -76,6 +76,68 @@
       "image": "images/os.png",
       "followers": 50,
       "questions": 70
+    }
+  ],
+  "questions": [
+    {
+      "id": 0,
+      "views": 100,
+      "votes": 50,
+      "answers": 5,
+      "question": "What is Front-end development??",
+      "tagIds": [0,1,2],
+      "tagNames": ["Web Development", "Android development", "IOS Development"],
+      "author": "Jhon Jonson",
+      "date": "2012-12-16T17:57:28.556094Z",
+      "dateNum": 500
+    },
+    {
+      "id": 1,
+      "views": 70,
+      "votes": 65,
+      "answers": 7,
+      "question": "What is Back-end development??",
+      "tagIds": [0,1,2],
+      "tagNames": ["Web Development", "Android development", "IOS Development"],
+      "author": "Steve Osten",
+      "date": "2012-8-16T17:57:28.556094Z",
+      "dateNum": 350
+    },
+    {
+      "id": 2,
+      "views": 45,
+      "votes": 30,
+      "answers": 8,
+      "question": "Are react and react native different??",
+      "tagIds": [0,1,2],
+      "tagNames": ["Web Development", "Android development", "IOS Development"],
+      "author": "James Twist",
+      "date": "2012-10-16T17:57:28.556094Z",
+      "dateNum": 400
+    },
+    {
+      "id": 3,
+      "views": 88,
+      "votes": 63,
+      "answers": 0,
+      "question": "What is REST API??",
+      "tagIds": [0],
+      "tagNames": ["Web Development"],
+      "author": "Jack Venes",
+      "date": "2012-4-16T17:57:28.556094Z",
+      "dateNum": 250
+    },
+    {
+      "id": 4,
+      "views": 150,
+      "votes": 89,
+      "answers": 13,
+      "question": "What is Machine Learning ??",
+      "tagIds": [3],
+      "tagNames": ["Machine Learning"],
+      "author": "Jack Venes",
+      "date": "2012-5-16T17:57:28.556094Z",
+      "dateNum": 280
     }
   ]
 }

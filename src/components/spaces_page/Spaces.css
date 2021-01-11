@@ -15,3 +15,28 @@
     border-top-right-radius: 5rem;
     border-bottom-right-radius: 5rem;
 }
+
+.loading {
+    height: 500px
+}
+
+.space-img {
+    width: 100%;
+}
+
+.question-icon {
+    color: tomato;
+    margin-right: 5;
+    margin-bottom: 5;
+}
+
+.follower-icon {
+    color: mediumslateblue;
+    margin-right: 5;
+    margin-bottom: 5;
+}
+
+.space-heading {
+    color: rgb(49, 49, 49);
+}
+
