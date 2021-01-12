@@ -7,6 +7,7 @@
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
     "axios": "^0.21.1",
+    "backend_server": "file:json-server",
     "bootstrap": "^4.5.3",
     "bootstrap-social": "^5.1.1",
     "cross-fetch": "^3.0.6",
