@@ -55,7 +55,7 @@
 }
 
 .category-div {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     margin-left: 0;
 }
 
@@ -63,30 +63,37 @@
     height: 58px;
     padding-left: 5px;
     padding-right: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4)
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 2rem;
+    text-align: center;
+    
+}
+
+.ques-btn {
+    height: 58px;
+    padding-left: 5px;
+    padding-right: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 2rem;
+    text-align: center;
+    background-color: #a5ecd7;
+
+}
+
+.follower-btn {
+    height: 58px;
+    padding-left: 5px;
+    padding-right: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 2rem;
+    text-align: center;
+    background-color: #a5ecd7;
+
 }
 
 .all-ques-heading {
     vertical-align: middle;
     color: rgb(49, 49, 49);
-}
-
-.prop-main1 {
-    height: 50px;
-    width: 170px;
-    border-radius: 30px;
-    margin: 1rem;
-    margin-right: 6rem;
-    border: solid 1.5px tomato;
-    background-color: #ffec85;
-}
-
-.prop-main2 {
-    height: 50px;
-    width: 170px;
-    border-radius: 30px;
-    margin: 1rem;
-    margin-right: 4rem;
-    border: solid 1.5px #6f4a8e;
-    background-color: #efbbcf;
+    /* text-align: center; */
+    margin: 0%;
 }

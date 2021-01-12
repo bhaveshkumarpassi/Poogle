@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Container, Row, Col, Image} from 'react-bootstrap';
+import {Breadcrumb, BreadcrumbItem} from 'reactstrap';
 import profilePic from '../../Images/profile_pic.png';
 import {RiQuestionAnswerFill} from 'react-icons/ri';
 import {HiOutlineUserGroup} from 'react-icons/hi';
@@ -18,7 +19,15 @@ class profile extends Component {
                             <Col md={3}>
                                 LeftSidebar
                             </Col>
+                            
                             <Col md={9}>
+                                <Col xs={6} sm={5} md={5}>
+                                    <Breadcrumb className='mb-5'>
+                                        <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                                        <BreadcrumbItem active>My Profile</BreadcrumbItem>
+                                    </Breadcrumb>
+                                </Col>
+                                
                                 <div className="profile__header">
                                     <Row>
                                         <Col xs={8} className="profile__header__column">

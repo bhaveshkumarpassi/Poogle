@@ -8,7 +8,7 @@ import { ListGroup,
     Nav,
     NavItem,
     NavLink,
-    Button,
+    Button, ButtonGroup,
     Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Loading from '../loading';
@@ -151,63 +151,37 @@ class Questions extends Component {
         }
         else{
 
+            var renderQuestions;
+
             if(this.state.filter === 'Latest') {
-                return(
-                    <div className='container questions'>
-                        
-                        <div className='row col-12'>
-                            <Breadcrumb className='mt-3 ml-3'>
-                                <BreadcrumbItem><Link to="/spaces">Spaces</Link></BreadcrumbItem>
-                                <BreadcrumbItem active>{this.props.space.name}</BreadcrumbItem>
-                            </Breadcrumb>
-                        </div>
-                        <div className='row category-div '>
-                            
-                            <Nav className='col-12' pills fill>
-                                <div className='row col-12'>
-                                    <h4 className='col-12 col-md-12 col-lg-3 mb-4 all-ques-heading'>All Questions</h4>
-                                    <Badge pill className='prop-main1 mt-0' color='light'><h6><span className='fa fa-question-circle fa-lg question-icon mr-2 mt-2'></span>{this.props.questions.length} questions</h6></Badge>
-                                    <Badge pill className='prop-main2 mt-0' color='light'><h6><span className='fa fa-users fa-lg follower-icon mr-2 mt-2'></span>{this.props.space.followers} followers</h6></Badge>
-                                    <Button className='col-12 col-md-12 col-lg-3 mb-4 add-ques-btn' color='primary'><span className='fa fa-lg fa-plus mr-3 ml-3' />ASK A QUESTION  </Button>
-                                </div>
-                                <div className='row col-12'>
-                                    <NavItem className='mb-4'>
-                                        <NavLink href='#' active={this.state.latestActive} onClick={() => this.onLatestSelect()}>Latest</NavLink>
-                                    </NavItem>
-                                    <NavItem className='mb-4'>
-                                        <NavLink href='#' active={this.state.votesActive} onClick={() => this.onVotesSelect()}>Votes</NavLink>
-                                    </NavItem>
-                                    <NavItem className='mb-4'>
-                                        <NavLink href='#' active={this.state.unansweredActive} onClick={() => this.onUnansweredSelect()}>Unanswered</NavLink>
-                                    </NavItem>
-                                </div>
-                            </Nav>
-                        </div>
-                        <div className="row justify-content-center">
-                                {MenuDate}
-                        </div>
-                        
-                    </div>
-               );
+                renderQuestions = MenuDate;
             }
             else if(this.state.filter === 'Votes') {
-                return(
-                    <div className='container questions'>
-                        <div className='row'>
-                            <Breadcrumb className='mt-3 ml-3'>
-                                <BreadcrumbItem><Link to="/spaces">Spaces</Link></BreadcrumbItem>
-                                <BreadcrumbItem active>{this.props.space.name}</BreadcrumbItem>
-                            </Breadcrumb>
-                        </div>
-                        <div className='row category-div '>
-                            <Nav className='col-12' pills fill>
-                                <div className='row col-12 '>
-                                    <h4 className='col-12 col-md-12 col-lg-3 mb-4 all-ques-heading'>All Questions</h4>
-                                    <Badge pill className='prop-main1 mt-0' color='light'><h6><span className='fa fa-question-circle fa-lg question-icon mr-2 mt-2'></span>{this.props.questions.length} questions</h6></Badge>
-                                    <Badge pill className='prop-main2 mt-0' color='light'><h6><span className='fa fa-users fa-lg follower-icon mr-2 mt-2'></span>{this.props.space.followers} followers</h6></Badge>
-                                    <Button className='col-12 col-md-12 col-lg-3 mb-4 add-ques-btn' color='primary'><span className='fa fa-lg fa-plus mr-3 ml-3' />ASK A QUESTION  </Button>
-                                </div>
-                                <div className='row col-12'>
+                renderQuestions = MenuVotes;
+            }
+            else
+                renderQuestions = MenuUnanswered;
+            
+            return(
+                <div className='container questions'>
+                        
+                    <div className='row'>
+                        <Breadcrumb className='mt-3 ml-3'>
+                            <BreadcrumbItem><Link to="/spaces">Spaces</Link></BreadcrumbItem>
+                            <BreadcrumbItem active>{this.props.space.name}</BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
+                    <div className='row'>
+                        <div className='container category-div '>
+                            <h4 className='row all-ques-heading justify-content-center'>All Questions</h4>
+                            <div className='row justify-content-center mt-4'>
+                                    <Button outline className='col-11 col-lg-3 mb-4 ques-btn mr-2 ml-2' color='primary'><span className='fa fa-lg fa-question-circle mr-2 ml-2' />{this.props.questions.length} QUESTIONS</Button>
+                                    <Button className='col-11 col-lg-3 mb-4 add-ques-btn mr-2 ml-2' color='danger'><span className='fa fa-lg fa-plus mr-2 ml-2' />ASK A QUESTION</Button>
+                                    <Button outline className='col-11 col-lg-3 mb-4 follower-btn mr-2 ml-2' color='primary'><span className='fa fa-lg fa-users mr-2 ml-2' />{this.props.space.followers} FOLLOWERS</Button>
+                            </div>
+                            <div className='row ml-1 mt-3 mr-1'>
+                                <Nav className='col-12 ' pills fill>
+                                        
                                     <NavItem className='mb-4'>
                                         <NavLink href='#' active={this.state.latestActive} onClick={() => this.onLatestSelect()}>Latest</NavLink>
                                     </NavItem>
@@ -217,52 +191,19 @@ class Questions extends Component {
                                     <NavItem className='mb-4'>
                                         <NavLink href='#' active={this.state.unansweredActive} onClick={() => this.onUnansweredSelect()}>Unanswered</NavLink>
                                     </NavItem>
-                                </div>
-                            </Nav>
-                        </div>
-                        <div className="row justify-content-center">
-                            {MenuVotes}
+                                    
+                                </Nav>
+                            </div>
                         </div>
                     </div>
-               );
-            }
-            else if(this.state.filter === 'Unanswered') {
-                return(
-                    <div className='container questions'>
-                        <div className='row'>
-                            <Breadcrumb className='mt-3 ml-3'>
-                                <BreadcrumbItem><Link to="/spaces">Spaces</Link></BreadcrumbItem>
-                                <BreadcrumbItem active>{this.props.space.name}</BreadcrumbItem>
-                            </Breadcrumb>
-                        </div>
-                        <div className='row category-div '>
-
-                            <Nav className='col-12' pills fill>
-                                <div className='row col-12'>
-                                    <h4 className='col-12 col-md-12 col-lg-3 mb-4 all-ques-heading'>All Questions</h4>
-                                    <Badge pill className='prop-main1 mt-0' color='light'><h6><span className='fa fa-question-circle fa-lg question-icon mr-2 mt-2'></span>{this.props.questions.length} questions</h6></Badge>
-                                    <Badge pill className='prop-main2 mt-0' color='light'><h6><span className='fa fa-users fa-lg follower-icon mr-2 mt-2'></span>{this.props.space.followers} followers</h6></Badge>
-                                    <Button className='col-12 col-md-12 col-lg-3 mb-4 add-ques-btn' color='primary'><span className='fa fa-lg fa-plus mr-3 ml-3' />ASK A QUESTION  </Button>
-                                </div>
-                                <div className='row col-12'>
-                                    <NavItem className='mb-4'>
-                                        <NavLink href='#' active={this.state.latestActive} onClick={() => this.onLatestSelect()}>Latest</NavLink>
-                                    </NavItem>
-                                    <NavItem className='mb-4'>
-                                        <NavLink href='#' active={this.state.votesActive} onClick={() => this.onVotesSelect()}>Votes</NavLink>
-                                    </NavItem>
-                                    <NavItem className='mb-4'>
-                                        <NavLink href='#' active={this.state.unansweredActive} onClick={() => this.onUnansweredSelect()}>Unanswered</NavLink>
-                                    </NavItem>
-                                </div>
-                            </Nav>
-                        </div>
-                        <div className="row justify-content-center">
-                            {MenuUnanswered}
-                        </div>
+                    
+                    <div className="row justify-content-center">
+                            {renderQuestions}
                     </div>
-               );
-            }
+                    
+                </div>
+            );
+            
         }
        
     }
