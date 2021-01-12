@@ -1,20 +1,19 @@
-import React from 'react';
-import ReactLoading from 'react-loading';
- 
-const Loading = ({ type, color }) => (
+import React from "react";
+import ReactLoading from "react-loading";
 
-        <div className='container'>
-            <div className="row justify-content-center" >
-                <div className='col-7 col-md-3' style={{ marginTop: '10%'}}>
-                    <ReactLoading type={type} color={color} height={200} width={200}/>
-                </div>
-                <div className='col-12' style={{marginBottom: '10%'}}>
-                    <h4 style={{ textAlign: 'center', color: 'rgb(49, 49, 49)'}}>Loading .... </h4>
-                </div>
-            </div> 
-        </div>
-    
-    
+const Loading = ({ type, color }) => (
+	<div className="container">
+		<div className="row justify-content-center">
+			<div className="col-7 col-md-3" style={{ marginTop: "10%" }}>
+				<ReactLoading type={type} color={color} height={200} width={200} />
+			</div>
+			<div className="col-12" style={{ marginBottom: "10%" }}>
+				<h4 style={{ textAlign: "center", color: "rgb(49, 49, 49)" }}>
+					Loading ....{" "}
+				</h4>
+			</div>
+		</div>
+	</div>
 );
- 
+
 export default Loading;
