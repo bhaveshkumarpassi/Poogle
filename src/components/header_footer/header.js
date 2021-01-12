@@ -47,7 +47,7 @@ class header extends Component {
                             {/* if user is logged in then we willshow only this */}
                             <Link to="/register" className="nav-link"><span className="NavLink"><span className="fa fa-sign-in fa-lg"></span>  Login</span></Link>
                             {/* otherwise */}
-                            <Link to="/register" className="nav-link"><span className="NavLink"><span className="fa fa-user-circle fa-lg"></span>  Profile</span></Link>
+                            <Link to="/profile" className="nav-link"><span className="NavLink"><span className="fa fa-user-circle fa-lg"></span>  Profile</span></Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

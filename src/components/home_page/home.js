@@ -18,7 +18,7 @@ class home extends Component {
 
                             <h4>We've got you covered</h4>
                             <br/>
-                            <button className="header__btn__link btn--text btn--scroll-to">Ask Here--> </button>
+                            <button className="header__btn__link btn--text btn--scroll-to">Ask Here&rarr; </button>
                         
                         </Col>
                         <Col sm={4}>

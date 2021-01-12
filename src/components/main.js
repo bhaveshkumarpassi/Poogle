@@ -8,6 +8,7 @@ import Footer from './header_footer/footer';
 import Home from './home_page/home';
 import Spaces from './spaces_page/Spaces';
 import Questions from './all_ques_page/questions';
+import Profile_page from './profile_page/profile'
 
 const mapStateToProps = state => {
     return {
@@ -56,6 +57,7 @@ class Main extends Component {
                         <Route path ='/home' component={() => <Home/>}/>
                         <Route exact path ='/spaces' component={() => <Spaces spaces={this.props.spaces}/>}/>
                         <Route path ='/spaces/:spaceId' component={SpaceWithId}/>
+                        <Route path="/profile" component={() => <Profile_page/>}/>
                         <Redirect to="/home" />
                     </Switch>
                     <Footer/>

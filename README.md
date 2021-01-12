@@ -1,9 +1,18 @@
+# To run temporary backend
+go to json server directory and run following commands
+1. npm i
+2. npm run json__server
+Your server will automatically run on port 3001
+
+## Redux developer tools are working on this project.
+To use them, you can install following chrome extension
+-> https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd
+
+
+
 # Understanding file structure
 All the colors are defined inside 'index.css' file
 As of now, all components are under paricular components folder
-
-
-
 
 
 
