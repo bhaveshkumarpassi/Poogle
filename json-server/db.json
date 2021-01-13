@@ -142,6 +142,7 @@
 	],
 	"users": [
 		{
+			"id":"1",
 			"user_id": "Jordanian",
 			"name": "Jordan Wills",
 			"about": {
@@ -152,20 +153,10 @@
 				"graduation_year": 2012,
 				"fun_fact": "I am graduated from IIT Chandigarh"
 			},
-			"Interests": [
-				"Aritficial Intelligence",
-				"Data Science",
-				"Parallel Computing",
-				"Cloud Computing",
-				"Computer Science",
-				"Research",
-				"Cricket",
-				"Music",
-				"Dancing"
-			],
-			"answers": 25,
-			"blogs": 15,
-			"questions": 6,
+			"interests": [0,2,5,9,3,4,8],
+			"answers":25,
+			"blogs":15,
+			"questions":6,
 			"upvotes": 9
 		}
 	]

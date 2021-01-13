@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	fetchQuestions: () => {
 		dispatch(fetchQuestions());
-	},
+	}
 });
 
 class Main extends Component {
@@ -69,7 +69,7 @@ class Main extends Component {
 							component={() => <Spaces spaces={this.props.spaces} />}
 						/>
 						<Route path="/spaces/:spaceId" component={SpaceWithId} />
-						<Route path="/profile" component={() => <Profile_page />} />
+						<Route exact path="/profile/:userId" component={Profile_page} />
 						<Redirect to="/home" />
 					</Switch>
 					<Footer />

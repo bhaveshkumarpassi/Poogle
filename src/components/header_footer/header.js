@@ -44,10 +44,11 @@ class header extends Component {
                         </Nav>
 
                         <Nav className="ml-auto RightNav">
-                            {/* if user is logged in then we willshow only this */}
+                            {/* if user is not logged in then we will show only this */}
                             <Link to="/register" className="nav-link"><span className="NavLink"><span className="fa fa-sign-in fa-lg"></span>  Login</span></Link>
                             {/* otherwise */}
-                            <Link to="/profile" className="nav-link"><span className="NavLink"><span className="fa fa-user-circle fa-lg"></span>  Profile</span></Link>
+                            <Link to="/profile/1" className="nav-link"><span className="NavLink"><span className="fa fa-user-circle fa-lg"></span>  Profile</span></Link>
+                                {/*need to change '1' to the id of the user*/}
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
