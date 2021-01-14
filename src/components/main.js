@@ -8,6 +8,7 @@ import Questions from "./all_ques_page/questions";
 import Profile_page from "./profile_page/profile";
 import SingleQuestion from "./single_ques/SingleQues";
 import ScrollToTop from './scroll-to-top/scroll-to-top';
+import Chat from "./chat/Chat";
 
 const mapStateToProps = (state) => {
 	return {
@@ -33,10 +34,9 @@ const mapDispatchToProps = (dispatch) => ({
 	}
 });
 
-
 class Main extends Component {
 	constructor(props) {
-		super(props); 
+		super(props);
 	}
 
 	componentDidMount() {
@@ -86,23 +86,37 @@ class Main extends Component {
 
 		return (
 			<div>
-					<ScrollToTop/>
-					<Switch>
-						<Route path="/home" component={() => <Home />} />
-						<Route
-							exact
-							path="/spaces"
-							component={() => <Spaces spaces={this.props.spaces} />}
-						/>
-						<Route path="/spaces/:spaceId" component={SpaceWithId} />
-						<Route
-							exact
-							path="/space-:spaceId/question-:quesId"
-							component={QuestionWithId}
-						/>
-						<Route exact path="/profile/:userId" component={() => <Profile_page user = {this.props.user} />} />
-						<Redirect to="/home" />
-					</Switch>
+				<ScrollToTop/>
+				<Switch>
+					<Route path="/home" component={() => <Home />} />
+					<Route
+						exact
+						path="/spaces"
+						component={() => <Spaces spaces={this.props.spaces} />}
+					/>
+					<Route path="/spaces/:spaceId" component={SpaceWithId} />
+					<Route
+						exact
+						path="/space-:spaceId/question-:quesId"
+						component={QuestionWithId}
+					/>
+					<Route exact path="/profile/:userId" component={Profile_page} />
+					<Route path="/chat" component={Chat} />
+					{/* <Route exact path="/profile/:userId" component={() => <Profile_page user = {this.props.user} />} /> */}
+					<Redirect to="/home" />
+				</Switch>
+				{/* <Switch>
+					<Route path="/home" component={() => <Home />} />
+					<Route
+						exact
+						path="/spaces"
+						component={() => <Spaces spaces={this.props.spaces} />}
+					/>
+					<Route path="/spaces/:spaceId" component={SpaceWithId} />
+					<Route exact path="/profile/:userId" component={Profile_page} />
+					<Route path="/chat" component={Chat} />
+					<Redirect to="/home" />
+				</Switch> */}
 			</div>
 		);
 	}
