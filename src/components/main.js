@@ -100,23 +100,10 @@ class Main extends Component {
 						path="/space-:spaceId/question-:quesId"
 						component={QuestionWithId}
 					/>
-					<Route exact path="/profile/:userId" component={Profile_page} />
+					<Route exact path="/profile/:userId" component={Profile_page}/>
 					<Route path="/chat" component={Chat} />
-					{/* <Route exact path="/profile/:userId" component={() => <Profile_page user = {this.props.user} />} /> */}
 					<Redirect to="/home" />
 				</Switch>
-				{/* <Switch>
-					<Route path="/home" component={() => <Home />} />
-					<Route
-						exact
-						path="/spaces"
-						component={() => <Spaces spaces={this.props.spaces} />}
-					/>
-					<Route path="/spaces/:spaceId" component={SpaceWithId} />
-					<Route exact path="/profile/:userId" component={Profile_page} />
-					<Route path="/chat" component={Chat} />
-					<Redirect to="/home" />
-				</Switch> */}
 			</div>
 		);
 	}

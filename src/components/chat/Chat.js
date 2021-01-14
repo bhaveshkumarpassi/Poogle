@@ -12,8 +12,8 @@ const Chat = (props) => {
 
 	return (
 		<div className="grid">
-			<div className="col-1">Search person</div>
-			<div className="col-2">
+			<div className="col-1 section-1">Search person</div>
+			<div className="col-2 section-2">
 				<ListGroup style={{ backgroundColor: "#a56cc1" }}>
 					{chats.map(({ name, chat }) => (
 						<ListGroupItem
@@ -40,7 +40,7 @@ const Chat = (props) => {
 					))}
 				</ListGroup>
 			</div>
-			<div className="col-3">Chat</div>
+			<div className="col-3 section-3">Chat</div>
 		</div>
 	);
 };

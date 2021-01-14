@@ -50,11 +50,13 @@ return(
       <MenuItem>Most viewed</MenuItem>
       <MenuItem>All blogs</MenuItem>
     </SubMenu>
-    <MenuItem icon={<HiChat />}>Chat Others</MenuItem>
+    <MenuItem icon={<HiChat />}>
+      Chat Others <Link to="/chat/"/>
+    </MenuItem>
     <MenuItem icon={<RiTeamLine />}>About Us</MenuItem>
     <MenuItem icon={<MdContactMail />}>Contact Us</MenuItem>
     <MenuItem icon={<span className='fa fa-user-circle'/>}>
-      Profile <Link to="/profile/"/>
+      Profile <Link to="/profile/1"/>
     </MenuItem>
     <MenuItem icon={<span className='fa fa-sign-in'/>}>
       Login
