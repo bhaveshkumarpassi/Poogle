@@ -1,5 +1,5 @@
 .single-question {
-    margin-top: 10rem;
+    margin-top: 0rem;
 }
 
 .single-question-heading {
@@ -24,4 +24,11 @@
 
 .single-question-profile {
     margin: 0 auto;
+}
+
+@media screen and (max-width:768px)
+{
+    .single-question{
+        margin-top: 5rem;
+    }
 }

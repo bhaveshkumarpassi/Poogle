@@ -132,7 +132,6 @@
 			"question": "What is REST API??",
 			"description": "i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know.",
 			"imageUrl": "images/web-dev.jpeg",
-			"links": ["www.google.com","www.google.com"],
 			"tagIds": [0],
 			"tagNames": ["Web Development"],
 			"author": "Jack Venes",
@@ -150,6 +149,41 @@
 			"author": "Jack Venes",
 			"date": "2012-5-16T17:57:28.556094Z",
 			"dateNum": 280
+		}
+	],
+	"answers":[
+		{
+			"id": 0,
+			"views": 90,
+			"votes": 50,
+			"questionId": 2,
+			"answer": "Both are frameworks/libraries to design frontend React is used for designing frontend of web applications and React native is used to design frontend for mobile applications for both android and ios. but the structure or concepts are very much similar.",
+			"author": "James Twist",
+			"date": "2012-10-16T17:57:28.556094Z",
+			"dateNum": 400,
+			"imageUrl": ""
+		},
+		{
+			"id": 1,
+			"views": 70,
+			"votes": 40,
+			"questionId": 2,
+			"answer": "Both are frameworks/libraries to design frontend React is used for designing frontend of web applications and React native is used to design frontend for mobile applications for both android and ios. but the structure or concepts are very much similar.",
+			"author": "Marcy kens",
+			"date": "2012-10-16T17:57:28.556094Z",
+			"dateNum": 350,
+			"imageUrl": ""
+		},
+		{
+			"id": 2,
+			"views": 45,
+			"votes": 25,
+			"questionId": 2,
+			"answer": "Both are frameworks/libraries to design frontend React is used for designing frontend of web applications and React native is used to design frontend for mobile applications for both android and ios. but the structure or concepts are very much similar.",
+			"author": "Jhon Cena",
+			"date": "2012-10-16T17:57:28.556094Z",
+			"dateNum": 200,
+			"imageUrl": "images/web-dev.jpeg"
 		}
 	],
 	"users": [

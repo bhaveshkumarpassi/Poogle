@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchSpaces, fetchQuestions } from "../redux/ActionCreators";
+import { fetchSpaces, fetchQuestions, fetchUser, fetchAnswers } from "../redux/ActionCreators";
 import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
@@ -13,6 +13,8 @@ const mapStateToProps = (state) => {
 	return {
 		spaces: state.spaces,
 		questions: state.questions,
+		answers: state.answers,
+		user: state.user
 	};
 };
 
@@ -22,6 +24,12 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	fetchQuestions: () => {
 		dispatch(fetchQuestions());
+	},
+	fetchUser: () => {
+		dispatch(fetchUser());
+	},
+	fetchAnswers: () => {
+		dispatch(fetchAnswers())
 	}
 });
 
@@ -34,6 +42,8 @@ class Main extends Component {
 	componentDidMount() {
 		this.props.fetchSpaces();
 		this.props.fetchQuestions();
+		this.props.fetchUser();
+		this.props.fetchAnswers();
 	}
 
 	render() {
@@ -65,14 +75,17 @@ class Main extends Component {
 					}
 					isLoading={this.props.questions.isLoading}
 					errMess={this.props.spaces.errMess}
+					answers = {
+						this.props.answers.answers.filter((ans) => ans.questionId === parseInt(match.params.quesId, 10))
+					}
+					answersIsLoading = {this.props.answers.isLoading}
+					answersErrMess = {this.props.answers.errMess}
 				/>
 			);
 		}
 
 		return (
 			<div>
-				{/* <Router history={history}>
-					<Header /> */}
 					<ScrollToTop/>
 					<Switch>
 						<Route path="/home" component={() => <Home />} />
@@ -87,11 +100,9 @@ class Main extends Component {
 							path="/space-:spaceId/question-:quesId"
 							component={QuestionWithId}
 						/>
-						<Route path="/profile/:userId" component={() => <Profile_page />} />
+						<Route exact path="/profile/:userId" component={() => <Profile_page user = {this.props.user} />} />
 						<Redirect to="/home" />
 					</Switch>
-					{/* <Footer />
-				</Router> */}
 			</div>
 		);
 	}

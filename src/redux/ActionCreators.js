@@ -84,6 +84,46 @@ export const addQuestions = (questions) => ({
 	payload: questions,
 });
 
+export const fetchAnswers = () => (dispatch) => {
+	dispatch(answersLoading(true));
+
+	return fetch(baseUrl + "answers")
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				var errmess = new Error(error.message);
+				throw errmess;
+			}
+		)
+		.then((response) => response.json())
+		.then((answers) => dispatch(addAnswers(answers)))
+		.catch((error) => dispatch(answersFailed(error.message)));
+};
+
+export const answersLoading = () => ({
+	type: ActionTypes.ANSWERS_LOADING,
+});
+
+export const answersFailed = (errmess) => ({
+	type: ActionTypes.ANSWERS_FAILED,
+	payload: errmess,
+});
+
+export const addAnswers = (answers) => ({
+	type: ActionTypes.ADD_ANSWERS,
+	payload: answers,
+});
+
 
 
 export const fetchUser = (userId) => (dispatch) =>{

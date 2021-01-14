@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProSidebar, SidebarHeader,  SidebarFooter, SidebarContent,Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+import { ProSidebar, SidebarHeader,  SidebarFooter, SidebarContent,Menu, MenuItem, SubMenu} from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import '../main';
 import {Link} from 'react-router-dom';
@@ -26,7 +26,14 @@ return(
     <MenuItem icon={<FaStickyNote />}>
       Spaces <Link to="/spaces"/>
     </MenuItem>
-    
+    <SubMenu title='Add' icon={<span className='fa fa-plus-circle'/>}>
+      <MenuItem>Add Question</MenuItem>
+      <MenuItem>Add Answer</MenuItem>
+      <MenuItem>Add Blog</MenuItem>
+    </SubMenu>
+    <MenuItem icon={<span className='fa fa-bell'/>}>
+      Notifications
+    </MenuItem>
     <SubMenu title="Top Categories" icon={<FaGem />}>
       <MenuItem>Top Questions</MenuItem>
       <MenuItem>Top Blogs</MenuItem>
@@ -46,6 +53,12 @@ return(
     <MenuItem icon={<HiChat />}>Chat Others</MenuItem>
     <MenuItem icon={<RiTeamLine />}>About Us</MenuItem>
     <MenuItem icon={<MdContactMail />}>Contact Us</MenuItem>
+    <MenuItem icon={<span className='fa fa-user-circle'/>}>
+      Profile <Link to="/profile/"/>
+    </MenuItem>
+    <MenuItem icon={<span className='fa fa-sign-in'/>}>
+      Login
+    </MenuItem>
   </Menu>
   </SidebarContent>
   <SidebarFooter>

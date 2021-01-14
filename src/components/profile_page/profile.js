@@ -15,9 +15,9 @@ import './profile.css';
 import Loading from '../loading';
 
 class profile extends Component {
-    componentDidMount(){
-        this.props.fetchUser(this.props.match.params.userId);
-    }
+    // componentDidMount(){
+    //     this.props.fetchUser(this.props.match.params.userId);
+    // }
     renderButtons()
     {   // renders the button
         const {user} = this.props.user;
@@ -80,7 +80,7 @@ class profile extends Component {
     }
     
     renderInterestList(){
-        const {interests} = this.props.user.user;
+        const {interests} = this.props.user;
         const spaces = this.props.spaces;
         return(interests.map((interest)=>{
             return(
@@ -194,12 +194,14 @@ class profile extends Component {
         )
     }
 }
-const mapStateToProps = (state, ownProps)=>{
-    return{
-        user:state.user,
-        spaces:state.spaces.spaces
-        //remember to check if spaces are avaliable.
-    }
-}
 
-export default connect(mapStateToProps, {fetchUser})(profile);
+export default profile
+// const mapStateToProps = (state, ownProps)=>{
+//     return{
+//         user:state.user,
+//         spaces:state.spaces.spaces
+//         //remember to check if spaces are avaliable.
+//     }
+// }
+
+// export default connect(mapStateToProps, {fetchUser})(profile);

@@ -6,7 +6,7 @@ import { ConfigureStore } from "./redux/configureStore";
 import history from './history';
 import {FaBars} from 'react-icons/fa';
 import Sidebar from './components/sidebar/sidebar'
-import Header from './components/header_footer/header'
+// import Header from './components/header_footer/header'
 import Footer from './components/header_footer/footer'
 import './App.css';
 const store = ConfigureStore();
@@ -30,7 +30,6 @@ function App() {
 						<div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
 							<FaBars />
 						</div>
-							<Header />
 							<Main />
 							<Footer/>
 					</main>
