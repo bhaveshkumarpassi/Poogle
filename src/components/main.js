@@ -6,6 +6,7 @@ import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
 import Profile_page from "./profile_page/profile";
+import Chat from "./chat/Chat";
 
 const mapStateToProps = (state) => {
 	return {
@@ -20,13 +21,12 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	fetchQuestions: () => {
 		dispatch(fetchQuestions());
-	}
+	},
 });
-
 
 class Main extends Component {
 	constructor(props) {
-		super(props); 
+		super(props);
 	}
 
 	componentDidMount() {
@@ -66,6 +66,7 @@ class Main extends Component {
 					/>
 					<Route path="/spaces/:spaceId" component={SpaceWithId} />
 					<Route exact path="/profile/:userId" component={Profile_page} />
+					<Route path="/chat" component={Chat} />
 					<Redirect to="/home" />
 				</Switch>
 			</div>
