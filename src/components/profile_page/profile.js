@@ -163,11 +163,9 @@ class profile extends Component {
                 <section className="top_section">
                     <Container>
                         <Row>
-                            <Col md={3}>
-                                LeftSidebar
-                            </Col>
+                            <Col md={1}></Col>
                             
-                            <Col md={9}>
+                            <Col md={10}>
                                 <Col xs={6} sm={5} md={5}>
                                     <Breadcrumb className='mb-5'>
                                         <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
@@ -187,6 +185,7 @@ class profile extends Component {
                                 </div>
                                 {this.renderAbout()}
                             </Col>
+                            <Col md={1}></Col>
                         </Row>
                     </Container>
                     

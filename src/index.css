@@ -25,3 +25,10 @@ code {
 .top_section {
 	margin-top: 3rem;
 }
+.main{
+	padding: 24px;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+}

@@ -21,9 +21,7 @@ class header extends Component {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="ml-auto RightNav">
-                            <Link to="/home" className="nav-link"><span className="NavLink"><span className="fa fa-home fa-lg"></span>  Home</span></Link>
-                            
-                            <NavDropdown title="Add" id="basic-nav-dropdown">
+                        <NavDropdown title="Add" id="basic-nav-dropdown">
                                 <NavDropdown.Item>
                                     <Link to="#" className="dropdown_nav-link">Add Question</Link>
                                 </NavDropdown.Item>
@@ -32,18 +30,9 @@ class header extends Component {
                                 </NavDropdown.Item>
                                 <NavDropdown.Item>
                                     <Link to="#" className="dropdown_nav-link">Add Blog</Link>
-                                </NavDropdown.Item>
-                                
+                                </NavDropdown.Item>  
                             </NavDropdown>
-                            
-                            {/* <Link to="#" className="nav-link"><span className="NavLink">Categories</span></Link> */}
-                            <Link to="/spaces" className="nav-link"><span className="NavLink"><span className="fa fa-sticky-note"></span>  Spaces</span></Link>
                             <Link to="#" className="nav-link"><span className="NavLink"><span className="fa fa-bell"></span>  Notifications</span></Link>
-                            <Link to="#" className="nav-link"><span className="NavLink"><span className="fa fa-address-card"></span>  Contact Us</span></Link>
-                            <NavDropdown.Divider />
-                        </Nav>
-
-                        <Nav className="ml-auto RightNav">
                             {/* if user is not logged in then we will show only this */}
                             <Link to="/register" className="nav-link"><span className="NavLink"><span className="fa fa-sign-in fa-lg"></span>  Login</span></Link>
                             {/* otherwise */}
