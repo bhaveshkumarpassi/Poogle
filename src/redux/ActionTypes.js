@@ -5,3 +5,7 @@ export const ADD_SPACES = "ADD_SPACES";
 export const QUESTIONS_LOADING = "QUESTIONS_LOADING";
 export const QUESTIONS_FAILED = "QUESTIONS_FAILED";
 export const ADD_QUESTIONS = "ADD_QUESTIONS";
+
+export const USER_LOADING = "USER_LOADING";
+export const USER_FAILED = 'USER_FAILED';
+export const GET_USER  = 'GET_USER';

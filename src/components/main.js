@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchSpaces, fetchQuestions } from "../redux/ActionCreators";
-import history from "../history";
-import Header from "./header_footer/header";
-import Footer from "./header_footer/footer";
 import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
@@ -25,12 +22,13 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	fetchQuestions: () => {
 		dispatch(fetchQuestions());
-	},
+	}
 });
+
 
 class Main extends Component {
 	constructor(props) {
-		super(props);
+		super(props); 
 	}
 
 	componentDidMount() {
@@ -73,8 +71,8 @@ class Main extends Component {
 
 		return (
 			<div>
-				<Router history={history}>
-					<Header />
+				{/* <Router history={history}>
+					<Header /> */}
 					<ScrollToTop/>
 					<Switch>
 						<Route path="/home" component={() => <Home />} />
@@ -89,11 +87,11 @@ class Main extends Component {
 							path="/space-:spaceId/question-:quesId"
 							component={QuestionWithId}
 						/>
-						<Route path="/profile" component={() => <Profile_page />} />
+						<Route path="/profile/:userId" component={() => <Profile_page />} />
 						<Redirect to="/home" />
 					</Switch>
-					<Footer />
-				</Router>
+					{/* <Footer />
+				</Router> */}
 			</div>
 		);
 	}

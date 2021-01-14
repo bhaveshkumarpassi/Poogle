@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Spaces } from "./spaces";
 import { Questions } from "./questions";
+import {user} from './reducers/user_reducer'
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 
@@ -10,6 +11,7 @@ export const ConfigureStore = () => {
 		combineReducers({
 			spaces: Spaces,
 			questions: Questions,
+			user,
 		}),
 		composeEnhancers(applyMiddleware(thunk, logger))
 	);

@@ -1,0 +1,13 @@
+.pro-sidebar-header{
+padding: 2rem;
+font-size: 140%;
+font-weight: bold;
+text-transform: uppercase;
+letter-spacing: 0.12rem;
+}
+
+
+
+.pro-sidebar-footer{
+    padding:1rem;
+}
