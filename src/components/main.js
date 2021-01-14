@@ -9,6 +9,8 @@ import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
 import Profile_page from "./profile_page/profile";
+import SingleQuestion from "./single_ques/SingleQues";
+import ScrollToTop from './scroll-to-top/scroll-to-top';
 
 const mapStateToProps = (state) => {
 	return {
@@ -57,10 +59,23 @@ class Main extends Component {
 			);
 		};
 
+		const QuestionWithId = ({ match }) => {
+			return(
+				<SingleQuestion
+					question={
+						this.props.questions.questions.filter((ques) => ques.id === parseInt(match.params.quesId, 10))[0]
+					}
+					isLoading={this.props.questions.isLoading}
+					errMess={this.props.spaces.errMess}
+				/>
+			);
+		}
+
 		return (
 			<div>
 				<Router history={history}>
 					<Header />
+					<ScrollToTop/>
 					<Switch>
 						<Route path="/home" component={() => <Home />} />
 						<Route
@@ -69,6 +84,11 @@ class Main extends Component {
 							component={() => <Spaces spaces={this.props.spaces} />}
 						/>
 						<Route path="/spaces/:spaceId" component={SpaceWithId} />
+						<Route
+							exact
+							path="/space-:spaceId/question-:quesId"
+							component={QuestionWithId}
+						/>
 						<Route path="/profile" component={() => <Profile_page />} />
 						<Redirect to="/home" />
 					</Switch>

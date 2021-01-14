@@ -14,7 +14,7 @@
 }
 
 .nav--sticky{
-    position: sticky;
+    position: fixed;
     top:0;
     /*background-color: var(--color-grey-lightest);*/
     /*background-color: #0278ae;*/

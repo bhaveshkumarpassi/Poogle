@@ -13,7 +13,7 @@ import { ListGroup,
 import { Link } from 'react-router-dom';
 import Loading from '../loading';
 import '../all_ques_page/questions.css'
-import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse';
+
 
 const RenderTags = ({question}) => question.tagNames.map((tag) => {
     return(
@@ -21,38 +21,39 @@ const RenderTags = ({question}) => question.tagNames.map((tag) => {
     );
 })
 
-function RenderMenuItem({question, class_Name, onClick}) {
+function RenderMenuItem({question, spaceId, class_Name, onClick}) {
     
-
     return(
         <ListGroup className='container'>
                 <ListGroupItem className={class_Name}>
-                    <div className='row'>
-                    <div className='col-7 col-md-8'>
-                        <ListGroupItemHeading className='question-heading'>{question.question}</ListGroupItemHeading>
-                        <RenderTags question={question} />
-                        <ListGroupItemText className='question-text'>
-                            Posted by :-  {question.author}
-                        </ListGroupItemText>
-                        <ListGroupItemText className='question-text'>
-                            Posted at :- {question.date}
-                        </ListGroupItemText>
-                    </div>
-                    <div className='col-3 col-md-4'>
-                        <div className='prop-div'>
-                            <Badge className='prop' color='light'>{question.views}</Badge>
-                            <p>views</p>
+                    <Link to={`/space-${spaceId}/question-${question.id}`}>
+                        <div className='row'>
+                        <div className='col-7 col-md-8'>
+                            <ListGroupItemHeading className='question-heading'>{question.question}</ListGroupItemHeading>
+                            <RenderTags question={question} />
+                            <ListGroupItemText className='question-text'>
+                                Posted by :-  {question.author}
+                            </ListGroupItemText>
+                            <ListGroupItemText className='question-text'>
+                                Posted at :- {question.date}
+                            </ListGroupItemText>
                         </div>
-                        <div className='prop-div'>
-                            <Badge className='prop' color='light'>{question.answers}</Badge>
-                            <p>answers</p>
+                        <div className='col-3 col-md-4'>
+                            <div className='prop-div'>
+                                <Badge className='prop' color='light'>{question.views}</Badge>
+                                <p>views</p>
+                            </div>
+                            <div className='prop-div'>
+                                <Badge className='prop' color='light'>{question.answers}</Badge>
+                                <p>answers</p>
+                            </div>
+                            <div className='prop-div'>
+                                <Badge className='prop' color='light'>{question.votes}</Badge>
+                                <p>votes</p>
+                            </div>
                         </div>
-                        <div className='prop-div'>
-                            <Badge className='prop' color='light'>{question.votes}</Badge>
-                            <p>votes</p>
                         </div>
-                    </div>
-                    </div>
+                    </Link>
                 </ListGroupItem>
         </ListGroup>
     );
@@ -107,7 +108,7 @@ class Questions extends Component {
             count += 1;
             return(
                 <div className="col-12" key={question.id}>
-                    <RenderMenuItem question={question} class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} onClick={this.props.onClick} />
+                    <RenderMenuItem question={question} spaceId={this.props.space.id} class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} onClick={this.props.onClick} />
                 </div>
             );
         }) 
@@ -117,7 +118,7 @@ class Questions extends Component {
             count += 1;
             return(
                 <div className="col-12" key={question.id}>
-                    <RenderMenuItem question={question} class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} onClick={this.props.onClick} />
+                    <RenderMenuItem question={question} spaceId={this.props.space.id} class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} onClick={this.props.onClick} />
                 </div>
             );
         }) 
@@ -127,7 +128,7 @@ class Questions extends Component {
             count += 1;
             return(
                 <div className="col-12" key={question.id}>
-                    <RenderMenuItem question={question} class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} onClick={this.props.onClick} />
+                    <RenderMenuItem question={question} spaceId={this.props.space.id} class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} onClick={this.props.onClick} />
                 </div>
             );
         }) 

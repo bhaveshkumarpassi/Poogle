@@ -8,12 +8,6 @@ const store = ConfigureStore();
 
 function App() {
 	return (
-		// <div>
-		//   <BrowserRouter>
-		//     <Main />
-		//   </BrowserRouter>
-		// </div>
-		// provides access of redux to store to main and thus to all othet components.
 		<Provider store={store}>
 			<BrowserRouter>
 				<div className="App">

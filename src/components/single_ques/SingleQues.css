@@ -1,0 +1,27 @@
+.single-question {
+    margin-top: 10rem;
+}
+
+.single-question-heading {
+    text-align: center;
+    margin-top: 0;
+    font-size: 1.3rem;
+}
+
+.single-question-text {
+    font-size: 0.5rem;
+}
+
+.single-question-profile-pic {
+    border-radius: 50%;
+    
+}
+
+.single-question-profile-name {
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.single-question-profile {
+    margin: 0 auto;
+}

@@ -40,7 +40,7 @@ class header extends Component {
                             <Link to="/spaces" className="nav-link"><span className="NavLink"><span className="fa fa-sticky-note"></span>  Spaces</span></Link>
                             <Link to="#" className="nav-link"><span className="NavLink"><span className="fa fa-bell"></span>  Notifications</span></Link>
                             <Link to="#" className="nav-link"><span className="NavLink"><span className="fa fa-address-card"></span>  Contact Us</span></Link>
-                            <NavDropdown.Divider />
+            
                         </Nav>
 
                         <Nav className="ml-auto RightNav">
