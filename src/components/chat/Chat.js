@@ -26,6 +26,18 @@ const Chat = (props) => {
 			name: "Dips",
 			chat: [
 				{ msg: "B", sender: "me" },
+				{ msg: "B", sender: "me" },
+				{ msg: "B", sender: "me" },
+				{ msg: "B", sender: "me" },
+				{ msg: "B", sender: "me" },
+				{ msg: "B", sender: "me" },
+				{ msg: "B", sender: "me" },
+				{ msg: "B", sender: "me" },
+				{ msg: "B", sender: "me" },
+				{ msg: "B", sender: "me" },
+				{ msg: "B", sender: "me" },
+				{ msg: "B", sender: "me" },
+				{ msg: "B", sender: "me" },
 				{ msg: "Hello", sender: "dips" },
 				{ msg: "Chal", sender: "me" },
 			],
@@ -90,7 +102,11 @@ const Chat = (props) => {
 						<div>
 							<div className="justify-content-end">
 								{chat.map(({ msg, sender }) => (
-									<div>
+									<div
+										className={`${
+											sender === "me" ? "align-self-end" : "algin-self-start"
+										}`}
+									>
 										<div
 											className={`rounded px-2 py-1 ${
 												sender === "me" ? "bg-primary text-white" : "border"
