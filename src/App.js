@@ -30,7 +30,7 @@ function App() {
 						<div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
 							<FaBars />
 						</div>
-							<Header />
+							<Header/>
 							<Main />
 							<Footer/>
 					</main>

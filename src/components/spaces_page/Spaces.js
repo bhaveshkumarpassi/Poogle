@@ -67,7 +67,7 @@ import './Spaces.css'
         render() {
             const menu = this.state.data.map((space) => {  
                 return (
-                    <div className="col-12 col-lg-3 col-md-4 col-sm-6 mt-1 mb-4"  key={space.id}>
+                    <div className="col-12 col-lg-3 col-md-6 col-sm-6 mt-1 mb-4"  key={space.id}>
                         <RenderMenuItem space={space} onClick={this.props.onClick} />
                     </div>
                 );

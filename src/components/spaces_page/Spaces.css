@@ -40,3 +40,9 @@
     color: rgb(49, 49, 49);
 }
 
+@media screen and (max-width:768px)
+{
+    .spaces{
+        margin-top: 5rem;
+    }
+}
