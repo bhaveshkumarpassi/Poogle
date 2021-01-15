@@ -34,36 +34,39 @@ const Chat = (props) => {
 		{ name: "Nisha", chat: [{ msg: "Yo", sender: "me" }] },
 	];
 
-	const personChatDisplay = ({ name, chat }) => (
-		<ListGroupItem
-			style={{ backgroundColor: "#a56cc1", border: "0px" }}
-			className="person"
-		>
-			<Row>
-				<Col>
-					<Image
-						src={profilePic}
-						className="user__profile__pic"
-						roundedCircle
-						style={{
-							maxHeight: "70px",
-						}}
-					/>
-				</Col>
-				<Col>
-					<h3
-						style={{ cursor: "pointer" }}
-						onClick={(e) => {
-							setPerson(e.target.innerHTML);
-						}}
-					>
-						{name}
-					</h3>
-					<p className="display__chat">{chat[0].msg}</p>
-				</Col>
-			</Row>
-		</ListGroupItem>
-	);
+	const personChatDisplay = ({ name, chat }) => {
+		const color = name === person ? "#a5fff1" : "#a56cc1";
+		return (
+			<ListGroupItem
+				style={{ backgroundColor: color, border: "0px" }}
+				className="person"
+			>
+				<Row>
+					<Col>
+						<Image
+							src={profilePic}
+							className="user__profile__pic"
+							roundedCircle
+							style={{
+								maxHeight: "70px",
+							}}
+						/>
+					</Col>
+					<Col>
+						<h3
+							style={{ cursor: "pointer" }}
+							onClick={(e) => {
+								setPerson(e.target.innerHTML);
+							}}
+						>
+							{name}
+						</h3>
+						<p className="display__chat">{chat[0].msg}</p>
+					</Col>
+				</Row>
+			</ListGroupItem>
+		);
+	};
 
 	return (
 		<Container>
