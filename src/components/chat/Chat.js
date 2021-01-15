@@ -17,8 +17,8 @@ const Chat = (props) => {
 
 	useEffect(() => {
 		const currChat = chats.filter(({ name, chat }) => name === person);
-		setChat(currChat[0].chat);
-		console.log(currChat[0].chat);
+		console.log("here", currChat);
+		if (currChat.length !== 0) setChat(currChat[0].chat);
 	}, [person]);
 
 	const chats = [
@@ -26,7 +26,7 @@ const Chat = (props) => {
 			name: "Dips",
 			chat: [
 				{ msg: "B", sender: "me" },
-				{ msg: "Hello", sender: "me" },
+				{ msg: "Hello", sender: "dips" },
 				{ msg: "Chal", sender: "me" },
 			],
 		},
@@ -85,9 +85,23 @@ const Chat = (props) => {
 						<h1>Choose a person to chat</h1>
 					) : (
 						<div>
-							{chat.map(({ msg, sender }) => (
-								<p>{msg}</p>
-							))}
+							<div className="justify-content-end">
+								{chat.map(({ msg, sender }) => (
+									<div>
+										<div
+											className={`rounded px-2 py-1 ${
+												sender === "me" ? "bg-primary text-white" : "border"
+											}`}
+											style={{ margin: "10px" }}
+										>
+											{msg}
+										</div>
+										<div className={`text-muted small text-right`}>
+											{sender === "me" ? "You" : person}
+										</div>
+									</div>
+								))}
+							</div>
 							<Form style={{ position: "absolute", bottom: "10px" }}>
 								<Form.Control placeholder="Type your message" />
 							</Form>
