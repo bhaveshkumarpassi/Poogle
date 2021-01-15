@@ -72,12 +72,12 @@ const Chat = (props) => {
 		<Container>
 			<Row>
 				<Col>
-					<Row>
+					<Row style={{ margin: "10px" }}>
 						<Form>
 							<Form.Control placeholder="Search" />
 						</Form>
 					</Row>
-					<Row>
+					<Row style={{ margin: "10px" }}>
 						<ListGroup style={{ backgroundColor: "#a56cc1" }}>
 							{chats.map(personChatDisplay)}
 						</ListGroup>
