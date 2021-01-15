@@ -17,7 +17,7 @@ const Chat = (props) => {
 		{ name: "Nisha", chat: [{ msg: "Yo", sender: "me" }] },
 	];
 
-	const personChat = ({ name, chat }) => (
+	const personChatDisplay = ({ name, chat }) => (
 		<ListGroupItem
 			style={{ backgroundColor: "#a56cc1", border: "0px" }}
 			className="person"
@@ -48,7 +48,7 @@ const Chat = (props) => {
 					<Row>Search person</Row>
 					<Row>
 						<ListGroup style={{ backgroundColor: "#a56cc1" }}>
-							{chats.map(personChat)}
+							{chats.map(personChatDisplay)}
 						</ListGroup>
 					</Row>
 				</Col>
