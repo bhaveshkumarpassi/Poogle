@@ -124,7 +124,35 @@ export const addAnswers = (answers) => ({
 	payload: answers,
 });
 
+export const fetchComments = () => (dispatch) => {    
+    return fetch(baseUrl + 'comments')
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+      })
+    .then(response => response.json())
+    .then(comments => dispatch(addComments(comments)))
+    .catch(error => dispatch(commentsFailed(error.message)));
+};
 
+export const commentsFailed = (errmess) => ({
+    type: ActionTypes.COMMENTS_FAILED,
+    payload: errmess
+});
+
+export const addComments = (comments) => ({
+    type: ActionTypes.ADD_COMMENTS,
+    payload: comments
+});
 
 export const fetchUser = (userId) => (dispatch) =>{
     dispatch((userLoading(true)));
@@ -161,3 +189,4 @@ export const getUser = (user) => ({
 	type: ActionTypes.GET_USER,
 	payload: user,
 });
+

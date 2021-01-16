@@ -13,3 +13,7 @@ export const ADD_ANSWERS = "ADD_ANSWERS";
 export const USER_LOADING = "USER_LOADING";
 export const USER_FAILED = 'USER_FAILED';
 export const GET_USER  = 'GET_USER';
+
+export const ADD_COMMENTS = 'ADD_COMMENTS';
+export const COMMENTS_FAILED = 'COMMENTS_FAILED';
+export const ADD_COMMENT = 'ADD_COMMENT';

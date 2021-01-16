@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchSpaces, fetchQuestions, fetchUser, fetchAnswers } from "../redux/ActionCreators";
+import { fetchSpaces, fetchQuestions, fetchUser, fetchAnswers, fetchComments } from "../redux/ActionCreators";
 import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
@@ -15,7 +15,8 @@ const mapStateToProps = (state) => {
 		spaces: state.spaces,
 		questions: state.questions,
 		answers: state.answers,
-		user: state.user
+		user: state.user,
+		comments: state.comments
 	};
 };
 
@@ -31,6 +32,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	fetchAnswers: () => {
 		dispatch(fetchAnswers())
+	},
+	fetchComments: () => {
+		dispatch(fetchComments())
 	}
 });
 
@@ -44,6 +48,7 @@ class Main extends Component {
 		this.props.fetchQuestions();
 		this.props.fetchUser();
 		this.props.fetchAnswers();
+		this.props.fetchComments();
 	}
 
 	render() {
@@ -80,6 +85,9 @@ class Main extends Component {
 					}
 					answersIsLoading = {this.props.answers.isLoading}
 					answersErrMess = {this.props.answers.errMess}
+					spaceId={match.params.spaceId}
+					comments = {this.props.comments.comments.filter((comm) => comm.questionId === parseInt(match.params.quesId, 10))}
+					commentsErrMess={this.props.comments.errMess}
 				/>
 			);
 		}

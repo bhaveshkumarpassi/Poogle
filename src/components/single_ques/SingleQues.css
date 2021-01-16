@@ -8,6 +8,16 @@
     font-size: 1.3rem;
 }
 
+.add-ans-btn {
+    height: 40px;
+    padding-left: 2px;
+    padding-right: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 2rem;
+    text-align: center;
+    display: inline-block;
+}
+
 .single-question-text {
     font-size: 0.5rem;
 }
@@ -24,6 +34,16 @@
 
 .single-question-profile {
     margin: 0 auto;
+}
+
+.comments-profile-pic {
+    width: 45%;
+    height: 45%;
+    margin-left: 0%;
+}
+
+.comments-data {
+    font-size: xx-small;
 }
 
 @media screen and (max-width:768px)
