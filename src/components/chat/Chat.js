@@ -9,6 +9,7 @@ import {
 	ListGroupItem,
 	Form,
 } from "react-bootstrap";
+import { FaSearch } from "react-icons/fa";
 import profilePic from "../../Images/profile_pic.png";
 
 const Chat = (props) => {
@@ -69,21 +70,30 @@ const Chat = (props) => {
 	};
 
 	return (
-		<Container>
-			<Row>
-				<Col>
-					<Row style={{ margin: "10px" }}>
-						<Form>
-							<Form.Control placeholder="Search" />
-						</Form>
+		<Container style={{ height: "80vh", marginTop: "20px" }}>
+			<Row style={{ height: "100%" }}>
+				{/*Chat sidebar*/}
+				<Col xs={6} md={4}>
+					<Row style={{ margin: "10px", backgroundColor: "bisque" }}>
+						<FaSearch style={{ margin: "12px" }} />
+						<input
+							type="text"
+							placeholder="Search person"
+							style={{
+								border: "none",
+								outlineWidth: "0",
+								background: "transparent",
+								padding: "10px",
+							}}
+						></input>
 					</Row>
 					<Row style={{ margin: "10px" }}>
-						<ListGroup style={{ backgroundColor: "#a56cc1" }}>
-							{chats.map(personChatDisplay)}
-						</ListGroup>
+						<ListGroup>{chats.map(personChatDisplay)}</ListGroup>
 					</Row>
 				</Col>
-				<Col>
+
+				{/*Chat section*/}
+				<Col xs={6} md={8}>
 					{person === "" ? (
 						<h1>Choose a person to chat</h1>
 					) : (
