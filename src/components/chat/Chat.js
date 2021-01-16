@@ -28,6 +28,20 @@ const Chat = (props) => {
 			chat: [
 				{ msg: "B", sender: "me" },
 				{ msg: "Hello", sender: "dips" },
+				{
+					msg:
+						"Cdfafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffhal",
+					sender: "me",
+				},
+				{ msg: "Chal", sender: "me" },
+				{ msg: "Chal", sender: "me" },
+				{ msg: "Chal", sender: "me" },
+				{ msg: "Chal", sender: "me" },
+				{ msg: "Chal", sender: "me" },
+				{ msg: "Chal", sender: "me" },
+				{ msg: "Chal", sender: "me" },
+				{ msg: "Chal", sender: "me" },
+				{ msg: "Chal", sender: "me" },
 				{ msg: "Chal", sender: "me" },
 			],
 		},
@@ -73,7 +87,7 @@ const Chat = (props) => {
 		<Container style={{ height: "80vh", marginTop: "20px" }}>
 			<Row style={{ height: "100%" }}>
 				{/*Chat sidebar*/}
-				<Col xs={6} md={4}>
+				<Col xs={6} md={4} style={{ overflow: "scroll" }}>
 					<Row style={{ margin: "10px", backgroundColor: "bisque" }}>
 						<FaSearch style={{ margin: "12px" }} />
 						<input
@@ -98,12 +112,14 @@ const Chat = (props) => {
 						<h1>Choose a person to chat</h1>
 					) : (
 						<div>
-							<div className="justify-content-end">
+							<div
+								className="justify-content-end"
+								style={{ overflowY: "scroll", height: "80vh" }}
+							>
 								{chat.map(({ msg, sender }) => (
 									<div
-										className={`${
-											sender === "me" ? "align-self-end" : "algin-self-start"
-										}`}
+										class={`${sender === "me" ? "sending__msg" : ""}`}
+										style={{ maxWidth: "50%", wordBreak: "break-all" }}
 									>
 										<div
 											className={`rounded px-2 py-1 ${
