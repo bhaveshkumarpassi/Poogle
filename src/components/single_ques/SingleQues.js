@@ -26,7 +26,6 @@ import "../single_ques/SingleQues.css";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
-const minLength = (len) => (val) => val && (val.length >= len);
 
 const RenderTags = ({question}) => question.tagNames.map((tag) => {
     return(
