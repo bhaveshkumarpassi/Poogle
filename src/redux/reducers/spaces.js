@@ -1,4 +1,4 @@
-import * as ActionTypes from "./ActionTypes";
+import * as ActionTypes from "../ActionTypes";
 
 // these are reducer functions.
 export const Spaces = (

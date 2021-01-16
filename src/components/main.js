@@ -9,6 +9,7 @@ import Profile_page from "./profile_page/profile";
 import SingleQuestion from "./single_ques/SingleQues";
 import ScrollToTop from './scroll-to-top/scroll-to-top';
 import Chat from "./chat/Chat";
+import Contact from './ContactUs/contact';
 
 const mapStateToProps = (state) => {
 	return {
@@ -110,6 +111,7 @@ class Main extends Component {
 					/>
 					<Route exact path="/profile/:userId" component={Profile_page}/>
 					<Route path="/chat" component={Chat} />
+					<Route path="/contact" component={Contact} />
 					<Redirect to="/home" />
 				</Switch>
 			</div>
