@@ -26,40 +26,54 @@ return(
     <MenuItem icon={<FaStickyNote />}>
       Spaces <Link to="/spaces"/>
     </MenuItem>
+    
     <SubMenu title='Add' icon={<span className='fa fa-plus-circle'/>}>
       <MenuItem>Add Question</MenuItem>
       <MenuItem>Add Answer</MenuItem>
       <MenuItem>Add Blog</MenuItem>
     </SubMenu>
+    
     <MenuItem icon={<span className='fa fa-bell'/>}>
       Notifications
     </MenuItem>
+    
     <SubMenu title="Top Categories" icon={<FaGem />}>
       <MenuItem>Top Questions</MenuItem>
       <MenuItem>Top Blogs</MenuItem>
       <MenuItem>Top Answers</MenuItem>
     </SubMenu>
+    
     <SubMenu title="Questions" icon={<FaQuestionCircle />}>
       <MenuItem>Latest questions</MenuItem>
       <MenuItem>Unanswered</MenuItem>
       <MenuItem>Most viewed</MenuItem>
       <MenuItem>All questions</MenuItem>
     </SubMenu>
+    
     <SubMenu title="Blogs" icon={<FaBlog />}>
       <MenuItem>Latest blogs</MenuItem>
       <MenuItem>Most viewed</MenuItem>
       <MenuItem>All blogs</MenuItem>
     </SubMenu>
+    
     <MenuItem icon={<HiChat />}>
-      Chat Others <Link to="/chat/"/>
+      Chat Others <Link to="/chat"/>
     </MenuItem>
-    <MenuItem icon={<RiTeamLine />}>About Us</MenuItem>
-    <MenuItem icon={<MdContactMail />}>Contact Us</MenuItem>
+
+    <MenuItem icon={<RiTeamLine />}>
+      About Us <Link to="/aboutUs"/>
+    </MenuItem>
+    
+    <MenuItem icon={<MdContactMail />}>
+      Contact Us <Link to="/contact"/>
+    </MenuItem>
+    
     <MenuItem icon={<span className='fa fa-user-circle'/>}>
       Profile <Link to="/profile/1"/>
     </MenuItem>
+    
     <MenuItem icon={<span className='fa fa-sign-in'/>}>
-      Login
+      Login <Link to="/login"/>
     </MenuItem>
   </Menu>
   </SidebarContent>

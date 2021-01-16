@@ -1,0 +1,48 @@
+.contact__section{
+    padding:3rem 1.5rem;
+}
+.page__navigation__breadCrump{
+    display: inline-block;
+    padding:0.8rem;
+}
+.page__heading h2
+{
+    display: inline-block;
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    color: var(--color-primary-blue);
+}
+.contact__text{
+    font-size: 1.05rem;
+}
+.contact__main__content{
+    margin: 0 auto;
+}
+/***/
+.form__content__div{
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+    background-color: #f5f5f5;
+}
+.form-label{
+    font-size: 1.1rem;
+    color:var(--color-primary-blue);
+}
+.form__icon{
+    margin-left: 4px;
+    margin-right: 8px;
+    margin-bottom: 4px;
+    font-size: 20px;
+}
+
+input:focus{
+    outline: none;
+}
+.contact__form__button{
+    background-color: var(--color-primary-blue);
+    color:#fff;
+}
+.contact__form__button:hover{
+    background-color: var(--color-secondary-blue);
+    color:#eee;
+}
