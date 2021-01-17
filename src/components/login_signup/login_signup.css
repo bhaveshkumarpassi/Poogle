@@ -1,0 +1,75 @@
+.forms__section{
+    padding:3rem 1.5rem;
+}
+.page__navigation__breadCrump{
+    display: inline-block;
+    padding:0.8rem;
+}
+.form__content__div--login{
+    margin: 0 auto;
+    width: 70%;
+}
+.form__other__text{
+    margin-top: 2rem;
+    font-size: 1rem;
+}
+@media screen and (min-width:865px) and (max-width:1024px)
+{
+    .form__content__div--login{
+        width: 90%;
+    }
+}
+@media screen and (min-width:768px) and (max-width:865px)
+{
+    .form__content__div--login{
+        width: 100%;
+    }
+}
+@media screen and (min-width:420px) and (max-width:585px)
+{
+    .form__content__div--login{
+        width: 95%;
+    }
+}
+@media screen and (max-width:420px)
+{
+    .form__content__div--login{
+        width:100%;
+    }
+}
+
+.social-login-label{
+    position: relative;
+    margin: 30px 0 20px;
+    color: #b7c9cc;
+    text-align: center;
+}
+.social-login-label::before{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -.5px;
+    width: 100%;
+    border-top: 1px solid #b7c9cc;
+    content: "";
+}
+.label-text{
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    padding: 0 30px;
+    color: #333;
+    background: #f5f5f5;
+    font-size: 1rem;
+}
+
+.social__icon__unique{
+    width: 50%;
+    text-align: center;
+    display: inline-block;
+}
+
+.social__icon img{
+    width: 50px;
+    height: auto;
+}

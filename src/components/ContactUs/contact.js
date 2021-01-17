@@ -56,7 +56,7 @@ class Contact extends Component {
                     </div>
                     <br/>
                     <div>
-                    <Jumbotron className="form__content__div">
+                        <Jumbotron className="form__content__div">
                             <Form>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label><span className="form__icon"><AiOutlineMail/></span>Email address</Form.Label>
