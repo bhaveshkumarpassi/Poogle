@@ -99,15 +99,17 @@ function RenderComments({commentsArray, isOpen, postComment, dishId}){
                         COMMENT
                     </Button>
                     </div>
+                    <hr/>
                     <Collapse isOpen={formOpen}>
                         <Card className='mt-3'>
                             <CardBody>
                                 <LocalForm onSubmit={toggle}>
                                 <div className="row form-group">
-                                    <Label htmlFor="comment" className="col-12">Your Comment</Label>
+                                    <Label htmlFor="comment" className="col-12"><span className='fa fa-lg  fa-pencil-square-o ml-1 mr-2'></span>Comment</Label>
                                     <div className="col-12">
                                         <Control.textarea model=".comment" name="comment" className="form-control"
                                         id="comment" rows="6"
+                                        placeholder={'Type your comment here ....'}
                                         validators={{required,maxLength: maxLength(500)}} />
                                         <Errors className="text-danger"
                                             show="touched"
