@@ -86,7 +86,6 @@ function RenderComments({commentsArray, isOpen, postComment, dishId}){
         const [formOpen, setIsOpen] = useState(false);
 
         const toggle = () => setIsOpen(!formOpen);
-
         return(
         <Collapse isOpen={isOpen}>
             <Card>

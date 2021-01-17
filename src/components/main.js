@@ -75,6 +75,29 @@ class Main extends Component {
 			);
 		};
 
+		const HomeQuestions = () => {
+			return(
+				<Home 
+					// questions={this.props.questions.questions.map((ques) => {
+					// 	ques.tagIds.filter((tag) => {
+					// 		this.props.user.interests.indexOf(tag, 10) >-1
+					// 	})
+					// })}
+					// questions={this.props.questions.questions.filter(
+					// 	(ques) => {
+					// 		ques.tagIds.filter((tag) => {
+					// 			this.props.user.user.interests.indexOf(tag, 10) >-1
+					// 		})
+					// 	}
+					// )}
+					questions={this.props.questions.questions}
+					isLoading={this.props.questions.isLoading}
+					errMess={this.props.questions.errMess}
+					spaces={this.props.spaces}
+				/>
+			);
+		}
+
 		const QuestionWithId = ({ match }) => {
 			return(
 				<SingleQuestion
@@ -99,7 +122,7 @@ class Main extends Component {
 			<div>
 				<ScrollToTop/>
 				<Switch>
-					<Route path="/home" component={() => <Home />} />
+					<Route path="/home" component={HomeQuestions} />
 					<Route
 						exact
 						path="/spaces"
