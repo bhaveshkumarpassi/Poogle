@@ -73,3 +73,10 @@
     width: 50px;
     height: auto;
 }
+
+/*signup specials*/
+
+.form__number{
+    text-align: center;
+    color:#888;
+}
