@@ -5,6 +5,11 @@ export const Questions = (
 	action
 ) => {
 	switch (action.type) {
+		case ActionTypes.ADD_QUESTION:
+			var question = action.payload;
+			return {
+				 ...state,
+				  questions: state.questions.concat(question)};
 		case ActionTypes.ADD_QUESTIONS:
 			return {
 				...state,

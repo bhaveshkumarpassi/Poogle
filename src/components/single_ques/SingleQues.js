@@ -92,7 +92,7 @@ function RenderComments({commentsArray, isOpen, postComment, dishId}){
                 <CardBody>
                 <div className="col-12 m-1">
                     <div className='row justify-content-between'>
-                    <h5 className='col-6'>Commnets</h5>
+                    <h5 className='col-6'>Comments</h5>
                     <Button onClick={toggle} className='col-6 col-sm-5 col-md-4 offset-0 add-ans-btn' color='primary'>
                         <span className='fa fa-lg fa-plus mr-2'></span>
                         COMMENT

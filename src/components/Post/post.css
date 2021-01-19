@@ -1,0 +1,14 @@
+.question-heading{
+    color: rgb(245, 240, 237);
+    border-radius: 5rem;
+    border-bottom-right-radius: 5rem;
+    background-color: rgb(172, 41, 41);
+    align-items:stretch;
+    margin-bottom: 10px;
+    border-bottom-width: thick;
+    border-bottom-style: double;
+    border-bottom-color:lightcoral;
+    font-weight: 600;
+    font-style:inherit;
+    font-size:x-large;
+ }

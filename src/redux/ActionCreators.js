@@ -84,6 +84,43 @@ export const addQuestions = (questions) => ({
 	payload: questions,
 });
 
+export const createQuestion = (question) => ({
+    type: ActionTypes.ADD_QUESTION,
+    payload: question,
+});
+
+export const postQuestion=(question,description)=>(dispatch)=>{
+	const newQuestion = {
+        question:question,
+        description:description,
+
+	};
+	newQuestion.date=new Date().toISOString();
+
+	return fetch(baseUrl + 'postQuestion',{
+		method:"POST",
+		body:JSON.stringify(newQuestion),
+		headers:{
+			"Content-type":"application/json"
+		},
+		credentials:"same-origin"
+	})
+	.then(response => {
+		if (response.ok) {
+		  return response;
+		} else {
+		  var error = new Error('Error ' + response.status + ': ' + response.statusText);
+		  error.response = response;
+		  throw error;
+		}
+	  },
+	  error => {
+			throw error;
+	  })
+	.then(response => response.json())
+	.then(response => alert("Thank You for submitting your question:\n " + JSON.stringify(response)))
+	.catch(error =>  { console.log('post forms', error.message); alert('Sorry Your question could not be submitted\nError: '+error.message); });
+  };
 export const fetchAnswers = () => (dispatch) => {
 	dispatch(answersLoading(true));
 

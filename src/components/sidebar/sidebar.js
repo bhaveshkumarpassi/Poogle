@@ -28,7 +28,7 @@ return(
     </MenuItem>
     
     <SubMenu title='Add' icon={<span className='fa fa-plus-circle'/>}>
-      <MenuItem>Add Question</MenuItem>
+      <MenuItem>Add Question<Link to ="/postQuestion" /></MenuItem>
       <MenuItem>Add Answer</MenuItem>
       <MenuItem>Add Blog</MenuItem>
     </SubMenu>
