@@ -65,7 +65,7 @@ class Contact extends Component {
 
                                 <Form.Group controlId="formBasicTextbox">
                                     <Form.Label><span className="form__icon"><BsPencilSquare/></span> Queries/ Suggestions</Form.Label>
-                                    <textarea name="feedback" className="form-control"  value={this.state.name} placeholder="Enter your queries/ suggeestions here" onChange={this.handleInputChange} />
+                                    <textarea name="feedback" rows={5} className="form-control"  value={this.state.name} placeholder="Enter your queries/ suggeestions here" onChange={this.handleInputChange} />
                                 </Form.Group>
                                 <div className="form__btn">
                                     <button className="btn contact__form__button" type="submit" onClick={this.handleSubmit}>
