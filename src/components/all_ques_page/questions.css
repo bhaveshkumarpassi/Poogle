@@ -26,6 +26,10 @@
     margin: 1rem 1rem;
 }
 
+.question-container{
+    border-radius: 1rem;
+}
+
 .tag {
     margin: 5px 0px 5px 0.7rem;
     height: 20px;

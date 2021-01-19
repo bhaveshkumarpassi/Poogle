@@ -24,7 +24,7 @@ const RenderTags = ({question}) => question.tagNames.map((tag) => {
 function RenderMenuItem({question, spaceId, class_Name, onClick}) {
     
     return(
-        <ListGroup className='container'>
+        <ListGroup className='container question-container'>
                 <ListGroupItem className={class_Name+' list-item-style'}>
                     <Link to={`/space-${spaceId}/question-${question.id}`}>
                         <div className='row'>

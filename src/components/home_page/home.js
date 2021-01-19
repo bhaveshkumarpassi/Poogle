@@ -10,7 +10,11 @@ import { ListGroup, List,
     Nav,
     NavItem,
     NavLink,
-    Button, Jumbotron } from 'reactstrap';
+    Button, Jumbotron, Carousel,
+    CarouselItem,
+    CarouselControl,
+    CarouselIndicators,
+    CarouselCaption } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Loading from '../loading';
 import { baseUrl } from '../../shared/baseUrl'
@@ -28,7 +32,7 @@ const RenderTags = ({question}) => question.tagNames.map((tag) => {
 function RenderMenuItem({question, class_Name, onClick}) {
     
     return(
-        <ListGroup className='container'>
+        <ListGroup className='container question-container'>
                 <ListGroupItem className={class_Name+' list-item-style'}>
                     <Link to={`/space-${question.tagIds[0]}/question-${question.id}`}>
                         <div className='row'>
@@ -93,8 +97,8 @@ class home extends Component {
             votesActive: false,
             unansweredActive: false,
             suggetsedActive: false,
-            suggestedSpaces: this.props.spaces.spaces.slice(0,6)
-        }
+            suggestedSpaces: this.props.spaces.spaces.slice(0,6),
+            }
     }
 
     onLatestSelect() {
@@ -212,7 +216,7 @@ class home extends Component {
             return (
                 <>
                 <Jumbotron className='mb-0'>
-                <div className = "header__title">
+                    <div className = "header__title">
                         <Row className='row'>
                             <Col sm ={8} className="mainsection__row">
                                 <h1 id="main_text">
@@ -233,7 +237,7 @@ class home extends Component {
                             </Col>
                         </Row>
 
-                    </div> 
+                    </div>
                     </Jumbotron>
                     <div>
                         <section className="new_section">
@@ -253,7 +257,7 @@ class home extends Component {
                                                         <NavLink href='#' active={this.state.unansweredActive} onClick={() => this.onUnansweredSelect()}>Unanswered</NavLink>
                                                     </NavItem>
                                                     <NavItem className='mb-4 filters'>
-                                                        <NavLink href='#' active={this.state.suggetsedActive} onClick={() => this.onSuggestedSelect()}>Suggested</NavLink>
+                                                        <NavLink href='#' active={this.state.suggetsedActive} onClick={() => this.onSuggestedSelect()}>Recommended Spaces</NavLink>
                                                     </NavItem>
                                                 </Nav>
                                             </div>
