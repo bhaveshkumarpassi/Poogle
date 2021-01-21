@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Chat.css";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import ChatSideBar from "./ChatSideBar";
@@ -6,6 +6,27 @@ import ChatSideBar from "./ChatSideBar";
 const Chat = () => {
 	const [person, setPerson] = useState("");
 	const [chat, setChat] = useState([]);
+	const [msg, setMsg] = useState("");
+
+	useEffect(() => {
+		setMsg("");
+	}, [person]);
+
+	useEffect(() => {
+		var list = document.getElementById("list");
+		list.scrollTop = list.scrollHeight;
+	}, [person, chat]);
+
+	const handleMessageSent = (e) => {
+		e.preventDefault();
+		setChat((chat) => [...chat, { msg, sender: "me" }]);
+		setMsg("");
+	};
+
+	const handleMsgChange = (e) => {
+		e.preventDefault();
+		setMsg(e.target.value);
+	};
 
 	return (
 		<Container style={{ height: "80vh", marginTop: "20px" }}>
@@ -28,7 +49,9 @@ const Chat = () => {
 								<div
 									className="justify-content-end"
 									style={{ overflowY: "scroll", height: "70vh", width: "100%" }}
+									id="list"
 								>
+									{console.log(chat)}
 									{chat.map(({ msg, sender }) => (
 										<div
 											class={`${sender === "me" ? "sending__msg" : ""}`}
@@ -56,8 +79,13 @@ const Chat = () => {
 										width: "85%",
 										margin: "auto",
 									}}
+									onSubmit={handleMessageSent}
 								>
-									<Form.Control placeholder="Type your message" />
+									<Form.Control
+										placeholder="Type your message"
+										value={msg}
+										onChange={handleMsgChange}
+									/>
 								</Form>
 							</Row>
 						</div>

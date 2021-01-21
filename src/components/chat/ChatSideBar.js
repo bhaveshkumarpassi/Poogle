@@ -34,9 +34,8 @@ const ChatSideBar = ({ person, setPerson, chat, setChat }) => {
 
 	useEffect(() => {
 		const currChat = chats.filter(({ name }) => name === person);
-		console.log("here", currChat);
 		if (currChat.length !== 0) setChat(currChat[0].chat);
-	});
+	}, [person]);
 
 	return (
 		<Col xs={6} md={4}>

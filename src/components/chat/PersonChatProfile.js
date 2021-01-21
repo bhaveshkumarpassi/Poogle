@@ -4,7 +4,6 @@ import { Row, Col, Image, ListGroupItem } from "react-bootstrap";
 import profilePic from "../../Images/profile_pic.png";
 
 const PersonChatProfile = ({ name, chat, setPerson, person }) => {
-	console.log(name, chat);
 	const color = name === person ? "#a5fff1" : "#a56cc1";
 	return (
 		<ListGroupItem
