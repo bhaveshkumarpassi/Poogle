@@ -1,129 +1,93 @@
 import React, { useEffect, useState } from "react";
 import "./Chat.css";
-import {
-	Container,
-	Row,
-	Col,
-	Image,
-	ListGroup,
-	ListGroupItem,
-	Form,
-} from "react-bootstrap";
-import profilePic from "../../Images/profile_pic.png";
+import { Container, Row, Col, Form } from "react-bootstrap";
+import ChatSideBar from "./ChatSideBar";
 
-const Chat = (props) => {
+const Chat = () => {
 	const [person, setPerson] = useState("");
 	const [chat, setChat] = useState([]);
+	const [msg, setMsg] = useState("");
 
 	useEffect(() => {
-		const currChat = chats.filter(({ name, chat }) => name === person);
-		console.log("here", currChat);
-		if (currChat.length !== 0) setChat(currChat[0].chat);
+		setMsg("");
 	}, [person]);
 
-	const chats = [
-		{
-			name: "Dips",
-			chat: [
-				{ msg: "B", sender: "me" },
-				{ msg: "B", sender: "me" },
-				{ msg: "B", sender: "me" },
-				{ msg: "B", sender: "me" },
-				{ msg: "B", sender: "me" },
-				{ msg: "B", sender: "me" },
-				{ msg: "B", sender: "me" },
-				{ msg: "B", sender: "me" },
-				{ msg: "B", sender: "me" },
-				{ msg: "B", sender: "me" },
-				{ msg: "B", sender: "me" },
-				{ msg: "B", sender: "me" },
-				{ msg: "B", sender: "me" },
-				{ msg: "Hello", sender: "dips" },
-				{ msg: "Chal", sender: "me" },
-			],
-		},
-		{ name: "Bhav", chat: [{ msg: "Bye", sender: "other" }] },
-		{ name: "Nisha", chat: [{ msg: "Yo", sender: "me" }] },
-	];
+	useEffect(() => {
+		var list = document.getElementById("list");
+		if (list) list.scrollTop = list.scrollHeight;
+	}, [person, chat]);
 
-	const personChatDisplay = ({ name, chat }) => {
-		const color = name === person ? "#a5fff1" : "#a56cc1";
-		return (
-			<ListGroupItem
-				style={{ backgroundColor: color, border: "0px" }}
-				className="person"
-			>
-				<Row>
-					<Col>
-						<Image
-							src={profilePic}
-							className="user__profile__pic"
-							roundedCircle
-							style={{
-								maxHeight: "70px",
-							}}
-						/>
-					</Col>
-					<Col>
-						<h3
-							style={{ cursor: "pointer" }}
-							onClick={(e) => {
-								setPerson(e.target.innerHTML);
-							}}
-						>
-							{name}
-						</h3>
-						<p className="display__chat">{chat[0].msg}</p>
-					</Col>
-				</Row>
-			</ListGroupItem>
-		);
+	const handleMessageSent = (e) => {
+		e.preventDefault();
+		setChat((chat) => [...chat, { msg, sender: "me" }]);
+		setMsg("");
+	};
+
+	const handleMsgChange = (e) => {
+		e.preventDefault();
+		setMsg(e.target.value);
 	};
 
 	return (
-		<Container>
-			<Row>
-				<Col>
-					<Row style={{ margin: "10px" }}>
-						<Form>
-							<Form.Control placeholder="Search" />
-						</Form>
-					</Row>
-					<Row style={{ margin: "10px" }}>
-						<ListGroup style={{ backgroundColor: "#a56cc1" }}>
-							{chats.map(personChatDisplay)}
-						</ListGroup>
-					</Row>
-				</Col>
-				<Col>
+		<Container style={{ height: "80vh", marginTop: "20px" }}>
+			<Row style={{ height: "100%" }}>
+				{/*Chat sidebar*/}
+				<ChatSideBar
+					person={person}
+					setPerson={setPerson}
+					chat={chat}
+					setChat={setChat}
+				/>
+
+				{/*Chat section*/}
+				<Col xs={6} md={8}>
 					{person === "" ? (
 						<h1>Choose a person to chat</h1>
 					) : (
 						<div>
-							<div className="justify-content-end">
-								{chat.map(({ msg, sender }) => (
-									<div
-										className={`${
-											sender === "me" ? "align-self-end" : "algin-self-start"
-										}`}
-									>
+							<Row style={{ padding: "10px" }}>
+								<div
+									className="justify-content-end"
+									style={{ overflowY: "scroll", height: "70vh", width: "100%" }}
+									id="list"
+								>
+									{console.log(chat)}
+									{chat.map(({ msg, sender }) => (
 										<div
-											className={`rounded px-2 py-1 ${
-												sender === "me" ? "bg-primary text-white" : "border"
-											}`}
-											style={{ margin: "10px" }}
+											class={`${sender === "me" ? "sending__msg" : ""}`}
+											style={{ maxWidth: "50%", wordBreak: "break-all" }}
 										>
-											{msg}
+											<div
+												className={`rounded px-2 py-1 ${
+													sender === "me" ? "bg-primary text-white" : "border"
+												}`}
+												style={{ margin: "10px" }}
+											>
+												{msg}
+											</div>
+											<div className={`text-muted small text-right`}>
+												{sender === "me" ? "You" : person}
+											</div>
 										</div>
-										<div className={`text-muted small text-right`}>
-											{sender === "me" ? "You" : person}
-										</div>
-									</div>
-								))}
-							</div>
-							<Form style={{ position: "absolute", bottom: "10px" }}>
-								<Form.Control placeholder="Type your message" />
-							</Form>
+									))}
+								</div>
+							</Row>
+							<Row>
+								<Form
+									style={{
+										bottom: "10px",
+										width: "85%",
+										margin: "auto",
+									}}
+									onSubmit={handleMessageSent}
+								>
+									<Form.Control
+										placeholder="Type your message"
+										value={msg}
+										onChange={handleMsgChange}
+									/>
+								</Form>
+							</Row>
 						</div>
 					)}
 				</Col>
