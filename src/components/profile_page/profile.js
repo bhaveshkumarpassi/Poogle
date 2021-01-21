@@ -38,7 +38,6 @@ class profile extends Component {
 	}
 	renderMainProfile() {
 		const { user } = this.props.user;
-		console.log("Hello I'm", user);
 		return (
 			<div className="profile__header">
 				<Row>
@@ -194,15 +193,13 @@ class profile extends Component {
 							<Col md={1}></Col>
 
 							<Col md={10}>
-								<Col xs={6} sm={5} md={5}>
-									<Breadcrumb className="mb-5">
-										<BreadcrumbItem>
-											<Link to="/home">Home</Link>
-										</BreadcrumbItem>
-										<BreadcrumbItem active>My Profile</BreadcrumbItem>
+								<Breadcrumb className="mb-5 page__navigation__breadCrump">
+									<BreadcrumbItem>
+										<Link to="/home">Home</Link>
+									</BreadcrumbItem>
+									<BreadcrumbItem active>My Profile</BreadcrumbItem>
 										{/************--ADD CONDITION FOR OTHER USER LEFT--***************************/}
-									</Breadcrumb>
-								</Col>
+								</Breadcrumb>
 								{this.renderMainProfile()}
 								<div className="user__navigation">
 									<Row>

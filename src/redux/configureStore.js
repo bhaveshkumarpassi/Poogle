@@ -1,4 +1,5 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import { Comments } from './reducers/comments';
 import { Spaces } from "./reducers/spaces";
 import { Questions } from "./reducers/questions";
 import { Answers } from './reducers/answers';
@@ -13,6 +14,7 @@ export const ConfigureStore = () => {
 			spaces: Spaces,
 			questions: Questions,
 			answers: Answers,
+			comments: Comments,
 			user,
 		}),
 		composeEnhancers(applyMiddleware(thunk, logger))

@@ -123,3 +123,7 @@
     color:#efefef;
     background-color: #0289c7;
 }
+.page__navigation__breadCrump{
+    display: inline-block;
+    padding:0.8rem;
+}

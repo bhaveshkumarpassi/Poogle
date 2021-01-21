@@ -1,3 +1,32 @@
+
+.filters {
+  background-color: #c6f1e7;
+}
+
+.list-item-style {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+  margin: 1rem 1rem;
+}
+
+.home-questions {
+  margin: 0;
+}
+
+.spaces-link {
+  font-size: x-small;
+}
+
+.suggested-heading {
+  font-size: 1.1rem;
+  color: #532e1c;
+  margin: 1rem;
+  line-height: 1.8rem;
+}
+
+.pagination-style {
+  flex-direction: column;
+}
+
 .header__title{
     row-gap: 3rem;
     align-content: center;
@@ -7,7 +36,7 @@
 }
 
 h1 {
-    font-size: 3.8rem;
+    font-size: 3rem;
     line-height: 1.35;
     font-weight: 500;
   }
@@ -54,7 +83,7 @@ h4 {
   .btn:hover {
     background-color: #cefff1;
   }
-  
+*/  
   .btn--text {
     display: inline-block;
     background: none;
@@ -68,6 +97,7 @@ h4 {
     cursor: pointer;
     transition: all 0.3s;
   }
+
   button:focus{
       outline: none;
   }
@@ -76,7 +106,7 @@ h4 {
   }
   .header__btn__link:hover{
     background-color: var(--color-grey);
-  } */
+  } 
   .header__side__image{
       margin-top: 3rem;
       margin-left: -2rem;
@@ -130,7 +160,16 @@ h4 {
   .header__side__image{
     display: none;
   }
+
 }
+
+/* @media screen and (min-width: 800px) {
+
+    .pagination-style {
+      flex-direction: column;
+    }
+} */
+
 @media screen and (max-width:345px){
   .header__title{
     padding-left:2rem;

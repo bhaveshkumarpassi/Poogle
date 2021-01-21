@@ -25,7 +25,7 @@ function RenderMenuItem({question, spaceId, class_Name, onClick}) {
     
     return(
         <ListGroup className='container'>
-                <ListGroupItem className={class_Name}>
+                <ListGroupItem className={class_Name+' list-item-style'}>
                     <Link to={`/space-${spaceId}/question-${question.id}`}>
                         <div className='row'>
                         <div className='col-7 col-md-8'>
@@ -176,20 +176,31 @@ class Questions extends Component {
                         <div className='container category-div '>
                             <h4 className='row all-ques-heading justify-content-center'>All Questions</h4>
                             <div className='row justify-content-center mt-4'>
-                                    <Button outline className='col-11 col-lg-3 mb-4 ques-btn mr-2 ml-2' color='primary'><span className='fa fa-lg fa-question-circle mr-2 ml-2' />{this.props.questions.length} QUESTIONS</Button>
-                                    <Button className='col-11 col-lg-3 mb-4 add-ques-btn mr-2 ml-2' color='danger'><span className='fa fa-lg fa-plus mr-2 ml-2' />ASK A QUESTION</Button>
-                                    <Button outline className='col-11 col-lg-3 mb-4 follower-btn mr-2 ml-2' color='primary'><span className='fa fa-lg fa-users mr-2 ml-2' />{this.props.space.followers} FOLLOWERS</Button>
+                                    {/* <Button outline className='col-8 col-lg-3 mb-4 ques-btn' color='primary'><span className='fa fa-lg fa-question-circle mr-2 ml-2' />{this.props.questions.length} QUESTIONS</Button> */}
+                                    <Button className='col-8 col-md-4 col-lg-3 mb-4 add-ques-btn' color='danger'><span className='fa fa-lg fa-plus mr-2 ml-2' />QUESTION</Button>
+                                    <ButtonGroup className='mb-4 button-grp col-8 col-md-4 col-lg-3'>
+                                        <Button outline color='info'>
+                                            <span className='fa fa-lg fa-question-circle mr-2' />
+                                            {this.props.questions.length}
+                                        </Button>
+                                        <Button outline color='info'>
+                                            <span className='fa fa-lg fa-users mr-2'></span>
+                                            {this.props.space.followers}
+                                        </Button>
+                                    </ButtonGroup>
+                                    <Button className='col-8 col-md-4 col-lg-3 mb-4 add-ques-btn' color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />FOLLOW</Button>
+                                    {/* <Button outline className='col-8 col-lg-3 mb-4 follower-btn' color='primary'><span className='fa fa-lg fa-users mr-2 ml-2' />{this.props.space.followers} FOLLOWERS</Button> */}
                             </div>
                             <div className='row ml-1 mt-3 mr-1'>
-                                <Nav className='col-12 ' pills fill>
+                                <Nav className='col-12 ' tabs>
                                         
-                                    <NavItem className='mb-4'>
+                                    <NavItem className='mb-4 filters'>
                                         <NavLink href='#' active={this.state.latestActive} onClick={() => this.onLatestSelect()}>Latest</NavLink>
                                     </NavItem>
-                                    <NavItem className='mb-4'>
+                                    <NavItem className='mb-4 filters'>
                                         <NavLink href='#' active={this.state.votesActive} onClick={() => this.onVotesSelect()}>Votes</NavLink>
                                     </NavItem>
-                                    <NavItem className='mb-4'>
+                                    <NavItem className='mb-4 filters'>
                                         <NavLink href='#' active={this.state.unansweredActive} onClick={() => this.onUnansweredSelect()}>Unanswered</NavLink>
                                     </NavItem>
                                     

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchSpaces, fetchQuestions, fetchUser, fetchAnswers } from "../redux/ActionCreators";
+import { fetchSpaces, fetchQuestions, fetchUser, fetchAnswers, fetchComments } from "../redux/ActionCreators";
 import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
@@ -9,13 +9,17 @@ import Profile_page from "./profile_page/profile";
 import SingleQuestion from "./single_ques/SingleQues";
 import ScrollToTop from './scroll-to-top/scroll-to-top';
 import Chat from "./chat/Chat";
+import Login from './login_signup/login';
+import Signup from './login_signup/signup'; 
+import Contact from './ContactUs/contact';
 
 const mapStateToProps = (state) => {
 	return {
 		spaces: state.spaces,
 		questions: state.questions,
 		answers: state.answers,
-		user: state.user
+		user: state.user,
+		comments: state.comments
 	};
 };
 
@@ -31,6 +35,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	fetchAnswers: () => {
 		dispatch(fetchAnswers())
+	},
+	fetchComments: () => {
+		dispatch(fetchComments())
 	}
 });
 
@@ -44,6 +51,7 @@ class Main extends Component {
 		this.props.fetchQuestions();
 		this.props.fetchUser();
 		this.props.fetchAnswers();
+		this.props.fetchComments();
 	}
 
 	render() {
@@ -67,6 +75,29 @@ class Main extends Component {
 			);
 		};
 
+		const HomeQuestions = () => {
+			return(
+				<Home 
+					// questions={this.props.questions.questions.map((ques) => {
+					// 	ques.tagIds.filter((tag) => {
+					// 		this.props.user.interests.indexOf(tag, 10) >-1
+					// 	})
+					// })}
+					// questions={this.props.questions.questions.filter(
+					// 	(ques) => {
+					// 		ques.tagIds.filter((tag) => {
+					// 			this.props.user.user.interests.indexOf(tag, 10) >-1
+					// 		})
+					// 	}
+					// )}
+					questions={this.props.questions.questions}
+					isLoading={this.props.questions.isLoading}
+					errMess={this.props.questions.errMess}
+					spaces={this.props.spaces}
+				/>
+			);
+		}
+
 		const QuestionWithId = ({ match }) => {
 			return(
 				<SingleQuestion
@@ -80,6 +111,9 @@ class Main extends Component {
 					}
 					answersIsLoading = {this.props.answers.isLoading}
 					answersErrMess = {this.props.answers.errMess}
+					spaceId={match.params.spaceId}
+					comments = {this.props.comments.comments.filter((comm) => comm.questionId === parseInt(match.params.quesId, 10))}
+					commentsErrMess={this.props.comments.errMess}
 				/>
 			);
 		}
@@ -88,7 +122,7 @@ class Main extends Component {
 			<div>
 				<ScrollToTop/>
 				<Switch>
-					<Route path="/home" component={() => <Home />} />
+					<Route path="/home" component={HomeQuestions} />
 					<Route
 						exact
 						path="/spaces"
@@ -102,6 +136,9 @@ class Main extends Component {
 					/>
 					<Route exact path="/profile/:userId" component={Profile_page}/>
 					<Route path="/chat" component={Chat} />
+					<Route path="/contact" component={Contact} />
+					<Route path="/login" component={Login} />
+					<Route path="/signup" component={Signup} />
 					<Redirect to="/home" />
 				</Switch>
 			</div>

@@ -16,7 +16,10 @@ import './Spaces.css'
             <CardBody>
                 <CardSubtitle tag="h6" className="mb-4 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {space.questions} Questions</CardSubtitle>
                 <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-users fa-lg follower-icon'/>    {space.followers} followers</CardSubtitle>
-                <Link to={`/spaces/${space.id}`}>view</Link>
+                <div className='row mt-4'>
+                    <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space.id}`}>view</Link>
+                    <Button className='col-12 mt-3' color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Follow</Button>
+                </div>
             </CardBody>
           </Card>
         );
