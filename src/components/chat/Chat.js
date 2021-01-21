@@ -14,7 +14,7 @@ const Chat = () => {
 
 	useEffect(() => {
 		var list = document.getElementById("list");
-		list.scrollTop = list.scrollHeight;
+		if (list) list.scrollTop = list.scrollHeight;
 	}, [person, chat]);
 
 	const handleMessageSent = (e) => {

@@ -1,7 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
 
-
 export const fetchSpaces = () => (dispatch) => {
 	// redux thunk allows to pass an action method instead of just action object and automayically recieves dispatch parameter.
 
@@ -124,57 +123,66 @@ export const addAnswers = (answers) => ({
 	payload: answers,
 });
 
-export const fetchComments = () => (dispatch) => {    
-    return fetch(baseUrl + 'comments')
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      error => {
-            var errmess = new Error(error.message);
-            throw errmess;
-      })
-    .then(response => response.json())
-    .then(comments => dispatch(addComments(comments)))
-    .catch(error => dispatch(commentsFailed(error.message)));
-};
-
-export const commentsFailed = (errmess) => ({
-    type: ActionTypes.COMMENTS_FAILED,
-    payload: errmess
-});
-
-export const addComments = (comments) => ({
-    type: ActionTypes.ADD_COMMENTS,
-    payload: comments
-});
-
-export const fetchUser = (userId) => (dispatch) =>{
-    dispatch((userLoading(true)));
-    return fetch(baseUrl+'users/'+userId)
-        .then(
-            (response) => {
+export const fetchComments = () => (dispatch) => {
+	return fetch(baseUrl + "comments")
+		.then(
+			(response) => {
 				if (response.ok) {
 					return response;
-                } 
-                else {
-					var error = new Error("Error " + response.status + ": " + response.statusText);
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
 					error.response = response;
 					throw error;
 				}
 			},
-			error => {throw new Error(error.message);}
-        )
-        .then((response)=>response.json())
-		// .then(user=> console.log(user))
-		.then(user => dispatch(getUser(user)))
-        .catch(error => dispatch(userLoadingFailed(error.message)));
-}
+			(error) => {
+				var errmess = new Error(error.message);
+				throw errmess;
+			}
+		)
+		.then((response) => response.json())
+		.then((comments) => dispatch(addComments(comments)))
+		.catch((error) => dispatch(commentsFailed(error.message)));
+};
+
+export const commentsFailed = (errmess) => ({
+	type: ActionTypes.COMMENTS_FAILED,
+	payload: errmess,
+});
+
+export const addComments = (comments) => ({
+	type: ActionTypes.ADD_COMMENTS,
+	payload: comments,
+});
+
+export const fetchUser = (userId) => (dispatch) => {
+	dispatch(userLoading(true));
+	return (
+		fetch(baseUrl + "users/" + userId)
+			.then(
+				(response) => {
+					if (response.ok) {
+						return response;
+					} else {
+						var error = new Error(
+							"Error " + response.status + ": " + response.statusText
+						);
+						error.response = response;
+						throw error;
+					}
+				},
+				(error) => {
+					throw new Error(error.message);
+				}
+			)
+			.then((response) => response.json())
+			// .then(user=> console.log(user))
+			.then((user) => dispatch(getUser(user)))
+			.catch((error) => dispatch(userLoadingFailed(error.message)))
+	);
+};
 
 export const userLoading = () => ({
 	type: ActionTypes.USER_LOADING,
@@ -189,4 +197,3 @@ export const getUser = (user) => ({
 	type: ActionTypes.GET_USER,
 	payload: user,
 });
-
