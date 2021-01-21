@@ -1,243 +1,292 @@
 {
-	"spaces": [
-		{
-			"id": 0,
-			"name": "Web Development",
-			"image": "images/web-dev.jpeg",
-			"followers": 50,
-			"questions": 70
-		},
-		{
-			"id": 1,
-			"name": "Android Development",
-			"image": "images/android-dev.jpg",
-			"followers": 50,
-			"questions": 70
-		},
-		{
-			"id": 2,
-			"name": "IOS Development",
-			"image": "images/ios-dev.png",
-			"followers": 50,
-			"questions": 70
-		},
-		{
-			"id": 3,
-			"name": "Machine Learning",
-			"image": "images/ml.jpeg",
-			"followers": 50,
-			"questions": 70
-		},
-		{
-			"id": 4,
-			"name": "Ethical Hacking",
-			"image": "images/ethical-hacking.jpg",
-			"followers": 50,
-			"questions": 70
-		},
-		{
-			"id": 5,
-			"name": "BlockChain",
-			"image": "images/blockchain.jpg",
-			"followers": 50,
-			"questions": 70
-		},
-		{
-			"id": 6,
-			"name": "Python",
-			"image": "images/python.jpg",
-			"followers": 50,
-			"questions": 70
-		},
-		{
-			"id": 7,
-			"name": "Data Structures",
-			"image": "images/data-structures.png",
-			"followers": 50,
-			"questions": 70
-		},
-		{
-			"id": 8,
-			"name": "Algorithms",
-			"image": "images/algo.jpg",
-			"followers": 50,
-			"questions": 70
-		},
-		{
-			"id": 9,
-			"name": "DBMS",
-			"image": "images/dbms.png",
-			"followers": 50,
-			"questions": 70
-		},
-		{
-			"id": 10,
-			"name": "Operating Systems",
-			"image": "images/os.png",
-			"followers": 50,
-			"questions": 70
-		}
-	],
-	"questions": [
-		{
-			"id": 0,
-			"views": 100,
-			"votes": 50,
-			"answers": 5,
-			"question": "What is Front-end development ??",
-			"description": "i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know.",
-			"imageUrl": "",
-			"links": ["www.google.com","www.google.com"],
-			"tagIds": [0, 1, 2],
-			"tagNames": ["Web Development", "Android development", "IOS Development"],
-			"author": "Jhon Jonson",
-			"date": "2012-12-16T17:57:28.556094Z",
-			"dateNum": 500
-		},
-		{
-			"id": 1,
-			"views": 70,
-			"votes": 65,
-			"answers": 7,
-			"question": "What is Back-end development??",
-			"description": "i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know.",
-			"imageUrl": "images/web-dev.jpeg",
-			"links": ["www.google.com","www.google.com"],
-			"tagIds": [0, 1, 2],
-			"tagNames": ["Web Development", "Android development", "IOS Development"],
-			"author": "Steve Osten",
-			"date": "2012-8-16T17:57:28.556094Z",
-			"dateNum": 350
-		},
-		{
-			"id": 2,
-			"views": 45,
-			"votes": 30,
-			"answers": 8,
-			"question": "Are react and react native different??",
-			"description": "i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know.",
-			"imageUrl": "images/web-dev.jpeg",
-			"links": ["www.google.com","www.google.com"],
-			"tagIds": [0, 1, 2],
-			"tagNames": ["Web Development", "Android development", "IOS Development"],
-			"author": "James Twist",
-			"date": "2012-10-16T17:57:28.556094Z",
-			"dateNum": 200
-		},
-		{
-			"id": 3,
-			"views": 88,
-			"votes": 63,
-			"answers": 0,
-			"question": "What is REST API??",
-			"description": "i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know.",
-			"imageUrl": "images/web-dev.jpeg",
-			"tagIds": [0],
-			"tagNames": ["Web Development"],
-			"author": "Jack Venes",
-			"date": "2012-4-16T17:57:28.556094Z",
-			"dateNum": 250
-		},
-		{
-			"id": 4,
-			"views": 150,
-			"votes": 89,
-			"answers": 13,
-			"question": "What is Machine Learning ??",
-			"tagIds": [3],
-			"tagNames": ["Machine Learning"],
-			"author": "Jack Venes",
-			"date": "2012-5-16T17:57:28.556094Z",
-			"dateNum": 280
-		}
-	],
-	"answers":[
-		{
-			"id": 0,
-			"views": 90,
-			"votes": 50,
-			"questionId": 2,
-			"answer": "Both are frameworks/libraries to design frontend React is used for designing frontend of web applications and React native is used to design frontend for mobile applications for both android and ios. but the structure or concepts are very much similar.",
-			"author": "James Twist",
-			"date": "2012-10-16T17:57:28.556094Z",
-			"dateNum": 400,
-			"imageUrl": ""
-		},
-		{
-			"id": 1,
-			"views": 70,
-			"votes": 10,
-			"questionId": 2,
-			"answer": "Both are frameworks/libraries to design frontend React is used for designing frontend of web applications and React native is used to design frontend for mobile applications for both android and ios. but the structure or concepts are very much similar.",
-			"author": "Marcy kens",
-			"date": "2012-10-16T17:57:28.556094Z",
-			"dateNum": 350,
-			"imageUrl": ""
-		},
-		{
-			"id": 2,
-			"views": 45,
-			"votes": 25,
-			"questionId": 2,
-			"answer": "Both are frameworks/libraries to design frontend React is used for designing frontend of web applications and React native is used to design frontend for mobile applications for both android and ios. but the structure or concepts are very much similar.",
-			"author": "Jhon Cena",
-			"date": "2012-10-16T17:57:28.556094Z",
-			"dateNum": 200,
-			"imageUrl": "images/web-dev.jpeg"
-		}
-	],
-	"comments": [
-		{
-			"id": 0,
-			"questionId": 2,
-			"comment": "this is a comment this is a comment this is a comment ..... this is a comment this is a comment this is a comment .....",
-			"author":"Jhon Cena",
-			"date":"2012-10-16T17:57:28.556094Z",
-			"dateNum":200
-		},
-		{
-			"id": 1,
-			"questionId": 2,
-			"comment": "this is a comment this is a comment this is a comment .....",
-			"author":"Jhon Cena",
-			"date":"2012-10-16T17:57:28.556094Z",
-			"dateNum":300
-		},
-		{
-			"id": 2,
-			"questionId": 2,
-			"comment": "this is a comment this is a comment this is a comment ..... this is a comment this is a comment this is a comment .....",
-			"author":"Jhon Cena",
-			"date":"2012-10-16T17:57:28.556094Z",
-			"dateNum":225
-		},
-		{
-			"id": 3,
-			"questionId": 2,
-			"comment": "this is a comment this is a comment this is a comment .....",
-			"author":"Jhon Cena",
-			"date":"2012-10-16T17:57:28.556094Z",
-			"dateNum":180
-		}
-	],
-	"users": [
-		{
-			"id":"1",
-			"user_id": "Jordanian",
-			"name": "Jordan Wills",
-			"about": {
-				"description": "I want to become Koala sleep all the day",
-				"job": "Software Engineer at Facebook",
-				"education": "Masters in Data Science, Standford University",
-				"field": "Computer Science and Engineering",
-				"graduation_year": 2012,
-				"fun_fact": "I am graduated from IIT Chandigarh"
-			},
-			"interests": [0,2,5,9,3,4,8],
-			"answers":25,
-			"blogs":15,
-			"questions":6,
-			"upvotes": 9
-		}
-	]
+  "spaces": [
+    {
+      "id": 0,
+      "name": "Web Development",
+      "image": "images/web-dev.jpeg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 1,
+      "name": "Android Development",
+      "image": "images/android-dev.jpg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 2,
+      "name": "IOS Development",
+      "image": "images/ios-dev.png",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 3,
+      "name": "Machine Learning",
+      "image": "images/ml.jpeg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 4,
+      "name": "Ethical Hacking",
+      "image": "images/ethical-hacking.jpg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 5,
+      "name": "BlockChain",
+      "image": "images/blockchain.jpg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 6,
+      "name": "Python",
+      "image": "images/python.jpg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 7,
+      "name": "Data Structures",
+      "image": "images/data-structures.png",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 8,
+      "name": "Algorithms",
+      "image": "images/algo.jpg",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 9,
+      "name": "DBMS",
+      "image": "images/dbms.png",
+      "followers": 50,
+      "questions": 70
+    },
+    {
+      "id": 10,
+      "name": "Operating Systems",
+      "image": "images/os.png",
+      "followers": 50,
+      "questions": 70
+    }
+  ],
+  "questions": [
+    {
+      "id": 0,
+      "views": 100,
+      "votes": 50,
+      "answers": 5,
+      "question": "What is Front-end development ??",
+      "description": "i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know.",
+      "imageUrl": "",
+      "links": [
+        "www.google.com",
+        "www.google.com"
+      ],
+      "tagIds": [
+        0,
+        1,
+        2
+      ],
+      "tagNames": [
+        "Web Development",
+        "Android development",
+        "IOS Development"
+      ],
+      "author": "Jhon Jonson",
+      "date": "2012-12-16T17:57:28.556094Z",
+      "dateNum": 500
+    },
+    {
+      "id": 1,
+      "views": 70,
+      "votes": 65,
+      "answers": 7,
+      "question": "What is Back-end development??",
+      "description": "i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know.",
+      "imageUrl": "images/web-dev.jpeg",
+      "links": [
+        "www.google.com",
+        "www.google.com"
+      ],
+      "tagIds": [
+        0,
+        1,
+        2
+      ],
+      "tagNames": [
+        "Web Development",
+        "Android development",
+        "IOS Development"
+      ],
+      "author": "Steve Osten",
+      "date": "2012-8-16T17:57:28.556094Z",
+      "dateNum": 350
+    },
+    {
+      "id": 2,
+      "views": 45,
+      "votes": 30,
+      "answers": 8,
+      "question": "Are react and react native different??",
+      "description": "i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know.",
+      "imageUrl": "images/web-dev.jpeg",
+      "links": [
+        "www.google.com",
+        "www.google.com"
+      ],
+      "tagIds": [
+        0,
+        1,
+        2
+      ],
+      "tagNames": [
+        "Web Development",
+        "Android development",
+        "IOS Development"
+      ],
+      "author": "James Twist",
+      "date": "2012-10-16T17:57:28.556094Z",
+      "dateNum": 200
+    },
+    {
+      "id": 3,
+      "views": 88,
+      "votes": 63,
+      "answers": 0,
+      "question": "What is REST API??",
+      "description": "i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know i want to know.",
+      "imageUrl": "images/web-dev.jpeg",
+      "tagIds": [
+        0
+      ],
+      "tagNames": [
+        "Web Development"
+      ],
+      "author": "Jack Venes",
+      "date": "2012-4-16T17:57:28.556094Z",
+      "dateNum": 250
+    },
+    {
+      "id": 4,
+      "views": 150,
+      "votes": 89,
+      "answers": 13,
+      "question": "What is Machine Learning ??",
+      "tagIds": [
+        3
+      ],
+      "tagNames": [
+        "Machine Learning"
+      ],
+      "author": "Jack Venes",
+      "date": "2012-5-16T17:57:28.556094Z",
+      "dateNum": 280
+    }
+  ],
+  "answers": [
+    {
+      "id": 0,
+      "views": 90,
+      "votes": 50,
+      "questionId": 2,
+      "answer": "Both are frameworks/libraries to design frontend React is used for designing frontend of web applications and React native is used to design frontend for mobile applications for both android and ios. but the structure or concepts are very much similar.",
+      "author": "James Twist",
+      "date": "2012-10-16T17:57:28.556094Z",
+      "dateNum": 400,
+      "imageUrl": ""
+    },
+    {
+      "id": 1,
+      "views": 70,
+      "votes": 10,
+      "questionId": 2,
+      "answer": "Both are frameworks/libraries to design frontend React is used for designing frontend of web applications and React native is used to design frontend for mobile applications for both android and ios. but the structure or concepts are very much similar.",
+      "author": "Marcy kens",
+      "date": "2012-10-16T17:57:28.556094Z",
+      "dateNum": 350,
+      "imageUrl": ""
+    },
+    {
+      "id": 2,
+      "views": 45,
+      "votes": 25,
+      "questionId": 2,
+      "answer": "Both are frameworks/libraries to design frontend React is used for designing frontend of web applications and React native is used to design frontend for mobile applications for both android and ios. but the structure or concepts are very much similar.",
+      "author": "Jhon Cena",
+      "date": "2012-10-16T17:57:28.556094Z",
+      "dateNum": 200,
+      "imageUrl": "images/web-dev.jpeg"
+    }
+  ],
+  "comments": [
+    {
+      "questionId": 2,
+      "author": "Elon Mask",
+      "comment": "This is a test comment by Elon Mask !! 😎😎",
+      "date": "2021-01-21T07:06:46.757Z",
+      "dateNum": 1611212806757,
+      "id": 1
+    },
+    {
+      "questionId": 2,
+      "author": "Elon Mask",
+      "comment": "Woweee !! React Native is awesome   🤩🤩 !!",
+      "date": "2021-01-21T07:07:39.821Z",
+      "dateNum": 1611212859821,
+      "id": 2
+    },
+    {
+      "questionId": 3,
+      "author": "Elon Mask",
+      "comment": "Maybe an API which is resting most of the time //  🤣🤣😅",
+      "date": "2021-01-21T07:14:04.773Z",
+      "dateNum": 1611213244773,
+      "id": 4
+    },
+    {
+      "questionId": 2,
+      "author": "Elon Mask",
+      "comment": "Poogle is great !! 🤗🤗",
+      "date": "2021-01-21T14:17:45.945Z",
+      "dateNum": 1611238665945,
+      "id": 5
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "user_id": "Jordanian",
+      "name": "Jordan Wills",
+      "about": {
+        "description": "I want to become Koala sleep all the day",
+        "job": "Software Engineer at Facebook",
+        "education": "Masters in Data Science, Standford University",
+        "field": "Computer Science and Engineering",
+        "graduation_year": 2012,
+        "fun_fact": "I am graduated from IIT Chandigarh"
+      },
+      "interests": [
+        0,
+        2,
+        5,
+        9,
+        3,
+        4,
+        8
+      ],
+      "answers": 25,
+      "blogs": 15,
+      "questions": 6,
+      "upvotes": 9
+    }
+  ]
 }

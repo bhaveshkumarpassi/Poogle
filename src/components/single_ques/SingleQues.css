@@ -16,6 +16,7 @@
     border-radius: 2rem;
     text-align: center;
     display: inline-block;
+    vertical-align: middle;
 }
 
 .single-question-text {
@@ -43,7 +44,7 @@
 }
 
 .comments-data {
-    font-size: xx-small;
+    font-size: x-small;
 }
 
 @media screen and (max-width:768px)

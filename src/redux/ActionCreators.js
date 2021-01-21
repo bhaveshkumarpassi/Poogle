@@ -124,6 +124,48 @@ export const addAnswers = (answers) => ({
 	payload: answers,
 });
 
+// --------------------------       Comments ------------------------
+
+export const addComment = (comment) => ({
+    type: ActionTypes.ADD_COMMENT,
+    payload: comment
+});
+
+export const postComment = (questionId, author, comment) => (dispatch) => {
+
+    const newComment = {
+        questionId: questionId,
+        author: author,
+        comment: comment
+    };
+	newComment.date = new Date().toISOString();
+	newComment.dateNum = Date.now();
+    
+    return fetch(baseUrl + 'comments', {
+        method: "POST",
+        body: JSON.stringify(newComment),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+	.then(response => dispatch(addComment(response)))
+    .catch(error =>  { console.log('post comments', error.message); alert('Your comment could not be posted\nError: '+error.message); });
+};
+
 export const fetchComments = () => (dispatch) => {    
     return fetch(baseUrl + 'comments')
     .then(response => {
@@ -153,6 +195,39 @@ export const addComments = (comments) => ({
     type: ActionTypes.ADD_COMMENTS,
     payload: comments
 });
+
+export const deleteComment = (commentId) => (dispatch) => {
+
+    //const bearer = 'Bearer ' + localStorage.getItem('token');
+
+    return fetch(baseUrl + 'comments/' + commentId, {
+        method: "DELETE",
+        headers: {
+			"Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(comments => { console.log('Comment Deleted', comments); dispatch(removeComment(commentId))})
+    .catch(error => dispatch(commentsFailed(error.message)));
+};
+
+export const removeComment = (commentId) => ({
+    type: ActionTypes.DELETE_COMMENT,
+    payload: commentId
+})
 
 export const fetchUser = (userId) => (dispatch) =>{
     dispatch((userLoading(true)));

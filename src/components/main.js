@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchSpaces, fetchQuestions, fetchUser, fetchAnswers, fetchComments } from "../redux/ActionCreators";
+import { fetchSpaces, fetchQuestions, fetchUser, fetchAnswers, fetchComments, postComment, deleteComment} from "../redux/ActionCreators";
 import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
@@ -38,7 +38,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	fetchComments: () => {
 		dispatch(fetchComments())
-	}
+	},
+	postComment: (questionId, author, comment) => dispatch(postComment(questionId, author, comment)),
+	deleteComment: (commentId) => dispatch(deleteComment(commentId))
 });
 
 class Main extends Component {
@@ -114,6 +116,8 @@ class Main extends Component {
 					spaceId={match.params.spaceId}
 					comments = {this.props.comments.comments.filter((comm) => comm.questionId === parseInt(match.params.quesId, 10))}
 					commentsErrMess={this.props.comments.errMess}
+					postComment={this.props.postComment}
+					deleteComment={this.props.deleteComment}
 				/>
 			);
 		}

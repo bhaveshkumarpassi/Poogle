@@ -10,6 +10,7 @@ import { ListGroup,
     NavLink,
     Button, ButtonGroup,
     Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Fade, Stagger} from 'react-animation-components';
 import { Link } from 'react-router-dom';
 import Loading from '../loading';
 import '../all_ques_page/questions.css'
@@ -24,11 +25,12 @@ const RenderTags = ({question}) => question.tagNames.map((tag) => {
 function RenderMenuItem({question, spaceId, class_Name, onClick}) {
     
     return(
+    <Fade in>
         <ListGroup className='container question-container'>
                 <ListGroupItem className={class_Name+' list-item-style'}>
                     <Link to={`/space-${spaceId}/question-${question.id}`}>
                         <div className='row'>
-                        <div className='col-7 col-md-8'>
+                        <div className='col-12 col-sm-8'>
                             <ListGroupItemHeading className='question-heading'>{question.question}</ListGroupItemHeading>
                             <RenderTags question={question} />
                             <ListGroupItemText className='question-text'>
@@ -38,7 +40,7 @@ function RenderMenuItem({question, spaceId, class_Name, onClick}) {
                                 Posted at :- {question.date}
                             </ListGroupItemText>
                         </div>
-                        <div className='col-3 col-md-4'>
+                        <div className='col-12 col-sm-4'>
                             <div className='prop-div'>
                                 <Badge className='prop' color='light'>{question.views}</Badge>
                                 <p>views</p>
@@ -56,6 +58,7 @@ function RenderMenuItem({question, spaceId, class_Name, onClick}) {
                     </Link>
                 </ListGroupItem>
         </ListGroup>
+    </Fade>
     );
 }
 
@@ -108,7 +111,13 @@ class Questions extends Component {
             count += 1;
             return(
                 <div className="col-12" key={question.id}>
-                    <RenderMenuItem question={question} spaceId={this.props.space.id} class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} onClick={this.props.onClick} />
+                   
+                        <RenderMenuItem 
+                            question={question} 
+                            spaceId={this.props.space.id} 
+                            class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} 
+                            onClick={this.props.onClick} />
+                
                 </div>
             );
         }) 
@@ -118,7 +127,13 @@ class Questions extends Component {
             count += 1;
             return(
                 <div className="col-12" key={question.id}>
-                    <RenderMenuItem question={question} spaceId={this.props.space.id} class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} onClick={this.props.onClick} />
+                    
+                        <RenderMenuItem 
+                            question={question} 
+                            spaceId={this.props.space.id} 
+                            class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} 
+                            onClick={this.props.onClick} />
+                   
                 </div>
             );
         }) 
@@ -128,7 +143,13 @@ class Questions extends Component {
             count += 1;
             return(
                 <div className="col-12" key={question.id}>
-                    <RenderMenuItem question={question} spaceId={this.props.space.id} class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} onClick={this.props.onClick} />
+                   
+                        <RenderMenuItem 
+                            question={question} 
+                            spaceId={this.props.space.id} 
+                            class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} 
+                            onClick={this.props.onClick} />
+                   
                 </div>
             );
         }) 
@@ -210,7 +231,9 @@ class Questions extends Component {
                     </div>
                     
                     <div id='all-questions-id' className="row justify-content-center">
+                        
                             {renderQuestions}
+                        
                     </div>
                     
                 </div>

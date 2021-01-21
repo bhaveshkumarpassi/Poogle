@@ -35,8 +35,9 @@ function RenderMenuItem({question, class_Name, onClick}) {
         <ListGroup className='container question-container'>
                 <ListGroupItem className={class_Name+' list-item-style'}>
                     <Link to={`/space-${question.tagIds[0]}/question-${question.id}`}>
+                        <div className='col-12'>
                         <div className='row'>
-                        <div className='col-7 col-md-8'>
+                        <div className='col-12 col-sm-8 col-md-8'>
                             <ListGroupItemHeading className='question-heading'>{question.question}</ListGroupItemHeading>
                             <RenderTags question={question} />
                             <ListGroupItemText className='question-text'>
@@ -46,7 +47,7 @@ function RenderMenuItem({question, class_Name, onClick}) {
                                 Posted at :- {question.date}
                             </ListGroupItemText>
                         </div>
-                        <div className='col-3 col-md-4'>
+                        <div className='col-12 col-sm-4 col-md-4'>
                             <div className='prop-div'>
                                 <Badge className='prop' color='light'>{question.views}</Badge>
                                 <p>views</p>
@@ -59,6 +60,7 @@ function RenderMenuItem({question, class_Name, onClick}) {
                                 <Badge className='prop' color='light'>{question.votes}</Badge>
                                 <p>votes</p>
                             </div>
+                        </div>
                         </div>
                         </div>
                     </Link>
@@ -241,7 +243,7 @@ class home extends Component {
                     </Jumbotron>
                     <div>
                         <section className="new_section">
-                            <div className='container home-questions'>
+                            <div className='container col-12 home-questions'>
                                     <div className='row'>
                                         <div className='container category-div '>
                                             <div className='row ml-1 mt-2 mr-1'>

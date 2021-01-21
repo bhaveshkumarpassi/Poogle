@@ -26,7 +26,9 @@ const fields = [{value:'Computer Science', label:'Computer Science'},
         {value:'Electronics and Communiaction',label:'Electronics and Communiaction' }, 
         {value:'Mechanical Engineering', label:'Mechanical Engineering' }, 
         {value:'Aerospace Enngineering', label:'Aerospace Enngineering'}, 
-        {value:'Civil Engineering', label:'Civil Engineering'}]
+        {value:'Civil Engineering', label:'Civil Engineering'},
+        {value:'Production Engineering', label:'Production Engineering'},
+        {value:'Metallurgy Engineering', label:'Metallurgy Engineering'}]
 
 
 class Signup extends Component {

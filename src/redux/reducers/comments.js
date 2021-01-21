@@ -12,6 +12,12 @@ export const Comments = (state = { errMess: null, comments:[]}, action) => {
         var comment = action.payload;
         return { ...state, comments: state.comments.concat(comment)};
 
+    case ActionTypes.DELETE_COMMENT: 
+        var commentId = action.payload;
+        var index = state.comments.indexOf(state.comments.filter(comment => comment.id === commentId)[0]);
+        state.comments.splice(index, 1);
+        return {...state, comments: state.comments}
+
     default:
       return state;
   }

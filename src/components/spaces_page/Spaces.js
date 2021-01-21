@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Card, Button, Form, FormGroup, Label, Input,
     CardTitle, Breadcrumb, BreadcrumbItem, CardBody, CardSubtitle} from 'reactstrap';
+import { FadeTransform } from 'react-animation-components';
 import {Link} from 'react-router-dom';
 import Loading from '../loading';
 import { baseUrl } from '../../shared/baseUrl'
@@ -8,6 +9,11 @@ import './Spaces.css'
 
     function RenderMenuItem ({space, onClick}) {
         return ( 
+        <FadeTransform
+        in
+        transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)'
+        }}>
             <Card className='space'>
             <CardBody>
                 <CardTitle tag="h6">{space.name}</CardTitle>
@@ -22,6 +28,7 @@ import './Spaces.css'
                 </div>
             </CardBody>
           </Card>
+        </FadeTransform>
         );
     }
 

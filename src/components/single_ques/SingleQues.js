@@ -17,12 +17,14 @@ import {
   } from "react-share";
 import { Row, Col, Container, 
         Card, CardBody, CardTitle, CardSubtitle, CardText, Collapse,
-        ButtonGroup, Button, CardImg, Badge, Modal, ModalHeader, ModalBody, ModalFooter, Media, Label} from "reactstrap";
+        ButtonGroup, Button, CardImg, Badge, Modal, ModalHeader, ModalBody, ModalFooter, Media, Label, Jumbotron} from "reactstrap";
 import {LocalForm, Control, Errors} from 'react-redux-form';
 import Loading from "../loading";
 import { baseUrl } from "../../shared/baseUrl";
 import profilePic from '../../Images/profile_pic.png';
 import "../single_ques/SingleQues.css";
+import { Fade, Stagger } from 'react-animation-components';
+
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -81,20 +83,26 @@ const RenderAnswers = ({answers}) => answers.sort((a,b) => b.votes-a.votes).map(
     );
 });
 
-function RenderComments({commentsArray, isOpen, postComment, dishId}){
+function RenderComments({commentsArray, isOpen, postComment, deleteComment, questionId}){
 
         const [formOpen, setIsOpen] = useState(false);
 
         const toggle = () => setIsOpen(!formOpen);
+
+        const handleSubmit = (values) =>  { postComment(questionId, 'Elon Mask', values.comment)};
+        const onDelete = (commentId) => {
+            deleteComment(commentId);
+        }
+
         return(
         <Collapse isOpen={isOpen}>
             <Card>
                 <CardBody>
                 <div className="col-12 m-1">
                     <div className='row justify-content-between'>
-                    <h5 className='col-6'>Commnets</h5>
-                    <Button onClick={toggle} className='col-6 col-sm-5 col-md-4 offset-0 add-ans-btn' color='primary'>
-                        <span className='fa fa-lg fa-plus mr-2'></span>
+                    <h5 className='col-6'><span className='fa fa-lg fa-comments' style={{color: 'mediumslateblue', fontSize: 50}} /></h5>
+                    <Button onClick={() => toggle()} className='mb-3 col-6 col-sm-5 col-md-4 offset-0 add-ans-btn' color='primary'>
+                        <span className='button-headings fa fa-plus mr-2'></span>
                         COMMENT
                     </Button>
                     </div>
@@ -102,7 +110,7 @@ function RenderComments({commentsArray, isOpen, postComment, dishId}){
                     <Collapse isOpen={formOpen}>
                         <Card className='mt-3'>
                             <CardBody>
-                                <LocalForm onSubmit={toggle}>
+                                <LocalForm onSubmit={handleSubmit}>
                                 <div className="row form-group">
                                     <Label htmlFor="comment" className="col-12"><span className='fa fa-lg  fa-pencil-square-o ml-1 mr-2'></span>Comment</Label>
                                     <div className="col-12">
@@ -130,23 +138,36 @@ function RenderComments({commentsArray, isOpen, postComment, dishId}){
                         </Card>
                     </Collapse>
                     <ul className="list-unstyled" >
-                        {commentsArray.sort((a,b) => a.dateNum-b.dateNum).map((comm) => {
+                        <Stagger in>
+                        {
+                        commentsArray.sort((a,b) => b.dateNum-a.dateNum).map((comm) => {
                             return (
+                                <Fade in>
                                     <li key={comm.id}>
                                         <Media className='row mt-4'>
-                                            <Media left className='col-4 col-md-3' >
+                                            <Media left className='mr-0 col-4 col-md-2' >
                                                 <Media object className='ml-0 comments-profile-pic' src = {profilePic} alt={comm.author} />
                                                 <br/>
-                                                <p className='comments-data'>{comm.author}</p>
-                                                <p className='comments-data'>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comm.date)))}</p>
+                                                <p className='comments-data'><b>{comm.author}</b> at {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comm.date)))}</p>
                                             </Media>
-                                            <Media className='col-8 col-md-9 offset-0' body>
+                                            <Media className=' comment mr-0 col-8 col-md-10' body>
                                                 {comm.comment}
+                                                
+                                            </Media>
+                                            <Media>
+                                                <Button 
+                                                    onClick={() => onDelete(comm.id)}
+                                                    className='fa fa-trash'
+                                                />
                                             </Media>
                                         </Media>
+                                        <hr/>
                                     </li>
+                                </Fade>
                                 );
-                            })}
+                            })
+                        }
+                        </Stagger>    
                     </ul>
                 </div>
                 </CardBody>
@@ -237,7 +258,12 @@ class RenderQuestionAnswers extends Component {
                 </Row>
             </CardBody>
         </Card>
-        <RenderComments commentsArray={this.props.comments} isOpen={this.state.showComments}></RenderComments>
+        <RenderComments 
+            commentsArray={this.props.comments}  
+            postComment={this.props.postComment}
+            deleteComment={this.props.deleteComment} 
+            questionId={this.props.question.id} 
+            isOpen={this.state.showComments}></RenderComments>
         <Card>
             <CardBody>
                 <div className='row justify-content-between'>
@@ -284,7 +310,6 @@ class RenderQuestionAnswers extends Component {
     );
     }
 }
-//}
 
 class SingleQuestion extends Component {
 
@@ -315,7 +340,14 @@ class SingleQuestion extends Component {
                 <Container className='single-question'>
                     <Row className='justify-content-center mt-5'>
                         <Col lg={10}>
-                            <RenderQuestionAnswers question={this.props.question} answers={this.props.answers} comments={this.props.comments} spaceId={this.props.spaceId} onClick={this.props.onClick} />
+                            <RenderQuestionAnswers 
+                                question={this.props.question} 
+                                answers={this.props.answers} 
+                                comments={this.props.comments} 
+                                spaceId={this.props.spaceId}
+                                postComment={this.props.postComment} 
+                                deleteComment={this.props.deleteComment}
+                                onClick={this.props.onClick} />
                         </Col>  
                     </Row> 
                 </Container>
