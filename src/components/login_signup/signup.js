@@ -110,15 +110,6 @@ class Signup extends Component {
           {
               return(
                   <>
-                    <Form.Group controlId="formBasicInput">
-                        <Form.Label><span className="form__icon"><FaUserAlt/></span>Name</Form.Label>
-                            <input name="Uname"  className="form-control" type="text"  placeholder="Enter name" value = {this.state.Uname} onChange={this.handleChange}/>
-                    </Form.Group>
-                    <Form.Group controlId="formBasicName">
-                        <Form.Label><span className="form__icon"><FiUserPlus/></span>UserName</Form.Label>
-                            <input name="userName"  className="form-control" type="text"  placeholder="Enter userName" 
-                            value = {this.state.userName} onChange={this.handleChange}/>
-                    </Form.Group>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label><span className="form__icon"><AiOutlineMail/></span>Email address</Form.Label>
                             <input name="email"  className="form-control" type="email"  placeholder="Enter email" 
@@ -169,6 +160,15 @@ class Signup extends Component {
         {
             return(
                 <>
+                    <Form.Group controlId="formBasicInput">
+                        <Form.Label><span className="form__icon"><FaUserAlt/></span>Name</Form.Label>
+                            <input name="Uname"  className="form-control" type="text"  placeholder="Enter name" value = {this.state.Uname} onChange={this.handleChange}/>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicName">
+                        <Form.Label><span className="form__icon"><FiUserPlus/></span>UserName</Form.Label>
+                            <input name="userName"  className="form-control" type="text"  placeholder="Enter userName" 
+                            value = {this.state.userName} onChange={this.handleChange}/>
+                    </Form.Group>
                     <Form.Group controlId="formBasicInput">
                         <Form.Label><span className="form__icon"><SiGooglescholar/></span>Graduation Year</Form.Label>
                             <input name="graduation_year"  className="form-control" type="text"  placeholder="Enter Year" value = {this.state.about.graduation_year} onChange={this.handleAboutChange}/>

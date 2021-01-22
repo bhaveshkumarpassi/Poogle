@@ -34,7 +34,7 @@ return(
     </SubMenu>
     
     <MenuItem icon={<span className='fa fa-bell'/>}>
-      Notifications
+      Notifications <Link to="/notifications"/>
     </MenuItem>
     
     <SubMenu title="Top Categories" icon={<FaGem />}>

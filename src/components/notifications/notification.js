@@ -15,36 +15,23 @@ class Notification extends Component {
         this.state = {
             showSpaces:true,
             showContent:false,
-            // showQuestion:false,
         }
         this.activateSpaces = this.activateSpaces.bind(this);
         this.activateContent = this.activateContent.bind(this);
-        // this.activateQuestions = this.activateQuestions.bind(this);
     }
     activateSpaces(){
         this.setState({
             showSpaces:true,
-            showContent:false,
-            // showQuestion:false,
+            showContent:false
         })
     }
 
     activateContent(){
         this.setState({
             showSpaces:false,
-            showContent:true,
-            // showQuestion:false,
+            showContent:true
         })
     }
-
-    // activateQuestions(){
-    //     this.setState({
-    //         showSpaces:false,
-    //         showContent:false,
-    //         showQuestion:true,
-    //     })
-        
-    // }
 
     renderSpaces(){
         let Description="I’m a 2019 computer science graduate, now it’s been more than a year since I’ve been looking for a fresher job in IT. What are ..."
@@ -95,9 +82,6 @@ class Notification extends Component {
                                     <NavItem className='notification__filters'>
                                         <NavLink href='#' active={this.state.showContent} onClick={() => this.activateContent()}>Your Content</NavLink>
                                     </NavItem>
-                                    {/* <NavItem className='notification__filters'>
-                                        <NavLink href='#' active={this.state.showQuestion} onClick={() => this.activateQuestions()}>Questions</NavLink>
-                                    </NavItem> */}
                                 </Nav>
                             </div>
                         </Row>
