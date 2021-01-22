@@ -1,6 +1,9 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
 
+
+// ------------------------------------ SPACES -------------------------------/
+
 export const fetchSpaces = () => (dispatch) => {
 	// redux thunk allows to pass an action method instead of just action object and automayically recieves dispatch parameter.
 
@@ -43,6 +46,8 @@ export const addSpaces = (spaces) => ({
 	payload: spaces,
 });
 
+//--------------------------------------  QUESTIONS  ------------------------------- /
+
 export const fetchQuestions = () => (dispatch) => {
 	dispatch(questionsLoading(true));
 
@@ -82,6 +87,8 @@ export const addQuestions = (questions) => ({
 	type: ActionTypes.ADD_QUESTIONS,
 	payload: questions,
 });
+
+// --------------------------      ANSWERES ----------------------------------/
 
 export const fetchAnswers = () => (dispatch) => {
 	dispatch(answersLoading(true));
