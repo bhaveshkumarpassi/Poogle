@@ -73,6 +73,10 @@
     width: 50px;
     height: auto;
 }
+.invalid__feedback{
+    font-size: 80%;
+    color: #dc3545;
+}
 
 /*signup specials*/
 

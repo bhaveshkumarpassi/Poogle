@@ -14,7 +14,12 @@ class login extends Component {
         super(props);
         this.state = {
             email:"",
-            password:""
+            password:"",
+            errors:{
+                email:"",
+                password:""
+            },
+            validated:false
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,8 +33,48 @@ class login extends Component {
         });
     }
 
+    formValidation = () =>{
+        const{email, password} = this.state;
+        let emailError="", passwordError = "", error;
+        if(!email){
+            emailError = "Email is required";
+            error = true;            
+        }
+        else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email))
+        {
+            emailError = "Email address is Invalid";
+            error= true;
+        }
+        if(!password.trim())
+        {
+            passwordError="Password is required"
+            error= true;
+        }
+        else if(password.length<5)
+        {
+            passwordError="Length of password must be 5 characters or more"
+            error= true;
+        }
+        
+        this.setState(prevState => ({
+            errors:{
+                email:emailError,
+                password: passwordError
+            }
+        }))
+        
+        return !error;
+    }
+
     handleSubmit(event) {
         event.preventDefault();
+        const isValid = this.formValidation();
+        this.setState({
+            validated:isValid
+        })
+        if(isValid){
+            window.alert("Form Submitted")
+        }
         console.log(this.state);
     }
 
@@ -48,15 +93,17 @@ class login extends Component {
                         </Row>
                         <div>
                         <Jumbotron className="form__content__div form__content__div--login">
-                            <Form>
+                            <Form validated={this.state.validated}>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label><span className="form__icon"><AiOutlineMail/></span>Email address</Form.Label>
                                     <input name="email" className="form-control" type="email" value={this.state.name} placeholder="Enter email" onChange={this.handleInputChange} />
+                                    <div className="invalid__feedback">{this.state.errors.email}</div>
                                 </Form.Group>
 
                                 <Form.Group controlId="formBasicTextbox">
                                     <Form.Label><span className="form__icon"><RiLockPasswordFill/></span>Password</Form.Label>
                                     <input name="password"  type="password" className="form-control"  value={this.state.name} placeholder="Enter password" onChange={this.handleInputChange} />
+                                    <div className="invalid__feedback">{this.state.errors.password}</div>
                                 </Form.Group>
 
                                 <div className="form__btn">
