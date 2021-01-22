@@ -37,14 +37,20 @@ class Signup extends Component {
         this.state = {
             currentStep: 1,
             userName:"",
+            email:"",
             Uname:"",
-            user_password:"",
+            password:"",
             about:{
                 graduation_year:null,
                 field:null,
                 description:null
             },
-            interests:null
+            interests:null,
+            errors:{
+                email:"",
+                password:""
+            },
+            validated:false
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleAboutChange = this.handleAboutChange.bind(this);
@@ -99,7 +105,41 @@ class Signup extends Component {
         currentStep: currentStep
         })
     }
-  handleSubmit = (event) => {
+    
+    formValidation = () =>{
+        const{email, password} = this.state;
+        let emailError="", passwordError = "", error;
+        if(!email){
+            emailError = "Email is required";
+            error = true;            
+        }
+        else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email))
+        {
+            emailError = "Email address is Invalid";
+            error= true;
+        }
+        if(!password.trim())
+        {
+            passwordError="Password is required"
+            error= true;
+        }
+        else if(password.length<5)
+        {
+            passwordError="Length of password must be 5 characters or more"
+            error= true;
+        }
+        
+        this.setState(prevState => ({
+            errors:{
+                email:emailError,
+                password: passwordError
+            }
+        }))
+        
+        return !error;
+    }
+    
+    handleSubmit = (event) => {
     event.preventDefault()
     console.log(this.state);  
     }
@@ -118,8 +158,8 @@ class Signup extends Component {
                     
                     <Form.Group controlId="formBasicPassword">
                             <Form.Label><span className="form__icon"><RiLockPasswordFill/></span>Password</Form.Label>
-                            <input name="user_password" className="form-control" type="password"  placeholder="Enter Password" 
-                            value = {this.state.user_password} onChange={this.handleChange}/>
+                            <input name="password" className="form-control" type="password"  placeholder="Enter Password" 
+                            value = {this.state.password} onChange={this.handleChange}/>
                     </Form.Group>
                     <div>
                         

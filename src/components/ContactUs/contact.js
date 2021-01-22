@@ -53,9 +53,6 @@ class Contact extends Component {
                 feedback: feedbackError
             }
         }))
-        console.log("Errors are", this.state.errors);
-        console.log(emailError);
-        console.log(feedbackError)
         return !error;
     }
     handleSubmit(event) {
