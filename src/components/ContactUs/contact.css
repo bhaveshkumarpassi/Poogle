@@ -46,3 +46,7 @@ input:focus{
     background-color: var(--color-secondary-blue);
     color:#eee;
 }
+.invalid__feedback{
+    font-size: 80%;
+    color: #dc3545;
+}
