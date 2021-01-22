@@ -12,6 +12,7 @@ import Chat from "./chat/Chat";
 import Login from './login_signup/login';
 import Signup from './login_signup/signup'; 
 import Contact from './ContactUs/contact';
+import Notifications from './notifications/notification';
 
 const mapStateToProps = (state) => {
 	return {
@@ -141,6 +142,7 @@ class Main extends Component {
 					<Route exact path="/profile/:userId" component={Profile_page}/>
 					<Route path="/chat" component={Chat} />
 					<Route path="/contact" component={Contact} />
+					<Route path="/notifications" component={Notifications}/>
 					<Route path="/login" component={Login} />
 					<Route path="/signup" component={Signup} />
 					<Redirect to="/home" />
