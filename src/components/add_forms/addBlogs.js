@@ -9,12 +9,11 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; 
 import {toolbarOptions, formats} from './text_editorVar';
 
-
 const spaces = [{value:'AI',label:'Artificial Intelligence'}, 
     {value:'Frontend', label:'Frontend'}, 
     {value:'Backend', label:'Backend'}];
 
-class addQuestions extends Component {
+class addBlogs extends Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -77,7 +76,7 @@ class addQuestions extends Component {
           error = true;            
         }
         
-        if(!description.trim()|| !description.trim().length || description==="<p><br></p>"){
+        if(!description.trim()||description==="<p><br></p>"){
           descriptionError = "Description is required";
           error = true;            
         }
@@ -105,31 +104,32 @@ class addQuestions extends Component {
                                 <BreadcrumbItem>
                                     <Link to="/home">Home</Link>
                                 </BreadcrumbItem>
-                                <BreadcrumbItem active>Add Question</BreadcrumbItem>
+                                <BreadcrumbItem active>Add Blog</BreadcrumbItem>
                             </Breadcrumb>
                         </Row>
                         <div>
-                          <Jumbotron className='form-jumbotron'>
-                            <Form>
-                              <Form.Group controlId="formBasicEmail">
-                                <Form.Label><span className="form__icon"></span>Title</Form.Label>
-                                  <input name="title" className="form-control" type="text" value={this.state.title} placeholder="Enter Title" onChange={this.handleInputChange} />
-                                    <div className="invalid__feedback">{this.state.errors.title}</div>
-                              </Form.Group>
+                            <Jumbotron className='form-jumbotron'>
+                                <Form>
+                                    <Form.Group controlId="formBasicEmail">
+                                    <Form.Label><span className="form__icon"></span>Title</Form.Label>
+                                        <input name="title" className="form-control" type="text" value={this.state.title} placeholder="Give a descriptive title." onChange={this.handleInputChange} />
+                                        <div className="invalid__feedback">{this.state.errors.title}</div>
+                                    </Form.Group>
 
-                              <Form.Group controlId="formBasicDropdown">
-                                <Form.Label><span className="form__icon"></span>Choose Category</Form.Label>
-                                <div><Select isMulti name="category" options={spaces} className="basic-multi-select" value={this.state.category} onChange={this.handleMultiSelectChange} classNamePrefix="select"/></div>
-                                    <div className="invalid__feedback">{this.state.errors.category}</div>
-                              </Form.Group>
+                                    <Form.Group controlId="formBasicDropdown">
+                                    <Form.Label><span className="form__icon"></span>Choose Category</Form.Label>
+                                    <div><Select isMulti name="category" options={spaces} className="basic-multi-select" value={this.state.category} onChange={this.handleMultiSelectChange} classNamePrefix="select"/></div>
+                                        <div className="invalid__feedback">{this.state.errors.category}</div>
+                                    </Form.Group>
 
-                              <Form.Group>
-                                <Form.Label><span className="form__icon"></span>Describe Here</Form.Label>
-                                <ReactQuill theme="snow"  value={this.state.description} onChange={this.handleEditorChange} 
-                                  style={{backgroundColor: 'white'}} modules={this.modules} formats= {formats}/>
-                                  <div className="invalid__feedback">{this.state.errors.description}</div>
-                              </Form.Group>
-                              <Button onClick={this.handleSubmit} variant="info"><span className='fa fa-paper-plane mr-3' />Submit</Button>
+                                    <Form.Group>
+                                    <Form.Label><span className="form__icon"></span>Describe Here</Form.Label>
+                                    <ReactQuill 
+                                        style={{backgroundColor: 'white'}} theme="snow"  value={this.state.description} onChange={this.handleEditorChange} 
+                                        modules={this.modules} formats= {formats}/>
+                                        <div className="invalid__feedback">{this.state.errors.description}</div>
+                                    </Form.Group>
+                                    <Button onClick={this.handleSubmit} variant="info"><span className='fa fa-paper-plane mr-3' />Publish Blog</Button>
                             </Form>
                           </Jumbotron>
                         </div>
@@ -141,4 +141,4 @@ class addQuestions extends Component {
         )
       }
 }
-export default addQuestions
+export default addBlogs

@@ -14,6 +14,8 @@ import Signup from './login_signup/signup';
 import Contact from './ContactUs/contact';
 import Notifications from './notifications/notification';
 import AddQuestion from './add_forms/addQuestions';
+import AddBlog from './add_forms/addBlogs';
+
 const mapStateToProps = (state) => {
 	return {
 		spaces: state.spaces,
@@ -145,6 +147,7 @@ class Main extends Component {
 					<Route path="/notifications" component={Notifications}/>
 					<Route path="/login" component={Login} />
 					<Route path="/addQuestion" component={AddQuestion}/>
+					<Route path="/addBlog" component={AddBlog} />
 					<Route path="/signup" component={Signup} />
 					<Redirect to="/home" />
 				</Switch>

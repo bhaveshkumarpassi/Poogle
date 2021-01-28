@@ -24,6 +24,11 @@ import { baseUrl } from "../../shared/baseUrl";
 import profilePic from '../../Images/profile_pic.png';
 import "../single_ques/SingleQues.css";
 import { Fade, Stagger } from 'react-animation-components';
+import Form from 'react-bootstrap/Form';
+import '../add_forms/add_forms.css'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; 
+import {toolbarOptions, formats} from '../add_forms/text_editorVar';
 
 
 const required = (val) => val && val.length;
@@ -111,29 +116,28 @@ function RenderComments({commentsArray, isOpen, postComment, deleteComment, ques
                         <Card className='mt-3'>
                             <CardBody>
                                 <LocalForm onSubmit={handleSubmit}>
-                                <div className="row form-group">
-                                    <Label htmlFor="comment" className="col-12"><span className='fa fa-lg  fa-pencil-square-o ml-1 mr-2'></span>Comment</Label>
-                                    <div className="col-12">
-                                        <Control.textarea model=".comment" name="comment" className="form-control"
-                                        id="comment" rows="6"
-                                        placeholder={'Type your comment here ....'}
-                                        validators={{required,maxLength: maxLength(500)}} />
-                                        <Errors className="text-danger"
-                                            show="touched"
-                                            model=".comment"
-                                            messages={{
-                                                required: "Required",
-                                                maxLength: 'Must be 500 characters or less'
-                                            }} />
+                                    <div className="row form-group">
+                                        <Label htmlFor="comment" className="col-12"><span className='fa fa-lg  fa-pencil-square-o ml-1 mr-2'></span>Comment</Label>
+                                        <div className="col-12">
+                                            <Control.textarea model=".comment" name="comment" className="form-control"
+                                            id="comment" rows="6"
+                                            placeholder={'Type your comment here ....'}
+                                            validators={{required,maxLength: maxLength(500)}} />
+                                            <Errors className="text-danger"
+                                                show="touched"
+                                                model=".comment"
+                                                messages={{
+                                                    required: "Required",
+                                                    maxLength: 'Must be 500 characters or less'
+                                                }} />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="row form-group">
-                                    <div className="col-12">
-                                        <Button type="submit" color="success">Submit</Button>
+                                    <div className="row form-group">
+                                        <div className="col-12">
+                                            <Button type="submit" color="success">Submit</Button>
+                                        </div>
                                     </div>
-                                </div>
-                                
-                            </LocalForm>
+                                </LocalForm>
                             </CardBody>
                         </Card>
                     </Collapse>
@@ -183,8 +187,20 @@ class RenderQuestionAnswers extends Component {
 
         this.state={
             shareModalOpen: false,
-            showComments: false
+            showComments: false,
+            answerModalOpen: false,
+            description: '',
+            errors:{
+                description:'',
+            }
+            
         }
+        this.handleEditorChange = this.handleEditorChange.bind(this);
+        this.handleSubmit= this.handleSubmit.bind(this)
+    }
+
+    modules = {
+        toolbar:toolbarOptions
     }
 
     onShareClicked() {
@@ -197,6 +213,46 @@ class RenderQuestionAnswers extends Component {
         this.setState({
             showComments: !this.state.showComments
         })
+    }
+
+    onAddAnswerClicked() {
+        this.setState({
+            answerModalOpen: !this.state.answerModalOpen
+        })
+    }
+
+    handleEditorChange(value) {
+        this.setState({ description: value })
+    }
+
+    handleSubmit(event){
+        event.preventDefault();
+        const isValid = this.formValidation();
+        console.log(this.state);
+        
+        if(isValid){
+            window.alert("Form Submitted");
+            
+        }
+        console.log(this.state);
+    }
+
+    formValidation = () =>{
+    
+        let descriptionError="", error;
+        
+        if(!this.state.description.trim()|| this.state.description==="<p><br></p>"){
+          descriptionError = "Description is required";
+          error = true;            
+        }
+        
+        this.setState(prevState => ({
+            errors:{
+                description: descriptionError
+            }
+        }))
+        
+        return !error;
     }
 
     render() {
@@ -268,7 +324,9 @@ class RenderQuestionAnswers extends Component {
             <CardBody>
                 <div className='row justify-content-between'>
                     <CardSubtitle className='col-6'>{this.props.answers.length} Answers(s)</CardSubtitle>
-                    <Button className='col-6 col-sm-5 col-md-4 add-ans-btn' color='danger'>
+                    <Button className='col-6 col-sm-5 col-md-4 add-ans-btn'
+                            color='danger'
+                            onClick={() => this.onAddAnswerClicked()}>
                         <span className='fa fa-lg fa-plus mr-2'></span>
                         ANSWER
                     </Button>
@@ -304,6 +362,29 @@ class RenderQuestionAnswers extends Component {
             </ModalBody>
             <ModalFooter>
                 <Button color="secondary" onClick={() => this.onShareClicked()}>Cancel</Button>
+            </ModalFooter>
+        </Modal>
+        <Modal isOpen={this.state.answerModalOpen} 
+               toggle={() => this.onAddAnswerClicked()}
+               className='modal-dialog modal-dialog-centered modal-lg'
+               backdrop='static'
+               >
+            <ModalHeader style={{backgroundColor: 'darkgray'}} toggle={() => this.onAddAnswerClicked()}>Your Answer</ModalHeader>
+            <ModalBody>
+                <Form>
+                <Form.Group>
+                    <Form.Label><span className="form__icon fa fa-pencil"></span>Describe Here</Form.Label>
+                    <ReactQuill 
+                        placeholder='Thanks for contributing an answer to Poogle ..... '
+                        style={{backgroundColor: 'white'}} theme="snow"  value={this.state.description} onChange={this.handleEditorChange} 
+                        modules={this.modules} formats= {formats}/>
+                        <div className="invalid__feedback">{this.state.errors.description}</div>
+                </Form.Group>
+                </Form>
+            </ModalBody>
+            <ModalFooter style={{backgroundColor: 'lightgray'}}>
+                <Button onClick={this.handleSubmit} color='info'><span className='fa fa-paper-plane mr-3' />Submit</Button>
+                <Button color="danger" onClick={() => this.onAddAnswerClicked()}>Cancel</Button>
             </ModalFooter>
         </Modal>
     </div>
