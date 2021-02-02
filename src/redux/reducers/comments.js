@@ -14,7 +14,7 @@ export const Comments = (state = { errMess: null, comments:[]}, action) => {
 
     case ActionTypes.DELETE_COMMENT: 
         var commentId = action.payload;
-        var index = state.comments.indexOf(state.comments.filter(comment => comment.id === commentId)[0]);
+        var index = state.comments.indexOf(state.comments.filter(comment => comment._id === commentId)[0]);
         state.comments.splice(index, 1);
         return {...state, comments: state.comments}
 

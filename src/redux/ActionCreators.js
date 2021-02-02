@@ -48,6 +48,43 @@ export const addSpaces = (spaces) => ({
 
 //--------------------------------------  QUESTIONS  ------------------------------- /
 
+export const addQuestion = (question) => ({
+    type: ActionTypes.ADD_QUESTION,
+    payload: question
+});
+
+export const postQuestion = (question) => (dispatch) => {
+
+	const newQuestion = question;
+	newQuestion.dateNum = Date.now();
+	//const bearer = 'Bearer ' + localStorage.getItem('token');
+	
+    return fetch(baseUrl + 'questions', {
+        method: "POST",
+        body: JSON.stringify(newQuestion),
+        headers: {
+		  "Content-Type": "application/json",
+		  //"Authorization": bearer
+        },
+        //credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+	.then(response => dispatch(addQuestion(response)))
+    .catch(error =>  { console.log('post questions', error.message); alert('Your question could not be posted\nError: '+error.message); });
+};
+
 export const fetchQuestions = () => (dispatch) => {
 	dispatch(questionsLoading(true));
 
@@ -74,6 +111,40 @@ export const fetchQuestions = () => (dispatch) => {
 		.catch((error) => dispatch(questionsFailed(error.message)));
 };
 
+export const deleteQuestion = (questionId) => (dispatch) => {
+
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+
+    return fetch(baseUrl + 'questions/' + questionId, {
+        method: "DELETE",
+        headers: {
+			"Content-Type": "application/json",
+			"Authorization": bearer
+		},
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(questions => { console.log('Question Deleted', questions); dispatch(removeQuestion(questionId))})
+    .catch(error => dispatch(questionsFailed(error.message)));
+};
+
+export const removeQuestion = (questionId) => ({
+    type: ActionTypes.DELETE_QUESTION,
+    payload: questionId
+})
+
 export const questionsLoading = () => ({
 	type: ActionTypes.QUESTIONS_LOADING,
 });
@@ -89,6 +160,43 @@ export const addQuestions = (questions) => ({
 });
 
 // --------------------------      ANSWERES ----------------------------------/
+
+export const addAnswer = (answer) => ({
+    type: ActionTypes.ADD_ANSWER,
+    payload: answer
+});
+
+export const postAnswer = (answer) => (dispatch) => {
+
+	const newAnswer = answer;
+	newAnswer.dateNum = Date.now();
+	const bearer = 'Bearer ' + localStorage.getItem('token');
+	
+    return fetch(baseUrl + 'answers', {
+        method: "POST",
+        body: JSON.stringify(newAnswer),
+        headers: {
+		  "Content-Type": "application/json",
+		  "Authorization": bearer
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+	.then(response => dispatch(addAnswer(response)))
+    .catch(error =>  { console.log('post answers', error.message); alert('Your answer could not be posted\nError: '+error.message); });
+};
 
 export const fetchAnswers = () => (dispatch) => {
 	dispatch(answersLoading(true));
@@ -116,6 +224,40 @@ export const fetchAnswers = () => (dispatch) => {
 		.catch((error) => dispatch(answersFailed(error.message)));
 };
 
+export const deleteAnswer = (answerId) => (dispatch) => {
+
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+
+    return fetch(baseUrl + 'questions/' + answerId, {
+        method: "DELETE",
+        headers: {
+			"Content-Type": "application/json",
+			"Authorization": bearer
+		},
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(answers => { console.log('Answer Deleted', answers); dispatch(removeAnswer(answerId))})
+    .catch(error => dispatch(answersFailed(error.message)));
+};
+
+export const removeAnswer = (answerId) => ({
+    type: ActionTypes.DELETE_ANSWER,
+    payload: answerId
+})
+
 export const answersLoading = () => ({
 	type: ActionTypes.ANSWERS_LOADING,
 });
@@ -130,28 +272,25 @@ export const addAnswers = (answers) => ({
 	payload: answers,
 });
 
-// --------------------------       Comments ------------------------
+// --------------------------   questionComments ------------------------
 
 export const addComment = (comment) => ({
     type: ActionTypes.ADD_COMMENT,
     payload: comment
 });
 
-export const postComment = (questionId, author, comment) => (dispatch) => {
+export const postComment = (comment) => (dispatch) => {
 
-    const newComment = {
-        questionId: questionId,
-        author: author,
-        comment: comment
-    };
-	newComment.date = new Date().toISOString();
+	const newComment = comment;
 	newComment.dateNum = Date.now();
-    
-    return fetch(baseUrl + 'comments', {
+	const bearer = 'Bearer ' + localStorage.getItem('token');
+	
+    return fetch(baseUrl + 'questionComments', {
         method: "POST",
         body: JSON.stringify(newComment),
         headers: {
-          "Content-Type": "application/json"
+		  "Content-Type": "application/json",
+		  "Authorization": bearer
         },
         credentials: "same-origin"
     })
@@ -173,7 +312,7 @@ export const postComment = (questionId, author, comment) => (dispatch) => {
 };
 
 export const fetchComments = () => (dispatch) => {    
-    return fetch(baseUrl + 'comments')
+    return fetch(baseUrl + 'questionComments')
     .then(response => {
         if (response.ok) {
           return response;
@@ -204,9 +343,9 @@ export const addComments = (comments) => ({
 
 export const deleteComment = (commentId) => (dispatch) => {
 
-    //const bearer = 'Bearer ' + localStorage.getItem('token');
+    const bearer = 'Bearer ' + localStorage.getItem('token');
 
-    return fetch(baseUrl + 'comments/' + commentId, {
+    return fetch(baseUrl + 'questionComments/' + commentId, {
         method: "DELETE",
         headers: {
 			"Content-Type": "application/json"

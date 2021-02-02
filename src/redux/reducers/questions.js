@@ -19,6 +19,16 @@ export const Questions = (
 		case ActionTypes.QUESTIONS_LOADING:
 			return { ...state, isLoading: true, errMess: null, questions: [] };
 
+		case ActionTypes.ADD_QUESTION:
+			var question = action.payload;
+			return { ...state, questions: state.questions.concat(question)};
+	
+		case ActionTypes.DELETE_QUESTION: 
+			var questionId = action.payload;
+			var index = state.questions.indexOf(state.questions.filter(question => question._id === questionId)[0]);
+			state.questions.splice(index, 1);
+			return {...state, questions: state.questions}
+
 		default:
 			return state;
 	}

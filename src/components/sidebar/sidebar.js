@@ -35,6 +35,14 @@ return(
     <MenuItem icon={<span className='fa fa-bell'/>}>
       Notifications <Link to="/notifications"/>
     </MenuItem>
+
+    {/* <MenuItem icon={<span className='fa fa-bell'/>}>
+      Blog <Link to="/blog"/>
+    </MenuItem>
+
+    <MenuItem icon={<span className='fa fa-bell'/>}>
+      Create <Link to="/blog/create"/>
+    </MenuItem> */}
     
     <SubMenu title="Top Categories" icon={<FaGem />}>
       <MenuItem>Top Questions</MenuItem>

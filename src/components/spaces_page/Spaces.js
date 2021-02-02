@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Card, Button, Form, FormGroup, Label, Input,
-    CardTitle, Breadcrumb, BreadcrumbItem, CardBody, CardSubtitle} from 'reactstrap';
+    CardTitle, Breadcrumb, BreadcrumbItem, CardBody, CardSubtitle, CardImg} from 'reactstrap';
 import { FadeTransform } from 'react-animation-components';
 import {Link} from 'react-router-dom';
 import Loading from '../loading';
@@ -8,6 +8,7 @@ import { baseUrl } from '../../shared/baseUrl'
 import './Spaces.css'
 
     function RenderMenuItem ({space, onClick}) {
+
         return ( 
         <FadeTransform
         in
@@ -18,12 +19,13 @@ import './Spaces.css'
             <CardBody>
                 <CardTitle tag="h6">{space.name}</CardTitle>
             </CardBody>
-                <img className='space-img' src={ baseUrl + space.image} alt={space.name} />
+            
+                <img className='space-img' src={'./images/'+space.image}  alt={space.name} />
             <CardBody>
-                <CardSubtitle tag="h6" className="mb-4 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {space.questions} Questions</CardSubtitle>
-                <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-users fa-lg follower-icon'/>    {space.followers} followers</CardSubtitle>
+                <CardSubtitle tag="h6" className="mb-4 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {space.questions.length} Questions</CardSubtitle>
+                <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-users fa-lg follower-icon'/>    {space.followers.length} followers</CardSubtitle>
                 <div className='row mt-4'>
-                    <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space.id}`}>view</Link>
+                    <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view</Link>
                     <Button className='col-12 mt-3' color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Follow</Button>
                 </div>
             </CardBody>

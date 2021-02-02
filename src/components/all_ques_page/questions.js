@@ -28,16 +28,16 @@ function RenderMenuItem({question, spaceId, class_Name, onClick}) {
     <Fade in>
         <ListGroup className='container question-container'>
                 <ListGroupItem className={class_Name+' list-item-style'}>
-                    <Link to={`/space-${spaceId}/question-${question.id}`}>
+                    <Link to={`/space-${spaceId}/question-${question._id}`}>
                         <div className='row'>
                         <div className='col-12 col-sm-8'>
-                            <ListGroupItemHeading className='question-heading'>{question.question}</ListGroupItemHeading>
+                            <ListGroupItemHeading className='question-heading'>{question.heading}</ListGroupItemHeading>
                             <RenderTags question={question} />
                             <ListGroupItemText className='question-text'>
                                 Posted by :-  {question.author}
                             </ListGroupItemText>
                             <ListGroupItemText className='question-text'>
-                                Posted at :- {question.date}
+                                Posted at :- {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(question.createdAt)))}
                             </ListGroupItemText>
                         </div>
                         <div className='col-12 col-sm-4'>
@@ -110,11 +110,11 @@ class Questions extends Component {
 
             count += 1;
             return(
-                <div className="col-12" key={question.id}>
+                <div className="col-12" key={question._id}>
                    
                         <RenderMenuItem 
                             question={question} 
-                            spaceId={this.props.space.id} 
+                            spaceId={this.props.space._id} 
                             class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} 
                             onClick={this.props.onClick} />
                 
@@ -126,11 +126,11 @@ class Questions extends Component {
 
             count += 1;
             return(
-                <div className="col-12" key={question.id}>
+                <div className="col-12" key={question._id}>
                     
                         <RenderMenuItem 
                             question={question} 
-                            spaceId={this.props.space.id} 
+                            spaceId={this.props.space._id} 
                             class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} 
                             onClick={this.props.onClick} />
                    
@@ -142,11 +142,11 @@ class Questions extends Component {
 
             count += 1;
             return(
-                <div className="col-12" key={question.id}>
+                <div className="col-12" key={question._id}>
                    
                         <RenderMenuItem 
                             question={question} 
-                            spaceId={this.props.space.id} 
+                            spaceId={this.props.space._id} 
                             class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} 
                             onClick={this.props.onClick} />
                    
@@ -198,7 +198,7 @@ class Questions extends Component {
                             <h4 className='row all-ques-heading justify-content-center'>All Questions</h4>
                             <div className='row justify-content-center mt-4'>
                                     {/* <Button outline className='col-8 col-lg-3 mb-4 ques-btn' color='primary'><span className='fa fa-lg fa-question-circle mr-2 ml-2' />{this.props.questions.length} QUESTIONS</Button> */}
-                                    <Button className='col-8 col-md-4 col-lg-3 mb-4 add-ques-btn' color='danger'><span className='fa fa-lg fa-plus mr-2 ml-2' />QUESTION</Button>
+                                    <Button className='col-8 col-md-4 col-lg-3 mb-4 add-ques-btn' color='danger'><span className='fa fa-lg fa-plus mr-2 ml-2' /><Link to={`/addQuestion/${this.props.space._id}`}>QUESTION</Link></Button>
                                     <ButtonGroup className='mb-4 button-grp col-8 col-md-4 col-lg-3'>
                                         <Button outline color='info'>
                                             <span className='fa fa-lg fa-question-circle mr-2' />

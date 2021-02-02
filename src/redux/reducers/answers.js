@@ -18,6 +18,16 @@ export const Answers = (
 
 		case ActionTypes.ANSWERS_LOADING:
 			return { ...state, isLoading: true, errMess: null, answers: [] };
+		
+		case ActionTypes.ADD_ANSWER:
+			var answer = action.payload;
+			return { ...state, answers: state.answers.concat(answer)};
+	
+		case ActionTypes.DELETE_ANSWER: 
+			var answerId = action.payload;
+			var index = state.answers.indexOf(state.answers.filter(answer => answer._id === answerId)[0]);
+			state.answers.splice(index, 1);
+			return {...state, answers: state.answers}
 
 		default:
 			return state;

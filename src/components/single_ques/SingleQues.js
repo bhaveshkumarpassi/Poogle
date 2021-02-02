@@ -260,7 +260,7 @@ class RenderQuestionAnswers extends Component {
     <div>
         <Card>
             <CardBody>
-                    <CardTitle className='single-question-heading'>{this.props.question.question}</CardTitle>
+                    <CardTitle className='single-question-heading'>{this.props.question.heading}</CardTitle>
                 <hr></hr>
                 <Row>
                     <Col className='mb-3 single-question-profile' xs={4} md={3} lg={2}>
@@ -273,9 +273,10 @@ class RenderQuestionAnswers extends Component {
                                 <RenderTags question={this.props.question} />
                             </Col>
                             <Col xs={12}>
-                                <CardText className='single-question-description'>{this.props.question.description}</CardText>
+                                <div dangerouslySetInnerHTML={{ __html: this.props.question.description }} />
+                                {/* <CardText className='single-question-description'>{this.props.question.description}</CardText> */}
                             </Col>
-                            {
+                            {/* {
                                 this.props.question.imageUrl
                                 ?
                                 <Col xs={12} className='mt-5'>
@@ -283,7 +284,7 @@ class RenderQuestionAnswers extends Component {
                                 </Col>
                                 :
                                 <Col></Col>
-                            }
+                            } */}
                         </Row>
                     </Col>
                 </Row>

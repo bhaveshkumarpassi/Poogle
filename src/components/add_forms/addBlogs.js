@@ -20,10 +20,12 @@ class addBlogs extends Component {
           description: '',
           title:'',
           category:'',
+          duration:null,
           errors:{
             description:'',
             category:'',
-            title:''
+            title:'',
+            duration:null
           }
 
 
@@ -32,6 +34,7 @@ class addBlogs extends Component {
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleMultiSelectChange = this.handleMultiSelectChange.bind(this)
         this.handleSubmit= this.handleSubmit.bind(this)
+    
       }
       modules = {
         toolbar:toolbarOptions
@@ -58,14 +61,14 @@ class addBlogs extends Component {
         
         if(isValid){
             window.alert("Form Submitted");
-            
+            window.alert(this.state);
         }
         console.log(this.state);
       }
       
       formValidation = () =>{
-        const{title, category,description} = this.state;
-        let titleError="", categoryError = "", descriptionError="", error;
+        const{title, category,description, duration} = this.state;
+        let titleError="", categoryError = "", descriptionError="", durationError="", error;
         if(!title.trim()){
             titleError = "Title is required";
             error = true;            
@@ -81,11 +84,17 @@ class addBlogs extends Component {
           error = true;            
         }
         
+        if(!duration || isNaN(duration) || duration<=0 ){
+          durationError = "Duration should be a positive numeric value";
+          error = true;
+        }
+        
         this.setState(prevState => ({
             errors:{
                 title:titleError,
                 description: descriptionError,
-                category:categoryError
+                category:categoryError,
+                duration: durationError
             }
         }))
         
@@ -98,7 +107,7 @@ class addBlogs extends Component {
         return (
             <div className="forms__section">
                 <Container>
-                <Col md={9} className="contact__main__content">
+                <Col md={12} className="contact__main__content">
                         <Row>
                             <Breadcrumb className="mb-4 page__navigation__breadCrump">
                                 <BreadcrumbItem>
@@ -123,13 +132,18 @@ class addBlogs extends Component {
                                     </Form.Group>
 
                                     <Form.Group>
-                                    <Form.Label><span className="form__icon"></span>Describe Here</Form.Label>
+                                    <Form.Label><span className="form__icon"></span>Describe content Here</Form.Label>
                                     <ReactQuill 
                                         style={{backgroundColor: 'white'}} theme="snow"  value={this.state.description} onChange={this.handleEditorChange} 
                                         modules={this.modules} formats= {formats}/>
                                         <div className="invalid__feedback">{this.state.errors.description}</div>
                                     </Form.Group>
-                                    <Button onClick={this.handleSubmit} variant="info"><span className='fa fa-paper-plane mr-3' />Publish Blog</Button>
+                                    <Form.Group controlId="formBasicEmail">
+                                    <Form.Label><span className="form__icon"></span>Read Duration</Form.Label>
+                                        <input name="duration" className="form-control" type="text" value={this.state.duration} placeholder="Expected read duration of Blog in minutes." onChange={this.handleInputChange} />
+                                        <div className="invalid__feedback">{this.state.errors.duration}</div>
+                                    </Form.Group>
+                                    <Button className='mt-4' onClick={this.handleSubmit} variant="info"><span className='fa fa-paper-plane mr-3' />Publish Blog</Button>
                             </Form>
                           </Jumbotron>
                         </div>

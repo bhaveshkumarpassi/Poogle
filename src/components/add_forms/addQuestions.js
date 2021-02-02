@@ -8,11 +8,10 @@ import Select from 'react-select'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; 
 import {toolbarOptions, formats} from './text_editorVar';
+import QuillEditor from './editor';
 
-
-const spaces = [{value:'AI',label:'Artificial Intelligence'}, 
-    {value:'Frontend', label:'Frontend'}, 
-    {value:'Backend', label:'Backend'}];
+const spaces = [{value:"Web-Development",label:'Web Development'}, 
+    {value:"Android-Development", label:'Android Development'}];
 
 class addQuestions extends Component {
     constructor(props) {
@@ -20,7 +19,8 @@ class addQuestions extends Component {
         this.state = { 
           description: '',
           title:'',
-          category:'',
+          category:[],
+         files:[],
           errors:{
             description:'',
             category:'',
@@ -31,6 +31,7 @@ class addQuestions extends Component {
        } 
         this.handleEditorChange = this.handleEditorChange.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
+        this.handleFileChange = this.handleFileChange.bind(this);
         this.handleMultiSelectChange = this.handleMultiSelectChange.bind(this)
         this.handleSubmit= this.handleSubmit.bind(this)
       }
@@ -46,12 +47,18 @@ class addQuestions extends Component {
         });
       }
       handleMultiSelectChange = category => {
-      this.setState({ category:category });
+      this.setState({ category:category })
       }
       
       handleEditorChange(value) {
+        console.log(this.state.description)
         this.setState({ description: value })
       }
+
+      handleFileChange(files) {
+        this.setState({ files: files});
+      }
+
       handleSubmit(event){
         event.preventDefault();
         const isValid = this.formValidation();
@@ -60,8 +67,25 @@ class addQuestions extends Component {
         if(isValid){
             window.alert("Form Submitted");
             
+            var tagNames = [];
+            var tagIds = [];
+            var len = this.state.category.length;
+             for(var i=0;i<len;i++)
+            {
+              tagNames.push(this.state.category[i].label);
+              tagIds.push(this.state.category[i].value);
+
+            }
+            const newQuestion = {
+              heading: this.state.title,
+              tagNames: tagNames,
+              tagIds: tagIds,
+              description: this.state.description
+            };
+
+            this.props.postQuestion(newQuestion);
         }
-        console.log(this.state);
+        //console.log(this.state);
       }
       
       formValidation = () =>{
@@ -76,6 +100,11 @@ class addQuestions extends Component {
           categoryError = "You must select at least one category";
           error = true;            
         }
+
+        /*if(!category.trim()){
+          categoryError = "You must select at least one category";
+          error = true; 
+        }*/
         
         if(!description.trim()|| !description.trim().length || description==="<p><br></p>"){
           descriptionError = "Description is required";
@@ -118,15 +147,23 @@ class addQuestions extends Component {
                               </Form.Group>
 
                               <Form.Group controlId="formBasicDropdown">
+                                {/* <Form.Label><span className="form__icon"></span>Title</Form.Label>
+                                  <input name="category" className="form-control" type="text" value={this.state.category} placeholder="Enter Category" onChange={this.handleInputChange} />
+                                    <div className="invalid__feedback">{this.state.errors.category}</div> */}
                                 <Form.Label><span className="form__icon"></span>Choose Category</Form.Label>
                                 <div><Select isMulti name="category" options={spaces} className="basic-multi-select" value={this.state.category} onChange={this.handleMultiSelectChange} classNamePrefix="select"/></div>
-                                    <div className="invalid__feedback">{this.state.errors.category}</div>
+                                <div className="invalid__feedback">{this.state.errors.category}</div>
                               </Form.Group>
 
                               <Form.Group>
                                 <Form.Label><span className="form__icon"></span>Describe Here</Form.Label>
-                                <ReactQuill theme="snow"  value={this.state.description} onChange={this.handleEditorChange} 
-                                  style={{backgroundColor: 'white'}} modules={this.modules} formats= {formats}/>
+                                {/* <ReactQuill theme="snow"  value={this.state.description} onChange={this.handleEditorChange} 
+                                  style={{backgroundColor: 'white'}} modules={this.modules} formats= {formats}/> */}
+                                  <QuillEditor
+                                    placeholder={"Start Posting Something"}
+                                    onEditorChange={this.handleEditorChange}
+                                    onFilesChange={this.handleFileChange}
+                                  />
                                   <div className="invalid__feedback">{this.state.errors.description}</div>
                               </Form.Group>
                               <Button onClick={this.handleSubmit} variant="info"><span className='fa fa-paper-plane mr-3' />Submit</Button>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchSpaces, fetchQuestions, fetchUser, fetchAnswers, fetchComments, postComment, deleteComment} from "../redux/ActionCreators";
+import { fetchSpaces, fetchQuestions, fetchUser, fetchAnswers, fetchComments, postComment, deleteComment, postQuestion} from "../redux/ActionCreators";
 import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
@@ -15,6 +15,9 @@ import Contact from './ContactUs/contact';
 import Notifications from './notifications/notification';
 import AddQuestion from './add_forms/addQuestions';
 import AddBlog from './add_forms/addBlogs';
+// import PostPage from "./post/PostPage";
+// import BlogPage from "./post/BlogPage";
+// import CreateBlogPage from "./post/CreatePage";
 
 const mapStateToProps = (state) => {
 	return {
@@ -43,7 +46,8 @@ const mapDispatchToProps = (dispatch) => ({
 		dispatch(fetchComments())
 	},
 	postComment: (questionId, author, comment) => dispatch(postComment(questionId, author, comment)),
-	deleteComment: (commentId) => dispatch(deleteComment(commentId))
+	deleteComment: (commentId) => dispatch(deleteComment(commentId)),
+	postQuestion: (question) => dispatch(postQuestion(question))
 });
 
 class Main extends Component {
@@ -65,12 +69,12 @@ class Main extends Component {
 				<Questions
 					space={
 						this.props.spaces.spaces.filter(
-							(space) => space.id === parseInt(match.params.spaceId, 10)
+							(space) => space._id === match.params.spaceId
 						)[0]
 					}
 					questions={this.props.questions.questions.filter(
 						(question) =>
-							question.tagIds.indexOf(parseInt(match.params.spaceId, 10)) > -1
+							question.tagIds.indexOf(match.params.stringId) > -1
 					)}
 					questionsErrMess={this.props.questions.errMess}
 					questionsIsLoading={this.props.questions.isLoading}
@@ -107,7 +111,7 @@ class Main extends Component {
 			return(
 				<SingleQuestion
 					question={
-						this.props.questions.questions.filter((ques) => ques.id === parseInt(match.params.quesId, 10))[0]
+						this.props.questions.questions.filter((ques) => ques._id === match.params.quesId)[0]
 					}
 					isLoading={this.props.questions.isLoading}
 					errMess={this.props.spaces.errMess}
@@ -135,7 +139,7 @@ class Main extends Component {
 						path="/spaces"
 						component={() => <Spaces spaces={this.props.spaces} />}
 					/>
-					<Route path="/spaces/:spaceId" component={SpaceWithId} />
+					<Route exact path="/spaces/:spaceId/:stringId" component={SpaceWithId} />
 					<Route
 						exact
 						path="/space-:spaceId/question-:quesId"
@@ -146,8 +150,11 @@ class Main extends Component {
 					<Route path="/contact" component={Contact} />
 					<Route path="/notifications" component={Notifications}/>
 					<Route path="/login" component={Login} />
-					<Route path="/addQuestion" component={AddQuestion}/>
-					<Route path="/addBlog" component={AddBlog} />
+					<Route exact path="/addQuestion" component={() => <AddQuestion postQuestion={this.props.postQuestion}/>}/>
+					<Route path="/addBlog" component={() => <AddBlog postQuestion={this.props.postQuestion} />} />
+					{/* <Route exact path="/blog" component={BlogPage} />
+					<Route exact path="/blog/create" component={CreateBlogPage} />
+          			<Route exact path="/blog/post/:postId" component={PostPage} /> */}
 					<Route path="/signup" component={Signup} />
 					<Redirect to="/home" />
 				</Switch>
