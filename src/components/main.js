@@ -15,13 +15,11 @@ import Contact from './ContactUs/contact';
 import Notifications from './notifications/notification';
 import AddQuestion from './add_forms/addQuestions';
 import AddBlog from './add_forms/addBlogs';
-<<<<<<< HEAD
+import Logout from './login_signup/logout';
 // import PostPage from "./post/PostPage";
 // import BlogPage from "./post/BlogPage";
 // import CreateBlogPage from "./post/CreatePage";
-=======
-import Logout from './login_signup/logout'
->>>>>>> 54a1941395469053268fc05f89bacee7694e8532
+
 
 const mapStateToProps = (state) => {
 	return {
@@ -60,11 +58,11 @@ class Main extends Component {
 	}
 
 	componentDidMount() {
-		// this.props.fetchSpaces();
-		// this.props.fetchQuestions();
-		// this.props.fetchUser();
-		// this.props.fetchAnswers();
-		// this.props.fetchComments();
+		this.props.fetchSpaces();
+		this.props.fetchQuestions();
+		this.props.fetchUser();
+		this.props.fetchAnswers();
+		this.props.fetchComments();
 	}
 
 	render() {
