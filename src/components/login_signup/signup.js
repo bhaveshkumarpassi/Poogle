@@ -16,6 +16,9 @@ import { SiGooglescholar } from "react-icons/si";
 import { MdDescription } from "react-icons/md";
 import {GiSelfLove} from 'react-icons/gi';
 import { HiOutlineUserGroup } from "react-icons/hi";
+import {signUp} from '../../redux/ActionCreators';
+import {connect} from 'react-redux';
+
 
 const spaces = [{value:'AI',label:'Artificial Intelligence'}, 
     {value:'Frontend', label:'Frontend'}, 
@@ -41,30 +44,33 @@ class Signup extends Component {
             Uname:"",
             password:"",
             about:{
-                graduation_year:null,
-                field:null,
-                description:null
+                graduation_year:"",
+                field:"",
+                description:""
             },
-            interests:null,
+            interests:"",
             errors:{
                 email:"",
-                password:""
+                password:"",
+                userName:"",
+                Uname:"",
+                interests:[]
             },
             validated:false
         }
-        this.handleChange = this.handleChange.bind(this)
-        this.handleAboutChange = this.handleAboutChange.bind(this);
         this._next = this._next.bind(this)
         this._prev = this._prev.bind(this)
-  }
-  handleChange(event) {
-    const target = event.target;
-    const name = target.name;
-    this.setState({
-        [name]: event.target.value
-    });   
-  }
-  handleAboutChange(event){
+    }
+    
+    handleChange = (event)=> {
+        const target = event.target;
+        const name = target.name;
+        this.setState({
+            [name]: event.target.value
+        });
+    }
+    
+    handleAboutChange = (event)=> {
       const target = event.target;
       const name=  target.name;
       this.setState( prevState =>({
@@ -89,13 +95,84 @@ class Signup extends Component {
         }))
     }
     
+    
+    step1FormValidation = ()=>{
+        const{email, password} = this.state;
+        let emailError="", passwordError = "", error=false;
+        if(!email){
+            emailError = "Email is required";
+            error = true;            
+        }
+        else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)){
+            emailError = "Email address is Invalid";
+            error= true;
+        }
+        
+        if(!password.trim()){
+            passwordError="Password is required"
+            error= true;
+        }
+        else if(password.length<4){
+            passwordError="Length of password must be 4 characters or more"
+            error= true;
+        }
+
+        this.setState(prevState => ({
+            errors:{
+                email:emailError,
+                password: passwordError,
+            }
+        }))
+        
+        return !error;
+
+    }
+
+    formValidation = () =>{
+        const{userName, Uname,interests} = this.state;
+        let UnameError="",interestsError="",userNameError="", error;
+        
+        if(!Uname.trim()){
+            UnameError = "Name is required";
+            error = true;
+        }
+
+        if(!interests||!interests.length){                   
+            interestsError = "You must select one of the interests";
+            error = true;
+        }
+
+        if(!userName.trim()){
+            userNameError = "UserName is required";
+            error = true;
+        }else if("userName already exists"&&0){//edit it
+            userNameError = "This Username is already taken.";
+            error=true;
+        }
+        
+        this.setState(prevState => ({
+            errors:{
+                interests:interestsError,
+                Uname:UnameError,
+                userName:userNameError
+            }
+        }))
+        
+        return !error;
+    }
+    
     _next(event) {
         event.preventDefault()
-        let currentStep = this.state.currentStep
-        currentStep = currentStep >= 2? 3: currentStep + 1
-        this.setState({
-        currentStep: currentStep
-        })
+        const isValid  = this.step1FormValidation();
+        if(isValid){
+            let currentStep = this.state.currentStep
+            currentStep = currentStep >= 2? 2: currentStep + 1
+            this.setState({
+            currentStep: currentStep,
+            
+            })
+        }
+        
     }
   _prev(event) {
         event.preventDefault()
@@ -105,43 +182,26 @@ class Signup extends Component {
         currentStep: currentStep
         })
     }
-    
-    formValidation = () =>{
-        const{email, password} = this.state;
-        let emailError="", passwordError = "", error;
-        if(!email){
-            emailError = "Email is required";
-            error = true;            
-        }
-        else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email))
-        {
-            emailError = "Email address is Invalid";
-            error= true;
-        }
-        if(!password.trim())
-        {
-            passwordError="Password is required"
-            error= true;
-        }
-        else if(password.length<5)
-        {
-            passwordError="Length of password must be 5 characters or more"
-            error= true;
-        }
-        
-        this.setState(prevState => ({
-            errors:{
-                email:emailError,
-                password: passwordError
-            }
-        }))
-        
-        return !error;
-    }
-    
+
     handleSubmit = (event) => {
-    event.preventDefault()
-    console.log(this.state);  
+    event.preventDefault();
+    const isValid  = this.formValidation();
+    this.setState({
+        validated:isValid
+    })
+    if(isValid){
+        console.log(this.state);
+        
+        let {email, password, userName, about, Uname, interests} = this.state;
+        //modify interests, about into the form they are required          ------LEFT
+        interests = interests.map((interest)=>{
+            return interest.value
+        })
+        //intentionally not sending interests and about. Need to add spaces first
+        this.props.signUp({name: Uname, user_name:userName, email, password});
+        window.alert('Form Submitted ');    
+    }
+      
     }
 
       firstPage(){
@@ -154,12 +214,14 @@ class Signup extends Component {
                         <Form.Label><span className="form__icon"><AiOutlineMail/></span>Email address</Form.Label>
                             <input name="email"  className="form-control" type="email"  placeholder="Enter email" 
                             value = {this.state.email} onChange={this.handleChange}/>
+                            <div className="invalid__feedback">{this.state.errors.email}</div>
                     </Form.Group>
                     
                     <Form.Group controlId="formBasicPassword">
                             <Form.Label><span className="form__icon"><RiLockPasswordFill/></span>Password</Form.Label>
                             <input name="password" className="form-control" type="password"  placeholder="Enter Password" 
                             value = {this.state.password} onChange={this.handleChange}/>
+                            <div className="invalid__feedback">{this.state.errors.password}</div>
                     </Form.Group>
                     <div>
                         
@@ -203,11 +265,13 @@ class Signup extends Component {
                     <Form.Group controlId="formBasicInput">
                         <Form.Label><span className="form__icon"><FaUserAlt/></span>Name</Form.Label>
                             <input name="Uname"  className="form-control" type="text"  placeholder="Enter name" value = {this.state.Uname} onChange={this.handleChange}/>
+                            <div className="invalid__feedback">{this.state.errors.Uname}</div>
                     </Form.Group>
                     <Form.Group controlId="formBasicName">
                         <Form.Label><span className="form__icon"><FiUserPlus/></span>UserName</Form.Label>
                             <input name="userName"  className="form-control" type="text"  placeholder="Enter userName" 
                             value = {this.state.userName} onChange={this.handleChange}/>
+                            <div className="invalid__feedback">{this.state.errors.userName}</div>
                     </Form.Group>
                     <Form.Group controlId="formBasicInput">
                         <Form.Label><span className="form__icon"><SiGooglescholar/></span>Graduation Year</Form.Label>
@@ -222,6 +286,7 @@ class Signup extends Component {
                     <Form.Group>
                         <Form.Label><span className="form__icon"><GiSelfLove/></span>Select your Interests</Form.Label>
                         <div><Select isMulti name="interests" options={spaces} className="basic-multi-select" value={this.state.interests} onChange={this.handleMultiSelectChange} classNamePrefix="select"/></div>
+                        <div className="invalid__feedback">{this.state.errors.interests}</div>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicEmail">
@@ -278,4 +343,4 @@ class Signup extends Component {
     }
 }
 
-export default Signup
+export default connect(null,{signUp}) (Signup);

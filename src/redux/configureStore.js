@@ -6,6 +6,7 @@ import { Answers } from './reducers/answers';
 import {user} from './reducers/user_reducer'
 import thunk from "redux-thunk";
 import logger from "redux-logger";
+import authReducer from "./reducers/authReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const ConfigureStore = () => {
@@ -16,6 +17,7 @@ export const ConfigureStore = () => {
 			answers: Answers,
 			comments: Comments,
 			user,
+			auth:authReducer
 		}),
 		composeEnhancers(applyMiddleware(thunk, logger))
 	);

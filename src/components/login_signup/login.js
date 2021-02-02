@@ -9,6 +9,10 @@ import {RiLockPasswordFill} from 'react-icons/ri';
 import './login_signup.css';
 import GoogleIcon from '../../Images/google_color.svg';
 import FacebookIcon from '../../Images/facebook_color.svg';
+import {signIn} from '../../redux/ActionCreators';
+import {connect} from 'react-redux';
+
+
 class login extends Component {
     constructor(props){
         super(props);
@@ -73,7 +77,9 @@ class login extends Component {
             validated:isValid
         })
         if(isValid){
-            window.alert("Form Submitted")
+            const{email, password} = this.state;
+            this.props.signIn({email, password});
+            window.alert("Form Submitted");
         }
         console.log(this.state);
     }
@@ -142,4 +148,4 @@ class login extends Component {
         )
     }
 }
-export default login;
+export default connect(null,{signIn})(login);
