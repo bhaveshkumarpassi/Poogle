@@ -2,6 +2,84 @@ import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
 
 
+//--------------------------AUTHENTICATION-----------------------------------/
+
+
+export const signIn = (userDetails) => async (dispatch,getState) =>{
+	try{
+		let response = await fetch(baseUrl+'users/login', {
+			method: 'POST', headers: {'Content-Type': 'application/json'}, body:JSON.stringify(userDetails)
+		});
+
+		if(response.ok){
+			response = await (response.json());	
+			localStorage.setItem('isSignedIn','true');
+    		localStorage.setItem('userId', response.user._id);
+			localStorage.setItem('token',response.token);
+			dispatch({type:ActionTypes.SIGN_IN,payload:response});
+		}else{
+			response = await response.text();
+			throw new Error(response);
+		}
+	}catch(err){
+		dispatch({type:ActionTypes.AUTH_FAILED,payload:{error:err}});
+	}
+}
+
+export const signUp = (userDetails) => async (dispatch,getState) =>{
+	try{
+		console.log(userDetails);
+		let response = await fetch(baseUrl+'users', {
+			method: 'POST', headers: {'Content-Type': 'application/json'}, body:JSON.stringify(userDetails)
+		});
+		console.log(response);
+
+		if(response.ok){
+			response = await (response.json());	
+			localStorage.setItem('isSignedIn',true);
+    		localStorage.setItem('userId', response.user._id);
+			localStorage.setItem('token',response.token);
+			dispatch({type:ActionTypes.SIGN_UP,payload:response});
+		}else{
+			response = await response.text();
+			console.log("Eror", response);
+			throw new Error(response);
+		}
+	}catch(err){
+		dispatch({type:ActionTypes.AUTH_FAILED,payload:{error:err}});
+	}
+}
+
+// Add authorization header in request and modify the logout
+export const logOut = (userToken) => async (dispatch,getState) =>{
+	try{
+		let bearer_token = 'Bearer '+userToken.token;
+		let response = await fetch(baseUrl+'users/logout', {
+			method: 'POST', headers: {'Content-Type': 'application/json','Authorization':bearer_token}
+		});
+
+		console.log(response);
+		if(response.ok){
+			response = await (response.json());	
+			localStorage.removeItem('isSignedIn');
+			localStorage.removeItem('userId')
+			localStorage.removeItem('token');
+			dispatch({type:ActionTypes.SIGN_OUT,payload:response});
+		}else{
+			response = await response.text();
+			throw new Error(response);
+		}
+	}catch(err){
+		dispatch({type:ActionTypes.SIGN_OUT,payload:{error:err}});
+	}
+}
+
+
+
+
+
+
+//**************************************************************************** */
 // ------------------------------------ SPACES -------------------------------/
 
 export const fetchSpaces = () => (dispatch) => {
@@ -45,7 +123,7 @@ export const addSpaces = (spaces) => ({
 	type: ActionTypes.ADD_SPACES,
 	payload: spaces,
 });
-
+//************************************************************************************/
 //--------------------------------------  QUESTIONS  ------------------------------- /
 
 export const fetchQuestions = () => (dispatch) => {

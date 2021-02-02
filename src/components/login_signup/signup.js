@@ -16,6 +16,9 @@ import { SiGooglescholar } from "react-icons/si";
 import { MdDescription } from "react-icons/md";
 import {GiSelfLove} from 'react-icons/gi';
 import { HiOutlineUserGroup } from "react-icons/hi";
+import {signUp} from '../../redux/ActionCreators';
+import {connect} from 'react-redux';
+
 
 const spaces = [{value:'AI',label:'Artificial Intelligence'}, 
     {value:'Frontend', label:'Frontend'}, 
@@ -41,11 +44,11 @@ class Signup extends Component {
             Uname:"",
             password:"",
             about:{
-                graduation_year:null,
-                field:null,
-                description:null
+                graduation_year:"",
+                field:"",
+                description:""
             },
-            interests:null,
+            interests:"",
             errors:{
                 email:"",
                 password:"",
@@ -55,19 +58,19 @@ class Signup extends Component {
             },
             validated:false
         }
-        this.handleChange = this.handleChange.bind(this)
-        this.handleAboutChange = this.handleAboutChange.bind(this);
         this._next = this._next.bind(this)
         this._prev = this._prev.bind(this)
-  }
-  handleChange(event) {
-    const target = event.target;
-    const name = target.name;
-    this.setState({
-        [name]: event.target.value
-    });   
-  }
-  handleAboutChange(event){
+    }
+    
+    handleChange = (event)=> {
+        const target = event.target;
+        const name = target.name;
+        this.setState({
+            [name]: event.target.value
+        });
+    }
+    
+    handleAboutChange = (event)=> {
       const target = event.target;
       const name=  target.name;
       this.setState( prevState =>({
@@ -134,7 +137,7 @@ class Signup extends Component {
             error = true;
         }
 
-        if(!interests||!interests.length){
+        if(!interests||!interests.length){                   
             interestsError = "You must select one of the interests";
             error = true;
         }
@@ -183,10 +186,20 @@ class Signup extends Component {
     handleSubmit = (event) => {
     event.preventDefault();
     const isValid  = this.formValidation();
-    
+    this.setState({
+        validated:isValid
+    })
     if(isValid){
         console.log(this.state);
-        window.alert('Form Submitted ')    
+        
+        let {email, password, userName, about, Uname, interests} = this.state;
+        //modify interests, about into the form they are required          ------LEFT
+        interests = interests.map((interest)=>{
+            return interest.value
+        })
+        //intentionally not sending interests and about. Need to add spaces first
+        this.props.signUp({name: Uname, user_name:userName, email, password});
+        window.alert('Form Submitted ');    
     }
       
     }
@@ -330,4 +343,4 @@ class Signup extends Component {
     }
 }
 
-export default Signup
+export default connect(null,{signUp}) (Signup);

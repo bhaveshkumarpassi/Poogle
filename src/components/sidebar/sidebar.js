@@ -74,6 +74,10 @@ return(
     <MenuItem icon={<span className='fa fa-sign-in'/>}>
       Login <Link to="/login"/>
     </MenuItem>
+    <MenuItem icon={<span className='fa fa-sign-in'/>}>
+      Logout <Link to="/logout"/>
+    </MenuItem>
+    
   </Menu>
   </SidebarContent>
   <SidebarFooter>

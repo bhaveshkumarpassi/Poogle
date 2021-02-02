@@ -15,6 +15,7 @@ import Contact from './ContactUs/contact';
 import Notifications from './notifications/notification';
 import AddQuestion from './add_forms/addQuestions';
 import AddBlog from './add_forms/addBlogs';
+import Logout from './login_signup/logout'
 
 const mapStateToProps = (state) => {
 	return {
@@ -52,11 +53,11 @@ class Main extends Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchSpaces();
-		this.props.fetchQuestions();
-		this.props.fetchUser();
-		this.props.fetchAnswers();
-		this.props.fetchComments();
+		// this.props.fetchSpaces();
+		// this.props.fetchQuestions();
+		// this.props.fetchUser();
+		// this.props.fetchAnswers();
+		// this.props.fetchComments();
 	}
 
 	render() {
@@ -149,6 +150,7 @@ class Main extends Component {
 					<Route path="/addQuestion" component={AddQuestion}/>
 					<Route path="/addBlog" component={AddBlog} />
 					<Route path="/signup" component={Signup} />
+					<Route path="/logout" component={Logout}/>
 					<Redirect to="/home" />
 				</Switch>
 			</div>
