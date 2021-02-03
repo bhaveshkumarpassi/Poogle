@@ -74,16 +74,16 @@ class addQuestions extends Component {
             {
               tagNames.push(this.state.category[i].label);
               tagIds.push(this.state.category[i].value);
-
             }
             const newQuestion = {
               heading: this.state.title,
               tagNames: tagNames,
               tagIds: tagIds,
-              description: this.state.description
+              description: this.state.description,
+              author: this.props.auth.userId
             };
 
-            this.props.postQuestion(newQuestion);
+            this.props.postQuestion(newQuestion, this.state.token);
         }
         //console.log(this.state);
       }
@@ -157,20 +157,20 @@ class addQuestions extends Component {
 
                               <Form.Group>
                                 <Form.Label><span className="form__icon"></span>Describe Here</Form.Label>
-                                {/* <ReactQuill theme="snow"  value={this.state.description} onChange={this.handleEditorChange} 
-                                  style={{backgroundColor: 'white'}} modules={this.modules} formats= {formats}/> */}
-                                  <QuillEditor
+                                <ReactQuill theme="snow"  value={this.state.description} onChange={this.handleEditorChange} 
+                                  style={{backgroundColor: 'white'}} modules={this.modules} formats= {formats}/>
+                                  {/* <QuillEditor
                                     placeholder={"Start Posting Something"}
                                     onEditorChange={this.handleEditorChange}
                                     onFilesChange={this.handleFileChange}
-                                  />
+                                  /> */}
                                   <div className="invalid__feedback">{this.state.errors.description}</div>
                               </Form.Group>
                               <Button onClick={this.handleSubmit} variant="info"><span className='fa fa-paper-plane mr-3' />Submit</Button>
                             </Form>
                           </Jumbotron>
                         </div>
-                
+                <p>{this.props.auth.userId}</p>
                 </Col>
                 </Container>
             

@@ -38,13 +38,13 @@ function RenderMenuItem({question, class_Name, onClick}) {
                         <div className='col-12'>
                         <div className='row'>
                         <div className='col-12 col-sm-8 col-md-8'>
-                            <ListGroupItemHeading className='question-heading'>{question.question}</ListGroupItemHeading>
+                            <ListGroupItemHeading className='question-heading'>{question.heading}</ListGroupItemHeading>
                             <RenderTags question={question} />
                             <ListGroupItemText className='question-text'>
-                                Posted by :-  {question.author}
+                                Posted by :-  {question.author.user_name}
                             </ListGroupItemText>
                             <ListGroupItemText className='question-text'>
-                                Posted at :- {question.date}
+                                Posted at :- {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(question.createdAt)))}
                             </ListGroupItemText>
                         </div>
                         <div className='col-12 col-sm-4 col-md-4'>

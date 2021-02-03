@@ -265,7 +265,7 @@ class RenderQuestionAnswers extends Component {
                 <Row>
                     <Col className='mb-3 single-question-profile' xs={4} md={3} lg={2}>
                         <CardImg className='single-question-profile-pic' src={profilePic}/>
-                        <CardText className='single-question-profile-name'>@{this.props.question.author} has a question ????</CardText>
+                        <CardText className='single-question-profile-name'>@{this.props.question.author.user_name} has a question ????</CardText>
                     </Col>
                     <Col xs={12} md={9} lg={10}>
                         <Row>

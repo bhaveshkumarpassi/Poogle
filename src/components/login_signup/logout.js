@@ -28,7 +28,7 @@ class Logout extends Component {
         let message="";
         if(this.state.isSignedIn){
             this.props.logOut({token:this.state.token});
-            message = "Login req sent. Hope it gets accepted soon." 
+            message = "Logout req sent. Hope it gets accepted soon." 
         }
         else{
             message = "Are you kidding me? You are not logged In"

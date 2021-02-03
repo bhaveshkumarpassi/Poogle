@@ -13,7 +13,7 @@ export const signIn = (userDetails) => async (dispatch,getState) =>{
 
 		if(response.ok){
 			response = await (response.json());	
-			localStorage.setItem('isSignedIn','true');
+			localStorage.setItem('isSignedIn',true);
     		localStorage.setItem('userId', response.user._id);
 			localStorage.setItem('token',response.token);
 			dispatch({type:ActionTypes.SIGN_IN,payload:response});
@@ -131,18 +131,18 @@ export const addQuestion = (question) => ({
     payload: question
 });
 
-export const postQuestion = (question) => (dispatch) => {
+export const postQuestion = (question, userToken) => (dispatch) => {
 
 	const newQuestion = question;
 	newQuestion.dateNum = Date.now();
-	//const bearer = 'Bearer ' + localStorage.getItem('token');
+	const bearer = 'Bearer ' + userToken;
 	
     return fetch(baseUrl + 'questions', {
         method: "POST",
         body: JSON.stringify(newQuestion),
         headers: {
 		  "Content-Type": "application/json",
-		  //"Authorization": bearer
+		  "Authorization": bearer
         },
         //credentials: "same-origin"
     })

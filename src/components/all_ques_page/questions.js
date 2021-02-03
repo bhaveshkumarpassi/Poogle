@@ -34,7 +34,7 @@ function RenderMenuItem({question, spaceId, class_Name, onClick}) {
                             <ListGroupItemHeading className='question-heading'>{question.heading}</ListGroupItemHeading>
                             <RenderTags question={question} />
                             <ListGroupItemText className='question-text'>
-                                Posted by :-  {question.author}
+                                Posted by :-  {question.author.user_name}
                             </ListGroupItemText>
                             <ListGroupItemText className='question-text'>
                                 Posted at :- {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(question.createdAt)))}

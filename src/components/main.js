@@ -27,7 +27,8 @@ const mapStateToProps = (state) => {
 		questions: state.questions,
 		answers: state.answers,
 		user: state.user,
-		comments: state.comments
+		comments: state.comments,
+		auth: state.auth
 	};
 };
 
@@ -49,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	postComment: (questionId, author, comment) => dispatch(postComment(questionId, author, comment)),
 	deleteComment: (commentId) => dispatch(deleteComment(commentId)),
-	postQuestion: (question) => dispatch(postQuestion(question))
+	postQuestion: (question, userToken) => dispatch(postQuestion(question, userToken))
 });
 
 class Main extends Component {
@@ -131,29 +132,40 @@ class Main extends Component {
 			);
 		}
 
+		const PrivateRoute = ({ component: Component, ...rest }) => (
+			<Route {...rest} render={(props) => (
+			  this.props.auth.isSignedIn
+				? <Component {...props} />
+				: <Redirect to={{
+					pathname: '/login',
+					state: { from: props.location }
+				  }} />
+			)} />
+		  );
+
 		return (
 			<div>
 				<ScrollToTop/>
 				<Switch>
-					<Route path="/home" component={HomeQuestions} />
-					<Route
+					<PrivateRoute path="/home" component={HomeQuestions} />
+					<PrivateRoute
 						exact
 						path="/spaces"
 						component={() => <Spaces spaces={this.props.spaces} />}
 					/>
-					<Route exact path="/spaces/:spaceId/:stringId" component={SpaceWithId} />
-					<Route
+					<PrivateRoute exact path="/spaces/:spaceId/:stringId" component={SpaceWithId} />
+					<PrivateRoute
 						exact
 						path="/space-:spaceId/question-:quesId"
 						component={QuestionWithId}
 					/>
-					<Route exact path="/profile/:userId" component={Profile_page}/>
-					<Route path="/chat" component={Chat} />
+					<PrivateRoute exact path="/profile/:userId" component={Profile_page}/>
+					<PrivateRoute path="/chat" component={Chat} />
 					<Route path="/contact" component={Contact} />
-					<Route path="/notifications" component={Notifications}/>
+					<PrivateRoute path="/notifications" component={Notifications}/>
 					<Route path="/login" component={Login} />
-					<Route exact path="/addQuestion" component={() => <AddQuestion postQuestion={this.props.postQuestion}/>}/>
-					<Route path="/addBlog" component={() => <AddBlog postQuestion={this.props.postQuestion} />} />
+					<PrivateRoute exact path="/addQuestion" component={() => <AddQuestion postQuestion={this.props.postQuestion} auth={this.props.auth}/>}/>
+					<PrivateRoute path="/addBlog" component={() => <AddBlog postQuestion={this.props.postQuestion} />} />
 					{/* <Route exact path="/blog" component={BlogPage} />
 					<Route exact path="/blog/create" component={CreateBlogPage} />
           			<Route exact path="/blog/post/:postId" component={PostPage} /> */}

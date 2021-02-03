@@ -18,11 +18,11 @@ import {GiSelfLove} from 'react-icons/gi';
 import { HiOutlineUserGroup } from "react-icons/hi";
 import {signUp} from '../../redux/ActionCreators';
 import {connect} from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-
-const spaces = [{value:'AI',label:'Artificial Intelligence'}, 
-    {value:'Frontend', label:'Frontend'}, 
-    {value:'Backend', label:'Backend'}];
+const spaces = [{value:'Web-Development',label:'Web Development'}, 
+    {value:'Android-Development', label:'Android Development'}];
 
 const fields = [{value:'Computer Science', label:'Computer Science'}, 
         {value:'Electrical Engineering', label:'Electrical Engineering'}, 
@@ -138,7 +138,7 @@ class Signup extends Component {
         }
 
         if(!interests||!interests.length){                   
-            interestsError = "You must select one of the interests";
+            interestsError = "You must select atleast one of the interests";
             error = true;
         }
 
@@ -183,7 +183,9 @@ class Signup extends Component {
         })
     }
 
-    handleSubmit = (event) => {
+    notify = (message) => toast(message);
+
+    handleSubmit = async (event) => {
     event.preventDefault();
     const isValid  = this.formValidation();
     this.setState({
@@ -198,8 +200,15 @@ class Signup extends Component {
             return interest.value
         })
         //intentionally not sending interests and about. Need to add spaces first
-        this.props.signUp({name: Uname, user_name:userName, email, password});
-        window.alert('Form Submitted ');    
+        await this.props.signUp({name: Uname, user_name:userName, email, password});
+        
+        if(this.props.auth.err)
+        {
+            this.notify("SignUp Unsuccesful!!");
+            this.notify("Either the email or username is already in use.");
+        }    
+        else 
+            this.notify("SignUp Succesful!!");
     }
       
     }
@@ -303,6 +312,7 @@ class Signup extends Component {
                             <button className="btn btn-danger"  type="button" onClick={this._prev}>Go Back</button>
                         </Col>
                         </Row>
+                        <ToastContainer/>
                     </div>
                     
                     
@@ -343,4 +353,8 @@ class Signup extends Component {
     }
 }
 
-export default connect(null,{signUp}) (Signup);
+const mapStateToProps = (state)=> {
+    return {auth: state.auth};
+}
+
+export default connect(mapStateToProps,{signUp}) (Signup);

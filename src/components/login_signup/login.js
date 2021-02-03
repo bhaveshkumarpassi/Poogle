@@ -3,7 +3,7 @@ import {Container, Row, Col, Image} from 'react-bootstrap';
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Form from 'react-bootstrap/Form';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {AiOutlineMail} from 'react-icons/ai';
 import {RiLockPasswordFill} from 'react-icons/ri';
 import './login_signup.css';
@@ -11,7 +11,8 @@ import GoogleIcon from '../../Images/google_color.svg';
 import FacebookIcon from '../../Images/facebook_color.svg';
 import {signIn} from '../../redux/ActionCreators';
 import {connect} from 'react-redux';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class login extends Component {
     constructor(props){
@@ -23,7 +24,8 @@ class login extends Component {
                 email:"",
                 password:""
             },
-            validated:false
+            validated:false,
+            authFailed: false
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -70,7 +72,10 @@ class login extends Component {
         return !error;
     }
 
-    handleSubmit(event) {
+
+    notify = (message) => toast(message);
+
+    handleSubmit = async (event) => {
         event.preventDefault();
         const isValid = this.formValidation();
         this.setState({
@@ -78,13 +83,21 @@ class login extends Component {
         })
         if(isValid){
             const{email, password} = this.state;
-            this.props.signIn({email, password});
-            window.alert("Form Submitted");
+            await this.props.signIn({email, password});
+            
+            if(this.props.auth.err)
+            {
+                this.notify(this.props.auth.err.message);
+                this.notify("Login Unsuccesful!!");
+            }    
+            else 
+                this.notify("Login Succesful!!");
         }
         console.log(this.state);
     }
 
     render() {
+
         return (
             <div className="forms__section">
                 <Container>
@@ -144,8 +157,14 @@ class login extends Component {
                         </div>
                     </Col>
                 </Container>
+                <ToastContainer />
             </div>
         )
     }
 }
-export default connect(null,{signIn})(login);
+
+const mapStateToProps = (state)=> {
+    return {auth: state.auth};
+}
+
+export default connect(mapStateToProps,{signIn})(login);
