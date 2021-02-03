@@ -64,7 +64,7 @@ return(
     </SubMenu>
     
     <MenuItem icon={<HiChat />}>
-      Chat Others <Link to="/chat"/>
+      Get Assistance <Link to="/chat"/>
     </MenuItem>
 
     <MenuItem icon={<RiTeamLine />}>

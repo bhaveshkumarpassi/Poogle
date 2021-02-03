@@ -91,7 +91,15 @@ class login extends Component {
                 this.notify("Login Unsuccesful!!");
             }    
             else 
-                this.notify("Login Succesful!!");
+            {
+                this.notify("Login Succesful!!")
+
+                setTimeout(() => {
+                    let { from } = this.props.location.state || { from: { pathname: "/" } };
+                    this.props.history.push(from.pathname);
+                }, 5000);
+
+            }    
         }
         console.log(this.state);
     }
@@ -157,7 +165,8 @@ class login extends Component {
                         </div>
                     </Col>
                 </Container>
-                <ToastContainer />
+                <ToastContainer
+                />
             </div>
         )
     }
