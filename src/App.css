@@ -38,3 +38,7 @@
         display: flex;
     }
 }
+.editor__content img{
+    display: block;
+    margin:5px auto;
+} 

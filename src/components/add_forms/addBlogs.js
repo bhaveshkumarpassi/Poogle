@@ -6,8 +6,11 @@ import './add_forms.css'
 import Form from 'react-bootstrap/Form';
 import Select from 'react-select'
 import ReactQuill from 'react-quill';
+import {Quill} from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; 
 import {toolbarOptions, formats} from './text_editorVar';
+import ImageCompress from 'quill-image-compress';
+Quill.register('modules/imageCompress', ImageCompress);
 
 const spaces = [{value:'AI',label:'Artificial Intelligence'}, 
     {value:'Frontend', label:'Frontend'}, 
@@ -37,7 +40,14 @@ class addBlogs extends Component {
     
       }
       modules = {
-        toolbar:toolbarOptions
+        toolbar:toolbarOptions,
+        imageCompress: {
+          quality: 0.7,
+          maxWidth: 500,
+          maxHeight: 500, 
+          imageType: 'image/jpeg', 
+          debug: true
+        }
       }
       
       handleInputChange(event) {
