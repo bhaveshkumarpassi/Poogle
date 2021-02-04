@@ -6,9 +6,12 @@ import './add_forms.css'
 import Form from 'react-bootstrap/Form';
 import Select from 'react-select'
 import ReactQuill from 'react-quill';
+import {Quill} from 'react-quill'
 import 'react-quill/dist/quill.snow.css'; 
 import {toolbarOptions, formats} from './text_editorVar';
-import QuillEditor from './editor';
+import ImageCompress from 'quill-image-compress';
+Quill.register('modules/imageCompress', ImageCompress);
+
 
 const spaces = [{value:"Web-Development",label:'Web Development'}, 
     {value:"Android-Development", label:'Android Development'},
@@ -50,7 +53,14 @@ class addQuestions extends Component {
         this.handleSubmit= this.handleSubmit.bind(this)
       }
       modules = {
-        toolbar:toolbarOptions
+        toolbar:toolbarOptions, 
+        imageCompress: {
+          quality: 0.7,
+          maxWidth: 500,
+          maxHeight: 500, 
+          imageType: 'image/jpeg', 
+          debug: true
+        }
       }
       
       handleInputChange(event) {
@@ -99,7 +109,6 @@ class addQuestions extends Component {
 
             this.props.postQuestion(newQuestion, this.state.token);
         }
-        //console.log(this.state);
       }
       
       formValidation = () =>{
@@ -114,11 +123,6 @@ class addQuestions extends Component {
           categoryError = "You must select at least one category";
           error = true;            
         }
-
-        /*if(!category.trim()){
-          categoryError = "You must select at least one category";
-          error = true; 
-        }*/
         
         if(!description.trim()|| !description.trim().length || description==="<p><br></p>"){
           descriptionError = "Description is required";
@@ -161,9 +165,6 @@ class addQuestions extends Component {
                               </Form.Group>
 
                               <Form.Group controlId="formBasicDropdown">
-                                {/* <Form.Label><span className="form__icon"></span>Title</Form.Label>
-                                  <input name="category" className="form-control" type="text" value={this.state.category} placeholder="Enter Category" onChange={this.handleInputChange} />
-                                    <div className="invalid__feedback">{this.state.errors.category}</div> */}
                                 <Form.Label><span className="form__icon"></span>Choose Category</Form.Label>
                                 <div><Select isMulti name="category" options={spaces} className="basic-multi-select" value={this.state.category} onChange={this.handleMultiSelectChange} classNamePrefix="select"/></div>
                                 <div className="invalid__feedback">{this.state.errors.category}</div>
@@ -172,12 +173,7 @@ class addQuestions extends Component {
                               <Form.Group>
                                 <Form.Label><span className="form__icon"></span>Describe Here</Form.Label>
                                 <ReactQuill theme="snow"  value={this.state.description} onChange={this.handleEditorChange} 
-                                  style={{backgroundColor: 'white'}} modules={this.modules} formats= {formats}/>
-                                  {/* <QuillEditor
-                                    placeholder={"Start Posting Something"}
-                                    onEditorChange={this.handleEditorChange}
-                                    onFilesChange={this.handleFileChange}
-                                  /> */}
+                                  style={{backgroundColor: 'white'}} modules={this.modules } formats= {formats}/>
                                   <div className="invalid__feedback">{this.state.errors.description}</div>
                               </Form.Group>
                               <Button onClick={this.handleSubmit} variant="info"><span className='fa fa-paper-plane mr-3' />Submit</Button>
@@ -185,6 +181,7 @@ class addQuestions extends Component {
                           </Jumbotron>
                         </div>
                 </Col>
+                
                 </Container>
             
           </div>

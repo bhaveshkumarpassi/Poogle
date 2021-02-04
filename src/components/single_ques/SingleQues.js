@@ -273,7 +273,7 @@ class RenderQuestionAnswers extends Component {
                                 <RenderTags question={this.props.question} />
                             </Col>
                             <Col xs={12}>
-                                <div dangerouslySetInnerHTML={{ __html: this.props.question.description }} />
+                                <div className="editor__content" dangerouslySetInnerHTML={{ __html: this.state.description }} />
                                 {/* <CardText className='single-question-description'>{this.props.question.description}</CardText> */}
                             </Col>
                             {/* {
