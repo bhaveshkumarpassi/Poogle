@@ -20,7 +20,7 @@ import './Spaces.css'
                 <CardTitle tag="h6">{space.name}</CardTitle>
             </CardBody>
             
-                <img className='space-img' src={'./images/'+space.image}  alt={space.name} />
+                <img className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}  alt={space.name} />
             <CardBody>
                 <CardSubtitle tag="h6" className="mb-4 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {space.questions.length} Questions</CardSubtitle>
                 <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-users fa-lg follower-icon'/>    {space.followers.length} followers</CardSubtitle>

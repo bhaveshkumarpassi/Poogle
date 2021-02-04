@@ -170,7 +170,6 @@ class addQuestions extends Component {
                             </Form>
                           </Jumbotron>
                         </div>
-                <p>{this.props.auth.userId}</p>
                 </Col>
                 </Container>
             

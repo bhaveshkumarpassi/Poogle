@@ -124,7 +124,7 @@ class Main extends Component {
 					answersIsLoading = {this.props.answers.isLoading}
 					answersErrMess = {this.props.answers.errMess}
 					spaceId={match.params.spaceId}
-					comments = {this.props.comments.comments.filter((comm) => comm.questionId === parseInt(match.params.quesId, 10))}
+					comments = {this.props.comments.comments.filter((comm) => comm.questionId === match.params.quesId)}
 					commentsErrMess={this.props.comments.errMess}
 					postComment={this.props.postComment}
 					deleteComment={this.props.deleteComment}
@@ -156,7 +156,7 @@ class Main extends Component {
 					<PrivateRoute exact path="/spaces/:spaceId/:stringId" component={SpaceWithId} />
 					<PrivateRoute
 						exact
-						path="/space-:spaceId/question-:quesId"
+						path="/space-:spaceId-:space/question-:quesId-:question"
 						component={QuestionWithId}
 					/>
 					<PrivateRoute exact path="/profile/:userId" component={Profile_page}/>
