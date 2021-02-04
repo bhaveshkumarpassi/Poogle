@@ -3,6 +3,7 @@ import { Card, Button, Form, FormGroup, Label, Input,
     CardTitle, Breadcrumb, BreadcrumbItem, CardBody, CardSubtitle, CardImg} from 'reactstrap';
 import { FadeTransform } from 'react-animation-components';
 import {Link} from 'react-router-dom';
+import ReactImageAppear from 'react-image-appear';
 import Loading from '../loading';
 import { baseUrl } from '../../shared/baseUrl'
 import './Spaces.css'
@@ -19,8 +20,9 @@ import './Spaces.css'
             <CardBody>
                 <CardTitle tag="h6">{space.name}</CardTitle>
             </CardBody>
-            
-                <img className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}  alt={space.name} />
+                <ReactImageAppear className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}  animation="zoomIn"
+                animationDuration="1s" />
+                
             <CardBody>
                 <CardSubtitle tag="h6" className="mb-4 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {space.questions.length} Questions</CardSubtitle>
                 <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-users fa-lg follower-icon'/>    {space.followers.length} followers</CardSubtitle>

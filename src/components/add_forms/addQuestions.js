@@ -11,7 +11,21 @@ import {toolbarOptions, formats} from './text_editorVar';
 import QuillEditor from './editor';
 
 const spaces = [{value:"Web-Development",label:'Web Development'}, 
-    {value:"Android-Development", label:'Android Development'}];
+    {value:"Android-Development", label:'Android Development'},
+    {value:"Digital-Design-(ECN 103)", label:'Digital Design-(ECN 103)'},
+    {value:"Analog-Electronic-Circuits-I-(ECN-102)", label: 'Analog Electronic Circuits-I-(ECN-102)'},
+    {value:"Analog-Electronic-Circuits-II-(ECN-102)", label: 'Analog Electronic Circuits-II-(ECN-102)'},
+    {value:"Communication-Engineering-(ECN-201)", label:"Communication Engineering (ECN 201)"},
+    {value:"Signal-and-Systems", label:"Signal and Systems"},
+    {value:"VLSI-Design-(ECN-208)", label:"VLSI Design (ECN 208)"},
+    {value:"Embedded-Systems-(ECN-305)", label:"Embedded Systems (ECN 305)"},
+    {value:"Control-Systems-(ECN-401)", label:"Control Systems (ECN 401)"},
+    {value:"HDL-based-system-Design-(ECN-411)", label:"HDL based system Design (ECN 411)"},
+    {value:"Foundations-of-VLSI-CAD-(ECN-416)", label:"Foundations of VLSI CAD (ECN 416)"},
+    {value:"Arduino", label:"Arduino"},
+    {value:"IOT", label:"IOT"},
+    {value:"Rasberry-Pi", label:"Rasberry Pi"},
+    {value:"Robotics", label:"Robotics"}];
 
 class addQuestions extends Component {
     constructor(props) {
