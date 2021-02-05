@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./Chat.css";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import ChatSideBar from "./ChatSideBar";
+import { baseUrl } from "../../shared/baseUrl";
+const axios = require("axios");
 
 const Chat = () => {
 	const [person, setPerson] = useState("");

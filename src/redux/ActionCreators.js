@@ -1,85 +1,83 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
 
-
 //--------------------------AUTHENTICATION-----------------------------------/
 
-
-export const signIn = (userDetails) => async (dispatch,getState) =>{
-	try{
-		let response = await fetch(baseUrl+'users/login', {
-			method: 'POST', headers: {'Content-Type': 'application/json'}, body:JSON.stringify(userDetails)
+export const signIn = (userDetails) => async (dispatch, getState) => {
+	try {
+		let response = await fetch(baseUrl + "users/login", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(userDetails),
 		});
 
-		if(response.ok){
-			response = await (response.json());	
-			localStorage.setItem('isSignedIn',true);
-			localStorage.setItem('userId', response.user._id);
-			//console.log(response.user._id, response.token, response.user.name)
-			localStorage.setItem('token',response.token);
-			dispatch({type:ActionTypes.SIGN_IN,payload:response});
-		}else{
+		if (response.ok) {
+			response = await response.json();
+			localStorage.setItem("isSignedIn", true);
+			localStorage.setItem("userId", response.user._id);
+			localStorage.setItem("token", response.token);
+			dispatch({ type: ActionTypes.SIGN_IN, payload: response });
+		} else {
 			response = await response.text();
 			throw new Error(response);
 		}
-	}catch(err){
-		dispatch({type:ActionTypes.AUTH_FAILED,payload:{error:err}});
-		window.alert(err);
+	} catch (err) {
+		dispatch({ type: ActionTypes.AUTH_FAILED, payload: { error: err } });
 	}
-}
+};
 
-export const signUp = (userDetails) => async (dispatch,getState) =>{
-	try{
+export const signUp = (userDetails) => async (dispatch, getState) => {
+	try {
 		console.log(userDetails);
-		let response = await fetch(baseUrl+'users', {
-			method: 'POST', headers: {'Content-Type': 'application/json'}, body:JSON.stringify(userDetails)
+		let response = await fetch(baseUrl + "users", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(userDetails),
 		});
 		console.log(response);
 
-		if(response.ok){
-			response = await (response.json());	
-			localStorage.setItem('isSignedIn',true);
-    		localStorage.setItem('userId', response.user._id);
-			localStorage.setItem('token',response.token);
-			dispatch({type:ActionTypes.SIGN_UP,payload:response});
-		}else{
+		if (response.ok) {
+			response = await response.json();
+			localStorage.setItem("isSignedIn", true);
+			localStorage.setItem("userId", response.user._id);
+			localStorage.setItem("token", response.token);
+			dispatch({ type: ActionTypes.SIGN_UP, payload: response });
+		} else {
 			response = await response.text();
 			console.log("Eror", response);
 			throw new Error(response);
 		}
-	}catch(err){
-		dispatch({type:ActionTypes.AUTH_FAILED,payload:{error:err}});
+	} catch (err) {
+		dispatch({ type: ActionTypes.AUTH_FAILED, payload: { error: err } });
 	}
-}
+};
 
 // Add authorization header in request and modify the logout
-export const logOut = (userToken) => async (dispatch,getState) =>{
-	try{
-		let bearer_token = 'Bearer '+userToken.token;
-		let response = await fetch(baseUrl+'users/logout', {
-			method: 'POST', headers: {'Content-Type': 'application/json','Authorization':bearer_token}
+export const logOut = (userToken) => async (dispatch, getState) => {
+	try {
+		let bearer_token = "Bearer " + userToken.token;
+		let response = await fetch(baseUrl + "users/logout", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: bearer_token,
+			},
 		});
 
-		console.log(response);
-		if(response.ok){
-			response = await (response.json());	
-			localStorage.removeItem('isSignedIn');
-			localStorage.removeItem('userId')
-			localStorage.removeItem('token');
-			dispatch({type:ActionTypes.SIGN_OUT,payload:response});
-		}else{
+		if (response.ok) {
+			response = await response.text();
+			localStorage.removeItem("isSignedIn");
+			localStorage.removeItem("userId");
+			localStorage.removeItem("token");
+			dispatch({ type: ActionTypes.SIGN_OUT, payload: response });
+		} else {
 			response = await response.text();
 			throw new Error(response);
 		}
-	}catch(err){
-		dispatch({type:ActionTypes.SIGN_OUT,payload:{error:err}});
+	} catch (err) {
+		dispatch({ type: ActionTypes.SIGN_OUT, payload: { error: err } });
 	}
-}
-
-
-
-
-
+};
 
 //**************************************************************************** */
 // ------------------------------------ SPACES -------------------------------/
@@ -129,40 +127,46 @@ export const addSpaces = (spaces) => ({
 //--------------------------------------  QUESTIONS  ------------------------------- /
 
 export const addQuestion = (question) => ({
-    type: ActionTypes.ADD_QUESTION,
-    payload: question
+	type: ActionTypes.ADD_QUESTION,
+	payload: question,
 });
 
 export const postQuestion = (question, userToken) => (dispatch) => {
-
 	const newQuestion = question;
 	newQuestion.dateNum = Date.now();
-	const bearer = 'Bearer ' + userToken;
-	
-    return fetch(baseUrl + 'questions', {
-        method: "POST",
-        body: JSON.stringify(newQuestion),
-        headers: {
-		  "Content-Type": "application/json",
-		  "Authorization": bearer
-        },
-        //credentials: "same-origin"
-    })
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      error => {
-            throw error;
-      })
-    .then(response => response.json())
-	.then(response => dispatch(addQuestion(response)))
-    .catch(error =>  { console.log('post questions', error.message); alert('Your question could not be posted\nError: '+error.message); });
+	const bearer = "Bearer " + userToken;
+
+	return fetch(baseUrl + "questions", {
+		method: "POST",
+		body: JSON.stringify(newQuestion),
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer,
+		},
+		//credentials: "same-origin"
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((response) => dispatch(addQuestion(response)))
+		.catch((error) => {
+			console.log("post questions", error.message);
+			alert("Your question could not be posted\nError: " + error.message);
+		});
 };
 
 export const fetchQuestions = () => (dispatch) => {
@@ -192,14 +196,13 @@ export const fetchQuestions = () => (dispatch) => {
 };
 
 export const deleteQuestion = (questionId) => (dispatch) => {
+	const bearer = "Bearer " + localStorage.getItem("token");
 
-    const bearer = 'Bearer ' + localStorage.getItem('token');
-
-    return fetch(baseUrl + 'questions/' + questionId, {
-        method: "DELETE",
-        headers: {
+	return fetch(baseUrl + "questions/" + questionId, {
+		method: "DELETE",
+		headers: {
 			"Content-Type": "application/json",
-			"Authorization": bearer
+			Authorization: bearer,
 		},
         //credentials: "same-origin"
     })
@@ -222,9 +225,9 @@ export const deleteQuestion = (questionId) => (dispatch) => {
 };
 
 export const removeQuestion = (questionId) => ({
-    type: ActionTypes.DELETE_QUESTION,
-    payload: questionId
-})
+	type: ActionTypes.DELETE_QUESTION,
+	payload: questionId,
+});
 
 export const questionsLoading = () => ({
 	type: ActionTypes.QUESTIONS_LOADING,
@@ -243,40 +246,46 @@ export const addQuestions = (questions) => ({
 // --------------------------      ANSWERES ----------------------------------/
 
 export const addAnswer = (answer) => ({
-    type: ActionTypes.ADD_ANSWER,
-    payload: answer
+	type: ActionTypes.ADD_ANSWER,
+	payload: answer,
 });
 
 export const postAnswer = (answer) => (dispatch) => {
-
 	const newAnswer = answer;
 	newAnswer.dateNum = Date.now();
-	const bearer = 'Bearer ' + localStorage.getItem('token');
-	
-    return fetch(baseUrl + 'answers', {
-        method: "POST",
-        body: JSON.stringify(newAnswer),
-        headers: {
-		  "Content-Type": "application/json",
-		  "Authorization": bearer
-        },
-        credentials: "same-origin"
-    })
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      error => {
-            throw error;
-      })
-    .then(response => response.json())
-	.then(response => dispatch(addAnswer(response)))
-    .catch(error =>  { console.log('post answers', error.message); alert('Your answer could not be posted\nError: '+error.message); });
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "answers", {
+		method: "POST",
+		body: JSON.stringify(newAnswer),
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer,
+		},
+		credentials: "same-origin",
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((response) => dispatch(addAnswer(response)))
+		.catch((error) => {
+			console.log("post answers", error.message);
+			alert("Your answer could not be posted\nError: " + error.message);
+		});
 };
 
 export const fetchAnswers = () => (dispatch) => {
@@ -306,38 +315,44 @@ export const fetchAnswers = () => (dispatch) => {
 };
 
 export const deleteAnswer = (answerId) => (dispatch) => {
+	const bearer = "Bearer " + localStorage.getItem("token");
 
-    const bearer = 'Bearer ' + localStorage.getItem('token');
-
-    return fetch(baseUrl + 'questions/' + answerId, {
-        method: "DELETE",
-        headers: {
+	return fetch(baseUrl + "questions/" + answerId, {
+		method: "DELETE",
+		headers: {
 			"Content-Type": "application/json",
-			"Authorization": bearer
+			Authorization: bearer,
 		},
-        credentials: "same-origin"
-    })
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      error => {
-            throw error;
-      })
-    .then(response => response.json())
-    .then(answers => { console.log('Answer Deleted', answers); dispatch(removeAnswer(answerId))})
-    .catch(error => dispatch(answersFailed(error.message)));
+		credentials: "same-origin",
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((answers) => {
+			console.log("Answer Deleted", answers);
+			dispatch(removeAnswer(answerId));
+		})
+		.catch((error) => dispatch(answersFailed(error.message)));
 };
 
 export const removeAnswer = (answerId) => ({
-    type: ActionTypes.DELETE_ANSWER,
-    payload: answerId
-})
+	type: ActionTypes.DELETE_ANSWER,
+	payload: answerId,
+});
 
 export const answersLoading = () => ({
 	type: ActionTypes.ANSWERS_LOADING,
@@ -356,60 +371,70 @@ export const addAnswers = (answers) => ({
 // --------------------------   questionComments ------------------------
 
 export const addComment = (comment) => ({
-    type: ActionTypes.ADD_COMMENT,
-    payload: comment
+	type: ActionTypes.ADD_COMMENT,
+	payload: comment,
 });
 
 export const postComment = (comment) => (dispatch) => {
-
 	const newComment = comment;
 	newComment.dateNum = Date.now();
-	const bearer = 'Bearer ' + localStorage.getItem('token');
-	
-    return fetch(baseUrl + 'questionComments', {
-        method: "POST",
-        body: JSON.stringify(newComment),
-        headers: {
-		  "Content-Type": "application/json",
-		  "Authorization": bearer
-        },
-        credentials: "same-origin"
-    })
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      error => {
-            throw error;
-      })
-    .then(response => response.json())
-	.then(response => dispatch(addComment(response)))
-    .catch(error =>  { console.log('post comments', error.message); alert('Your comment could not be posted\nError: '+error.message); });
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "questionComments", {
+		method: "POST",
+		body: JSON.stringify(newComment),
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer,
+		},
+		credentials: "same-origin",
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((response) => dispatch(addComment(response)))
+		.catch((error) => {
+			console.log("post comments", error.message);
+			alert("Your comment could not be posted\nError: " + error.message);
+		});
 };
 
-export const fetchComments = () => (dispatch) => {    
-    return fetch(baseUrl + 'questionComments')
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      error => {
-            var errmess = new Error(error.message);
-            throw errmess;
-      })
-    .then(response => response.json())
-    .then(comments => dispatch(addComments(comments)))
-    .catch(error => dispatch(commentsFailed(error.message)));
+export const fetchComments = () => (dispatch) => {
+	return fetch(baseUrl + "questionComments")
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				var errmess = new Error(error.message);
+				throw errmess;
+			}
+		)
+		.then((response) => response.json())
+		.then((comments) => dispatch(addComments(comments)))
+		.catch((error) => dispatch(commentsFailed(error.message)));
 };
 
 export const commentsFailed = (errmess) => ({
@@ -423,37 +448,43 @@ export const addComments = (comments) => ({
 });
 
 export const deleteComment = (commentId) => (dispatch) => {
+	const bearer = "Bearer " + localStorage.getItem("token");
 
-    const bearer = 'Bearer ' + localStorage.getItem('token');
-
-    return fetch(baseUrl + 'questionComments/' + commentId, {
-        method: "DELETE",
-        headers: {
-			"Content-Type": "application/json"
-        },
-        credentials: "same-origin"
-    })
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      error => {
-            throw error;
-      })
-    .then(response => response.json())
-    .then(comments => { console.log('Comment Deleted', comments); dispatch(removeComment(commentId))})
-    .catch(error => dispatch(commentsFailed(error.message)));
+	return fetch(baseUrl + "questionComments/" + commentId, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		credentials: "same-origin",
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((comments) => {
+			console.log("Comment Deleted", comments);
+			dispatch(removeComment(commentId));
+		})
+		.catch((error) => dispatch(commentsFailed(error.message)));
 };
 
 export const removeComment = (commentId) => ({
-    type: ActionTypes.DELETE_COMMENT,
-    payload: commentId
-})
+	type: ActionTypes.DELETE_COMMENT,
+	payload: commentId,
+});
 
 export const fetchUser = (userId) => (dispatch) => {
 	dispatch(userLoading(true));

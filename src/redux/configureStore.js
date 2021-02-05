@@ -1,9 +1,9 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import { Comments } from './reducers/comments';
+import { Comments } from "./reducers/comments";
 import { Spaces } from "./reducers/spaces";
 import { Questions } from "./reducers/questions";
-import { Answers } from './reducers/answers';
-import {user} from './reducers/user_reducer'
+import { Answers } from "./reducers/answers";
+import { user } from "./reducers/user_reducer";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import authReducer from "./reducers/authReducer";
@@ -17,7 +17,7 @@ export const ConfigureStore = () => {
 			answers: Answers,
 			comments: Comments,
 			user,
-			auth:authReducer
+			auth: authReducer,
 		}),
 		composeEnhancers(applyMiddleware(thunk, logger))
 	);

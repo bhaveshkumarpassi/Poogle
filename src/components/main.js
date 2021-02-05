@@ -61,7 +61,7 @@ class Main extends Component {
 	componentDidMount = () => {
 		this.props.fetchSpaces();
 		this.props.fetchQuestions();
-		this.props.fetchUser();
+		// this.props.fetchUser();
 		this.props.fetchAnswers();
 		this.props.fetchComments();
 	}
