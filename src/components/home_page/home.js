@@ -34,7 +34,8 @@ function RenderMenuItem({question, class_Name, onClick}) {
     return(
         <ListGroup className='container question-container'>
                 <ListGroupItem className={class_Name+' list-item-style'}>
-                    <Link to={`/space-${question.tagIds[0]}/question-${question.id}`}>
+                    {/* <Link to={`/space-${question.tagIds[0]}/question-${question.id}`}> */}
+                    <Link to={`/question-${question._id}-${question.heading}`}>
                         <div className='col-12'>
                         <div className='row'>
                         <div className='col-12 col-sm-8 col-md-8'>
@@ -69,25 +70,6 @@ function RenderMenuItem({question, class_Name, onClick}) {
     );
 }
 
-function RenderSpaceItem ({space, onClick}) {
-    return ( 
-        <Card className='space'>
-        <CardBody>
-            <CardTitle tag="h6">{space.name}</CardTitle>
-        </CardBody>
-            <img className='space-img' src={ baseUrl + space.image} alt={space.name} />
-        <CardBody>
-            <CardSubtitle tag="h6" className="mb-4 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {space.questions} Questions</CardSubtitle>
-            <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-users fa-lg follower-icon'/>    {space.followers} followers</CardSubtitle>
-            <div className='row mt-4'>
-                <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space.id}`}>view</Link>
-                <Button className='col-12 mt-3' color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Follow</Button>
-            </div>
-        </CardBody>
-      </Card>
-    );
-}
-
 class home extends Component {
 
     constructor(props) {
@@ -99,7 +81,6 @@ class home extends Component {
             votesActive: false,
             unansweredActive: false,
             suggetsedActive: false,
-            suggestedSpaces: this.props.spaces.spaces.slice(0,6),
             }
     }
 
@@ -130,16 +111,6 @@ class home extends Component {
             votesActive: false,
             unansweredActive: true,
             suggetsedActive: false
-        })
-    }
-
-    onSuggestedSelect() {
-        this.setState({
-            filter: 'Suggested',
-            latestActive: false,
-            votesActive: false,
-            unansweredActive: false,
-            suggetsedActive: true
         })
     }
 
@@ -176,20 +147,12 @@ class home extends Component {
             );
         }) 
 
-        const SuggestedSpaces = this.state.suggestedSpaces.map((space) => {  
-            return (
-                <div className="col-12 col-lg-3 col-md-6 col-sm-6 mt-1 mb-4"  key={space.id}>
-                    <RenderSpaceItem space={space} onClick={this.props.onClick} />
-                </div>
-            );
-        });
-
-        if(this.props.isLoading || this.props.spaces.isLoading) {
+        if(this.props.isLoading) {
             return(
                 <Loading type="spokes" color="grey"/>       
             );
         }
-        else if(this.props.errMess || this.props.spaces.errMess) {
+        else if(this.props.errMess) {
             return(
                 <div className="container spaces">
                     <div className="row"> 
@@ -212,8 +175,6 @@ class home extends Component {
             }
             else if(this.state.filter === 'Unanswered')
                 renderQuestions = MenuUnanswered;
-            else
-                renderQuestions = SuggestedSpaces;
             
             return (
                 <>
@@ -257,9 +218,6 @@ class home extends Component {
                                                     </NavItem>
                                                     <NavItem className='mb-4 filters'>
                                                         <NavLink href='#' active={this.state.unansweredActive} onClick={() => this.onUnansweredSelect()}>Unanswered</NavLink>
-                                                    </NavItem>
-                                                    <NavItem className='mb-4 filters'>
-                                                        <NavLink href='#' active={this.state.suggetsedActive} onClick={() => this.onSuggestedSelect()}>Recommended Spaces</NavLink>
                                                     </NavItem>
                                                 </Nav>
                                             </div>

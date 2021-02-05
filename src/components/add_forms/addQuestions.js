@@ -79,11 +79,7 @@ class addQuestions extends Component {
         this.setState({ description: value })
       }
 
-      handleFileChange(files) {
-        this.setState({ files: files});
-      }
-
-      handleSubmit(event){
+      handleSubmit = (event) => {
         event.preventDefault();
         const isValid = this.formValidation();
         console.log(this.state);
@@ -188,4 +184,6 @@ class addQuestions extends Component {
         )
       }
 }
+
+
 export default addQuestions

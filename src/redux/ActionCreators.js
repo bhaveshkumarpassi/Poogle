@@ -14,7 +14,8 @@ export const signIn = (userDetails) => async (dispatch,getState) =>{
 		if(response.ok){
 			response = await (response.json());	
 			localStorage.setItem('isSignedIn',true);
-    		localStorage.setItem('userId', response.user._id);
+			localStorage.setItem('userId', response.user._id);
+			//console.log(response.user._id, response.token, response.user.name)
 			localStorage.setItem('token',response.token);
 			dispatch({type:ActionTypes.SIGN_IN,payload:response});
 		}else{
@@ -23,6 +24,7 @@ export const signIn = (userDetails) => async (dispatch,getState) =>{
 		}
 	}catch(err){
 		dispatch({type:ActionTypes.AUTH_FAILED,payload:{error:err}});
+		window.alert(err);
 	}
 }
 
@@ -82,12 +84,12 @@ export const logOut = (userToken) => async (dispatch,getState) =>{
 //**************************************************************************** */
 // ------------------------------------ SPACES -------------------------------/
 
-export const fetchSpaces = () => (dispatch) => {
+export const fetchSpaces = (limit, skip) => (dispatch) => {
 	// redux thunk allows to pass an action method instead of just action object and automayically recieves dispatch parameter.
 
 	dispatch(spacesLoading(true)); // could do this or anything at anytime as middleware operation.
-
-	return fetch(baseUrl + "spaces")
+	//&skip=${skip}
+	return fetch(baseUrl + 'spaces')
 		.then(
 			(response) => {
 				if (response.ok) {
@@ -199,7 +201,7 @@ export const deleteQuestion = (questionId) => (dispatch) => {
 			"Content-Type": "application/json",
 			"Authorization": bearer
 		},
-        credentials: "same-origin"
+        //credentials: "same-origin"
     })
     .then(response => {
         if (response.ok) {
@@ -214,7 +216,8 @@ export const deleteQuestion = (questionId) => (dispatch) => {
             throw error;
       })
     .then(response => response.json())
-    .then(questions => { console.log('Question Deleted', questions); dispatch(removeQuestion(questionId))})
+    .then(() => dispatch(removeQuestion(questionId)))
+	.then(() => console.log('Question deleted!!'))
     .catch(error => dispatch(questionsFailed(error.message)));
 };
 

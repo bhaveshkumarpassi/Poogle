@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchSpaces, fetchQuestions, fetchUser, fetchAnswers, fetchComments, postComment, deleteComment, postQuestion} from "../redux/ActionCreators";
+import { fetchSpaces, fetchQuestions, fetchUser, 
+	fetchAnswers, fetchComments, postComment, 
+	deleteComment, postQuestion, deleteQuestion} from "../redux/ActionCreators";
 import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
@@ -16,9 +18,6 @@ import Notifications from './notifications/notification';
 import AddQuestion from './add_forms/addQuestions';
 import AddBlog from './add_forms/addBlogs';
 import Logout from './login_signup/logout';
-// import PostPage from "./post/PostPage";
-// import BlogPage from "./post/BlogPage";
-// import CreateBlogPage from "./post/CreatePage";
 
 
 const mapStateToProps = (state) => {
@@ -33,9 +32,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	fetchSpaces: () => {
-		dispatch(fetchSpaces());
-	},
+	 fetchSpaces: () => {
+	 	dispatch(fetchSpaces());
+	 },
 	fetchQuestions: () => {
 		dispatch(fetchQuestions());
 	},
@@ -50,7 +49,8 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	postComment: (questionId, author, comment) => dispatch(postComment(questionId, author, comment)),
 	deleteComment: (commentId) => dispatch(deleteComment(commentId)),
-	postQuestion: (question, userToken) => dispatch(postQuestion(question, userToken))
+	postQuestion: (question, userToken) => dispatch(postQuestion(question, userToken)),
+	deleteQuestion: (quesId) => dispatch(deleteQuestion(quesId))
 });
 
 class Main extends Component {
@@ -58,7 +58,7 @@ class Main extends Component {
 		super(props);
 	}
 
-	componentDidMount() {
+	componentDidMount = () => {
 		this.props.fetchSpaces();
 		this.props.fetchQuestions();
 		this.props.fetchUser();
@@ -123,11 +123,13 @@ class Main extends Component {
 					}
 					answersIsLoading = {this.props.answers.isLoading}
 					answersErrMess = {this.props.answers.errMess}
-					spaceId={match.params.spaceId}
+					//spaceId={match.params.spaceId}
 					comments = {this.props.comments.comments.filter((comm) => comm.questionId === match.params.quesId)}
 					commentsErrMess={this.props.comments.errMess}
 					postComment={this.props.postComment}
 					deleteComment={this.props.deleteComment}
+					auth={this.props.auth}
+					deleteQuestion={this.props.deleteQuestion}
 				/>
 			);
 		}
@@ -151,12 +153,14 @@ class Main extends Component {
 					<PrivateRoute
 						exact
 						path="/spaces"
-						component={() => <Spaces spaces={this.props.spaces} />}
+						//component={Spaces}
+						component={() => <Spaces spaces={this.props.spaces} fetchSpaces={this.props.fetchSpaces} />}
 					/>
 					<PrivateRoute exact path="/spaces/:spaceId/:stringId" component={SpaceWithId} />
 					<PrivateRoute
 						exact
-						path="/space-:spaceId-:space/question-:quesId-:question"
+						path="/question-:quesId-:question"
+						//path="/space-:spaceId/question-:quesId-:question"
 						component={QuestionWithId}
 					/>
 					<PrivateRoute exact path="/profile/:userId" component={Profile_page}/>
@@ -165,10 +169,7 @@ class Main extends Component {
 					<PrivateRoute path="/notifications" component={Notifications}/>
 					<Route path="/login" component={Login} />
 					<PrivateRoute exact path="/addQuestion" component={() => <AddQuestion postQuestion={this.props.postQuestion} auth={this.props.auth}/>}/>
-					<PrivateRoute path="/addBlog" component={() => <AddBlog postQuestion={this.props.postQuestion} />} />
-					{/* <Route exact path="/blog" component={BlogPage} />
-					<Route exact path="/blog/create" component={CreateBlogPage} />
-          			<Route exact path="/blog/post/:postId" component={PostPage} /> */}
+					<PrivateRoute path="/addBlog" component={() => <AddBlog postQuestion={this.props.postQuestion} auth={this.props.auth}/>} />
 					<Route path="/signup" component={Signup} />
 					<Route path="/logout" component={Logout}/>
 					<Redirect to="/home" />

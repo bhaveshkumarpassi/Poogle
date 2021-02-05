@@ -7,6 +7,10 @@ import ReactImageAppear from 'react-image-appear';
 import Loading from '../loading';
 import { baseUrl } from '../../shared/baseUrl'
 import './Spaces.css'
+import { fetchSpaces } from '../../redux/ActionCreators';
+import { connect } from "react-redux";
+import { BsArrowBarRight } from 'react-icons/bs';
+
 
     function RenderMenuItem ({space, onClick}) {
 
@@ -44,7 +48,9 @@ import './Spaces.css'
 
             this.handleSearch = this.handleSearch.bind(this);
             this.state = {
-                data: []
+                data: [],
+                limit: 4,  
+                skip: 0,
             }
 
             this.arrayHolder = [];
@@ -57,12 +63,41 @@ import './Spaces.css'
         }
 
         componentDidMount() {
+
             this.setState({
                 data: this.props.spaces.spaces
             });
 
             this.arrayHolder = this.props.spaces.spaces
         }
+
+        /*nextPage() {
+            this.setState({
+                skip: this.state.skip + this.state.limit,
+            })
+        }
+        previousPage() {
+            if(this.state.skip > 0) {
+                this.setState({
+                    skip: this.state.skip - this.state.limit,
+                })
+            }
+        }*/
+
+        /*componentDidUpdate = async (prevProps, prevState) => {
+
+            if(this.state.skip !== prevState.skip){
+                await this.props.fetchSpaces(this.state.limit, this.state.skip);
+
+                this.setState({
+                    data: this.props.spaces.spaces
+                });
+    
+                this.arrayHolder = this.props.spaces.spaces
+            }
+
+            
+        }*/
 
         searchFilterFunction = text => {
         
@@ -124,17 +159,35 @@ import './Spaces.css'
                                     <Button className='col-2 cancelbtn' type='reset' value='reset' color='danger' onClick={() => this.setState({ data : this.props.spaces.spaces })}><span className='fa fa-times'></span></Button>
                                 </FormGroup>
                                 </Form>
+                                {/* <Button onClick={() => this.handleScroll()} >Load more</Button> */}
                             </div>
                             <hr style={{marginBottom: 25, marginTop: 25}} />
                         </div>  
                                       
                     </div>
-                    <div className="row justify-content-center">
+                    <div className="row justify-content-center" >
                         {menu}
                     </div>
+                    {/* <div onClick={this.nextPage}> Previous Page </div>
+                    <div onClick={this.previousPage}> Next Page </div>  */}
                 </div>
             );}            
         }
     }
+
+
+/*const mapStateToProps = (state, ownProps) => {
+    return {
+        spaces: state.spaces
+    };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+	fetchSpaces: () => {
+		dispatch(fetchSpaces());
+	}
+});*/
+
+//export default connect(mapStateToProps, mapDispatchToProps)(Spaces);
 
 export default Spaces;

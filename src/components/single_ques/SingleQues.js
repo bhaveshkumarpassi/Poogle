@@ -19,6 +19,7 @@ import { Row, Col, Container,
         Card, CardBody, CardTitle, CardSubtitle, CardText, Collapse,
         ButtonGroup, Button, CardImg, Badge, Modal, ModalHeader, ModalBody, ModalFooter, Media, Label, Jumbotron} from "reactstrap";
 import {LocalForm, Control, Errors} from 'react-redux-form';
+import { withRouter } from 'react-router-dom';
 import Loading from "../loading";
 import { baseUrl } from "../../shared/baseUrl";
 import profilePic from '../../Images/profile_pic.png';
@@ -27,9 +28,11 @@ import { Fade, Stagger } from 'react-animation-components';
 import Form from 'react-bootstrap/Form';
 import '../add_forms/add_forms.css'
 import ReactQuill from 'react-quill';
+import {Quill} from 'react-quill'
 import 'react-quill/dist/quill.snow.css'; 
 import {toolbarOptions, formats} from '../add_forms/text_editorVar';
-
+import ImageCompress from 'quill-image-compress';
+Quill.register('modules/imageCompress', ImageCompress);
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -200,7 +203,14 @@ class RenderQuestionAnswers extends Component {
     }
 
     modules = {
-        toolbar:toolbarOptions
+        toolbar:toolbarOptions,
+        imageCompress: {
+            quality: 0.7,
+            maxWidth: 500,
+            maxHeight: 500, 
+            imageType: 'image/jpeg', 
+            debug: true
+          }
     }
 
     onShareClicked() {
@@ -255,7 +265,13 @@ class RenderQuestionAnswers extends Component {
         return !error;
     }
 
+    onQuesDelete() {
+        
+    }
+
     render() {
+
+
     return(
     <div>
         <Card>
@@ -273,18 +289,8 @@ class RenderQuestionAnswers extends Component {
                                 <RenderTags question={this.props.question} />
                             </Col>
                             <Col xs={12}>
-                                <div className="editor__content" dangerouslySetInnerHTML={{ __html: this.state.description }} />
-                                {/* <CardText className='single-question-description'>{this.props.question.description}</CardText> */}
+                                <div className="editor__content" dangerouslySetInnerHTML={{ __html: this.props.question.description }} />
                             </Col>
-                            {/* {
-                                this.props.question.imageUrl
-                                ?
-                                <Col xs={12} className='mt-5'>
-                                    <CardImg src={ baseUrl + this.props.question.imageUrl} alt='Question Image'/>
-                                </Col>
-                                :
-                                <Col></Col>
-                            } */}
                         </Row>
                     </Col>
                 </Row>
@@ -307,10 +313,15 @@ class RenderQuestionAnswers extends Component {
                         <Button color='success' onClick={() => this.onShareClicked()}>
                             <span className='fa fa-lg fa-share'></span>
                         </Button>
-                        <Button>
-                            <span className='fa fa-lg fa-trash'></span>
-                        </Button>
-                        
+                        {
+                            this.props.question.author._id === this.props.auth.userId
+                            ?
+                            <Button onClick={() => this.props.deleteQuestion(this.props.question._id)} >
+                                <span className='fa fa-lg fa-trash'></span>
+                            </Button>
+                            :
+                            <></>
+                        }
                     </ButtonGroup>   
                 </Row>
             </CardBody>
@@ -339,25 +350,25 @@ class RenderQuestionAnswers extends Component {
         <Modal isOpen={this.state.shareModalOpen} toggle={() => this.onShareClicked()}>
             <ModalHeader toggle={() => this.onShareClicked()}>Let's Share this !!</ModalHeader>
             <ModalBody>
-                <FacebookShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id} title={'Can you answer this ??'} quote={'Can you answer this ??'} hashtag={'#Poogle'}>
+                <FacebookShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} title={'Can you answer this ??'} quote={'Can you answer this ??'} hashtag={'#Poogle'}>
                     <FacebookIcon round={true}></FacebookIcon>
                 </FacebookShareButton>
-                <WhatsappShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id+'/#1'} title={'Can you answer this ??'} separator={'\n'}>
+                <WhatsappShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} title={'Can you answer this ??'} separator={'\n'}>
                     <WhatsappIcon round={true}></WhatsappIcon>
                 </WhatsappShareButton>
-                <TelegramShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id} title={'Can you answer this ??'}>
+                <TelegramShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} title={'Can you answer this ??'}>
                     <TelegramIcon round></TelegramIcon>
                 </TelegramShareButton>
-                <LinkedinShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id} title={'Can you answer this ??'} source={'WWW.poogle.com'}>
+                <LinkedinShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} title={'Can you answer this ??'} source={'WWW.poogle.com'}>
                     <LinkedinIcon round></LinkedinIcon>
                 </LinkedinShareButton>
-                <TwitterShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id} title={'Can you answer this ??'} hashtags={'#Poogle'}>
+                <TwitterShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} title={'Can you answer this ??'} hashtags={'#Poogle'}>
                     <TwitterIcon round></TwitterIcon>
                 </TwitterShareButton>
-                <RedditShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id} title={'Can you answer this ??'}>
+                <RedditShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} title={'Can you answer this ??'}>
                     <RedditIcon round></RedditIcon>
                 </RedditShareButton>
-                <PinterestShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id} description={'Can you answer this ??'} title={'Can you answer this ??'}>
+                <PinterestShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} description={'Can you answer this ??'} title={'Can you answer this ??'}>
                     <PinterestIcon round></PinterestIcon>
                 </PinterestShareButton>
             </ModalBody>
@@ -426,10 +437,13 @@ class SingleQuestion extends Component {
                                 question={this.props.question} 
                                 answers={this.props.answers} 
                                 comments={this.props.comments} 
-                                spaceId={this.props.spaceId}
+                                //spaceId={this.props.spaceId}
                                 postComment={this.props.postComment} 
                                 deleteComment={this.props.deleteComment}
-                                onClick={this.props.onClick} />
+                                onClick={this.props.onClick}
+                                auth={this.props.auth}
+                                deleteQuestion={this.props.deleteQuestion}
+                                />
                         </Col>  
                     </Row> 
                 </Container>
