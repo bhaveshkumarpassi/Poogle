@@ -64,9 +64,8 @@ export const logOut = (userToken) => async (dispatch, getState) => {
 			},
 		});
 
-		console.log(response);
 		if (response.ok) {
-			response = await response.json();
+			response = await response.text();
 			localStorage.removeItem("isSignedIn");
 			localStorage.removeItem("userId");
 			localStorage.removeItem("token");
