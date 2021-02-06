@@ -13,6 +13,7 @@
 		"bootstrap-social": "^5.1.1",
 		"cross-fetch": "^3.0.6",
 		"font-awesome": "^4.7.0",
+		"pusher-js": "^7.0.3",
 		"quill-image-compress": "^1.2.14",
 		"react": "^17.0.1",
 		"react-animation-components": "^3.0.0",
