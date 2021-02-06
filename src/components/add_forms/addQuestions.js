@@ -48,7 +48,6 @@ class addQuestions extends Component {
        } 
         this.handleEditorChange = this.handleEditorChange.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
-        this.handleFileChange = this.handleFileChange.bind(this);
         this.handleMultiSelectChange = this.handleMultiSelectChange.bind(this)
         this.handleSubmit= this.handleSubmit.bind(this)
       }
@@ -75,7 +74,6 @@ class addQuestions extends Component {
       }
       
       handleEditorChange(value) {
-        console.log(this.state.description)
         this.setState({ description: value })
       }
 
@@ -103,7 +101,7 @@ class addQuestions extends Component {
               author: this.props.auth.userId
             };
 
-            this.props.postQuestion(newQuestion, this.state.token);
+            this.props.postQuestion(newQuestion);
         }
       }
       

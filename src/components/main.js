@@ -3,7 +3,8 @@ import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchSpaces, fetchQuestions, fetchUser, 
 	fetchAnswers, fetchComments, postComment, 
-	deleteComment, postQuestion, deleteQuestion} from "../redux/ActionCreators";
+	deleteComment, postQuestion, deleteQuestion, postReaction, fetchReactions, deleteReaction,
+	postAnswer, deleteAnswer} from "../redux/ActionCreators";
 import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
@@ -24,6 +25,7 @@ const mapStateToProps = (state) => {
 	return {
 		spaces: state.spaces,
 		questions: state.questions,
+		qreactions: state.qreactions,
 		answers: state.answers,
 		user: state.user,
 		comments: state.comments,
@@ -38,6 +40,9 @@ const mapDispatchToProps = (dispatch) => ({
 	fetchQuestions: () => {
 		dispatch(fetchQuestions());
 	},
+	fetchReactions: () => {
+		dispatch(fetchReactions());
+	},
 	fetchUser: () => {
 		dispatch(fetchUser());
 	},
@@ -50,7 +55,11 @@ const mapDispatchToProps = (dispatch) => ({
 	postComment: (questionId, author, comment) => dispatch(postComment(questionId, author, comment)),
 	deleteComment: (commentId) => dispatch(deleteComment(commentId)),
 	postQuestion: (question, userToken) => dispatch(postQuestion(question, userToken)),
-	deleteQuestion: (quesId) => dispatch(deleteQuestion(quesId))
+	deleteQuestion: (quesId) => dispatch(deleteQuestion(quesId)),
+	postAnswer: (answer) => dispatch(postAnswer(answer)),
+	postReaction: (reac) => dispatch(postReaction(reac)),
+	deleteReaction: (reacId) => dispatch(deleteReaction(reacId)),
+	deleteAnswer: (answerId) => dispatch(deleteAnswer(answerId)),
 });
 
 class Main extends Component {
@@ -61,6 +70,7 @@ class Main extends Component {
 	componentDidMount = () => {
 		this.props.fetchSpaces();
 		this.props.fetchQuestions();
+		this.props.fetchReactions();
 		// this.props.fetchUser();
 		this.props.fetchAnswers();
 		this.props.fetchComments();
@@ -83,6 +93,15 @@ class Main extends Component {
 					questionsIsLoading={this.props.questions.isLoading}
 					errMess={this.props.spaces.errMess}
 					isLoading={this.props.spaces.isLoading}
+					auth={this.props.auth}
+					deleteQuestion={this.props.deleteQuestion}
+					answers={this.props.answers.answers}
+					answersIsLoading = {this.props.answers.isLoading}
+					answersErrMess = {this.props.answers.errMess}
+					reactions={this.props.qreactions.qreactions}
+					reactionsIsLoading={this.props.qreactions.isLoading}
+					reactionsErrMess = {this.props.qreactions.errMess}
+					postReaction={this.props.postReaction}
 				/>
 			);
 		};
@@ -119,17 +138,23 @@ class Main extends Component {
 					isLoading={this.props.questions.isLoading}
 					errMess={this.props.spaces.errMess}
 					answers = {
-						this.props.answers.answers.filter((ans) => ans.questionId === parseInt(match.params.quesId, 10))
+						this.props.answers.answers.filter((ans) => ans.question === match.params.quesId)
 					}
 					answersIsLoading = {this.props.answers.isLoading}
 					answersErrMess = {this.props.answers.errMess}
 					//spaceId={match.params.spaceId}
-					comments = {this.props.comments.comments.filter((comm) => comm.questionId === match.params.quesId)}
+					comments = {this.props.comments.comments.filter((comm) => comm.question === match.params.quesId)}
 					commentsErrMess={this.props.comments.errMess}
 					postComment={this.props.postComment}
 					deleteComment={this.props.deleteComment}
 					auth={this.props.auth}
-					deleteQuestion={this.props.deleteQuestion}
+					postAnswer={this.props.postAnswer}
+					deleteAnswer={this.props.deleteAnswer}
+					postReaction={this.props.postReaction}
+					deleteReaction={this.props.deleteReaction}
+					reactions={this.props.qreactions.qreactions.filter((reac) => reac.question === match.params.quesId)}
+					reactionsIsLoading={this.props.qreactions.isLoading}
+					reactionsErrMess = {this.props.qreactions.errMess}
 				/>
 			);
 		}
