@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchSpaces, fetchQuestions, fetchUser, 
+import { fetchSpaces, fetchQuestions, 
 	fetchAnswers, fetchComments, postComment, 
 	deleteComment, postQuestion, deleteQuestion, postReaction, fetchReactions, deleteReaction,
 	postAnswer, deleteAnswer} from "../redux/ActionCreators";
@@ -14,7 +14,7 @@ import ScrollToTop from './scroll-to-top/scroll-to-top';
 import Chat from "./chat/Chat";
 import Login from './login_signup/login';
 import Signup from './login_signup/signup'; 
-import Contact from './ContactUs/contact';
+import Contact from './contactUs/contact';
 import Notifications from './notifications/notification';
 import AddQuestion from './add_forms/addQuestions';
 import AddBlog from './add_forms/addBlogs';
@@ -43,9 +43,6 @@ const mapDispatchToProps = (dispatch) => ({
 	fetchReactions: () => {
 		dispatch(fetchReactions());
 	},
-	fetchUser: () => {
-		dispatch(fetchUser());
-	},
 	fetchAnswers: () => {
 		dispatch(fetchAnswers())
 	},
@@ -71,7 +68,6 @@ class Main extends Component {
 		this.props.fetchSpaces();
 		this.props.fetchQuestions();
 		this.props.fetchReactions();
-		// this.props.fetchUser();
 		this.props.fetchAnswers();
 		this.props.fetchComments();
 	}

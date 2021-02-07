@@ -640,45 +640,6 @@ export const fetchUser = (userId) => async (dispatch, getState) => {
 	}
 };
 
-// export const fetchUser = (userId) => (dispatch) => {
-	
-// 	return (
-// 		fetch(baseUrl + "users/" + userId)
-// 			.then(
-// 				(response) => {
-// 					if (response.ok) {
-// 						return response;
-// 					} else {
-// 						var error = new Error(
-// 							"Error " + response.status + ": " + response.statusText
-// 						);
-// 						error.response = response;
-// 						throw error;
-// 					}
-// 				},
-// 				(error) => {
-// 					throw new Error(error.message);
-// 				}
-// 			)
-// 			.then((response) => response.json())
-// 			.then((user) => dispatch(getUser(user)))
-// 			.catch((error) => dispatch(userLoadingFailed(error.message)))
-// 	);
-// };
-
-// export const userLoading = () => ({
-// 	type: ActionTypes.USER_LOADING,
-// });
-
-// export const userLoadingFailed = (errmess) => ({
-// 	type: ActionTypes.USER_FAILED,
-// 	payload: errmess,
-// });
-
-// export const getUser = (user) => ({
-// 	type: ActionTypes.GET_USER,
-// 	payload: user,
-// });
 
 /*************************************************************** */
 /*------------CONTACT US FORM----------------------------*/
