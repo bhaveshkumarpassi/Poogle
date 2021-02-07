@@ -9,7 +9,7 @@ import { Qreactions } from "./reducers/qReactions";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import authReducer from "./reducers/authReducer";
-
+import contact from './reducers/contactUs'
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const ConfigureStore = () => {
 	const store = createStore(
@@ -22,6 +22,7 @@ export const ConfigureStore = () => {
 			user,
 			auth: authReducer,
 			chats: Chat,
+			contact
 		}),
 		composeEnhancers(applyMiddleware(thunk, logger))
 	);
