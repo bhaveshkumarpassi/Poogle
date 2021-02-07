@@ -1,9 +1,10 @@
 import { baseUrl } from "../../shared/baseUrl";
 const axios = require("axios");
 
-export const getChats = (userDetails) => async (dispatch) => {
+export const getChats = (token) => async (dispatch) => {
 	try {
-		const bearer_token = "Bearer" + userDetails.token;
+		console.log(token);
+		const bearer_token = "Bearer " + token;
 		const payload = await axios({
 			method: "get",
 			url: baseUrl + "messages",
@@ -12,15 +13,16 @@ export const getChats = (userDetails) => async (dispatch) => {
 				Authorization: bearer_token,
 			},
 		});
-		dispatch({ type: "GET_CHAT", payload });
+		console.log(payload);
+		dispatch({ type: "GET_CHAT", payload: payload.data });
 	} catch (e) {
 		dispatch({ type: "CHAT_ERROR", payload: e });
 	}
 };
 
-export const sendMessage = (userDetails, msg, to) => async (dispatch) => {
+export const sendMessage = (token, msg, to) => async (dispatch) => {
 	try {
-		const bearer_token = "Bearer " + userDetails.token;
+		const bearer_token = "Bearer " + token;
 		const data = await axios({
 			method: "post",
 			url: baseUrl + "messages",

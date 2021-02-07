@@ -3,34 +3,11 @@ import "./Chat.css";
 import { Container, Row, Col, ListGroup, Form } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import PersonChatProfile from "./PersonChatProfile";
+import { connect } from "react-redux";
 
-const ChatSideBar = ({ person, setPerson, chat, setChat }) => {
-	const chats = [
-		{
-			name: "Dips",
-			chat: [
-				{ msg: "B", sender: "me" },
-				{ msg: "Hello", sender: "dips" },
-				{
-					msg:
-						"Cdfafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffhal",
-					sender: "me",
-				},
-				{ msg: "Chal", sender: "me" },
-				{ msg: "Chal", sender: "me" },
-				{ msg: "Chal", sender: "me" },
-				{ msg: "Chal", sender: "me" },
-				{ msg: "Chal", sender: "me" },
-				{ msg: "Chal", sender: "me" },
-				{ msg: "Chal", sender: "me" },
-				{ msg: "Chal", sender: "me" },
-				{ msg: "Chal", sender: "me" },
-				{ msg: "Chal", sender: "me" },
-			],
-		},
-		{ name: "Bhav", chat: [{ msg: "Bye", sender: "other" }] },
-		{ name: "Nisha", chat: [{ msg: "Yo", sender: "me" }] },
-	];
+const ChatSideBar = (props) => {
+	console.log(props);
+	const { person, setPerson, chats, chat, setChat } = props;
 
 	useEffect(() => {
 		const currChat = chats.filter(({ name }) => name === person);
@@ -68,4 +45,8 @@ const ChatSideBar = ({ person, setPerson, chat, setChat }) => {
 	);
 };
 
-export default ChatSideBar;
+const mapStateToProps = (state) => {
+	return { ...state.chats };
+};
+
+export default connect(mapStateToProps)(ChatSideBar);

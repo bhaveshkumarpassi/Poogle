@@ -4,6 +4,7 @@ import { Spaces } from "./reducers/spaces";
 import { Questions } from "./reducers/questions";
 import { Answers } from "./reducers/answers";
 import { user } from "./reducers/user_reducer";
+import { Chat } from "./reducers/chat";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import authReducer from "./reducers/authReducer";
@@ -18,6 +19,7 @@ export const ConfigureStore = () => {
 			comments: Comments,
 			user,
 			auth: authReducer,
+			chats: Chat,
 		}),
 		composeEnhancers(applyMiddleware(thunk, logger))
 	);

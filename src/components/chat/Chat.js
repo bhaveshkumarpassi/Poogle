@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./Chat.css";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import ChatSideBar from "./ChatSideBar";
+import { getChats, sendMessage } from "../../redux/actions/chat";
 import { baseUrl } from "../../shared/baseUrl";
+import { connect } from "react-redux";
 const axios = require("axios");
 const Pusher = require("pusher-js");
 
-const Chat = () => {
+const Chat = ({ chats, token, dispatch }) => {
+	console.log(chats);
 	const [person, setPerson] = useState("");
 	const [chat, setChat] = useState([]);
 	const [msg, setMsg] = useState("");
@@ -19,32 +22,13 @@ const Chat = () => {
 		const channel = pusher.subscribe("messages");
 		channel.bind("inserted", (data) => {
 			console.log(data);
-			const bearer_token =
-				"Bearer " +
-				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDFjMmJjYTQ0MjdlYTg5N2NlMjk1MTgiLCJpYXQiOjE2MTI0NTg5NTV9.RpALxpHS3VvoaBSeEBkRjL_1TQrUczSjRRzU6VLnw8A";
-			axios({
-				method: "get",
-				url: baseUrl + "messages",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: bearer_token,
-				},
-			}).then((res) => console.log(res));
+			console.log(token);
+			dispatch(getChats(token));
 		});
 	}, []);
 
 	useEffect(() => {
-		const bearer_token =
-			"Bearer " +
-			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDFjMmJjYTQ0MjdlYTg5N2NlMjk1MTgiLCJpYXQiOjE2MTI0NTg5NTV9.RpALxpHS3VvoaBSeEBkRjL_1TQrUczSjRRzU6VLnw8A";
-		axios({
-			method: "get",
-			url: baseUrl + "messages",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: bearer_token,
-			},
-		}).then((res) => console.log(res));
+		dispatch(getChats(token));
 	}, []);
 
 	useEffect(() => {
@@ -59,18 +43,7 @@ const Chat = () => {
 	const handleMessageSent = (e) => {
 		e.preventDefault();
 		setChat((chat) => [...chat, { msg, sender: "me" }]);
-		const bearer_token =
-			"Bearer " +
-			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDFjMmJjYTQ0MjdlYTg5N2NlMjk1MTgiLCJpYXQiOjE2MTI0NTg5NTV9.RpALxpHS3VvoaBSeEBkRjL_1TQrUczSjRRzU6VLnw8A";
-		axios({
-			method: "post",
-			url: baseUrl + "messages",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: bearer_token,
-			},
-			data: { msg, to: "601c44b6fa5d9b3b64f57194" },
-		}).then((res) => console.log(res));
+		dispatch(sendMessage(token, msg, "601c44b6fa5d9b3b64f57194"));
 		setMsg("");
 	};
 
@@ -146,4 +119,8 @@ const Chat = () => {
 	);
 };
 
-export default Chat;
+const mapStateToProps = (state) => {
+	return { chats: state.chats, token: state.auth.token };
+};
+
+export default connect(mapStateToProps)(Chat);
