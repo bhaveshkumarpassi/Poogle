@@ -14,7 +14,21 @@ Quill.register('modules/imageCompress', ImageCompress);
 
 
 const spaces = [{value:"Web-Development",label:'Web Development'}, 
-    {value:"Android-Development", label:'Android Development'}];
+    {value:"Android-Development", label:'Android Development'},
+    {value:"Digital-Design-(ECN 103)", label:'Digital Design-(ECN 103)'},
+    {value:"Analog-Electronic-Circuits-I-(ECN-102)", label: 'Analog Electronic Circuits-I-(ECN-102)'},
+    {value:"Analog-Electronic-Circuits-II-(ECN-102)", label: 'Analog Electronic Circuits-II-(ECN-102)'},
+    {value:"Communication-Engineering-(ECN-201)", label:"Communication Engineering (ECN 201)"},
+    {value:"Signal-and-Systems", label:"Signal and Systems"},
+    {value:"VLSI-Design-(ECN-208)", label:"VLSI Design (ECN 208)"},
+    {value:"Embedded-Systems-(ECN-305)", label:"Embedded Systems (ECN 305)"},
+    {value:"Control-Systems-(ECN-401)", label:"Control Systems (ECN 401)"},
+    {value:"HDL-based-system-Design-(ECN-411)", label:"HDL based system Design (ECN 411)"},
+    {value:"Foundations-of-VLSI-CAD-(ECN-416)", label:"Foundations of VLSI CAD (ECN 416)"},
+    {value:"Arduino", label:"Arduino"},
+    {value:"IOT", label:"IOT"},
+    {value:"Rasberry-Pi", label:"Rasberry Pi"},
+    {value:"Robotics", label:"Robotics"}];
 
 class addQuestions extends Component {
     constructor(props) {
@@ -34,7 +48,6 @@ class addQuestions extends Component {
        } 
         this.handleEditorChange = this.handleEditorChange.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
-        this.handleFileChange = this.handleFileChange.bind(this);
         this.handleMultiSelectChange = this.handleMultiSelectChange.bind(this)
         this.handleSubmit= this.handleSubmit.bind(this)
       }
@@ -61,15 +74,10 @@ class addQuestions extends Component {
       }
       
       handleEditorChange(value) {
-        console.log(this.state.description)
         this.setState({ description: value })
       }
 
-      handleFileChange(files) {
-        this.setState({ files: files});
-      }
-
-      handleSubmit(event){
+      handleSubmit = (event) => {
         event.preventDefault();
         const isValid = this.formValidation();
         console.log(this.state);
@@ -93,7 +101,7 @@ class addQuestions extends Component {
               author: this.props.auth.userId
             };
 
-            this.props.postQuestion(newQuestion, this.state.token);
+            this.props.postQuestion(newQuestion);
         }
       }
       
@@ -174,4 +182,6 @@ class addQuestions extends Component {
         )
       }
 }
+
+
 export default addQuestions

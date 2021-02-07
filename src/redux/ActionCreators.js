@@ -82,12 +82,12 @@ export const logOut = (userToken) => async (dispatch, getState) => {
 //**************************************************************************** */
 // ------------------------------------ SPACES -------------------------------/
 
-export const fetchSpaces = () => (dispatch) => {
+export const fetchSpaces = (limit, skip) => (dispatch) => {
 	// redux thunk allows to pass an action method instead of just action object and automayically recieves dispatch parameter.
 
 	dispatch(spacesLoading(true)); // could do this or anything at anytime as middleware operation.
-
-	return fetch(baseUrl + "spaces")
+	//&skip=${skip}
+	return fetch(baseUrl + 'spaces')
 		.then(
 			(response) => {
 				if (response.ok) {
@@ -131,10 +131,10 @@ export const addQuestion = (question) => ({
 	payload: question,
 });
 
-export const postQuestion = (question, userToken) => (dispatch) => {
+export const postQuestion = (question) => (dispatch) => {
 	const newQuestion = question;
 	newQuestion.dateNum = Date.now();
-	const bearer = "Bearer " + userToken;
+	const bearer = "Bearer " + localStorage.getItem("token");
 
 	return fetch(baseUrl + "questions", {
 		method: "POST",
@@ -168,6 +168,8 @@ export const postQuestion = (question, userToken) => (dispatch) => {
 			alert("Your question could not be posted\nError: " + error.message);
 		});
 };
+
+
 
 export const fetchQuestions = () => (dispatch) => {
 	dispatch(questionsLoading(true));
@@ -204,30 +206,24 @@ export const deleteQuestion = (questionId) => (dispatch) => {
 			"Content-Type": "application/json",
 			Authorization: bearer,
 		},
-		credentials: "same-origin",
-	})
-		.then(
-			(response) => {
-				if (response.ok) {
-					return response;
-				} else {
-					var error = new Error(
-						"Error " + response.status + ": " + response.statusText
-					);
-					error.response = response;
-					throw error;
-				}
-			},
-			(error) => {
-				throw error;
-			}
-		)
-		.then((response) => response.json())
-		.then((questions) => {
-			console.log("Question Deleted", questions);
-			dispatch(removeQuestion(questionId));
-		})
-		.catch((error) => dispatch(questionsFailed(error.message)));
+        //credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(() => dispatch(removeQuestion(questionId)))
+	.then(() => console.log('Question deleted!!'))
+    .catch(error => dispatch(questionsFailed(error.message)));
 };
 
 export const removeQuestion = (questionId) => ({
@@ -249,6 +245,129 @@ export const addQuestions = (questions) => ({
 	payload: questions,
 });
 
+
+// --------------------------     QUESTION REACTION   -------------------------/
+
+export const addReaction = (reac) => ({
+	type: ActionTypes.ADD_QREACTION,
+	payload: reac,
+});
+
+export const postReaction = (reac) => (dispatch) => {
+	
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "questionReactions", {
+		method: "POST",
+		body: JSON.stringify(reac),
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer,
+		},
+		//credentials: "same-origin",
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((response) => dispatch(addReaction(response)))
+		.catch((error) => {
+			console.log("post reactions", error.message);
+			alert("Your Reaction could not be posted\nError: " + error.message);
+		});
+};
+
+export const fetchReactions = () => (dispatch) => {
+	return fetch(baseUrl + "questionReactions")
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				var errmess = new Error(error.message);
+				throw errmess;
+			}
+		)
+		.then((response) => response.json())
+		.then((reactions) => dispatch(addReactions(reactions)))
+		.catch((error) => dispatch(reactionsFailed(error.message)));
+};
+
+export const reactionsFailed = (errmess) => ({
+	type: ActionTypes.QREACTIONS_FAILED,
+	payload: errmess,
+});
+
+export const addReactions = (reactions) => ({
+	type: ActionTypes.ADD_QREACTIONS,
+	payload: reactions,
+});
+
+export const deleteReaction = (reacId) => (dispatch) => {
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "questionReactions/" + reacId, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer
+		},
+		credentials: "same-origin",
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((reactions) => {
+			console.log("Reaction Deleted", reactions);
+			dispatch(removeReaction(reacId));
+		})
+		.catch((error) => {
+			console.log("delete Reactions", error.message);
+			alert("Your Reaction could not be deleted\nError: " + error.message);
+		});
+};
+
+export const removeReaction = (reacId) => ({
+	type: ActionTypes.DELETE_QREACTION,
+	payload: reacId,
+});
+
+
 // --------------------------      ANSWERES ----------------------------------/
 
 export const addAnswer = (answer) => ({
@@ -268,7 +387,7 @@ export const postAnswer = (answer) => (dispatch) => {
 			"Content-Type": "application/json",
 			Authorization: bearer,
 		},
-		credentials: "same-origin",
+		//credentials: "same-origin",
 	})
 		.then(
 			(response) => {
@@ -323,13 +442,13 @@ export const fetchAnswers = () => (dispatch) => {
 export const deleteAnswer = (answerId) => (dispatch) => {
 	const bearer = "Bearer " + localStorage.getItem("token");
 
-	return fetch(baseUrl + "questions/" + answerId, {
+	return fetch(baseUrl + "answers/" + answerId, {
 		method: "DELETE",
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: bearer,
 		},
-		credentials: "same-origin",
+		//credentials: "same-origin",
 	})
 		.then(
 			(response) => {
@@ -393,7 +512,7 @@ export const postComment = (comment) => (dispatch) => {
 			"Content-Type": "application/json",
 			Authorization: bearer,
 		},
-		credentials: "same-origin",
+		//credentials: "same-origin",
 	})
 		.then(
 			(response) => {
@@ -460,6 +579,7 @@ export const deleteComment = (commentId) => (dispatch) => {
 		method: "DELETE",
 		headers: {
 			"Content-Type": "application/json",
+			Authorization: bearer
 		},
 		credentials: "same-origin",
 	})
@@ -484,7 +604,10 @@ export const deleteComment = (commentId) => (dispatch) => {
 			console.log("Comment Deleted", comments);
 			dispatch(removeComment(commentId));
 		})
-		.catch((error) => dispatch(commentsFailed(error.message)));
+		.catch((error) => {
+			console.log("delete comments", error.message);
+			alert("Your comment could not be deleted\nError: " + error.message);
+		});
 };
 
 export const removeComment = (commentId) => ({

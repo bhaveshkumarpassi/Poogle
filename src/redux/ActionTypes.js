@@ -23,6 +23,11 @@ export const COMMENTS_FAILED = "COMMENTS_FAILED";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
 
+export const ADD_QREACTION = 'ADD_QREACTION';
+export const ADD_QREACTIONS = 'ADD_QREACTIONS';
+export const QREACTIONS_FAILED = 'QREACTIONS_FAILED';
+export const DELETE_QREACTION = 'DELETE_QREACTION';
+
 //Authentication
 export const SIGN_UP = "SIGN_UP";
 export const SIGN_IN = "SIGN_IN";

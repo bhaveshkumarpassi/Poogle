@@ -214,8 +214,8 @@ class Signup extends Component {
             setTimeout(() => {
                 let { from } = this.props.location.state || { from: { pathname: "/" } };
                 this.props.history.push(from.pathname);
-            }, 6000);
-        }    
+            }, 5000);
+        }   
     }
       
     }

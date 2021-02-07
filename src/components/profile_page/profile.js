@@ -16,7 +16,8 @@ import Loading from "../loading";
 
 class profile extends Component {
 	componentDidMount() {
-		this.props.fetchUser(this.props.match.params.userId);
+		//this.props.fetchUser(this.props.match.params.userId);
+		this.props.fetchUser(this.props.auth.userId)
 	}
 	renderButtons() {
 		// renders the button
@@ -231,6 +232,7 @@ const mapStateToProps = (state, ownProps) => {
 	return {
 		user: state.user,
 		spaces: state.spaces.spaces,
+		auth: state.auth
 		//remember to check if spaces are avaliable.
 	};
 };
