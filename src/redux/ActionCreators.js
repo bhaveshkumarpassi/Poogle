@@ -615,43 +615,53 @@ export const removeComment = (commentId) => ({
 	payload: commentId,
 });
 
-export const fetchUser = (userId) => (dispatch) => {
-	dispatch(userLoading(true));
-	return (
-		fetch(baseUrl + "users/" + userId)
-			.then(
-				(response) => {
-					if (response.ok) {
-						return response;
-					} else {
-						var error = new Error(
-							"Error " + response.status + ": " + response.statusText
-						);
-						error.response = response;
-						throw error;
-					}
-				},
-				(error) => {
-					throw new Error(error.message);
-				}
-			)
-			.then((response) => response.json())
-			// .then(user=> console.log(user))
-			.then((user) => dispatch(getUser(user)))
-			.catch((error) => dispatch(userLoadingFailed(error.message)))
-	);
+export const fetchUser = (userId) => async (dispatch, getState) => {
+	console.log("Got fet user request for userId"+ userId);
+	dispatch({type: ActionTypes.USER_LOADING});
+	try {
+		console.log(userId);
+		let response = await fetch(baseUrl + "users/"+userId, {
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		});
+		console.log(response);
+
+		if (response.ok) {
+			response = await response.json();
+			dispatch({ type: ActionTypes.GET_USER, payload: response });
+		} else {
+			response = await response.text();
+			console.log("Errrrrrror", response);
+			throw new Error(response);
+		}
+	} catch (err) {
+		console.log("err", err);
+		dispatch({ type: ActionTypes.USER_FAILED, payload: { errmess: err } });
+	}
 };
 
-export const userLoading = () => ({
-	type: ActionTypes.USER_LOADING,
-});
 
-export const userLoadingFailed = (errmess) => ({
-	type: ActionTypes.USER_FAILED,
-	payload: errmess,
-});
+/*************************************************************** */
+/*------------CONTACT US FORM----------------------------*/
+export const contactUs = (formDetails) => async (dispatch, getState) => {
+	try {
+		console.log(formDetails);
+		let response = await fetch(baseUrl + "contactUs", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(formDetails),
+		});
+		console.log(response);
 
-export const getUser = (user) => ({
-	type: ActionTypes.GET_USER,
-	payload: user,
-});
+		if (response.ok) {
+			response = await response.json();
+			dispatch({ type: ActionTypes.CONTACT_US, payload: response });
+		} else {
+			response = await response.json();
+			console.log("Error", response);
+			throw new Error(response);
+		}
+	} catch (err) {
+		dispatch({ type: ActionTypes.FORM_FAILED, payload: { error: err } });
+	}
+};
