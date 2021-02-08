@@ -223,4 +223,4 @@ class addQuestions extends Component {
 }
 
 
-export default addQuestions
+export default addQuestions;

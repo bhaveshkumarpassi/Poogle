@@ -288,5 +288,79 @@
       "questions": 6,
       "upvotes": 9
     }
+  ],
+  "blogs":[
+    {
+      "id": 1,
+      "views": 70,
+      "claps": 65,
+      "blog": "Back-end development??",
+      "content": "Lorem ipsumLorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. ",
+      "tagIds": [
+        0,
+        1,
+        2
+      ],
+      "tagNames": [
+        "Web Development",
+        "Android development",
+        "IOS Development"
+      ],
+      "author": "Steve Osten",
+      "date": "2012-8-16T17:57:28.556094Z",
+      "dateNum": 350
+    },
+    {
+      "id": 2,
+      "views": 45,
+      "claps": 30,
+      "blog": "Are react and react native different??",
+      "content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est.Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec  lorem. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit  amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem.",
+      "tagIds": [
+        0,
+        1,
+        2
+      ],
+      "tagNames": [
+        "Web Development",
+        "Android development",
+        "IOS Development"
+      ],
+      "author": "James Twist",
+      "date": "2012-10-16T17:57:28.556094Z",
+      "dateNum": 200
+    },
+    {
+      "id": 3,
+      "views": 88,
+      "claps": 63,
+      "blog": " REST API??",
+      "content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit                  amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit                  amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec                       lorem.",
+      "tagIds": [
+        0
+      ],
+      "tagNames": [
+        "Web Development"
+      ],
+      "author": "Jack Venes",
+      "date": "2012-4-16T17:57:28.556094Z",
+      "dateNum": 250
+    },
+    {
+      "id": 4,
+      "views": 150,
+      "claps": 89,
+      "blog": "Machine Learning Models??",
+      "content":"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit                  amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce es Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec                  lorem. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit                  amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem.",
+      "tagIds": [
+        3
+      ],
+      "tagNames": [
+        "Machine Learning"
+      ],
+      "author": "Jack Venes",
+      "date": "2012-5-16T17:57:28.556094Z",
+      "dateNum": 280
+    }
   ]
 }

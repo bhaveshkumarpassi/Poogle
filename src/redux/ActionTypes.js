@@ -33,6 +33,13 @@ export const ADD_AREACTIONS = 'ADD_AREACTIONS';
 export const AREACTIONS_FAILED = 'AREACTIONS_FAILED';
 export const DELETE_AREACTION = 'DELETE_AREACTION';
 
+
+export const BLOGS_LOADING = "BLOGS_LOADING";
+export const BLOGS_FAILED = "BLOGS_FAILED";
+export const ADD_BLOGS = "ADD_BLOGS";
+export const ADD_BLOG = "ADD_BLOG";
+export const DELETE_BLOG = "DELETE_BLOG";
+
 //Authentication
 export const SIGN_UP = "SIGN_UP";
 export const SIGN_IN = "SIGN_IN";

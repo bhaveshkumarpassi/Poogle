@@ -1,0 +1,119 @@
+.blogEven {
+    background-color: #fef2a0;
+    padding: 1rem;
+}
+
+.searchbtn {
+    height: 40px;
+    width: 40px;
+    border-top-left-radius: 5rem;
+    border-bottom-left-radius: 5rem;
+}
+
+
+.blogOdd {
+    background-color: white;
+    padding: 1rem;
+}
+
+.blog-heading {
+    font-size: 1.1rem;
+    color: #532e1c;
+    margin: 1rem;
+    line-height: 1.8rem;
+}
+
+.list-item-style {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    margin: 1rem 1rem;
+}
+
+.blog-container{
+    border-radius: 1rem;
+}
+
+.tag {
+    margin: 5px 0px 5px 0.7rem;
+    height: 20px;
+    background-color: #c87941;
+}
+
+.blog-text {
+    margin: 5px;
+    color:  #c87941;
+    font-size: 0.8rem;
+    margin: 1rem;
+}
+
+.prop {
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    padding-top: 20px;
+    margin: 1rem 1rem;
+    border: solid 1.5px tomato;
+    background-color: #ffec85;
+}
+
+.prop-div {
+    display: inline-block;
+}
+
+.prop-div p {
+    text-align: center;
+    color: #c87941;
+}
+
+.category-div {
+    margin-top: 1rem;
+    margin-left: 0rem;
+    
+}
+
+.add-blog-btn {
+    height: 58px;
+    padding-left: 5px;
+    padding-right: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 2rem;
+    text-align: center;
+    
+}
+
+.button-grp {
+    height: 58px;
+}
+
+.button-grp-button {
+    background-color: lightskyblue;
+}
+
+.blog-btn {
+    height: 58px;
+    padding-left: 5px;
+    padding-right: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 2rem;
+    text-align: center;
+    background-color: #a5ecd7;
+
+}
+
+.follower-btn {
+    height: 58px;
+    padding-left: 5px;
+    padding-right: 20px;
+    box-shadow: 0 4px 8px 0 rgba(231, 163, 163, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 2rem;
+    text-align: center;
+    background-color: #a5ecd7;
+
+}
+
+.all-blog-heading {
+    vertical-align: middle;
+    color: rgb(46, 9, 9);
+    text-align: center; 
+    margin: 0%;
+    
+}
