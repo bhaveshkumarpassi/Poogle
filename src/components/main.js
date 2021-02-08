@@ -218,9 +218,9 @@ class Main extends Component {
 						path="/blogs"
 						component={()=><Blogs blogs={this.props.blogs.blogs}/>}/>
 					<PrivateRoute exact path="/profile/:userId" component={Profile_page}/>
-					<PrivateRoute exact path="/profile" component={() => <Profile_page user={this.props.user} 
+					{/* <PrivateRoute exact path="/profile" component={() => <Profile_page user={this.props.user} 
 						isLoading={this.props.user.isLoading}
-						errMess={this.props.user.errMess} />}/>
+						errMess={this.props.user.errMess} />}/> */}
 					<PrivateRoute path="/chat" component={Chat} />
 					<Route path="/contact" component={Contact} />
 					<PrivateRoute path="/notifications" component={Notifications}/>
