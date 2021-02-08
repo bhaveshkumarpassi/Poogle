@@ -43,7 +43,51 @@ const RenderTags = ({question}) => question.tagNames.map((tag) => {
     );
 })
 
-const RenderAnswers = ({answers, deleteAnswer, auth}) => answers.sort((a,b) => b.votes-a.votes).map((ans) => {
+
+
+
+const RenderAnswers = ({answers, deleteAnswer, auth, areactions, postAReaction, deleteAReaction}) => answers.sort((a,b) => b.votes-a.votes).map((ans) => {
+
+    var uvotes = areactions.filter((reac) => reac.answer === ans._id && reac.category === "UpVote");
+    var dvotes = areactions.filter((reac) => reac.answer === ans._id && reac.category === "DownVote");
+    var ivote = uvotes.filter((uv) => uv.user === auth.userId)[0];
+    var idvote = dvotes.filter((dv) => dv.user === auth.userId)[0];
+
+    const upAVote = async (upvotes) => {
+
+        if(upvotes.length && upvotes.filter(uv => (uv.answer === ans._id && uv.user === auth.userId))[0]) {
+            
+            var v = upvotes.filter(uv => (uv.answer === ans._id && uv.user === auth.userId))[0];
+            await deleteAReaction(v._id);
+        }
+        else {
+            var reac = {
+                user: auth.userId,
+                answer: ans._id,
+                category: 'UpVote'
+            }
+            await postAReaction(reac);
+        }
+    }
+    
+    const downAVote = async (upvotes) => {
+    
+        if(upvotes.length && upvotes.filter(uv => (uv.answer === ans._id && uv.user === auth.userId))[0]) {
+            
+            var v = upvotes.filter(uv => (uv.answer === ans._id && uv.user === auth.userId))[0];
+            await deleteAReaction(v._id);
+        }
+        else {
+            var reac = {
+                user: auth.userId,
+                answer: ans._id,
+                category: 'DownVote'
+            }
+            await postAReaction(reac);
+        }
+        
+    }
+    
     return(
         <Card id={ans.id}>
             <CardBody>
@@ -63,14 +107,14 @@ const RenderAnswers = ({answers, deleteAnswer, auth}) => answers.sort((a,b) => b
                 <hr></hr>
                 <Row>
                     <ButtonGroup>
-                        <Button color='info'>
-                            <span className='fa fa-lg fa-arrow-circle-up' />
+                        <Button color={ ivote ? 'primary' : 'info' } onClick={ !idvote ? () => upAVote(uvotes)  : console.log('Not allowed!!')}>
+                            <span className={ ivote ? 'fa fa-lg fa-arrow-circle-up' : 'fa fa-lg fa-arrow-up'} />
                         </Button>
                         <Button color='info' disabled>
-                            {ans.votes}
+                            {uvotes.length-dvotes.length}
                         </Button>
-                        <Button color='info'>
-                            <span className='fa fa-lg fa-arrow-circle-down'></span>
+                        <Button color={ idvote ? 'primary' : 'info' } onClick={ !ivote ? () => downAVote(dvotes) : console.log('Not allowed!!')}>
+                            <span className={ idvote ? 'fa fa-lg fa-arrow-circle-down' : 'fa fa-lg fa-arrow-down'}></span>
                         </Button>
                         {
                             ans.author._id === auth.userId
@@ -90,6 +134,7 @@ const RenderAnswers = ({answers, deleteAnswer, auth}) => answers.sort((a,b) => b
 
 function RenderComments({commentsArray, isOpen, postComment, deleteComment, questionId, author}){
 
+        
         const [formOpen, setIsOpen] = useState(false);
 
         const toggle = () => setIsOpen(!formOpen);
@@ -202,7 +247,6 @@ class RenderQuestionAnswers extends Component {
             errors:{
                 description:'',
             }
-            
         }
         this.handleEditorChange = this.handleEditorChange.bind(this);
         this.handleSubmit= this.handleSubmit.bind(this);
@@ -342,14 +386,14 @@ class RenderQuestionAnswers extends Component {
                 <hr></hr>
                 <Row>
                     <ButtonGroup>
-                        <Button color='info' onClick={ !idvote ? () => this.upVote(uvotes) : console.log('Not allowed!!')}>
-                            <span className={ ivote ? 'fa fa-lg fa-arrow-circle-up' : 'fa fa-arrow-up'} />
+                        <Button color={ ivote ? 'primary' : 'info' } onClick={ !idvote ? () => this.upVote(uvotes) : console.log('Not allowed!!')}>
+                            <span className={ ivote ? 'fa fa-lg fa-arrow-circle-up' : 'fa fa-lg fa-arrow-up'} />
                         </Button>
                         <Button color='info' disabled>
                             {uvotes.length-dvotes.length}
                         </Button>
-                        <Button color='info' onClick={ !ivote ? () => this.downVote(dvotes) : console.log('Not allowed!!')}>
-                            <span className={ idvote ? 'fa fa-lg fa-arrow-circle-down' : 'fa fa-arrow-down'}></span>
+                        <Button color={ idvote ? 'primary' : 'info' } onClick={ !ivote ? () => this.downVote(dvotes) : console.log('Not allowed!!')}>
+                            <span className={ idvote ? 'fa fa-lg fa-arrow-circle-down' : 'fa fa-lg fa-arrow-down'}></span>
                         </Button>
                         <Button color='danger' onClick={() => this.onCommentsClicked()}>
                             <span className='fa fa-lg fa-comment mr-2' />
@@ -383,6 +427,9 @@ class RenderQuestionAnswers extends Component {
                 <hr></hr>
                 <RenderAnswers answers = {this.props.answers}
                  deleteAnswer={this.props.deleteAnswer}
+                 areactions={this.props.areactions}
+                 postAReaction={this.props.postAReaction}
+                 deleteAReaction={this.props.deleteAReaction}
                  auth={this.props.auth} />
             </CardBody>
         </Card>
@@ -451,12 +498,12 @@ class SingleQuestion extends Component {
 
     render() {
 
-        if(this.props.isLoading || this.props.answersIsLoading || this.props.reactionsIsLoading){
+        if(this.props.isLoading || this.props.answersIsLoading || this.props.reactionsIsLoading || this.props.areactionsIsLoading){
             return(
                 <Loading type="spokes" color="grey"/> 
             );
         }
-        else if(this.props.errMess || this.props.answersErrMess || this.props.commentsErrMess || this.props.reactionsErrMess) {
+        else if(this.props.errMess || this.props.answersErrMess || this.props.commentsErrMess || this.props.reactionsErrMess || this.props.reactionsErrMess) {
             return(
                 <div className="container spaces">
                     <div className="row"> 
@@ -486,6 +533,9 @@ class SingleQuestion extends Component {
                                 postReaction={this.props.postReaction}
                                 deleteReaction={this.props.deleteReaction}
                                 reactions={this.props.reactions}
+                                areactions={this.props.areactions}
+                                postAReaction={this.props.postAReaction}
+					            deleteAReaction={this.props.deleteAReaction}
                                 />
                         </Col>  
                     </Row> 

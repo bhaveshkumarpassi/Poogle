@@ -7,15 +7,18 @@ import {Link} from 'react-router-dom';
 import {AiOutlineMail} from 'react-icons/ai';
 import {BsPencilSquare} from 'react-icons/bs';
 import './contact.css';
+import { connect } from 'react-redux';
+import {contactUs} from '../../redux/ActionCreators';
 class Contact extends Component {
     constructor(props){
         super(props);
         this.state = {
             email:"",
-            feedback:"", 
+            message:"", 
             errors:{
                 email:"",
-                feedback:""
+                message:"", 
+                submissionError:null
             },
             validated:false
         }
@@ -30,8 +33,8 @@ class Contact extends Component {
         });
     }
     formValidation = () =>{
-        const{email, feedback} = this.state;
-        let emailError="", feedbackError = "", error;
+        const{email, message} = this.state;
+        let emailError="", messageError = "", error;
         if(!email){
             emailError = "Email is required";
             error = true;            
@@ -41,16 +44,16 @@ class Contact extends Component {
             emailError = "Email address is Invalid";
             error= true;
         }
-        if(!feedback.trim())
+        if(!message.trim())
         {
-            feedbackError="Feedback is required"
+            messageError="Message is required"
             error= true;
         }
         
         this.setState(prevState => ({
             errors:{
                 email:emailError,
-                feedback: feedbackError
+                message: messageError
             }
         }))
         return !error;
@@ -62,10 +65,26 @@ class Contact extends Component {
             validated:isValid
         })
         if(isValid){
-            window.alert("Form Submitted")
+            try{
+                const {email, message} = this.state;
+                this.props.contactUs({email, message})
+                window.alert("Form Submitted")
+            }catch(e){
+                console.log("Contact ", e);
+            }
+            
         }
         console.log(this.state);
         
+    }
+    componentDidMount(){
+        if(this.props.auth){
+            this.setState({
+                email:this.props.auth.email
+            })    
+        }
+        
+
     }
     
     
@@ -101,9 +120,9 @@ class Contact extends Component {
                                 </Form.Group>
 
                                 <Form.Group controlId="formBasicTextbox">
-                                    <Form.Label><span className="form__icon"><BsPencilSquare/></span> Queries/ Suggestions</Form.Label>
-                                    <textarea name="feedback" rows={5} className="form-control"  value={this.state.name} placeholder="Enter your queries/ suggestions here" onChange={this.handleInputChange} />
-                                    <div className="invalid__feedback">{this.state.errors.feedback}</div>
+                                    <Form.Label><span className="form__icon"><BsPencilSquare/></span> Message</Form.Label>
+                                    <textarea name="message" rows={5} className="form-control"  value={this.state.name} placeholder="Enter your queries/ suggestions here" onChange={this.handleInputChange} />
+                                    <div className="invalid__feedback">{this.state.errors.message}</div>
                                 </Form.Group>
                                 <div className="form__btn">
                                     <button className="btn contact__form__button" type="submit" onClick={this.handleSubmit}>
@@ -122,4 +141,8 @@ class Contact extends Component {
         )
     }
 }
-export default Contact;
+const mapStateToProps = (state)=> {
+    return {auth: state.auth.user};
+}
+// export default connect(mapStateToProps, {})(Contact);
+export default connect(mapStateToProps,{contactUs}) (Contact);

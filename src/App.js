@@ -20,6 +20,7 @@ function App() {
 	const handleToggleSidebar = (value) => {
 		setToggled(value);
 	};
+	
 	return (
 		<Provider store={store}>
 			<BrowserRouter>
