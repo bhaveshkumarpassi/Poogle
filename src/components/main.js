@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchSpaces, fetchQuestions, fetchUser,
-	fetchAnswers, fetchComments, postComment, 
+	fetchAnswers, fetchComments, postComment, fetchBlogs,
 	deleteComment, postQuestion, deleteQuestion, postReaction, fetchReactions, deleteReaction,
 	postAnswer, deleteAnswer, postAReaction, fetchAReactions, deleteAReaction} from "../redux/ActionCreators";
 import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
+import Blogs from "./all_blog_page/blogs";
 import Profile_page from "./profile_page/profile";
 import SingleQuestion from "./single_ques/SingleQues";
 import ScrollToTop from './scroll-to-top/scroll-to-top';
@@ -25,6 +26,7 @@ const mapStateToProps = (state) => {
 	return {
 		spaces: state.spaces,
 		questions: state.questions,
+		blogs:state.blogs,
 		qreactions: state.qreactions,
 		answers: state.answers,
 		areactions: state.areactions,
@@ -40,6 +42,9 @@ const mapDispatchToProps = (dispatch) => ({
 	 },
 	fetchQuestions: () => {
 		dispatch(fetchQuestions());
+	},
+	fetchBlogs: () => {
+        dispatch(fetchBlogs());
 	},
 	fetchReactions: () => {
 		dispatch(fetchReactions());
@@ -76,11 +81,14 @@ class Main extends Component {
 	componentDidMount = () => {
 		this.props.fetchSpaces();
 		this.props.fetchQuestions();
+		this.props.fetchBlogs();
 		this.props.fetchReactions();
 		this.props.fetchUser(this.props.auth.userId);
 		this.props.fetchAReactions();
 		this.props.fetchAnswers();
 		this.props.fetchComments();
+		
+
 	}
 
 	render() {
@@ -133,6 +141,10 @@ class Main extends Component {
 					isLoading={this.props.questions.isLoading}
 					errMess={this.props.questions.errMess}
 					spaces={this.props.spaces}
+					blogs={this.props.blogs.blogs}
+					blogsLoading={this.props.blogs.isLoading}
+                    blogsErrMess={this.props.blogs.errMess}
+		
 				/>
 			);
 		}
@@ -201,6 +213,11 @@ class Main extends Component {
 						//path="/space-:spaceId/question-:quesId-:question"
 						component={QuestionWithId}
 					/>
+					<Route 
+						exact
+						path="/blogs"
+						component={()=><Blogs blogs={this.props.blogs.blogs}/>}/>
+					<PrivateRoute exact path="/profile/:userId" component={Profile_page}/>
 					<PrivateRoute exact path="/profile" component={() => <Profile_page user={this.props.user} 
 						isLoading={this.props.user.isLoading}
 						errMess={this.props.user.errMess} />}/>

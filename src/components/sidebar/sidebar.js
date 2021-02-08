@@ -57,11 +57,9 @@ return(
       <MenuItem>All questions</MenuItem>
     </SubMenu>
     
-    <SubMenu title="Blogs" icon={<FaBlog />}>
-      <MenuItem>Latest blogs</MenuItem>
-      <MenuItem>Most viewed</MenuItem>
-      <MenuItem>All blogs</MenuItem>
-    </SubMenu>
+    <MenuItem icon={<FaBlog />}>
+      Blog <Link to="/blogs"/>
+    </MenuItem>
     
     <MenuItem icon={<HiChat />}>
       Get Assistance <Link to="/chat"/>
