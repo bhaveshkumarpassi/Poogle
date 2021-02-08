@@ -1,4 +1,4 @@
-export const Chat = (state, action) => {
+export const Chat = (state = { chats: [] }, action) => {
 	switch (action.type) {
 		case "GET_CHAT":
 			return { ...state, chats: action.payload };
