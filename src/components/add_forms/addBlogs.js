@@ -165,4 +165,5 @@ class addBlogs extends Component {
         )
       }
 }
+
 export default addBlogs

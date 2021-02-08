@@ -19,6 +19,7 @@ import { Row, Col, Container,
         Card, CardBody, CardTitle, CardSubtitle, CardText, Collapse,
         ButtonGroup, Button, CardImg, Badge, Modal, ModalHeader, ModalBody, ModalFooter, Media, Label, Jumbotron} from "reactstrap";
 import {LocalForm, Control, Errors} from 'react-redux-form';
+import { withRouter } from 'react-router-dom';
 import Loading from "../loading";
 import { baseUrl } from "../../shared/baseUrl";
 import profilePic from '../../Images/profile_pic.png';
@@ -27,9 +28,11 @@ import { Fade, Stagger } from 'react-animation-components';
 import Form from 'react-bootstrap/Form';
 import '../add_forms/add_forms.css'
 import ReactQuill from 'react-quill';
+import {Quill} from 'react-quill'
 import 'react-quill/dist/quill.snow.css'; 
 import {toolbarOptions, formats} from '../add_forms/text_editorVar';
-
+import ImageCompress from 'quill-image-compress';
+Quill.register('modules/imageCompress', ImageCompress);
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -40,29 +43,20 @@ const RenderTags = ({question}) => question.tagNames.map((tag) => {
     );
 })
 
-const RenderAnswers = ({answers}) => answers.sort((a,b) => b.votes-a.votes).map((ans) => {
+const RenderAnswers = ({answers, deleteAnswer, auth}) => answers.sort((a,b) => b.votes-a.votes).map((ans) => {
     return(
         <Card id={ans.id}>
             <CardBody>
                 <Row>
                     <Col className='mb-3 single-question-profile' xs={4} md={3} lg={2}>
                         <CardImg className='single-question-profile-pic' src={profilePic}/>
-                        <CardText className='single-question-profile-name'>@{ans.author} got an answer !!!</CardText>
+                        <CardText className='single-question-profile-name'>@{ans.author.user_name} got an answer !!!</CardText>
                     </Col>
                     <Col xs={12} md={9} lg={10}>
                         <Row>
                             <Col xs={12}>
-                                <CardText className='single-question-description'>{ans.answer}</CardText>
+                                <div className="editor__content" dangerouslySetInnerHTML={{ __html: ans.description }} />
                             </Col>
-                            {
-                                ans.imageUrl
-                                ?
-                                <Col xs={12} className='mt-5'>
-                                    <CardImg src={ baseUrl + ans.imageUrl} alt='Answer Image'/>
-                                </Col>
-                                :
-                                <Col></Col>
-                            }
                         </Row>
                     </Col>
                 </Row>
@@ -78,9 +72,15 @@ const RenderAnswers = ({answers}) => answers.sort((a,b) => b.votes-a.votes).map(
                         <Button color='info'>
                             <span className='fa fa-lg fa-arrow-circle-down'></span>
                         </Button>
-                        <Button color='danger'>
-                            <span className='fa fa-lg fa-trash'></span>
-                        </Button>
+                        {
+                            ans.author._id === auth.userId
+                            ?
+                            <Button color='danger' onClick={() => deleteAnswer(ans._id)} >
+                                <span className='fa fa-lg fa-trash'></span>
+                            </Button>
+                            :
+                            <></>
+                        }
                     </ButtonGroup>   
                 </Row>
             </CardBody>
@@ -88,16 +88,20 @@ const RenderAnswers = ({answers}) => answers.sort((a,b) => b.votes-a.votes).map(
     );
 });
 
-function RenderComments({commentsArray, isOpen, postComment, deleteComment, questionId}){
+function RenderComments({commentsArray, isOpen, postComment, deleteComment, questionId, author}){
 
         const [formOpen, setIsOpen] = useState(false);
 
         const toggle = () => setIsOpen(!formOpen);
 
-        const handleSubmit = (values) =>  { postComment(questionId, 'Elon Mask', values.comment)};
-        const onDelete = (commentId) => {
-            deleteComment(commentId);
-        }
+        const handleSubmit = async (values) =>  { 
+            
+            await postComment({
+                author: author,
+                question: questionId,
+                comment: values.comment
+            });
+        };
 
         return(
         <Collapse isOpen={isOpen}>
@@ -147,22 +151,27 @@ function RenderComments({commentsArray, isOpen, postComment, deleteComment, ques
                         commentsArray.sort((a,b) => b.dateNum-a.dateNum).map((comm) => {
                             return (
                                 <Fade in>
-                                    <li key={comm.id}>
+                                    <li key={comm._id}>
                                         <Media className='row mt-4'>
                                             <Media left className='mr-0 col-4 col-md-2' >
-                                                <Media object className='ml-0 comments-profile-pic' src = {profilePic} alt={comm.author} />
+                                                <Media object className='ml-0 comments-profile-pic' src = {profilePic} alt={comm.author.user_name} />
                                                 <br/>
-                                                <p className='comments-data'><b>{comm.author}</b> at {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comm.date)))}</p>
+                                                <p className='comments-data'><b>{comm.author.user_name}</b> at {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comm.createdAt)))}</p>
                                             </Media>
                                             <Media className=' comment mr-0 col-8 col-md-10' body>
                                                 {comm.comment}
                                                 
                                             </Media>
                                             <Media>
-                                                <Button 
-                                                    onClick={() => onDelete(comm.id)}
-                                                    className='fa fa-trash'
-                                                />
+                                                {
+                                                    comm.author._id === author
+                                                    ?
+                                                    <Button color='danger' onClick={() => deleteComment(comm._id)} >
+                                                        <span className='fa fa-trash'></span>
+                                                    </Button>
+                                                    :
+                                                    <></>
+                                                }
                                             </Media>
                                         </Media>
                                         <hr/>
@@ -196,11 +205,20 @@ class RenderQuestionAnswers extends Component {
             
         }
         this.handleEditorChange = this.handleEditorChange.bind(this);
-        this.handleSubmit= this.handleSubmit.bind(this)
+        this.handleSubmit= this.handleSubmit.bind(this);
+        this.upVote=this.upVote.bind(this);
+        this.downVote=this.downVote.bind(this);
     }
 
     modules = {
-        toolbar:toolbarOptions
+        toolbar:toolbarOptions,
+        imageCompress: {
+            quality: 0.7,
+            maxWidth: 500,
+            maxHeight: 500, 
+            imageType: 'image/jpeg', 
+            debug: true
+          }
     }
 
     onShareClicked() {
@@ -225,16 +243,20 @@ class RenderQuestionAnswers extends Component {
         this.setState({ description: value })
     }
 
-    handleSubmit(event){
+    handleSubmit = async (event) => {
         event.preventDefault();
         const isValid = this.formValidation();
         console.log(this.state);
         
         if(isValid){
             window.alert("Form Submitted");
-            
+            var answer = {
+                question: this.props.question._id,
+                description: this.state.description,
+                author: this.props.auth.userId
+            };
+            await this.props.postAnswer(answer);
         }
-        console.log(this.state);
     }
 
     formValidation = () =>{
@@ -255,7 +277,46 @@ class RenderQuestionAnswers extends Component {
         return !error;
     }
 
+    upVote = async (upvotes) => {
+
+        if(upvotes.length && upvotes.filter(uv => (uv.question === this.props.question._id && uv.user === this.props.auth.userId))[0]) {
+            
+            var v = upvotes.filter(uv => (uv.question === this.props.question._id && uv.user === this.props.auth.userId))[0];
+            await this.props.deleteReaction(v._id);
+        }
+        else {
+            var reac = {
+                user: this.props.auth.userId,
+                question: this.props.question._id,
+                category: 'UpVote'
+            }
+            await this.props.postReaction(reac);
+        }
+    }
+
+    downVote = async (upvotes) => {
+        if(upvotes.length && upvotes.filter(uv => (uv.question === this.props.question._id && uv.user === this.props.auth.userId))[0]) {
+            
+            var v = upvotes.filter(uv => (uv.question === this.props.question._id && uv.user === this.props.auth.userId))[0];
+            await this.props.deleteReaction(v._id);
+        }
+        else {
+            var reac = {
+                user: this.props.auth.userId,
+                question: this.props.question._id,
+                category: 'DownVote'
+            }
+            await this.props.postReaction(reac);
+        }
+    }
+
     render() {
+
+    var uvotes = this.props.reactions.filter((reac) => reac.category === "UpVote");
+    var dvotes = this.props.reactions.filter((reac) => reac.category === "DownVote");
+    var ivote = uvotes.filter((uv) => uv.user === this.props.auth.userId)[0];
+    var idvote = dvotes.filter((dv) => dv.user === this.props.auth.userId)[0];
+
     return(
     <div>
         <Card>
@@ -273,32 +334,22 @@ class RenderQuestionAnswers extends Component {
                                 <RenderTags question={this.props.question} />
                             </Col>
                             <Col xs={12}>
-                                <div className="editor__content" dangerouslySetInnerHTML={{ __html: this.state.description }} />
-                                {/* <CardText className='single-question-description'>{this.props.question.description}</CardText> */}
+                                <div className="editor__content" dangerouslySetInnerHTML={{ __html: this.props.question.description }} />
                             </Col>
-                            {/* {
-                                this.props.question.imageUrl
-                                ?
-                                <Col xs={12} className='mt-5'>
-                                    <CardImg src={ baseUrl + this.props.question.imageUrl} alt='Question Image'/>
-                                </Col>
-                                :
-                                <Col></Col>
-                            } */}
                         </Row>
                     </Col>
                 </Row>
                 <hr></hr>
                 <Row>
                     <ButtonGroup>
-                        <Button color='info'>
-                            <span className='fa fa-lg fa-arrow-circle-up' />
+                        <Button color='info' onClick={ !idvote ? () => this.upVote(uvotes) : console.log('Not allowed!!')}>
+                            <span className={ ivote ? 'fa fa-lg fa-arrow-circle-up' : 'fa fa-arrow-up'} />
                         </Button>
                         <Button color='info' disabled>
-                            {this.props.question.votes}
+                            {uvotes.length-dvotes.length}
                         </Button>
-                        <Button color='info'>
-                            <span className='fa fa-lg fa-arrow-circle-down'></span>
+                        <Button color='info' onClick={ !ivote ? () => this.downVote(dvotes) : console.log('Not allowed!!')}>
+                            <span className={ idvote ? 'fa fa-lg fa-arrow-circle-down' : 'fa fa-arrow-down'}></span>
                         </Button>
                         <Button color='danger' onClick={() => this.onCommentsClicked()}>
                             <span className='fa fa-lg fa-comment mr-2' />
@@ -307,10 +358,6 @@ class RenderQuestionAnswers extends Component {
                         <Button color='success' onClick={() => this.onShareClicked()}>
                             <span className='fa fa-lg fa-share'></span>
                         </Button>
-                        <Button>
-                            <span className='fa fa-lg fa-trash'></span>
-                        </Button>
-                        
                     </ButtonGroup>   
                 </Row>
             </CardBody>
@@ -319,7 +366,8 @@ class RenderQuestionAnswers extends Component {
             commentsArray={this.props.comments}  
             postComment={this.props.postComment}
             deleteComment={this.props.deleteComment} 
-            questionId={this.props.question.id} 
+            questionId={this.props.question._id} 
+            author={this.props.auth.userId}
             isOpen={this.state.showComments}></RenderComments>
         <Card>
             <CardBody>
@@ -333,31 +381,33 @@ class RenderQuestionAnswers extends Component {
                     </Button>
                 </div>
                 <hr></hr>
-                <RenderAnswers answers = {this.props.answers} />
+                <RenderAnswers answers = {this.props.answers}
+                 deleteAnswer={this.props.deleteAnswer}
+                 auth={this.props.auth} />
             </CardBody>
         </Card>
         <Modal isOpen={this.state.shareModalOpen} toggle={() => this.onShareClicked()}>
             <ModalHeader toggle={() => this.onShareClicked()}>Let's Share this !!</ModalHeader>
             <ModalBody>
-                <FacebookShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id} title={'Can you answer this ??'} quote={'Can you answer this ??'} hashtag={'#Poogle'}>
+                <FacebookShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} title={'Can you answer this ??'} quote={'Can you answer this ??'} hashtag={'#Poogle'}>
                     <FacebookIcon round={true}></FacebookIcon>
                 </FacebookShareButton>
-                <WhatsappShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id+'/#1'} title={'Can you answer this ??'} separator={'\n'}>
+                <WhatsappShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} title={'Can you answer this ??'} separator={'\n'}>
                     <WhatsappIcon round={true}></WhatsappIcon>
                 </WhatsappShareButton>
-                <TelegramShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id} title={'Can you answer this ??'}>
+                <TelegramShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} title={'Can you answer this ??'}>
                     <TelegramIcon round></TelegramIcon>
                 </TelegramShareButton>
-                <LinkedinShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id} title={'Can you answer this ??'} source={'WWW.poogle.com'}>
+                <LinkedinShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} title={'Can you answer this ??'} source={'WWW.poogle.com'}>
                     <LinkedinIcon round></LinkedinIcon>
                 </LinkedinShareButton>
-                <TwitterShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id} title={'Can you answer this ??'} hashtags={'#Poogle'}>
+                <TwitterShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} title={'Can you answer this ??'} hashtags={'#Poogle'}>
                     <TwitterIcon round></TwitterIcon>
                 </TwitterShareButton>
-                <RedditShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id} title={'Can you answer this ??'}>
+                <RedditShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} title={'Can you answer this ??'}>
                     <RedditIcon round></RedditIcon>
                 </RedditShareButton>
-                <PinterestShareButton url={'http://localhost:3000/space-'+this.props.spaceId+'/question-'+this.props.question.id} description={'Can you answer this ??'} title={'Can you answer this ??'}>
+                <PinterestShareButton url={'http://localhost:3000/question-'+this.props.question._id+'-'+this.props.question.heading} description={'Can you answer this ??'} title={'Can you answer this ??'}>
                     <PinterestIcon round></PinterestIcon>
                 </PinterestShareButton>
             </ModalBody>
@@ -401,12 +451,12 @@ class SingleQuestion extends Component {
 
     render() {
 
-        if(this.props.isLoading || this.props.answersIsLoading){
+        if(this.props.isLoading || this.props.answersIsLoading || this.props.reactionsIsLoading){
             return(
                 <Loading type="spokes" color="grey"/> 
             );
         }
-        else if(this.props.errMess || this.props.answersErrMess || this.props.commentsErrMess) {
+        else if(this.props.errMess || this.props.answersErrMess || this.props.commentsErrMess || this.props.reactionsErrMess) {
             return(
                 <div className="container spaces">
                     <div className="row"> 
@@ -426,10 +476,17 @@ class SingleQuestion extends Component {
                                 question={this.props.question} 
                                 answers={this.props.answers} 
                                 comments={this.props.comments} 
-                                spaceId={this.props.spaceId}
+                                //spaceId={this.props.spaceId}
                                 postComment={this.props.postComment} 
                                 deleteComment={this.props.deleteComment}
-                                onClick={this.props.onClick} />
+                                onClick={this.props.onClick}
+                                auth={this.props.auth}
+                                postAnswer={this.props.postAnswer}
+                                deleteAnswer={this.props.deleteAnswer}
+                                postReaction={this.props.postReaction}
+                                deleteReaction={this.props.deleteReaction}
+                                reactions={this.props.reactions}
+                                />
                         </Col>  
                     </Row> 
                 </Container>

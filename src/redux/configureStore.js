@@ -4,6 +4,7 @@ import { Spaces } from "./reducers/spaces";
 import { Questions } from "./reducers/questions";
 import { Answers } from "./reducers/answers";
 import { user } from "./reducers/user_reducer";
+import { Qreactions } from "./reducers/qReactions";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import authReducer from "./reducers/authReducer";
@@ -16,8 +17,9 @@ export const ConfigureStore = () => {
 			questions: Questions,
 			answers: Answers,
 			comments: Comments,
+			qreactions: Qreactions,
 			user,
-			auth: authReducer,
+			auth: authReducer
 		}),
 		composeEnhancers(applyMiddleware(thunk, logger))
 	);

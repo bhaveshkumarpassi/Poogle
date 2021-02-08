@@ -84,7 +84,7 @@ class login extends Component {
         if(isValid){
             const{email, password} = this.state;
             await this.props.signIn({email, password});
-            
+
             if(this.props.auth.err)
             {
                 this.notify(this.props.auth.err.message);
@@ -99,7 +99,7 @@ class login extends Component {
                     this.props.history.push(from.pathname);
                 }, 5000);
 
-            }    
+            }   
         }
         console.log(this.state);
     }
