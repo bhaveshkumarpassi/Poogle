@@ -21,8 +21,6 @@ const Chat = ({ chats, token, dispatch }) => {
 
 		const channel = pusher.subscribe("messages");
 		channel.bind("inserted", (data) => {
-			console.log(data);
-			console.log(token);
 			dispatch(getChats(token));
 		});
 	}, []);
@@ -43,7 +41,8 @@ const Chat = ({ chats, token, dispatch }) => {
 	const handleMessageSent = (e) => {
 		e.preventDefault();
 		setChat((chat) => [...chat, { msg, sender: "me" }]);
-		dispatch(sendMessage(token, msg, "601c44b6fa5d9b3b64f57194"));
+		const id = chats.chats.filter(({ name }) => person === name)[0]._id;
+		dispatch(sendMessage(token, msg, id));
 		setMsg("");
 	};
 

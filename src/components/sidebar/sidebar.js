@@ -74,7 +74,7 @@ return(
     </MenuItem>
     
     <MenuItem icon={<span className='fa fa-user-circle'/>}>
-      Profile <Link to="/profile/1"/>
+      Profile <Link to="/profile"/>
     </MenuItem>
     
     <MenuItem icon={<span className='fa fa-sign-in'/>}>
