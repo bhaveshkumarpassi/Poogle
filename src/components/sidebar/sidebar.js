@@ -3,6 +3,7 @@ import { ProSidebar, SidebarHeader,  SidebarFooter, SidebarContent,Menu, MenuIte
 import 'react-pro-sidebar/dist/css/styles.css';
 import '../main';
 import {Link} from 'react-router-dom';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { FaHome, FaGem, FaStickyNote, FaBlog, FaQuestionCircle} from 'react-icons/fa';
 import {MdContactMail} from 'react-icons/md'
 import {RiTeamLine} from 'react-icons/ri'
@@ -16,6 +17,17 @@ return(
 >
     <SidebarHeader>
         Poogle
+    </SidebarHeader>
+    <SidebarHeader>
+      <Form inline>
+        <FormGroup className='row' >
+            <Label htmlFor="searchSpace" hidden>Search</Label>
+            <Button className='col-2' type="submit" value="submit"><span className='fa fa-search'></span></Button>
+            <Input className='col-9' type="text" name="searchSpace" id="searchSpace"  placeholder="Search Poogle ... " 
+                //innerRef={(input) => this.searchSpace = input}
+            />
+        </FormGroup>
+      </Form>
     </SidebarHeader>
     <SidebarContent>
   <Menu iconShape="square">
