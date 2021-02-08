@@ -43,7 +43,6 @@ function RenderMenuItem({ question, class_Name, onClick }) {
 	return (
 		<ListGroup className="container question-container">
 			<ListGroupItem className={class_Name + " list-item-style"}>
-				{/* <Link to={`/space-${question.tagIds[0]}/question-${question.id}`}> */}
 				<Link to={`/question-${question._id}-${question.heading}`}>
 					<div className="col-12">
 						<div className="row">
