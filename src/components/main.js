@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { fetchSpaces, fetchQuestions, 
 	fetchAnswers, fetchComments, postComment, 
 	deleteComment, postQuestion, deleteQuestion, postReaction, fetchReactions, deleteReaction,
-	postAnswer, deleteAnswer} from "../redux/ActionCreators";
+	postAnswer, deleteAnswer, postAReaction, fetchAReactions, deleteAReaction} from "../redux/ActionCreators";
 import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
@@ -14,7 +14,7 @@ import ScrollToTop from './scroll-to-top/scroll-to-top';
 import Chat from "./chat/Chat";
 import Login from './login_signup/login';
 import Signup from './login_signup/signup'; 
-import Contact from './contactUs/contact';
+import Contact from './ContactUs/contact';
 import Notifications from './notifications/notification';
 import AddQuestion from './add_forms/addQuestions';
 import AddBlog from './add_forms/addBlogs';
@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
 		questions: state.questions,
 		qreactions: state.qreactions,
 		answers: state.answers,
+		areactions: state.areactions,
 		user: state.user,
 		comments: state.comments,
 		auth: state.auth
@@ -43,6 +44,9 @@ const mapDispatchToProps = (dispatch) => ({
 	fetchReactions: () => {
 		dispatch(fetchReactions());
 	},
+	fetchAReactions: () => {
+		dispatch(fetchAReactions());
+	},
 	fetchAnswers: () => {
 		dispatch(fetchAnswers())
 	},
@@ -57,6 +61,8 @@ const mapDispatchToProps = (dispatch) => ({
 	postReaction: (reac) => dispatch(postReaction(reac)),
 	deleteReaction: (reacId) => dispatch(deleteReaction(reacId)),
 	deleteAnswer: (answerId) => dispatch(deleteAnswer(answerId)),
+	postAReaction: (reac) => dispatch(postAReaction(reac)),
+	deleteAReaction: (reacId) => dispatch(deleteAReaction(reacId)),
 });
 
 class Main extends Component {
@@ -68,6 +74,7 @@ class Main extends Component {
 		this.props.fetchSpaces();
 		this.props.fetchQuestions();
 		this.props.fetchReactions();
+		this.props.fetchAReactions();
 		this.props.fetchAnswers();
 		this.props.fetchComments();
 	}
@@ -98,6 +105,7 @@ class Main extends Component {
 					reactionsIsLoading={this.props.qreactions.isLoading}
 					reactionsErrMess = {this.props.qreactions.errMess}
 					postReaction={this.props.postReaction}
+					
 				/>
 			);
 		};
@@ -151,6 +159,11 @@ class Main extends Component {
 					reactions={this.props.qreactions.qreactions.filter((reac) => reac.question === match.params.quesId)}
 					reactionsIsLoading={this.props.qreactions.isLoading}
 					reactionsErrMess = {this.props.qreactions.errMess}
+					areactions= {this.props.areactions.areactions}
+					areactionsIsLoading={this.props.areactions.isLoading}
+					aeactionsErrMess = {this.props.areactions.errMess}
+					postAReaction={this.props.postAReaction}
+					deleteAReaction={this.props.deleteAReaction}
 				/>
 			);
 		}

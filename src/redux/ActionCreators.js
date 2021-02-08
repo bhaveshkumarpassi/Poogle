@@ -493,6 +493,128 @@ export const addAnswers = (answers) => ({
 	payload: answers,
 });
 
+// --------------------------   Answer Reaction   -------------------------
+
+
+export const addAReaction = (reac) => ({
+	type: ActionTypes.ADD_AREACTION,
+	payload: reac,
+});
+
+export const postAReaction = (reac) => (dispatch) => {
+	
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "answerReactions", {
+		method: "POST",
+		body: JSON.stringify(reac),
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer,
+		},
+		//credentials: "same-origin",
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((response) => dispatch(addAReaction(response)))
+		.catch((error) => {
+			console.log("post reactions", error.message);
+			alert("Your Reaction could not be posted\nError: " + error.message);
+		});
+};
+
+export const fetchAReactions = () => (dispatch) => {
+	return fetch(baseUrl + "answerReactions")
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				var errmess = new Error(error.message);
+				throw errmess;
+			}
+		)
+		.then((response) => response.json())
+		.then((reactions) => dispatch(addAReactions(reactions)))
+		.catch((error) => dispatch(areactionsFailed(error.message)));
+};
+
+export const areactionsFailed = (errmess) => ({
+	type: ActionTypes.AREACTIONS_FAILED,
+	payload: errmess,
+});
+
+export const addAReactions = (reactions) => ({
+	type: ActionTypes.ADD_AREACTIONS,
+	payload: reactions,
+});
+
+export const deleteAReaction = (reacId) => (dispatch) => {
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "answerReactions/" + reacId, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer
+		},
+		//credentials: "same-origin",
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((reactions) => {
+			console.log("Reaction Deleted", reactions);
+			dispatch(removeAReaction(reacId));
+		})
+		.catch((error) => {
+			console.log("delete Reactions", error.message);
+			alert("Your Reaction could not be deleted\nError: " + error.message);
+		});
+};
+
+export const removeAReaction = (reacId) => ({
+	type: ActionTypes.DELETE_AREACTION,
+	payload: reacId,
+});
+
 // --------------------------   questionComments ------------------------
 
 export const addComment = (comment) => ({

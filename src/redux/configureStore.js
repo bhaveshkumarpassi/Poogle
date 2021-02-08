@@ -6,6 +6,7 @@ import { Answers } from "./reducers/answers";
 import { user } from "./reducers/user_reducer";
 import { Chat } from "./reducers/chat";
 import { Qreactions } from "./reducers/qReactions";
+import { Areactions } from "./reducers/aReactions";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import authReducer from "./reducers/authReducer";
@@ -19,6 +20,7 @@ export const ConfigureStore = () => {
 			answers: Answers,
 			comments: Comments,
 			qreactions: Qreactions,
+			areactions: Areactions,
 			user,
 			auth: authReducer,
 			chats: Chat,
