@@ -64,16 +64,16 @@ function RenderMenuItem({question, spaceId, class_Name,
                         onClick={() => viewAdd(views, postReaction, question._id, auth.userId)}
                         >
                             {question.heading}
-                        </Link>
+                            </Link>
                         {
-                                auth.userId === question.author._id
-                                ?
-                            
-                                    <Button color='danger' onClick={() => deleteQuestion(question._id)}><span className='fa fa-lg fa-trash'></span></Button>
-                            
-                                :
-                                <></>
-                            }   
+                            auth.userId === question.author._id
+                            ?
+                        
+                                <Button color='danger' style={{marginTop: 6}} onClick={() => deleteQuestion(question._id)}><span className='fa fa-trash'></span></Button>
+                        
+                            :
+                            <></>
+                        }   
                         </ListGroupItemHeading>
                             <RenderTags question={question} />
                             <ListGroupItemText className='question-text'>

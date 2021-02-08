@@ -15,10 +15,10 @@ import "./profile.css";
 import Loading from "../loading";
 
 class profile extends Component {
-	componentDidMount() {
+	/*componentDidMount() {
 		//this.props.fetchUser(this.props.match.params.userId);
 		this.props.fetchUser(this.props.auth.userId)
-	}
+	}*/
 	renderButtons() {
 		// renders the button
 		const { user } = this.props.user;
@@ -55,7 +55,7 @@ class profile extends Component {
 								<Row>
 									<h3>{user.name}</h3>
 								</Row>
-								<Row>@{user.user_id}</Row>
+								<Row>@{user.user_name}</Row>
 							</div>
 						</Row>
 					</Col>
@@ -98,7 +98,7 @@ class profile extends Component {
 	}
 
 	renderInterestList() {
-		const { interests } = this.props.user.user;
+		const { interests } = this.props.user;
 		const spaces = this.props.spaces;
 		return interests.map((interest) => {
 			return (
@@ -151,7 +151,7 @@ class profile extends Component {
 							<SiGooglescholar />
 						</span>
 						<span className="info__title">PEC Graduation Year: </span>
-						<span className="info__description"> {about.graduation_year}</span>
+						<span className="info__description">{about.graduation_year}</span>
 					</Row>
 					<Row className="user__info--each">
 						<span className="user__icon">
@@ -166,26 +166,27 @@ class profile extends Component {
 					<Row>
 						<h4>Interests</h4>
 					</Row>
-					<Row>{this.renderInterestList()}</Row>
+					{/* <Row>{this.renderInterestList()}</Row> */}
 				</div>
 			</>
 		);
 	}
 
 	render() {
-		if (this.props.user.isLoading) {
+		if (this.props.isLoading) {
 			return <Loading type="spokes" color="grey" />;
-		} else if (this.props.user.errMess) {
+		} else if (this.props.errMess) {
 			return (
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							<h4>{this.props.user.errMess}</h4>
+							<h4>{this.props.errMess}</h4>
 						</div>
 					</div>
 				</div>
 			);
 		}
+	
 		return (
 			<div>
 				<section className="top_section">
@@ -228,7 +229,7 @@ class profile extends Component {
 		);
 	}
 }
-const mapStateToProps = (state, ownProps) => {
+/*const mapStateToProps = (state, ownProps) => {
 	return {
 		user: state.user,
 		spaces: state.spaces.spaces,
@@ -237,4 +238,6 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
-export default connect(mapStateToProps, { fetchUser })(profile);
+export default connect(mapStateToProps, { fetchUser })(profile);*/
+
+export default profile;

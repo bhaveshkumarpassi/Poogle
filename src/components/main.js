@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchSpaces, fetchQuestions, 
+import { fetchSpaces, fetchQuestions, fetchUser,
 	fetchAnswers, fetchComments, postComment, 
 	deleteComment, postQuestion, deleteQuestion, postReaction, fetchReactions, deleteReaction,
 	postAnswer, deleteAnswer, postAReaction, fetchAReactions, deleteAReaction} from "../redux/ActionCreators";
@@ -53,6 +53,9 @@ const mapDispatchToProps = (dispatch) => ({
 	fetchComments: () => {
 		dispatch(fetchComments())
 	},
+	fetchUser: (userId) => {
+		dispatch(fetchUser(userId))
+	},
 	postComment: (questionId, author, comment) => dispatch(postComment(questionId, author, comment)),
 	deleteComment: (commentId) => dispatch(deleteComment(commentId)),
 	postQuestion: (question, userToken) => dispatch(postQuestion(question, userToken)),
@@ -74,6 +77,7 @@ class Main extends Component {
 		this.props.fetchSpaces();
 		this.props.fetchQuestions();
 		this.props.fetchReactions();
+		this.props.fetchUser(this.props.auth.userId);
 		this.props.fetchAReactions();
 		this.props.fetchAnswers();
 		this.props.fetchComments();
@@ -197,7 +201,9 @@ class Main extends Component {
 						//path="/space-:spaceId/question-:quesId-:question"
 						component={QuestionWithId}
 					/>
-					<PrivateRoute exact path="/profile/:userId" component={Profile_page}/>
+					<PrivateRoute exact path="/profile" component={() => <Profile_page user={this.props.user} 
+						isLoading={this.props.user.isLoading}
+						errMess={this.props.user.errMess} />}/>
 					<PrivateRoute path="/chat" component={Chat} />
 					<Route path="/contact" component={Contact} />
 					<PrivateRoute path="/notifications" component={Notifications}/>
