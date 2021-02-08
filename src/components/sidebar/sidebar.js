@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import { ProSidebar, SidebarHeader,  SidebarFooter, SidebarContent,Menu, MenuItem, SubMenu} from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import '../main';
@@ -10,11 +11,64 @@ import {RiTeamLine} from 'react-icons/ri'
 import {HiChat} from 'react-icons/hi'
 import './sidebar.css'
 
-function Sidebar({collapsed, toggled, handleToggleSidebar}){    
+
+const renderSignIn = (status)=>{
+  if(status.isSignedIn=="true"){
+    return(
+      <>
+      <MenuItem icon={<span className='fa fa-user-circle'/>}>
+        Profile <Link to={"/profile/"+status.userId}/>
+      </MenuItem>
+
+      <MenuItem icon={<span className='fa fa-sign-in'/>}>
+        Logout <Link to="/logout"/>
+      </MenuItem> 
+      </>
+    )
+  }else{
+    return(
+      <>
+      <MenuItem icon={<span className='fa fa-sign-in'/>}>
+        Login <Link to="/login"/>
+      </MenuItem>
+      <MenuItem icon={<span className='fa fa-sign-in'/>}>
+        Signup <Link to="/signup"/>
+      </MenuItem>
+      </>
+    )
+  }
+
+}
+
+const renderSignInTop = (status)=>{
+  if(status.isSignedIn=="true"){
+    return(
+      <>
+      <SubMenu title='Add' icon={<span className='fa fa-plus-circle'/>}>
+        <MenuItem>Add Question <Link to="addQuestion"/></MenuItem>
+        <MenuItem>Add Blog <Link to='addBlog' /></MenuItem>
+      </SubMenu>
+    
+      <MenuItem icon={<span className='fa fa-bell'/>}>
+        Notifications <Link to="/notifications"/>
+      </MenuItem> 
+      </>
+    )
+  }
+  else return(
+    <>
+    </>
+  )
+}
+
+
+function Sidebar({collapsed, toggled, handleToggleSidebar}){
+  let auth = useSelector(state=> state.auth)||false;    
 return(
 <ProSidebar breakPoint='md' collapsed={collapsed} 
           toggled={toggled} onToggle={handleToggleSidebar}
 >
+
     <SidebarHeader>
         Poogle
     </SidebarHeader>
@@ -38,23 +92,8 @@ return(
     <MenuItem icon={<FaStickyNote />}>
       Spaces <Link to="/spaces"/>
     </MenuItem>
-    
-    <SubMenu title='Add' icon={<span className='fa fa-plus-circle'/>}>
-      <MenuItem>Add Question <Link to="addQuestion"/></MenuItem>
-      <MenuItem>Add Blog <Link to='addBlog' /></MenuItem>
-    </SubMenu>
-    
-    <MenuItem icon={<span className='fa fa-bell'/>}>
-      Notifications <Link to="/notifications"/>
-    </MenuItem>
 
-    {/* <MenuItem icon={<span className='fa fa-bell'/>}>
-      Blog <Link to="/blog"/>
-    </MenuItem>
-
-    <MenuItem icon={<span className='fa fa-bell'/>}>
-      Create <Link to="/blog/create"/>
-    </MenuItem> */}
+    {renderSignInTop(auth)}
     
     <SubMenu title="Top Categories" icon={<FaGem />}>
       <MenuItem>Top Questions</MenuItem>
@@ -85,17 +124,10 @@ return(
       Contact Us <Link to="/contact"/>
     </MenuItem>
     
-    <MenuItem icon={<span className='fa fa-user-circle'/>}>
-      Profile <Link to="/profile"/>
-    </MenuItem>
     
-    <MenuItem icon={<span className='fa fa-sign-in'/>}>
-      Login <Link to="/login"/>
-    </MenuItem>
-    <MenuItem icon={<span className='fa fa-sign-in'/>}>
-      Logout <Link to="/logout"/>
-    </MenuItem>
+    {renderSignIn(auth)}
     
+
   </Menu>
   </SidebarContent>
   <SidebarFooter>

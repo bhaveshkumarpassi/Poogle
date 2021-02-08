@@ -15,22 +15,35 @@ import "./profile.css";
 import Loading from "../loading";
 
 class profile extends Component {
-	/*componentDidMount() {
-		//this.props.fetchUser(this.props.match.params.userId);
-		this.props.fetchUser(this.props.auth.userId)
-	}*/
+	constructor(props){
+        super(props);
+        this.state = {
+			owner:this.props.auth.userId,
+			user:this.props.match.params.userId,
+			showAbout:true,
+			showQuestions:false,
+			showAnswers:false,
+			showBlogs:false		    
+		}
+        
+    }
+	componentDidMount() {
+		if(this.props.auth.userId==this.props.match.params.userId&&!this.props.user.user)
+			this.props.fetchUser(this.props.match.params.userId);
+		
+		// this.props.fetchUser(this.props.auth.userId)
+	}
 	renderButtons() {
-		// renders the button
+
 		const { user } = this.props.user;
 		return (
 			<div className="user__account__buttons">
 				<Row>
 					{/* <button className="user__btn userbtn--1">Follow</button> */}
 					{/*If logged In*/}
-					{/* <button className="user__btn userbtn--1">Update Profile</button> */}
+					{this.state.owner===this.state.user && <button className="user__btn userbtn--2">Update Profile</button>}
 				</Row>
 				<Row>
-					<button className="user__btn userbtn--2">Chat Privately</button>
 					{/* If logged In */}
 					{/* <button className="user__btn userbtn--2">Delete Profile</button> */}
 				</Row>
@@ -98,15 +111,15 @@ class profile extends Component {
 	}
 
 	renderInterestList() {
-		const { interests } = this.props.user;
-		const spaces = this.props.spaces;
-		return interests.map((interest) => {
-			return (
-				<Link to="" className="interests__button" key={interest}>
-					{spaces[interest].name}
-				</Link>
-			);
-		});
+		// const { interests } = this.props.user.user;
+		// const spaces = this.props.spaces;
+		// return interests.map((interest) => {
+		// 	return (
+		// 		<Link to="" className="interests__button" key={interest}>
+		// 			{spaces[interest].name}
+		// 		</Link>
+		// 	);
+		// });
 	}
 
 	renderAbout() {
@@ -125,20 +138,7 @@ class profile extends Component {
 						<span className="info__title">Description: </span>
 						<span className="info__description">{about.description}</span>
 					</Row>
-					<Row className="user__info--each">
-						<span className="user__icon">
-							<FaBriefcase />
-						</span>
-						<span className="info__title">Job:</span>
-						<span className="info__description"> {about.job}</span>
-					</Row>
-					<Row className="user__info--each">
-						<span className="user__icon">
-							<FaBuilding />
-						</span>
-						<span className="info__title">Education: </span>
-						<span className="info__description">{about.education}</span>
-					</Row>
+					
 					<Row className="user__info--each">
 						<span className="user__icon">
 							<HiOutlineUserGroup />
@@ -151,7 +151,7 @@ class profile extends Component {
 							<SiGooglescholar />
 						</span>
 						<span className="info__title">PEC Graduation Year: </span>
-						<span className="info__description">{about.graduation_year}</span>
+						<span className="info__description"> {about.graduation_year}</span>
 					</Row>
 					<Row className="user__info--each">
 						<span className="user__icon">
@@ -166,27 +166,52 @@ class profile extends Component {
 					<Row>
 						<h4>Interests</h4>
 					</Row>
-					{/* <Row>{this.renderInterestList()}</Row> */}
+					<Row>{this.renderInterestList()}</Row>
 				</div>
 			</>
 		);
+	
+	
+	
+	}
+
+	renderQuestions(){
+		return(
+			<>
+			<h1>Questions here</h1>
+			</>
+		)
+
+	}
+	renderBlogs(){
+		return(
+			<>
+			<h1>Blogs here</h1>
+			</>
+		)
+	}
+	renderAnswers(){
+		return(
+			<>
+			<h1>Answers here</h1>
+			</>
+		)
 	}
 
 	render() {
-		if (this.props.isLoading) {
+		if (this.props.user.isLoading) {
 			return <Loading type="spokes" color="grey" />;
-		} else if (this.props.errMess) {
+		} else if (this.props.user.errMess) {
 			return (
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							<h4>{this.props.errMess}</h4>
+							<h4>{this.props.user.errMess}</h4>
 						</div>
 					</div>
 				</div>
 			);
 		}
-	
 		return (
 			<div>
 				<section className="top_section">
@@ -229,15 +254,15 @@ class profile extends Component {
 		);
 	}
 }
-/*const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, ownProps) => {
 	return {
 		user: state.user,
 		spaces: state.spaces.spaces,
-		auth: state.auth
+		user:state.user,
+		auth:state.auth,
+		admin:state.admin
 		//remember to check if spaces are avaliable.
 	};
 };
 
-export default connect(mapStateToProps, { fetchUser })(profile);*/
-
-export default profile;
+export default connect(mapStateToProps, { fetchUser })(profile);
