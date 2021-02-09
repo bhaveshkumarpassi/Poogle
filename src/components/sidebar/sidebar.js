@@ -45,8 +45,8 @@ const renderSignInTop = (status)=>{
     return(
       <>
       <SubMenu title='Add' icon={<span className='fa fa-plus-circle'/>}>
-        <MenuItem>Add Question <Link to="addQuestion"/></MenuItem>
-        <MenuItem>Add Blog <Link to='addBlog' /></MenuItem>
+        <MenuItem>Add Question <Link to="/addQuestion"/></MenuItem>
+        <MenuItem>Add Blog <Link to='/addBlog' /></MenuItem>
       </SubMenu>
     
       <MenuItem icon={<span className='fa fa-bell'/>}>

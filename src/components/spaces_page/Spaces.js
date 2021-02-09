@@ -24,9 +24,7 @@ import { BsArrowBarRight } from 'react-icons/bs';
             <CardBody>
                 <CardTitle tag="h6">{space.name}</CardTitle>
             </CardBody>
-                <ReactImageAppear className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}  animation="zoomIn"
-                animationDuration="1s" />
-                
+                <CardImg className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}/>
             <CardBody>
                 <CardSubtitle tag="h6" className="mb-4 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {space.questions.length} Questions</CardSubtitle>
                 <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-users fa-lg follower-icon'/>    {space.followers.length} followers</CardSubtitle>

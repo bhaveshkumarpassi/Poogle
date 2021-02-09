@@ -20,6 +20,7 @@ import Notifications from './notifications/notification';
 import AddQuestion from './add_forms/addQuestions';
 import AddBlog from './add_forms/addBlogs';
 import Logout from './login_signup/logout';
+import AboutUs from './aboutUs/aboutUs';
 
 
 const mapStateToProps = (state) => {
@@ -222,6 +223,7 @@ class Main extends Component {
 						isLoading={this.props.user.isLoading}
 						errMess={this.props.user.errMess} />}/> */}
 					<PrivateRoute path="/chat" component={Chat} />
+					<Route path="/aboutUs" component={() => <AboutUs/>} />
 					<Route path="/contact" component={Contact} />
 					<PrivateRoute path="/notifications" component={Notifications}/>
 					<Route path="/login" component={Login} />

@@ -1,0 +1,64 @@
+.about {
+    width: 100%;
+    height: 100%;
+}
+
+.dev-heading {
+    margin-top: 3rem;
+    color: #03506f;
+    text-shadow:5px 5px 4px #a3d2ca;
+    font-weight: bold;
+    font-family: 'Anton', sans-serif;
+    font-family: 'Source Code Pro', monospace;
+}
+
+.dev-content {
+    margin-top: 4rem;
+}
+
+.dev-card {
+    border-radius: 1rem;
+}
+
+.dev-name {
+    text-align: center;
+    color: #03506f;
+    text-shadow:5px 5px 4px #a3d2ca;
+    font-family: 'Anton', sans-serif;
+    font-family: 'Source Code Pro', monospace;
+}
+
+.linked {
+    background-color: #0e76a8;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+}
+
+.linked:hover {
+    background-color: #0b638e;
+}
+
+.git {
+    background-color: black;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+}
+
+.insta {
+    background-color: #DD2A7B;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+}
+
+.insta:hover {
+    background-color: #bc2a8d;
+}
+
+.mail {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+}
