@@ -753,7 +753,7 @@ export const fetchUser = (userId) => async (dispatch, getState) => {
 			dispatch({ type: ActionTypes.GET_USER, payload: response });
 		} else {
 			response = await response.text();
-			console.log("Errrrrrror", response);
+			console.log("Error", response);
 			throw new Error(response);
 		}
 	} catch (err) {

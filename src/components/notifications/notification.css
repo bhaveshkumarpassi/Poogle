@@ -5,14 +5,16 @@
     margin:0 auto;
 }
 .notification__filters{
-    background-color: var(--color-primary-blue);
+    background-color:#eee;
     /* color:#fff; */
 }
-.notification__filters a{
-    color: #fff;
+.notification__filters .a{
+    /* color: #fff; */
+    color:#aaa !important;
 }
 .notification__filters .active{
-    background-color:#eee !important;
+    background-color: var(--color-primary-blue) !important;
+    color: #fff !important;
 }
 .notifications__nav{
     padding-bottom: 0.6rem;

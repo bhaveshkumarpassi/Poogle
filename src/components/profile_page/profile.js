@@ -11,26 +11,78 @@ import { SiGooglescholar } from "react-icons/si";
 import { MdDescription } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { fetchUser } from "../../redux/ActionCreators";
+import questionComp from '../all_ques_page/questions';
+import blogComp from '../all_blog_page/blogs';
 import "./profile.css";
 import Loading from "../loading";
 
+
 class profile extends Component {
-	/*componentDidMount() {
-		//this.props.fetchUser(this.props.match.params.userId);
-		this.props.fetchUser(this.props.auth.userId)
-	}*/
+	constructor(props){
+        super(props);
+        this.state = {
+			owner:this.props.auth.userId,
+			user:this.props.match.params.userId,
+			showAbout:true,
+			showQuestions:false,
+			showAnswers:false,
+			showBlogs:false		    
+		}       
+    }
+	componentDidMount() {
+		if(this.props.auth.userId==this.props.match.params.userId&&!this.props.user.user)
+			this.props.fetchUser(this.props.match.params.userId);
+		
+		// this.props.fetchUser(this.props.auth.userId)
+	}
+	activateAbout = (e)=>{
+		e.preventDefault();
+		this.setState({
+			showAbout:true,
+			showQuestions:false,
+			showAnswers:false,
+			showBlogs:false	
+		})
+	}
+	activateQuestions = (e)=>{
+		e.preventDefault();
+		this.setState({
+			showAbout:false,
+			showQuestions:true,
+			showAnswers:false,
+			showBlogs:false	
+		})
+	}
+	activateAnswers = (e)=>{
+		e.preventDefault();
+		this.setState({
+			showAbout:false,
+			showQuestions:false,
+			showAnswers:true,
+			showBlogs:false	
+		})
+	}
+	activateBlogs = (e)=>{
+		e.preventDefault();
+		this.setState({
+			showAbout:false,
+			showQuestions:false,
+			showAnswers:false,
+			showBlogs:true	
+		})
+	}
+
 	renderButtons() {
-		// renders the button
+
 		const { user } = this.props.user;
 		return (
 			<div className="user__account__buttons">
 				<Row>
 					{/* <button className="user__btn userbtn--1">Follow</button> */}
 					{/*If logged In*/}
-					{/* <button className="user__btn userbtn--1">Update Profile</button> */}
+					{this.state.owner===this.state.user && <button className="user__btn userbtn--2">Update Profile</button>}
 				</Row>
 				<Row>
-					<button className="user__btn userbtn--2">Chat Privately</button>
 					{/* If logged In */}
 					{/* <button className="user__btn userbtn--2">Delete Profile</button> */}
 				</Row>
@@ -64,28 +116,20 @@ class profile extends Component {
 							<div className="user__posts__details">
 								<Row>
 									<span className="user__icon">
-										<HiOutlineUserGroup />
-										<span className="icon__title"> {user.upvotes} upvotes</span>
-									</span>
-								</Row>
-								<Row>
-									<span className="user__icon">
 										<RiQuestionAnswerFill />
-										<span className="icon__title">{user.answers} answers</span>
+										<span className="icon__title">  {user.answers.length} answers</span>
 									</span>
 								</Row>
 								<Row>
 									<span className="user__icon">
-										<FaBlog />{" "}
-										<span className="icon__title">{user.blogs} blogs</span>
+										<FaBlog />
+										<span className="icon__title"> {user.blogs.length} blogs</span>
 									</span>
 								</Row>
 								<Row>
 									<span className="user__icon">
 										<FaQuestionCircle />
-										<span className="icon__title">
-											{user.questions} questions
-										</span>
+										<span className="icon__title"> {user.questions.length} questions</span>
 									</span>
 								</Row>
 							</div>
@@ -98,17 +142,20 @@ class profile extends Component {
 	}
 
 	renderInterestList() {
-		const { interests } = this.props.user;
+		const { interests } = this.props.user.user;
+		
 		const spaces = this.props.spaces;
-		return interests.map((interest) => {
-			return (
-				<Link to="" className="interests__button" key={interest}>
-					{spaces[interest].name}
-				</Link>
-			);
-		});
+		// return spaces.map((space))
+		// return interests.map((interestObj) => {
+		// 	return (
+		// 		<Link to="/spaces/" className="interests__button" key={interestObj._id}>
+		// 			{spaces[interestObj.interest].name}
+		// 		</Link>
+		// 	);
+		// });
 	}
-
+	
+	
 	renderAbout() {
 		const { user } = this.props.user;
 		const { about } = user;
@@ -125,20 +172,7 @@ class profile extends Component {
 						<span className="info__title">Description: </span>
 						<span className="info__description">{about.description}</span>
 					</Row>
-					<Row className="user__info--each">
-						<span className="user__icon">
-							<FaBriefcase />
-						</span>
-						<span className="info__title">Job:</span>
-						<span className="info__description"> {about.job}</span>
-					</Row>
-					<Row className="user__info--each">
-						<span className="user__icon">
-							<FaBuilding />
-						</span>
-						<span className="info__title">Education: </span>
-						<span className="info__description">{about.education}</span>
-					</Row>
+					
 					<Row className="user__info--each">
 						<span className="user__icon">
 							<HiOutlineUserGroup />
@@ -151,42 +185,100 @@ class profile extends Component {
 							<SiGooglescholar />
 						</span>
 						<span className="info__title">PEC Graduation Year: </span>
-						<span className="info__description">{about.graduation_year}</span>
+						<span className="info__description"> {about.graduation_year}</span>
 					</Row>
-					<Row className="user__info--each">
+					{/* <Row className="user__info--each">
 						<span className="user__icon">
 							<FaRegSmile />
 						</span>
 						<span className="info__title">Fun Fact: </span>
 						<span className="info__description">{about.fun_fact}</span>
-					</Row>
+					</Row> */}
 				</div>
 
 				<div className="user__info">
 					<Row>
 						<h4>Interests</h4>
 					</Row>
-					{/* <Row>{this.renderInterestList()}</Row> */}
+					<Row>{this.renderInterestList()}</Row>
 				</div>
 			</>
 		);
+	
+	
+	
+	}
+
+	renderQuestions(){
+		const { questions } = this.props.user.user
+		if(questions.length>0){
+			return(
+				<div className="profile__section">
+				<h2>Questions</h2>
+	
+				</div>
+			)
+		}else{
+			return(
+				<div className="profile__section">
+				<h2>Questions</h2>
+				<p>  You have not asked any question till now</p>
+	
+				</div>
+			)
+		}
+		
+
+	}
+	renderBlogs(){
+		const { blogs } = this.props.user.user
+		if(blogs.length>0){
+			return(
+				<div className="profile__section">
+					<h2>Blogs</h2>
+				</div>
+			)
+		}else{
+			return(
+				<div className="profile__section">
+					<h2>Blogs</h2>
+					<p>You have not posted any blog</p>
+				</div>
+			)
+		}
+	}
+	renderAnswers(){
+		const {answers} = this.props.user.user
+		if(answers.length){
+			return(
+				<div className="profile__section">
+					<h2>Answers</h2>
+				</div>
+			)
+		}else{
+			return(
+				<div className="profile__section">
+					<h2>Answers</h2>
+					<p>You have not answered any question</p>
+				</div>
+			)
+		}
 	}
 
 	render() {
-		if (this.props.isLoading) {
+		if (this.props.user.isLoading) {
 			return <Loading type="spokes" color="grey" />;
-		} else if (this.props.errMess) {
+		} else if (this.props.user.errMess) {
 			return (
 				<div className="container">
 					<div className="row">
 						<div className="col-12">
-							<h4>{this.props.errMess}</h4>
+							<h4>{this.props.user.errMess}</h4>
 						</div>
 					</div>
 				</div>
 			);
 		}
-	
 		return (
 			<div>
 				<section className="top_section">
@@ -199,27 +291,30 @@ class profile extends Component {
 									<BreadcrumbItem>
 										<Link to="/home">Home</Link>
 									</BreadcrumbItem>
-									<BreadcrumbItem active>My Profile</BreadcrumbItem>
+									<BreadcrumbItem active>Profile</BreadcrumbItem>
 										{/************--ADD CONDITION FOR OTHER USER LEFT--***************************/}
 								</Breadcrumb>
 								{this.renderMainProfile()}
 								<div className="user__navigation">
 									<Row>
-										<Link to="#About" className="user__navigation--link">
+										<Link to="#" active={this.state.showAbout} onClick={this.activateAbout}className="user__navigation--link">
 											About
 										</Link>
-										<Link to="#Questions" className="user__navigation--link">
+										<Link to="#" onClick={this.activateQuestions} className="user__navigation--link">
 											Questions
 										</Link>
-										<Link to="#Answers" className="user__navigation--link">
+										<Link to="#" onClick={this.activateAnswers} className="user__navigation--link">
 											Answers
 										</Link>
-										<Link to="#Blogs" className="user__navigation--link">
+										<Link to="#" onClick={this.activateBlogs} className="user__navigation--link">
 											Blogs
 										</Link>
 									</Row>
 								</div>
-								{this.renderAbout()}
+								{this.state.showAbout && this.renderAbout()}
+								{this.state.showQuestions && this.renderQuestions()}
+								{this.state.showAnswers && this.renderAnswers()}
+								{this.state.showBlogs && this.renderBlogs()}
 							</Col>
 							<Col md={1}></Col>
 						</Row>
@@ -229,15 +324,15 @@ class profile extends Component {
 		);
 	}
 }
-/*const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, ownProps) => {
 	return {
 		user: state.user,
 		spaces: state.spaces.spaces,
-		auth: state.auth
+		user:state.user,
+		auth:state.auth,
+		admin:state.admin
 		//remember to check if spaces are avaliable.
 	};
 };
 
-export default connect(mapStateToProps, { fetchUser })(profile);*/
-
-export default profile;
+export default connect(mapStateToProps, { fetchUser })(profile);
