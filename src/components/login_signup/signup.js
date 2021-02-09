@@ -1,11 +1,13 @@
 import React, { Component} from 'react'
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {signUp} from '../../redux/ActionCreators';
 import {Container, Row, Col,Image} from 'react-bootstrap';
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
+import Select from 'react-select'
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Form from 'react-bootstrap/Form';
-import {Link} from 'react-router-dom';
 import './login_signup.css';
-import Select from 'react-select'
 import GoogleIcon from '../../Images/google_color.svg';
 import FacebookIcon from '../../Images/facebook_color.svg';
 import {FaUserAlt, FaRegCalendarAlt} from 'react-icons/fa'
@@ -16,22 +18,9 @@ import { SiGooglescholar } from "react-icons/si";
 import { MdDescription } from "react-icons/md";
 import {GiSelfLove} from 'react-icons/gi';
 import { HiOutlineUserGroup } from "react-icons/hi";
-import {signUp} from '../../redux/ActionCreators';
-import {connect} from 'react-redux';
+import {spaces, fields} from '../variables';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-const spaces = [{value:'Web-Development',label:'Web Development'}, 
-    {value:'Android-Development', label:'Android Development'}];
-
-const fields = [{value:'Computer Science', label:'Computer Science'}, 
-        {value:'Electrical Engineering', label:'Electrical Engineering'}, 
-        {value:'Electronics and Communiaction',label:'Electronics and Communiaction' }, 
-        {value:'Mechanical Engineering', label:'Mechanical Engineering' }, 
-        {value:'Aerospace Enngineering', label:'Aerospace Enngineering'}, 
-        {value:'Civil Engineering', label:'Civil Engineering'},
-        {value:'Production Engineering', label:'Production Engineering'},
-        {value:'Metallurgy Engineering', label:'Metallurgy Engineering'}]
 
 
 class Signup extends Component {
@@ -192,15 +181,14 @@ class Signup extends Component {
         validated:isValid
     })
     if(isValid){
-        console.log(this.state);
-        
         let {email, password, userName, about, Uname, interests} = this.state;
-        //modify interests, about into the form they are required          ------LEFT
-        interests = interests.map((interest)=>{
-            return interest.value
+        interests = interests.map((Interest)=>{
+            return {interest:Interest.value}
         })
-        //intentionally not sending interests and about. Need to add spaces first
-        await this.props.signUp({name: Uname, user_name:userName, email, password});
+        about.field = about.field.value;
+        
+        const data = {name: Uname, user_name:userName, email, password, interests, about};
+        await this.props.signUp(data);
         
         if(this.props.auth.err)
         {

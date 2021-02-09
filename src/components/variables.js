@@ -52,9 +52,18 @@ export const spaces = [{value:"Web-Development",label:'Web Development'},
     {value:"Arduino", label:"Arduino"},
     {value:"IOT", label:"IOT"},
     {value:"Rasberry-Pi", label:"Rasberry Pi"},
-    {value:"Robotics", label:"Robotics"}];
+    {value:"Robotics", label:"Robotics"}
+];
 
-
+export const fields = [{value:'Computer Science', label:'Computer Science'}, 
+    {value:'Electrical Engineering', label:'Electrical Engineering'}, 
+    {value:'Electronics and Communiaction',label:'Electronics and Communiaction' }, 
+    {value:'Mechanical Engineering', label:'Mechanical Engineering' }, 
+    {value:'Aerospace Engineering', label:'Aerospace Engineering'}, 
+    {value:'Civil Engineering', label:'Civil Engineering'},
+    {value:'Production Engineering', label:'Production Engineering'},
+    {value:'Metallurgy Engineering', label:'Metallurgy Engineering'}
+];
 
 
 export const toolbarOptions = [
@@ -64,11 +73,11 @@ export const toolbarOptions = [
     [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'},{ 'align': [] }],
     ['link', 'image', 'video'],
     ['clean']
-]
+];
     
 export const formats = [
     'font', 'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
     'code-block', 'script', 'color','background', 'list', 'bullet', 'indent',
     'link', 'image', 'video', 'align', 'clean'
-]
+];
     
