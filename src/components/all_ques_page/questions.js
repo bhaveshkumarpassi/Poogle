@@ -337,6 +337,7 @@ class Questions extends Component {
                         
                                     <Link to='/addQuestion'>
                                         <Button className='add-ques-btn col-8 col-md-4 col-lg-3 mb-4' color='danger'>
+                                        
                                             <span className='fa fa-lg fa-plus mr-2 ml-2' />QUESTION
                                             
                                         </Button>
