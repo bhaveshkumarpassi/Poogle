@@ -232,7 +232,11 @@ class Main extends Component {
 					<PrivateRoute 
 						exact
 						path="/blogs"
-						component={()=><Blogs blogs={this.props.blogs.blogs} fetchBlogs= {this.props.fetchBlogs}/>}/>
+						component={()=><Blogs blogs={this.props.blogs.blogs}
+						 fetchBlogs= {this.props.fetchBlogs} 
+						 auth={this.props.auth}
+						 deleteBlog={this.props.deleteBlog}
+						 />}/>
 				
 					<PrivateRoute exact path="/profile/:userId" component={Profile_page}/>
 					{/* <PrivateRoute exact path="/profile" component={() => <Profile_page user={this.props.user} 

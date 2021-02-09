@@ -42,9 +42,9 @@ function RenderMenuItem({blog, class_Name,
     
     //var ans = answers.filter(a => a.question === question._id);
     //var ansCount = answers.filter(a => a.question === question._id).length;
-    var uclapsCount = breactions.filter(r => r.category === 'UpClap').filter(r => r.blog === blog._id ).length;
-    var views = breactions.filter(r => r.category === 'View').filter(r => r.blog === blog._id);
-    var viewsCount = views.length;
+    //var uclapsCount = breactions.filter(r => r.category === 'UpClap').filter(r => r.blog === blog._id ).length;
+    //var views = breactions.filter(r => r.category === 'View').filter(r => r.blog === blog._id);
+    //var viewsCount = views.length;
      
     if(filter==='Latest' || filter==='Claps'){
     return(
@@ -57,7 +57,7 @@ function RenderMenuItem({blog, class_Name,
                                 <ListGroupItemHeading className='blog-heading'>
                                 <Link className='blog-heading' 
                                 to={`/blog-${blog._id}-${blog.heading}`}
-                                onClick={() => viewAdd(views, postBReaction, blog._id, auth.userId)}
+                                //onClick={() => viewAdd(views, postBReaction, blog._id, auth.userId)}
                                 >
                                     {blog.heading}
                                 </Link>
@@ -82,11 +82,11 @@ function RenderMenuItem({blog, class_Name,
                                 </div>
                                 <div className='col-12 col-sm-4'>
                                     <div className='prop-div'>
-                                        <Badge className='prop' color='light'>{viewsCount}</Badge>
+                                        <Badge className='prop' color='light'>{0}</Badge>
                                         <p>views</p>
                                     </div>
                                     <div className='prop-div'>
-                                        <Badge className='prop' color='light'>{uclapsCount}</Badge>
+                                        <Badge className='prop' color='light'>{0}</Badge>
                                         <p>claps</p>
                                     </div>
                                 </div>
@@ -187,7 +187,7 @@ function RenderMenuItem({blog, class_Name,
                             auth={this.props.auth}
                             deleteBlog={this.props.deleteBlog}
                            // answers={this.props.answers}
-                            breactions={this.props.breactions}
+                            //breactions={this.props.breactions}
                             postBReaction={this.props.postBReaction}
                             filter={this.state.filter}
                             //spaceId={this.props.space.stringId}
@@ -198,10 +198,7 @@ function RenderMenuItem({blog, class_Name,
         }) 
 
 
-        const MenuClaps = this.props.blogs.sort((a,b) => 
-        ((this.props.breactions.filter(r => (r.category === 'UpClap' && r.blog === b._id)).length)-
-        (this.props.breactions.filter(r => (r.category === 'UpClap' && r.blog === a._id)).length))
-        ).map((blog) => {
+        const MenuClaps = this.props.blogs.map((blog) => {
 
             count += 1;
             return(
@@ -215,7 +212,7 @@ function RenderMenuItem({blog, class_Name,
                             auth={this.props.auth}
                             deleteBlog={this.props.deleteBlog}
                             //answers={this.props.answers}
-                            breactions={this.props.breactions}
+                            //breactions={this.props.breactions}
                             postBReaction={this.props.postBReaction}
                             filter={this.state.filter}
                             />
