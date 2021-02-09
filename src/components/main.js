@@ -87,8 +87,6 @@ class Main extends Component {
 		this.props.fetchAReactions();
 		this.props.fetchAnswers();
 		this.props.fetchComments();
-		
-
 	}
 
 	render() {
