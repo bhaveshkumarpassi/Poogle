@@ -11,8 +11,11 @@ import { SiGooglescholar } from "react-icons/si";
 import { MdDescription } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { fetchUser } from "../../redux/ActionCreators";
+import questionComp from '../all_ques_page/questions';
+import blogComp from '../all_blog_page/blogs';
 import "./profile.css";
 import Loading from "../loading";
+
 
 class profile extends Component {
 	constructor(props){
@@ -24,8 +27,7 @@ class profile extends Component {
 			showQuestions:false,
 			showAnswers:false,
 			showBlogs:false		    
-		}
-        
+		}       
     }
 	componentDidMount() {
 		if(this.props.auth.userId==this.props.match.params.userId&&!this.props.user.user)
@@ -33,6 +35,43 @@ class profile extends Component {
 		
 		// this.props.fetchUser(this.props.auth.userId)
 	}
+	activateAbout = (e)=>{
+		e.preventDefault();
+		this.setState({
+			showAbout:true,
+			showQuestions:false,
+			showAnswers:false,
+			showBlogs:false	
+		})
+	}
+	activateQuestions = (e)=>{
+		e.preventDefault();
+		this.setState({
+			showAbout:false,
+			showQuestions:true,
+			showAnswers:false,
+			showBlogs:false	
+		})
+	}
+	activateAnswers = (e)=>{
+		e.preventDefault();
+		this.setState({
+			showAbout:false,
+			showQuestions:false,
+			showAnswers:true,
+			showBlogs:false	
+		})
+	}
+	activateBlogs = (e)=>{
+		e.preventDefault();
+		this.setState({
+			showAbout:false,
+			showQuestions:false,
+			showAnswers:false,
+			showBlogs:true	
+		})
+	}
+
 	renderButtons() {
 
 		const { user } = this.props.user;
@@ -77,28 +116,20 @@ class profile extends Component {
 							<div className="user__posts__details">
 								<Row>
 									<span className="user__icon">
-										<HiOutlineUserGroup />
-										<span className="icon__title"> {user.upvotes} upvotes</span>
-									</span>
-								</Row>
-								<Row>
-									<span className="user__icon">
 										<RiQuestionAnswerFill />
-										<span className="icon__title">{user.answers} answers</span>
+										<span className="icon__title">  {user.answers.length} answers</span>
 									</span>
 								</Row>
 								<Row>
 									<span className="user__icon">
-										<FaBlog />{" "}
-										<span className="icon__title">{user.blogs} blogs</span>
+										<FaBlog />
+										<span className="icon__title"> {user.blogs.length} blogs</span>
 									</span>
 								</Row>
 								<Row>
 									<span className="user__icon">
 										<FaQuestionCircle />
-										<span className="icon__title">
-											{user.questions} questions
-										</span>
+										<span className="icon__title"> {user.questions.length} questions</span>
 									</span>
 								</Row>
 							</div>
@@ -111,17 +142,20 @@ class profile extends Component {
 	}
 
 	renderInterestList() {
-		// const { interests } = this.props.user.user;
-		// const spaces = this.props.spaces;
-		// return interests.map((interest) => {
+		const { interests } = this.props.user.user;
+		
+		const spaces = this.props.spaces;
+		// return spaces.map((space))
+		// return interests.map((interestObj) => {
 		// 	return (
-		// 		<Link to="" className="interests__button" key={interest}>
-		// 			{spaces[interest].name}
+		// 		<Link to="/spaces/" className="interests__button" key={interestObj._id}>
+		// 			{spaces[interestObj.interest].name}
 		// 		</Link>
 		// 	);
 		// });
 	}
-
+	
+	
 	renderAbout() {
 		const { user } = this.props.user;
 		const { about } = user;
@@ -153,13 +187,13 @@ class profile extends Component {
 						<span className="info__title">PEC Graduation Year: </span>
 						<span className="info__description"> {about.graduation_year}</span>
 					</Row>
-					<Row className="user__info--each">
+					{/* <Row className="user__info--each">
 						<span className="user__icon">
 							<FaRegSmile />
 						</span>
 						<span className="info__title">Fun Fact: </span>
 						<span className="info__description">{about.fun_fact}</span>
-					</Row>
+					</Row> */}
 				</div>
 
 				<div className="user__info">
@@ -176,26 +210,59 @@ class profile extends Component {
 	}
 
 	renderQuestions(){
-		return(
-			<>
-			<h1>Questions here</h1>
-			</>
-		)
+		const { questions } = this.props.user.user
+		if(questions.length>0){
+			return(
+				<div className="profile__section">
+				<h2>Questions</h2>
+	
+				</div>
+			)
+		}else{
+			return(
+				<div className="profile__section">
+				<h2>Questions</h2>
+				<p>  You have not asked any question till now</p>
+	
+				</div>
+			)
+		}
+		
 
 	}
 	renderBlogs(){
-		return(
-			<>
-			<h1>Blogs here</h1>
-			</>
-		)
+		const { blogs } = this.props.user.user
+		if(blogs.length>0){
+			return(
+				<div className="profile__section">
+					<h2>Blogs</h2>
+				</div>
+			)
+		}else{
+			return(
+				<div className="profile__section">
+					<h2>Blogs</h2>
+					<p>You have not posted any blog</p>
+				</div>
+			)
+		}
 	}
 	renderAnswers(){
-		return(
-			<>
-			<h1>Answers here</h1>
-			</>
-		)
+		const {answers} = this.props.user.user
+		if(answers.length){
+			return(
+				<div className="profile__section">
+					<h2>Answers</h2>
+				</div>
+			)
+		}else{
+			return(
+				<div className="profile__section">
+					<h2>Answers</h2>
+					<p>You have not answered any question</p>
+				</div>
+			)
+		}
 	}
 
 	render() {
@@ -224,27 +291,30 @@ class profile extends Component {
 									<BreadcrumbItem>
 										<Link to="/home">Home</Link>
 									</BreadcrumbItem>
-									<BreadcrumbItem active>My Profile</BreadcrumbItem>
+									<BreadcrumbItem active>Profile</BreadcrumbItem>
 										{/************--ADD CONDITION FOR OTHER USER LEFT--***************************/}
 								</Breadcrumb>
 								{this.renderMainProfile()}
 								<div className="user__navigation">
 									<Row>
-										<Link to="#About" className="user__navigation--link">
+										<Link to="#" active={this.state.showAbout} onClick={this.activateAbout}className="user__navigation--link">
 											About
 										</Link>
-										<Link to="#Questions" className="user__navigation--link">
+										<Link to="#" onClick={this.activateQuestions} className="user__navigation--link">
 											Questions
 										</Link>
-										<Link to="#Answers" className="user__navigation--link">
+										<Link to="#" onClick={this.activateAnswers} className="user__navigation--link">
 											Answers
 										</Link>
-										<Link to="#Blogs" className="user__navigation--link">
+										<Link to="#" onClick={this.activateBlogs} className="user__navigation--link">
 											Blogs
 										</Link>
 									</Row>
 								</div>
-								{this.renderAbout()}
+								{this.state.showAbout && this.renderAbout()}
+								{this.state.showQuestions && this.renderQuestions()}
+								{this.state.showAnswers && this.renderAnswers()}
+								{this.state.showBlogs && this.renderBlogs()}
 							</Col>
 							<Col md={1}></Col>
 						</Row>

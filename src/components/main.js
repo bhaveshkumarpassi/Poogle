@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { fetchSpaces, fetchQuestions, fetchUser,
 	fetchAnswers, fetchComments, postComment, fetchBlogs,
 	deleteComment, postQuestion, deleteQuestion, postReaction, fetchReactions, deleteReaction,
-	postAnswer, deleteAnswer, postAReaction, fetchAReactions, deleteAReaction} from "../redux/ActionCreators";
+	postAnswer, deleteAnswer, postAReaction, fetchAReactions, deleteAReaction,postBlog,deleteBlog,
+	postBComment,fetchBComments,fetchBReactions,postBReaction,deleteBComment,deleteBReaction} from "../redux/ActionCreators";
 import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
@@ -28,6 +29,8 @@ const mapStateToProps = (state) => {
 		spaces: state.spaces,
 		questions: state.questions,
 		blogs:state.blogs,
+		breactions:state.breactions,
+		bcomments:state.bcomments,
 		qreactions: state.qreactions,
 		answers: state.answers,
 		areactions: state.areactions,
@@ -46,6 +49,12 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	fetchBlogs: () => {
         dispatch(fetchBlogs());
+	},
+	fetchBComments: () =>{
+         dispatch(fetchBComments());
+	},
+	fetchBReactions: () =>{
+        dispatch(fetchBReactions());
 	},
 	fetchReactions: () => {
 		dispatch(fetchReactions());
@@ -72,6 +81,12 @@ const mapDispatchToProps = (dispatch) => ({
 	deleteAnswer: (answerId) => dispatch(deleteAnswer(answerId)),
 	postAReaction: (reac) => dispatch(postAReaction(reac)),
 	deleteAReaction: (reacId) => dispatch(deleteAReaction(reacId)),
+	postBlog:(blog,userToken) => dispatch(postBlog(blog,userToken)),
+	deleteBlog: (blogId) => dispatch(deleteBlog(blogId)),
+	postBComment : (blogId,author,comment) => dispatch(postBComment(blogId,author,comment)),
+	deleteBComment : (commentId) => dispatch(deleteBComment(commentId)),
+	postBReaction : (reac) => dispatch(postBReaction(reac)),
+	deleteBReaction: (reacId) => dispatch(deleteBReaction(reacId))
 });
 
 class Main extends Component {
@@ -88,8 +103,8 @@ class Main extends Component {
 		this.props.fetchAReactions();
 		this.props.fetchAnswers();
 		this.props.fetchComments();
-		
-
+		this.props.fetchBComments();
+		this.props.fetchBReactions();
 	}
 
 	render() {
@@ -214,10 +229,11 @@ class Main extends Component {
 						//path="/space-:spaceId/question-:quesId-:question"
 						component={QuestionWithId}
 					/>
-					<Route 
+					<PrivateRoute 
 						exact
 						path="/blogs"
-						component={()=><Blogs blogs={this.props.blogs.blogs}/>}/>
+						component={()=><Blogs blogs={this.props.blogs.blogs} fetchBlogs= {this.props.fetchBlogs}/>}/>
+				
 					<PrivateRoute exact path="/profile/:userId" component={Profile_page}/>
 					{/* <PrivateRoute exact path="/profile" component={() => <Profile_page user={this.props.user} 
 						isLoading={this.props.user.isLoading}
@@ -228,7 +244,7 @@ class Main extends Component {
 					<PrivateRoute path="/notifications" component={Notifications}/>
 					<Route path="/login" component={Login} />
 					<PrivateRoute exact path="/addQuestion" component={() => <AddQuestion postQuestion={this.props.postQuestion} auth={this.props.auth}/>}/>
-					<PrivateRoute path="/addBlog" component={() => <AddBlog postQuestion={this.props.postQuestion} auth={this.props.auth}/>} />
+					<PrivateRoute path="/addBlog" component={() => <AddBlog postBlog={this.props.postBlog} auth={this.props.auth}/>} />
 					<Route path="/signup" component={Signup} />
 					<Route path="/logout" component={Logout}/>
 					<Redirect to="/home" />

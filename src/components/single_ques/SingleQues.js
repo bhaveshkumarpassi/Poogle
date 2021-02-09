@@ -30,7 +30,7 @@ import '../add_forms/add_forms.css'
 import ReactQuill from 'react-quill';
 import {Quill} from 'react-quill'
 import 'react-quill/dist/quill.snow.css'; 
-import {toolbarOptions, formats} from '../add_forms/text_editorVar';
+import {toolbarOptions, formats} from '../variables';
 import ImageCompress from 'quill-image-compress';
 Quill.register('modules/imageCompress', ImageCompress);
 

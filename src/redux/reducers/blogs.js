@@ -22,7 +22,13 @@ export const Blogs = (
 		case ActionTypes.ADD_BLOG:
 				var blog = action.payload;
 				return { ...state, blogs: state.blogs.concat(blog)};	
-
+		
+		case ActionTypes.DELETE_BLOG: 
+				var blogId = action.payload;
+				var index = state.blogs.indexOf(state.blogs.filter(blog => blog._id === blogId)[0]);
+				state.blogs.splice(index, 1);
+				return {...state, blogs: state.blogs}
+	
 		default:
 			return state;
 	}

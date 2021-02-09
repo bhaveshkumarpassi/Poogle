@@ -40,6 +40,18 @@ export const ADD_BLOGS = "ADD_BLOGS";
 export const ADD_BLOG = "ADD_BLOG";
 export const DELETE_BLOG = "DELETE_BLOG";
 
+
+export const ADD_BREACTION = 'ADD_BREACTION';
+export const ADD_BREACTIONS = 'ADD_BREACTIONS';
+export const REACTIONS_BFAILED = 'REACTIONS_BFAILED';
+export const DELETE_BREACTION = 'DELETE_BREACTION';
+
+export const ADD_BCOMMENTS = "ADD_BCOMMENTS";
+export const COMMENTS_BFAILED = "COMMENTS_BFAILED";
+export const ADD_BCOMMENT = "ADD_BCOMMENT";
+export const DELETE_BCOMMENT = "DELETE_BCOMMENT";
+
+
 //Authentication
 export const SIGN_UP = "SIGN_UP";
 export const SIGN_IN = "SIGN_IN";
@@ -49,3 +61,5 @@ export const AUTH_FAILED = "AUTH_FAILED";
 //Contact US form
 export const CONTACT_US= "CONTACT_US";
 export const FORM_FAILED = "FORM_FAILED";
+
+

@@ -12,6 +12,8 @@ import thunk from "redux-thunk";
 import logger from "redux-logger";
 import authReducer from "./reducers/authReducer";
 import contact from './reducers/contactUs'
+import { Breactions } from "./reducers/bReactions";
+import { Bcomments } from "./reducers/bComments";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const ConfigureStore = () => {
 	const store = createStore(
@@ -22,6 +24,8 @@ export const ConfigureStore = () => {
 			comments: Comments,
 			blogs:Blogs,
 			qreactions: Qreactions,
+			breactions:Breactions,
+			bcomments: Bcomments,
 			areactions: Areactions,
 			user,
 			auth: authReducer,

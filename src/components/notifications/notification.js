@@ -74,8 +74,7 @@ class Notification extends Component {
                         
                         <Row>
                             <div className='row ml-1 mr-1 notifications__nav'>
-                                <Nav className='col-12' tabs>
-                                        
+                                <Nav className='col-12' tabs>  
                                     <NavItem className='notification__filters'>
                                         <NavLink href='#' active={this.state.showSpaces} onClick={() => this.activateSpaces()}>Spaces</NavLink>
                                     </NavItem>
