@@ -789,6 +789,51 @@ export const contactUs = (formDetails) => async (dispatch, getState) => {
 };
 
 //----------------BLOGS---------------------------------//
+
+
+export const addBlog = (blog) => ({
+	type: ActionTypes.ADD_BLOG,
+	payload: blog,
+});
+
+export const postBlog = (blog) => (dispatch) => {
+	const newBlog = blog;
+	newBlog.dateNum = Date.now();
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "blogs", {
+		method: "POST",
+		body: JSON.stringify(newBlog),
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer,
+		},
+		//credentials: "same-origin"
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((response) => dispatch(addBlog(response)))
+		.catch((error) => {
+			console.log("post blogs", error.message);
+			alert("Your blog could not be posted\nError: " + error.message);
+		});
+};
+
 export const fetchBlogs = () => (dispatch) => {
 	dispatch(blogsLoading(true));
 
@@ -815,6 +860,41 @@ export const fetchBlogs = () => (dispatch) => {
 		.catch((error) => dispatch(blogsFailed(error.message)));
 };
 
+
+export const deleteBlog = (blogId) => (dispatch) => {
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "blogs/" + blogId, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer,
+		},
+        //credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(() => dispatch(removeBlog(blogId)))
+	.then(() => console.log('Blog deleted!!'))
+    .catch(error => dispatch(blogsFailed(error.message)));
+};
+
+export const removeBlog = (blogId) => ({
+	type: ActionTypes.DELETE_BLOG,
+	payload: blogId,
+});
+
 export const blogsLoading = () => ({
 	type: ActionTypes.BLOGS_LOADING,
 });
@@ -827,4 +907,250 @@ export const blogsFailed = (errmess) => ({
 export const addBlogs = (blogs) => ({
 	type: ActionTypes.ADD_BLOGS,
 	payload: blogs,
+});
+
+
+//------------------------------------------BLOGS REACTIONS--------------------------------------------------------------------//
+
+
+export const addBReaction = (reac) => ({
+	type: ActionTypes.ADD_BREACTION,
+	payload: reac,
+});
+
+export const postBReaction = (reac) => (dispatch) => {
+	
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "blogReactions", {
+		method: "POST",
+		body: JSON.stringify(reac),
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer,
+		},
+		//credentials: "same-origin",
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((response) => dispatch(addBReaction(response)))
+		.catch((error) => {
+			console.log("post reactions", error.message);
+			alert("Your Reaction could not be posted\nError: " + error.message);
+		});
+};
+
+export const fetchBReactions = () => (dispatch) => {
+	return fetch(baseUrl + "blogReactions")
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				var errmess = new Error(error.message);
+				throw errmess;
+			}
+		)
+		.then((response) => response.json())
+		.then((reactions) => dispatch(addBReactions(reactions)))
+		.catch((error) => dispatch(reactionsBFailed(error.message)));
+};
+
+export const reactionsBFailed = (errmess) => ({
+	type: ActionTypes.REACTIONS_BFAILED,
+	payload: errmess,
+});
+
+export const addBReactions = (reactions) => ({
+	type: ActionTypes.ADD_BREACTIONS,
+	payload: reactions,
+});
+
+export const deleteBReaction = (reacId) => (dispatch) => {
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "blogReactions/" + reacId, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer
+		},
+		credentials: "same-origin",
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((reactions) => {
+			console.log("Reaction Deleted", reactions);
+			dispatch(removeBReaction(reacId));
+		})
+		.catch((error) => {
+			console.log("delete Reactions", error.message);
+			alert("Your Reaction could not be deleted\nError: " + error.message);
+		});
+};
+
+export const removeBReaction = (reacId) => ({
+	type: ActionTypes.DELETE_BREACTION,
+	payload: reacId,
+});
+
+//---------------------------------------------BLOG COMMENTS---------------------------------------------------//
+
+
+export const addBComment = (comment) => ({
+	type: ActionTypes.ADD_BCOMMENT,
+	payload: comment,
+});
+
+export const postBComment = (comment) => (dispatch) => {
+	const newBComment = comment;
+	newBComment.dateNum = Date.now();
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "blogComments", {
+		method: "POST",
+		body: JSON.stringify(newBComment),
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer,
+		},
+		//credentials: "same-origin",
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((response) => dispatch(addBComment(response)))
+		.catch((error) => {
+			console.log("post comments", error.message);
+			alert("Your comment could not be posted\nError: " + error.message);
+		});
+};
+
+export const fetchBComments = () => (dispatch) => {
+	return fetch(baseUrl + "blogComments")
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				var errmess = new Error(error.message);
+				throw errmess;
+			}
+		)
+		.then((response) => response.json())
+		.then((comments) => dispatch(addBComments(comments)))
+		.catch((error) => dispatch(commentsBFailed(error.message)));
+};
+
+export const commentsBFailed = (errmess) => ({
+	type: ActionTypes.COMMENTS_BFAILED,
+	payload: errmess,
+});
+
+export const addBComments = (comments) => ({
+	type: ActionTypes.ADD_BCOMMENTS,
+	payload: comments,
+});
+
+export const deleteBComment = (commentId) => (dispatch) => {
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "blogComments/" + commentId, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer
+		},
+		credentials: "same-origin",
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((comments) => {
+			console.log("Comment Deleted", comments);
+			dispatch(removeBComment(commentId));
+		})
+		.catch((error) => {
+			console.log("delete comments", error.message);
+			alert("Your comment could not be deleted\nError: " + error.message);
+		});
+};
+
+export const removeBComment = (commentId) => ({
+	type: ActionTypes.DELETE_BCOMMENT,
+	payload: commentId,
 });
