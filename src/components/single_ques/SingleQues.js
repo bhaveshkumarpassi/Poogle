@@ -368,13 +368,13 @@ class RenderQuestionAnswers extends Component {
                     <CardTitle className='single-question-heading'>{this.props.question.heading}</CardTitle>
                 <hr></hr>
                 <Row>
-                    <Col className='mb-3 single-question-profile' xs={4} md={3} lg={2}>
+                    <Col className='mb-3 single-question-profile' xs={5} sm={4} md={3} lg={2}>
                         <CardImg className='single-question-profile-pic' src={profilePic}/>
                         <CardText className='single-question-profile-name'>@{this.props.question.author.user_name} has a question ????</CardText>
                     </Col>
                     <Col xs={12} md={9} lg={10}>
                         <Row>
-                            <Col className='mb-3'>
+                            <Col className='mb-4'>
                                 <RenderTags question={this.props.question} />
                             </Col>
                             <Col xs={12}>
