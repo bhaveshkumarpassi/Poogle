@@ -5,6 +5,7 @@ import ChatSideBar from "./ChatSideBar";
 import { getChats, sendMessage } from "../../redux/actions/chat";
 import { baseUrl } from "../../shared/baseUrl";
 import { connect } from "react-redux";
+import background from "../../Images/chat_back.jpg";
 const axios = require("axios");
 const Pusher = require("pusher-js");
 
@@ -40,6 +41,7 @@ const Chat = ({ chats, token, dispatch }) => {
 
 	const handleMessageSent = (e) => {
 		e.preventDefault();
+		if (msg === "") return;
 		setChat((chat) => [...chat, { msg, sender: "me" }]);
 		const id = chats.chats.filter(({ name }) => person === name)[0]._id;
 		dispatch(sendMessage(token, msg, id));
@@ -53,7 +55,7 @@ const Chat = ({ chats, token, dispatch }) => {
 
 	return (
 		<Container style={{ height: "80vh", marginTop: "20px" }}>
-			<Row style={{ height: "100%" }}>
+			<Row style={{ maxHeight: "60vh" }}>
 				{/*Chat sidebar*/}
 				<ChatSideBar
 					person={person}
@@ -71,10 +73,17 @@ const Chat = ({ chats, token, dispatch }) => {
 							<Row style={{ padding: "10px" }}>
 								<div
 									className="justify-content-end"
-									style={{ overflowY: "scroll", height: "70vh", width: "100%" }}
+									style={{
+										overflowY: "scroll",
+										height: "74vh",
+										width: "100%",
+										backgroundImage: { background },
+										backgroundRepeat: "repeat",
+										backgroundPosition: "center",
+									}}
 									id="list"
 								>
-									{chat.map(({ msg, sender }) => (
+									{chat.map(({ msg, sender, createdAt }) => (
 										<div
 											class={`${sender === "me" ? "sending__msg" : ""}`}
 											style={{ maxWidth: "50%", wordBreak: "break-all" }}
@@ -86,6 +95,9 @@ const Chat = ({ chats, token, dispatch }) => {
 												style={{ margin: "10px" }}
 											>
 												{msg}
+											</div>
+											<div className={`text-muted small text-left`}>
+												{createdAt}
 											</div>
 											<div className={`text-muted small text-right`}>
 												{sender === "me" ? "You" : person}
