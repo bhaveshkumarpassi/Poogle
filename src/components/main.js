@@ -5,7 +5,7 @@ import { fetchSpaces, fetchQuestions, fetchUser,
 	fetchAnswers, fetchComments, postComment, fetchBlogs,
 	deleteComment, postQuestion, deleteQuestion, postReaction, fetchReactions, deleteReaction,
 	postAnswer, deleteAnswer, postAReaction, fetchAReactions, deleteAReaction,postBlog,deleteBlog,
-	postBComment,fetchBComments,fetchBReactions,postBReaction,deleteBComment,deleteBReaction} from "../redux/ActionCreators";
+	postBComment,fetchBComments,fetchBReactions,postBReaction,deleteBComment,deleteBReaction, fetchBlogDemands, postBlogDemand, deleteBlogDemand} from "../redux/ActionCreators";
 import Home from "./home_page/home";
 import Spaces from "./spaces_page/Spaces";
 import Questions from "./all_ques_page/questions";
@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
 		blogs:state.blogs,
 		breactions:state.breactions,
 		bcomments:state.bcomments,
+		blogDemands:state.blogDemands,
 		qreactions: state.qreactions,
 		answers: state.answers,
 		areactions: state.areactions,
@@ -55,6 +56,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	fetchBReactions: () =>{
         dispatch(fetchBReactions());
+	},
+	fetchBlogDemands:()=>{
+		dispatch(fetchBlogDemands());
 	},
 	fetchReactions: () => {
 		dispatch(fetchReactions());
@@ -86,7 +90,9 @@ const mapDispatchToProps = (dispatch) => ({
 	postBComment : (blogId,author,comment) => dispatch(postBComment(blogId,author,comment)),
 	deleteBComment : (commentId) => dispatch(deleteBComment(commentId)),
 	postBReaction : (reac) => dispatch(postBReaction(reac)),
-	deleteBReaction: (reacId) => dispatch(deleteBReaction(reacId))
+	deleteBReaction: (reacId) => dispatch(deleteBReaction(reacId)),
+	postBlogDemand:(blog,userToken)=>dispatch(postBlogDemand(blogDemand,userToken)),
+	deleteBlogDemand:(blogDemandId)=>dispatch(deleteBlogDemand(blogDemandId))
 });
 
 class Main extends Component {
@@ -105,6 +111,7 @@ class Main extends Component {
 		this.props.fetchComments();
 		this.props.fetchBComments();
 		this.props.fetchBReactions();
+		this.props.fetchBlogDemands();
 	}
 
 	render() {

@@ -1,5 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
+import addBlogDemands from "../components/add_forms/addBlogDemands";
 
 //--------------------------AUTHENTICATION-----------------------------------/
 
@@ -1153,4 +1154,125 @@ export const deleteBComment = (commentId) => (dispatch) => {
 export const removeBComment = (commentId) => ({
 	type: ActionTypes.DELETE_BCOMMENT,
 	payload: commentId,
+});
+
+
+//---------------------------------------BLOG DEMANDS------------------------------------------------//
+
+export const addBlogDemand = (blogDemand) => ({
+	type: ActionTypes.ADD_BLOGDEMAND,
+	payload: blogDemand,
+});
+
+export const postBlogDemand = (blogDemand) => (dispatch) => {
+	const newBlogDemand = blogDemand;
+	newBlogDemand.dateNum = Date.now();
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "blogDemands", {
+		method: "POST",
+		body: JSON.stringify(newBlogDemand),
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer,
+		},
+		//credentials: "same-origin"
+	})
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				throw error;
+			}
+		)
+		.then((response) => response.json())
+		.then((response) => dispatch(addBlogDemand(response)))
+		.catch((error) => {
+			console.log("post blogDemands", error.message);
+			alert("Your blogDemand could not be posted\nError: " + error.message);
+		});
+};
+
+export const fetchBlogDemands = () => (dispatch) => {
+	dispatch(blogDemandsLoading(true));
+
+	return fetch(baseUrl + "blogDemands")
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				var errmess = new Error(error.message);
+				throw errmess;
+			}
+		)
+		.then((response) => response.json())
+		.then((blogDemands) => dispatch(addBlogDemands(blogDemands)))
+		.catch((error) => dispatch(blogDemandsFailed(error.message)));
+};
+
+
+export const deleteBlogDemand = (blogDemandId) => (dispatch) => {
+	const bearer = "Bearer " + localStorage.getItem("token");
+
+	return fetch(baseUrl + "blogDemands/" + blogDemandId, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: bearer,
+		},
+        //credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(() => dispatch(removeBlogDemand(blogDemandId)))
+	.then(() => console.log('BlogDemand deleted!!'))
+    .catch(error => dispatch(blogDemandsFailed(error.message)));
+};
+
+export const removeBlogDemand = (blogDemandId) => ({
+	type: ActionTypes.DELETE_BLOGDEMAND,
+	payload: blogDemandId,
+});
+
+export const blogDemandsLoading = () => ({
+	type: ActionTypes.BLOGDEMANDS_LOADING,
+});
+
+export const blogDemandsFailed = (errmess) => ({
+	type: ActionTypes.BLOGDEMANDS_FAILED,
+	payload: errmess,
+});
+
+export const addBlogDemands = (blogDemands) => ({
+	type: ActionTypes.ADD_BLOGDEMANDS,
+	payload: blogDemands,
 });

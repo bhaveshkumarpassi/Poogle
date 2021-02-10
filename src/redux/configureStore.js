@@ -14,6 +14,7 @@ import authReducer from "./reducers/authReducer";
 import contact from './reducers/contactUs'
 import { Breactions } from "./reducers/bReactions";
 import { Bcomments } from "./reducers/bComments";
+import { BlogDemands } from "./reducers/blogDemands";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const ConfigureStore = () => {
 	const store = createStore(
@@ -26,6 +27,7 @@ export const ConfigureStore = () => {
 			qreactions: Qreactions,
 			breactions:Breactions,
 			bcomments: Bcomments,
+			blogDemands:BlogDemands,
 			areactions: Areactions,
 			user,
 			auth: authReducer,
