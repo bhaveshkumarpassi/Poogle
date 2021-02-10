@@ -15,6 +15,7 @@ import questionComp from '../all_ques_page/questions';
 import blogComp from '../all_blog_page/blogs';
 import "./profile.css";
 import Loading from "../loading";
+import {spaces} from '../variables';
 
 
 class profile extends Component {
@@ -142,17 +143,22 @@ class profile extends Component {
 	}
 
 	renderInterestList() {
-		const { interests } = this.props.user.user;
+		let { interests } = this.props.user.user;
+		interests = interests.map(({interest, voteCount})=> {
+			let interestId = interest
+			interest = interest.replaceAll('-',' ');
+			return {interestId , interest, voteCount};
+		})
 		
-		const spaces = this.props.spaces;
-		// return spaces.map((space))
-		// return interests.map((interestObj) => {
-		// 	return (
-		// 		<Link to="/spaces/" className="interests__button" key={interestObj._id}>
-		// 			{spaces[interestObj.interest].name}
-		// 		</Link>
-		// 	);
-		// });
+		return interests.map((interestObj,key) => {
+			console.log(key);
+			return (
+				<Link to={"/spaces/"+interestObj.interestId} className="interests__button" key={key}>
+					<span className="">{interestObj.interest}</span>
+					<span className="interest__count">{interestObj.voteCount}</span>
+				</Link>
+			);
+		});
 	}
 	
 	
