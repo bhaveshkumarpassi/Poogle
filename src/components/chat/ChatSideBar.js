@@ -15,8 +15,8 @@ const ChatSideBar = (props) => {
 	}, [person]);
 
 	return (
-		<Col xs={6} md={4}>
-			<Row style={{ margin: "10px", backgroundColor: "bisque" }}>
+		<Col xs={6} md={4} style={{ maxHeight: "60%" }}>
+			<Row style={{ width: "100%" }}>
 				<FaSearch style={{ margin: "12px" }} />
 				<input
 					type="text"
@@ -29,8 +29,9 @@ const ChatSideBar = (props) => {
 					}}
 				></input>
 			</Row>
-			<Row style={{ margin: "10px", overflow: "scroll", height: "70vh" }}>
-				<ListGroup>
+			<h1>Chats</h1>
+			<Row style={{ overflow: "scroll", height: "70vh", width: "100%" }}>
+				<ListGroup style={{ width: "100%" }}>
 					{chats.map(({ name, chat }) => (
 						<PersonChatProfile
 							name={name}
