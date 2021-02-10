@@ -22,6 +22,7 @@ import AddQuestion from './add_forms/addQuestions';
 import AddBlog from './add_forms/addBlogs';
 import Logout from './login_signup/logout';
 import AboutUs from './aboutUs/aboutUs';
+import SingleBlog from './single-blog/SingleBlog';
 
 
 const mapStateToProps = (state) => {
@@ -141,18 +142,7 @@ class Main extends Component {
 		const HomeQuestions = () => {
 			return(
 				<Home 
-					// questions={this.props.questions.questions.map((ques) => {
-					// 	ques.tagIds.filter((tag) => {
-					// 		this.props.user.interests.indexOf(tag, 10) >-1
-					// 	})
-					// })}
-					// questions={this.props.questions.questions.filter(
-					// 	(ques) => {
-					// 		ques.tagIds.filter((tag) => {
-					// 			this.props.user.user.interests.indexOf(tag, 10) >-1
-					// 		})
-					// 	}
-					// )}
+			
 					questions={this.props.questions.questions}
 					isLoading={this.props.questions.isLoading}
 					errMess={this.props.questions.errMess}
@@ -200,6 +190,30 @@ class Main extends Component {
 			);
 		}
 
+		const BlogWithId = ({ match }) => {
+			return(
+				<SingleBlog
+					blog={
+						this.props.blogs.blogs.filter((blog) => blog._id === match.params.blogId)[0]
+					}
+					isLoading={this.props.blogs.isLoading}
+					errMess={this.props.blogs.errMess}
+					//bcomments={this.props.bcomments.bcomments}
+					bcomments = {this.props.bcomments.bcomments.filter((comm) => comm.blog === match.params.blogId)}
+					bcommentsErrMess={this.props.bcomments.errMess}
+					postBComment={this.props.postBComment}
+					deleteBComment={this.props.deleteBComment}
+					auth={this.props.auth}
+					postReaction={this.props.postBReaction}
+					deleteReaction={this.props.deleteBReaction}
+					reactions={this.props.breactions.breactions.filter((reac) => reac.blog === match.params.blogId)}
+					reactionsIsLoading={this.props.breactions.isLoading}
+					reactionsErrMess = {this.props.breactions.errMess}
+				/>
+			);
+		}
+
+
 		const PrivateRoute = ({ component: Component, ...rest }) => (
 			<Route {...rest} render={(props) => (
 			  this.props.auth.isSignedIn
@@ -232,11 +246,24 @@ class Main extends Component {
 					<PrivateRoute 
 						exact
 						path="/blogs"
-						component={()=><Blogs blogs={this.props.blogs.blogs}
-						 fetchBlogs= {this.props.fetchBlogs} 
+						component={()=><Blogs 
+						 blogs={this.props.blogs.blogs}
+						 //fetchBlogs= {this.props.fetchBlogs} 
+						 isLoading={this.props.blogs.isLoading}
+						 errMess={this.props.errMess}
 						 auth={this.props.auth}
 						 deleteBlog={this.props.deleteBlog}
+						 reactions={this.props.breactions.breactions}
+						 reactionsIsLoading={this.props.breactions.isLoading}
+						 reactionsErrMess = {this.props.breactions.errMess}
+						 postReaction={this.props.postBReaction}
 						 />}/>
+
+					<PrivateRoute 
+						exact
+						path='/blog-:blogId-:blog'
+						component={BlogWithId}
+						/>
 				
 					<PrivateRoute exact path="/profile/:userId" component={Profile_page}/>
 					{/* <PrivateRoute exact path="/profile" component={() => <Profile_page user={this.props.user} 

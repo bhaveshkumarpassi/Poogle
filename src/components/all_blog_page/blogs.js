@@ -10,7 +10,6 @@ import { ListGroup,
     NavLink,
     Button,Form,FormGroup,Label,Input, ButtonGroup,
     Pagination, PaginationItem, PaginationLink } from 'reactstrap';
-import { Fade, Stagger} from 'react-animation-components';
 import { Link } from 'react-router-dom';
 import Loading from '../loading';
 import '../all_blog_page/blogs.css';
@@ -40,15 +39,12 @@ async function viewAdd(views, postBReaction, blog, user) {
 function RenderMenuItem({blog, class_Name, 
     onClick, auth, deleteBlog, breactions, postBReaction,filter}) {
     
-    //var ans = answers.filter(a => a.question === question._id);
-    //var ansCount = answers.filter(a => a.question === question._id).length;
-    //var uclapsCount = breactions.filter(r => r.category === 'UpClap').filter(r => r.blog === blog._id ).length;
-    //var views = breactions.filter(r => r.category === 'View').filter(r => r.blog === blog._id);
-    //var viewsCount = views.length;
+    var likesCount = breactions.filter(r => r.category === 'Like').filter(r => r.blog === blog._id ).length;
+    var views = breactions.filter(r => r.category === 'View').filter(r => r.blog === blog._id);
+    var viewsCount = views.length;
      
-    if(filter==='Latest' || filter==='Claps'){
+    if(filter==='Latest' || filter==='Likes'){
     return(
-            <Fade in>
                 <ListGroup className='container blog-container'>
                         <ListGroupItem className={class_Name+' list-item-style'}>
 
@@ -57,7 +53,7 @@ function RenderMenuItem({blog, class_Name,
                                 <ListGroupItemHeading className='blog-heading'>
                                 <Link className='blog-heading' 
                                 to={`/blog-${blog._id}-${blog.heading}`}
-                                //onClick={() => viewAdd(views, postBReaction, blog._id, auth.userId)}
+                                onClick={() => viewAdd(views, postBReaction, blog._id, auth.userId)}
                                 >
                                     {blog.heading}
                                 </Link>
@@ -82,19 +78,22 @@ function RenderMenuItem({blog, class_Name,
                                 </div>
                                 <div className='col-12 col-sm-4'>
                                     <div className='prop-div'>
-                                        <Badge className='prop' color='light'>{0}</Badge>
-                                        <p>views</p>
+                                        <Badge className='prop' color='light'>{viewsCount}</Badge>
+                                        <p>Views</p>
                                     </div>
                                     <div className='prop-div'>
-                                        <Badge className='prop' color='light'>{0}</Badge>
-                                        <p>claps</p>
+                                        <Badge className='prop' color='light'>{likesCount}</Badge>
+                                        <p>Likes</p>
+                                    </div>
+                                    <div className='prop-div'>
+                                        <Badge className='prop' color='light'>{blog.duration}</Badge>
+                                        <p>minutes</p>
                                     </div>
                                 </div>
                                 </div>
                         
                         </ListGroupItem>
                 </ListGroup>
-            </Fade>
         );
     }
     
@@ -104,42 +103,15 @@ function RenderMenuItem({blog, class_Name,
     
     constructor(props){
         super(props);
-       // this.handleSearch = this.handleSearch.bind(this);   
         this.state={
             filter: 'Latest',
             latestActive: true,
             clapsActive:false,
-          //  data:[]
+
         }
-       // this.arrayHolder = [];
+
     }
-    // handleSearch(event) {
-
-    //     this.searchFilterFunction(this.searchBlog.value)
-    //     event.preventDefault();
-    // }
-    // componentDidMount() {
-    //     this.setState({
-    //         data: this.props.blogs.blogs
-    //     });
-
-       // this.arrayHolder = this.props.blogs.blogs
-   // }
-
-    // searchFilterFunction = text => {
-        
-    //     const newData = this.arrayHolder.filter(item => {
-    //       const itemData = [`${item.blog.toUpperCase()}`];
-    //       const textData = text.toUpperCase();
-    
-    //       return [itemData.indexOf(textData) > -1];
-    //     })
-
-    //     this.setState({
-    //       data: newData,
-    //     });
-    // };
-
+   
     onLatestSelect() {
         this.setState({
             filter:'Latest',
@@ -150,24 +122,12 @@ function RenderMenuItem({blog, class_Name,
 
     onClapsSelect(){
         this.setState({
-            filter:'Claps',
+            filter:'Likes',
             latestActive:false,
             clapsActive:true,
         })
     }
     render() {
-
-        // const menu = this.state.data.map((blog) => {  
-        //     return (
-        //         <div className="col-12 col-lg-3 col-md-6 col-sm-6 mt-1 mb-4"  key={blog.id}>
-        //             <RenderMenuItem 
-        //             blog={blog} 
-        //             class_Name={count%2==0 ? 'blogEven' : 'blogOdd'}
-        //             onClick={this.props.onClick}
-        //              />
-        //         </div>
-        //     );
-        // });
 
        
         
@@ -180,17 +140,13 @@ function RenderMenuItem({blog, class_Name,
                    
                         <RenderMenuItem 
                             blog={blog} 
-                            // spaceId={this.props.space._id} 
                             class_Name={count%2 == 0 ? 'blogEven' : 'blogOdd'} 
                             onClick={this.props.onClick}
-                           // spaceId={this.spaceId}
                             auth={this.props.auth}
                             deleteBlog={this.props.deleteBlog}
-                           // answers={this.props.answers}
-                            //breactions={this.props.breactions}
-                            postBReaction={this.props.postBReaction}
+                            breactions={this.props.reactions}
+                            postBReaction={this.props.postReaction}
                             filter={this.state.filter}
-                            //spaceId={this.props.space.stringId}
                              />
                 
                 </div>
@@ -198,7 +154,7 @@ function RenderMenuItem({blog, class_Name,
         }) 
 
 
-        const MenuClaps = this.props.blogs.map((blog) => {
+        const MenuLikes = this.props.blogs.map((blog) => {
 
             count += 1;
             return(
@@ -206,13 +162,11 @@ function RenderMenuItem({blog, class_Name,
                     
                         <RenderMenuItem 
                             blog={blog} 
-                            // spaceId={this.props.space._id} 
                             class_Name={count%2 == 0 ? 'blogEven' : 'blogOdd'} 
                             onClick={this.props.onClick}
                             auth={this.props.auth}
                             deleteBlog={this.props.deleteBlog}
-                            //answers={this.props.answers}
-                            //breactions={this.props.breactions}
+                            breactions={this.props.breactions}
                             postBReaction={this.props.postBReaction}
                             filter={this.state.filter}
                             />
@@ -222,12 +176,12 @@ function RenderMenuItem({blog, class_Name,
         })
 
         
-        if(this.props.isLoading || this.props.blogsIsLoading|| this.props.reactionsIsLoading) {
+        if(this.props.isLoading || this.props.reactionsIsLoading) {
             return(
                 <Loading type="spokes" color="grey"/>       
             );
         }
-        else if(this.props.errMess || this.props.blogsErrMess|| this.props.reactionsIsLoading) {
+        else if(this.props.errMess || this.props.reactionsIsLoading) {
             return(
                 <div className="container spaces">
                     <div className="row"> 
@@ -245,8 +199,8 @@ function RenderMenuItem({blog, class_Name,
             if(this.state.filter === 'Latest') {
                 renderBlogs = MenuDate;
             }
-            else if(this.state.filter === 'Claps') {
-                renderBlogs = MenuClaps;
+            else if(this.state.filter === 'Likes') {
+                renderBlogs = MenuLikes;
             }
             
         return (
@@ -255,7 +209,7 @@ function RenderMenuItem({blog, class_Name,
             <div className='row'>
                 <Breadcrumb className='mt-3 ml-3'>
                     <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
-                    <BreadcrumbItem active>BLOGS</BreadcrumbItem>
+                    <BreadcrumbItem active>Blogs</BreadcrumbItem>
                 </Breadcrumb>
             </div>
             <div className='row'>
@@ -281,7 +235,6 @@ function RenderMenuItem({blog, class_Name,
                             </ButtonGroup>
                             <Button className='col-8 col-md-4 col-lg-3 mb-4 add-blog-btn' color='danger'>
                             <span className='fa fa-lg fa-bookmark mr-2 ml-2' />FOLLOW</Button>
-                            {/* <Button outline className='col-8 col-lg-3 mb-4 follower-btn' color='primary'><span className='fa fa-lg fa-users mr-2 ml-2' />{this.props.space.followers} FOLLOWERS</Button> */}
                     </div>
                     <div className='row ml-1 mt-3 mr-1'>
                         <Nav className='col-12 ' tabs>
@@ -290,7 +243,7 @@ function RenderMenuItem({blog, class_Name,
                                 <NavLink href='#' active={this.state.latestActive} onClick={() => this.onLatestSelect()}>Latest</NavLink>
                             </NavItem>
                             <NavItem className='mb-6 filters'>
-                                <NavLink href='#' active={this.state.clapsActive} onClick={() => this.onClapsSelect()}>Claps</NavLink>
+                                <NavLink href='#' active={this.state.clapsActive} onClick={() => this.onClapsSelect()}>Likes</NavLink>
                             </NavItem>
                         </Nav>
                     </div>
