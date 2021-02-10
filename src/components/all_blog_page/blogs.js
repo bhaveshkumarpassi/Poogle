@@ -10,6 +10,7 @@ import { ListGroup,
     NavLink,
     Button,Form,FormGroup,Label,Input, ButtonGroup,
     Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Fade, Stagger} from 'react-animation-components';
 import { Link } from 'react-router-dom';
 import Loading from '../loading';
 import '../all_blog_page/blogs.css';
@@ -45,10 +46,7 @@ function RenderMenuItem({blog, class_Name,
      
     if(filter==='Latest' || filter==='Likes'){
     return(
-<<<<<<< HEAD
-=======
         <Fade in>
->>>>>>> 7d166685a182e5f05c4d8f34775e19bb414563db
                 <ListGroup className='container blog-container'>
                         <ListGroupItem className={class_Name+' list-item-style'}>
 
@@ -98,6 +96,7 @@ function RenderMenuItem({blog, class_Name,
                         
                         </ListGroupItem>
                 </ListGroup>
+            </Fade>
         );
     }
     
@@ -223,7 +222,7 @@ function RenderMenuItem({blog, class_Name,
                 
                                 
                                 <Button className='col-8 col-md-4 col-lg-3 mb-4 m-2 add-blog-btn' color='danger'>
-                                <Link style={{color: 'white'}} to='/addQuestion'><span className='fa fa-lg fa-plus mr-2 ml-2'>BLOG</span></Link>
+                                <Link style={{color: 'white'}} to='/addBlog'><span className='fa fa-lg fa-plus mr-2 ml-2'>BLOG</span></Link>
                                 </Button>
                                 
                     

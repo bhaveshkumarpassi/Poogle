@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { ProSidebar, SidebarHeader,  SidebarFooter, SidebarContent,Menu, MenuItem, SubMenu} from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
@@ -61,9 +61,9 @@ const renderSignInTop = (status)=>{
   )
 }
 
-
 function Sidebar({collapsed, toggled, handleToggleSidebar}){
-  let auth = useSelector(state=> state.auth)||false;    
+  let auth = useSelector(state=> state.auth)||false;   
+
 return(
 <ProSidebar breakPoint='md' collapsed={collapsed} 
           toggled={toggled} onToggle={handleToggleSidebar}
