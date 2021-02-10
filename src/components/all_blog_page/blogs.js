@@ -45,6 +45,10 @@ function RenderMenuItem({blog, class_Name,
      
     if(filter==='Latest' || filter==='Likes'){
     return(
+<<<<<<< HEAD
+=======
+        <Fade in>
+>>>>>>> 7d166685a182e5f05c4d8f34775e19bb414563db
                 <ListGroup className='container blog-container'>
                         <ListGroupItem className={class_Name+' list-item-style'}>
 
@@ -217,24 +221,22 @@ function RenderMenuItem({blog, class_Name,
                     <h4 className='row all-blog-heading justify-content-center'>All Blogs</h4>
                     <div className='row justify-content-center mt-4'>
                 
-                            <Link to='/addBlog'>
-                                <Button className=' col-8 col-md-4 col-lg-3 mb-4 add-blog-btn' color='danger'>
-                                    <span className='fa fa-lg fa-plus mr-2 ml-2' />BLOG
+                                
+                                <Button className='col-8 col-md-4 col-lg-3 mb-4 m-2 add-blog-btn' color='danger'>
+                                <Link style={{color: 'white'}} to='/addQuestion'><span className='fa fa-lg fa-plus mr-2 ml-2'>BLOG</span></Link>
                                 </Button>
-                            </Link>
+                                
                     
-                            <ButtonGroup className='mb-4 button-grp col-8 col-md-4 col-lg-3'>
-                                <Button outline color='info'>
-                                    <span className='fa fa-lg fa-questions-circle mr-2' />
-                                    {this.props.blogs.length}BLOGS
-                                </Button>
-                                <Button outline color='info'>
-                                    <span className='fa fa-lg fa-users mr-2'></span>
-                                    Followers
-                                </Button>
-                            </ButtonGroup>
-                            <Button className='col-8 col-md-4 col-lg-3 mb-4 add-blog-btn' color='danger'>
-                            <span className='fa fa-lg fa-bookmark mr-2 ml-2' />FOLLOW</Button>
+                            
+                               <Button className='col-8 col-md-4 col-lg-3 mb-4 m-2 add-blog-btn' color='info'>
+                                   <Link style={{color:'white'}} to='/addBlog'>
+                                   <span className='fa fa-lg fa-plus mr-2 ml-2'>Add Blog Demand</span></Link>
+                               </Button>
+                            
+                            
+                            <Button className='col-8 col-md-4 col-lg-3 mb-4 ml-4 add-blog-btn' color='danger'>
+                            <span className='fa fa-lg fa-bookmark mr-2 ml-2'/>FOLLOW</Button>
+                            {/* <Button outline className='col-8 col-lg-3 mb-4 follower-btn' color='primary'><span className='fa fa-lg fa-users mr-2 ml-2' />{this.props.space.followers} FOLLOWERS</Button> */}
                     </div>
                     <div className='row ml-1 mt-3 mr-1'>
                         <Nav className='col-12 ' tabs>
