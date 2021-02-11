@@ -31,10 +31,22 @@ class profile extends Component {
 		}       
     }
 	componentDidMount() {
-		if(this.props.auth.userId==this.props.match.params.userId&&!this.props.user.user)
-			this.props.fetchUser(this.props.match.params.userId);
-		
-		// this.props.fetchUser(this.props.auth.userId)
+		const authId= this.props.auth.userId
+        const user= this.props.user.user;
+		const reqId = this.props.match.params.userId;
+        let userId;
+        if(user){
+            userId = user.userId;
+        }
+		if(reqId){
+			if(authId){
+				if(!user||userId!=reqId){
+					this.props.fetchUser(reqId);
+				}
+			}else{
+				this.props.fetchUser(reqId);
+			}
+		}
 	}
 	activateAbout = (e)=>{
 		e.preventDefault();
@@ -79,9 +91,8 @@ class profile extends Component {
 		return (
 			<div className="user__account__buttons">
 				<Row>
-					{/* <button className="user__btn userbtn--1">Follow</button> */}
-					{/*If logged In*/}
-					{this.state.owner===this.state.user && <button className="user__btn userbtn--2">Update Profile</button>}
+					{this.state.owner===this.state.user && <button className="user__btn userbtn--1">Change Profile Pic</button>}
+					{this.state.owner===this.state.user && <button className="user__btn userbtn--2">Update Details</button>}
 				</Row>
 				<Row>
 					{/* If logged In */}
@@ -332,11 +343,9 @@ class profile extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
 	return {
-		user: state.user,
 		spaces: state.spaces.spaces,
 		user:state.user,
 		auth:state.auth,
-		admin:state.admin
 		//remember to check if spaces are avaliable.
 	};
 };
