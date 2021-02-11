@@ -66,7 +66,9 @@ const ChatSideBar = (props) => {
 								/>
 						  ))
 						: chats
-								.filter(({ name }) => name.includes(search))
+								.filter(({ name }) =>
+									name.toLowerCase().includes(search.toLowerCase())
+								)
 								.map(({ name, chat }) => (
 									<PersonChatProfile
 										name={name}
