@@ -335,13 +335,13 @@ class Questions extends Component {
                             <h4 className='row all-ques-heading justify-content-center'>All Questions</h4>
                             <div className='row justify-content-center mt-4'>
                         
-                                    <Link to='/addQuestion'>
+                                    
                                         <Button className='add-ques-btn col-8 col-md-4 col-lg-3 mb-4' color='danger'>
-                                        
+                                        <Link style={{color: 'white'}} to='/addBlog'>
                                             <span className='fa fa-lg fa-plus mr-2 ml-2' />QUESTION
-                                            
+                                        </Link>    
                                         </Button>
-                                    </Link>
+                                    
                             
                                     <ButtonGroup className='mb-4 button-grp col-8 col-md-4 col-lg-3'>
                                         <Button outline color='info'>

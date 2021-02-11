@@ -1,7 +1,7 @@
 import * as ActionTypes from "../ActionTypes";
 
 export const BlogDemands = (
-	state = { isLoading: true, errMess: null, blogs: [] },
+	state = { isLoading: true, errMess: null, blogDemands: [] },
 	action
 ) => {
 	switch (action.type) {

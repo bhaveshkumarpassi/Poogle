@@ -1,6 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
-import addBlogDemands from "../components/add_forms/addBlogDemands";
+
 
 //--------------------------AUTHENTICATION-----------------------------------/
 
@@ -1272,7 +1272,19 @@ export const blogDemandsFailed = (errmess) => ({
 	payload: errmess,
 });
 
-export const addBlogDemands = (blogDemands) => ({
+export const addBlogDemands = (blogdemands) => ({
 	type: ActionTypes.ADD_BLOGDEMANDS,
-	payload: blogDemands,
+	payload: blogdemands,
 });
+
+
+
+
+
+
+
+
+
+
+
+

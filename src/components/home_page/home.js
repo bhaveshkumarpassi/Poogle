@@ -164,7 +164,7 @@ class home extends Component {
 						/>
 					</div>
 				);
-			});
+	});
 
 		const MenuUnanswered = this.props.questions
 			.filter((question) => question.answers == 0)

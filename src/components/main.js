@@ -91,7 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
 	deleteBComment : (commentId) => dispatch(deleteBComment(commentId)),
 	postBReaction : (reac) => dispatch(postBReaction(reac)),
 	deleteBReaction: (reacId) => dispatch(deleteBReaction(reacId)),
-	postBlogDemand:(blog,userToken)=>dispatch(postBlogDemand(blogDemand,userToken)),
+	postBlogDemand:(blogDemand,userToken)=>dispatch(postBlogDemand(blogDemand,userToken)),
 	deleteBlogDemand:(blogDemandId)=>dispatch(deleteBlogDemand(blogDemandId))
 });
 
@@ -243,6 +243,7 @@ class Main extends Component {
 						 fetchBlogs= {this.props.fetchBlogs} 
 						 auth={this.props.auth}
 						 deleteBlog={this.props.deleteBlog}
+						 postBlogDemand={this.props.postBlogDemand}
 						 />}/>
 				
 					<PrivateRoute exact path="/profile/:userId" component={Profile_page}/>
@@ -256,6 +257,7 @@ class Main extends Component {
 					<Route path="/login" component={Login} />
 					<PrivateRoute exact path="/addQuestion" component={() => <AddQuestion postQuestion={this.props.postQuestion} auth={this.props.auth}/>}/>
 					<PrivateRoute path="/addBlog" component={() => <AddBlog postBlog={this.props.postBlog} auth={this.props.auth}/>} />
+                    
 					<Route path="/signup" component={Signup} />
 					<Route path="/logout" component={Logout}/>
 					<Redirect to="/home" />
