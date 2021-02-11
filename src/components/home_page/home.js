@@ -27,7 +27,7 @@ import { Fade, Stagger} from 'react-animation-components';
 import { Link } from "react-router-dom";
 import Loading from "../loading";
 import { baseUrl } from "../../shared/baseUrl";
-import "../spaces_page/Spaces.css";
+import "../followed-spaces/Spaces.css";
 import "./home.css";
 import "../all_ques_page/questions.css";
 
@@ -181,7 +181,7 @@ const RenderTags = ({ question }) =>
 		}
 	}
 
-	
+
 class home extends Component {
 	constructor(props) {
 		super(props);

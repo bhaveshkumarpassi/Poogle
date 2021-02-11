@@ -806,10 +806,10 @@ export const removeComment = (commentId) => ({
 	type: ActionTypes.DELETE_COMMENT,
 	payload: commentId,
 });
-
+/******************************************************************* */
+/*------------FETCH USER----------------------------*/
 export const fetchUser = (userId) => async (dispatch, getState) => {
 	console.log("Got fet user request for userId"+ userId);
-	dispatch({type: ActionTypes.USER_LOADING});
 	try {
 		console.log(userId);
 		let response = await fetch(baseUrl + "users/"+userId, {

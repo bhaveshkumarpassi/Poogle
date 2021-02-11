@@ -35,7 +35,6 @@ const mapStateToProps = (state) => {
 		qreactions: state.qreactions,
 		answers: state.answers,
 		areactions: state.areactions,
-		user: state.user,
 		comments: state.comments,
 		auth: state.auth
 	};
@@ -68,9 +67,6 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	fetchComments: () => {
 		dispatch(fetchComments())
-	},
-	fetchUser: (userId) => {
-		dispatch(fetchUser(userId))
 	},
 	postComment: (questionId, author, comment) => dispatch(postComment(questionId, author, comment)),
 	deleteComment: (commentId) => dispatch(deleteComment(commentId)),
@@ -112,7 +108,6 @@ class Main extends Component {
 		await this.props.fetchBlogs();
 		await this.props.fetchBReactions();
 		await this.props.fetchBComments();
-
 	}
 
 	render() {
@@ -265,7 +260,7 @@ class Main extends Component {
 				<ScrollToTop/>
 				<Switch>
 					<PrivateRoute path="/home" component={HomeQuestions} />
-					<PrivateRoute
+					<Route
 						exact
 						path="/spaces"
 						//component={Spaces}
