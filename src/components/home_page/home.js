@@ -23,10 +23,11 @@ import {
 	CarouselIndicators,
 	CarouselCaption,
 } from "reactstrap";
+import { Fade, Stagger} from 'react-animation-components';
 import { Link } from "react-router-dom";
 import Loading from "../loading";
 import { baseUrl } from "../../shared/baseUrl";
-import "../spaces_page/Spaces.css";
+import "../followed-spaces/Spaces.css";
 import "./home.css";
 import "../all_ques_page/questions.css";
 
@@ -39,57 +40,147 @@ const RenderTags = ({ question }) =>
 		);
 	});
 
-function RenderMenuItem({ question, class_Name, onClick }) {
-	return (
-		<ListGroup className="container question-container">
-			<ListGroupItem className={class_Name + " list-item-style"}>
-				<Link to={`/question-${question._id}-${question.heading}`}>
-					<div className="col-12">
-						<div className="row">
-							<div className="col-12 col-sm-8 col-md-8">
-								<ListGroupItemHeading className="question-heading">
-									{question.heading}
-								</ListGroupItemHeading>
+	async function viewAdd(views, postReaction, question, user) {
+
+		if(views && views.length && views.filter(v => v.user === user)[0]){
+			console.log('another view')
+		}
+		else
+		{
+			var reac = {
+				user: user,
+				question: question,
+				category: 'View'
+			};
+			await postReaction(reac);
+		}
+	}
+	
+	function RenderMenuItem({question, spaceId, class_Name, 
+		onClick, auth, deleteQuestion, answers, reactions, postReaction,
+		filter}) {
+		
+		//var ans = answers.filter(a => a.question === question._id);
+		var ansCount = answers.filter(a => a.question === question._id).length;
+		var uvotesCount = reactions.filter(r => r.category === 'UpVote').filter(r => r.question === question._id ).length;
+		var dvotesCount = reactions.filter(r => r.category === 'DownVote').filter(r => r.question === question._id).length;
+		var views = reactions.filter(r => r.category === 'View').filter(r => r.question === question._id);
+		var viewsCount = views.length;
+	
+		if(filter==='Unanswered'){
+		if(ansCount===0){
+		return(
+			<ListGroup className='container question-container'>
+					<ListGroupItem className={class_Name+' list-item-style'}>
+	
+							<div className='row'>
+							<div className='col-12 col-sm-8'>
+							<ListGroupItemHeading className='question-heading'>
+							<Link className='question-heading' 
+							to={`/question-${question._id}-${question.heading}`}
+							onClick={() => viewAdd(views, postReaction, question._id, auth.userId)}
+							>
+								{question.heading}
+								</Link>
+							{
+								auth.userId === question.author._id
+								?
+							
+									<Button color='danger' style={{marginTop: 6}} onClick={() => deleteQuestion(question._id)}><span className='fa fa-trash'></span></Button>
+							
+								:
+								<></>
+							}   
+							</ListGroupItemHeading>
 								<RenderTags question={question} />
-								<ListGroupItemText className="question-text">
-									Posted by :- {question.author.user_name}
+								<ListGroupItemText className='question-text'>
+									Posted by :-  {question.author.user_name}
 								</ListGroupItemText>
-								<ListGroupItemText className="question-text">
-									Posted at :-{" "}
-									{new Intl.DateTimeFormat("en-US", {
-										year: "numeric",
-										month: "short",
-										day: "2-digit",
-									}).format(new Date(Date.parse(question.createdAt)))}
+								<ListGroupItemText className='question-text'>
+									Posted at :- {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(question.createdAt)))}
 								</ListGroupItemText>
+	
 							</div>
-							<div className="col-12 col-sm-4 col-md-4">
-								<div className="prop-div">
-									<Badge className="prop" color="light">
-										{question.views}
-									</Badge>
+							<div className='col-12 col-sm-4'>
+								<div className='prop-div'>
+									<Badge className='prop' color='light'>{viewsCount}</Badge>
 									<p>views</p>
 								</div>
-								<div className="prop-div">
-									<Badge className="prop" color="light">
-										{question.answers}
-									</Badge>
+								<div className='prop-div'>
+									<Badge className='prop' color='light'>{ansCount}</Badge>
 									<p>answers</p>
 								</div>
-								<div className="prop-div">
-									<Badge className="prop" color="light">
-										{question.votes}
-									</Badge>
+								<div className='prop-div'>
+									<Badge className='prop' color='light'>{uvotesCount-dvotesCount}</Badge>
 									<p>votes</p>
 								</div>
 							</div>
-						</div>
-					</div>
-				</Link>
-			</ListGroupItem>
-		</ListGroup>
-	);
-}
+							</div>
+					   
+					</ListGroupItem>
+			</ListGroup>
+		);
+		}
+		else
+			return <></>
+		}
+		else {
+			return(
+		
+					<ListGroup className='container question-container'>
+							<ListGroupItem className={class_Name+' list-item-style'}>
+	
+									<div className='row'>
+									<div className='col-12 col-sm-8'>
+									<ListGroupItemHeading className='question-heading'>
+									<Link className='question-heading' 
+									to={`/question-${question._id}-${question.heading}`}
+									onClick={() => viewAdd(views, postReaction, question._id, auth.userId)}
+									>
+										{question.heading}
+									</Link>
+									{
+											auth.userId === question.author._id
+											?
+										
+												<Button color='danger' onClick={() => deleteQuestion(question._id)}><span className='fa fa-lg fa-trash'></span></Button>
+										
+											:
+											<></>
+										}   
+									</ListGroupItemHeading>
+										<RenderTags question={question} />
+										<ListGroupItemText className='question-text'>
+											Posted by :-  {question.author.user_name}
+										</ListGroupItemText>
+										<ListGroupItemText className='question-text'>
+											Posted at :- {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(question.createdAt)))}
+										</ListGroupItemText>
+	
+									</div>
+									<div className='col-12 col-sm-4'>
+										<div className='prop-div'>
+											<Badge className='prop' color='light'>{viewsCount}</Badge>
+											<p>views</p>
+										</div>
+										<div className='prop-div'>
+											<Badge className='prop' color='light'>{ansCount}</Badge>
+											<p>answers</p>
+										</div>
+										<div className='prop-div'>
+											<Badge className='prop' color='light'>{uvotesCount-dvotesCount}</Badge>
+											<p>votes</p>
+										</div>
+									</div>
+									</div>
+							
+							</ListGroupItem>
+					</ListGroup>
+	
+			);
+		}
+	}
+
 
 class home extends Component {
 	constructor(props) {
@@ -137,7 +228,7 @@ class home extends Component {
 	render() {
 		var count = -1;
 		const MenuDate = this.props.questions
-			.sort((a, b) => a.dateNum - b.dateNum)
+			.sort((a, b) => b.dateNum - a.dateNum)
 			.map((question) => {
 				count += 1;
 				return (
@@ -146,6 +237,12 @@ class home extends Component {
 							question={question}
 							class_Name={count % 2 == 0 ? "questionEven" : "questionOdd"}
 							onClick={this.props.onClick}
+							auth={this.props.auth}
+                            deleteQuestion={this.props.deleteQuestion}
+                            answers={this.props.answers}
+                            reactions={this.props.reactions}
+                            postReaction={this.props.postReaction}
+							filter={this.state.filter}
 						/>
 					</div>
 				);
@@ -161,13 +258,18 @@ class home extends Component {
 							question={question}
 							class_Name={count % 2 == 0 ? "questionEven" : "questionOdd"}
 							onClick={this.props.onClick}
+							auth={this.props.auth}
+                            deleteQuestion={this.props.deleteQuestion}
+                            answers={this.props.answers}
+                            reactions={this.props.reactions}
+                            postReaction={this.props.postReaction}
+							filter={this.state.filter}
 						/>
 					</div>
 				);
 	});
 
 		const MenuUnanswered = this.props.questions
-			.filter((question) => question.answers == 0)
 			.map((question) => {
 				count += 1;
 				return (
@@ -176,14 +278,20 @@ class home extends Component {
 							question={question}
 							class_Name={count % 2 == 0 ? "questionEven" : "questionOdd"}
 							onClick={this.props.onClick}
+							auth={this.props.auth}
+                            deleteQuestion={this.props.deleteQuestion}
+                            answers={this.props.answers}
+                            reactions={this.props.reactions}
+                            postReaction={this.props.postReaction}
+							filter={this.state.filter}
 						/>
 					</div>
 				);
 			});
 
-		if (this.props.isLoading) {
+		if (this.props.isLoading|| this.props.answersIsLoading || this.props.reactionsIsLoading) {
 			return <Loading type="spokes" color="grey" />;
-		} else if (this.props.errMess) {
+		} else if (this.props.errMess || this.props.answersErrMess || this.props.reactionsErrMess) {
 			return (
 				<div className="container spaces">
 					<div className="row">

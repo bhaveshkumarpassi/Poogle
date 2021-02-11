@@ -1,5 +1,20 @@
-export const spaces = [{value:"Web-Development",label:'Web Development'}, 
+export const spaces = [
+    {value:"Algorithms", label:'Algorithms'},
+    {value:"Machine-Learning", label: "Machine Learning"},
+    {value:"Data-Structures", label: "Data Structures"},
+    {value:"Web-Development",label:'Web Development'}, 
     {value:"Android-Development", label:'Android Development'},
+    {value:"Blockchain", label: 'Blockchain'},
+    {value:'Ethical-Hacking', label: 'Ethical Hacking'},
+    {value:'Operating-Systems', label: 'Operating Systems'},
+    {value:'DBMS', label: 'DBMS'},
+    {value:'Python', label: 'Python'},
+    {value:"C++", label:'C++'},
+    {value:"Cloud-Computing", label:"Cloud Computing"},
+    {value:"Computer-Architecture", label:"Computer Architecture"},
+    {value:"Computer-Science-Others", label:"Computer Science Others"},
+    {value:"Applied-Mathematics", label:"Applied Mathematics"},
+    {value:"Applied-Science", label:"Applied Science"},
     {value:"Physical-Metallurgy-(MTN-102)",label:'Physical Metallurgy (MTN 102)'},
     {value:"Mechanical-Metallurgy-(MTN-303)",label:"Mechanical Metallurgy (MTN 303)"},
     {value:"corrosion-engineering(MTN-433)",label:"Corrosion Engineering (MTN 433)"},
@@ -52,7 +67,8 @@ export const spaces = [{value:"Web-Development",label:'Web Development'},
     {value:"Arduino", label:"Arduino"},
     {value:"IOT", label:"IOT"},
     {value:"Rasberry-Pi", label:"Rasberry Pi"},
-    {value:"Robotics", label:"Robotics"}
+    {value:"Robotics", label:"Robotics"},
+    {value:"Electronics-and-Communication-Engineering-others", label:"Electronics and Communication Engineering others"}
 ];
 
 export const fields = [{value:'Computer Science', label:'Computer Science'}, 

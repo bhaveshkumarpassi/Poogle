@@ -24,81 +24,97 @@ const RenderTags = ({blog}) => blog.tagNames.map((tag) => {
 })
 
 async function viewAdd(views, postBReaction, blog, user) {
-
-    if(views && views.length && views.filter(v => v.user === user)[0]){
-        console.log('another view')
-    }
-    else
-    {
-        var reac = {
-            user: user,
-            blog: blog,
-            category: 'View'
-        };
-        await postBReaction(reac);
-    }
+	if (views && views.length && views.filter((v) => v.user === user)[0]) {
+		console.log("another view");
+	} else {
+		var reac = {
+			user: user,
+			blog: blog,
+			category: "View",
+		};
+		await postBReaction(reac);
+	}
 }
-function RenderMenuItem({blog, class_Name, 
-    onClick, auth, deleteBlog, breactions, postBReaction,filter}) {
-    
-    //var ans = answers.filter(a => a.question === question._id);
-    //var ansCount = answers.filter(a => a.question === question._id).length;
-    //var uclapsCount = breactions.filter(r => r.category === 'UpClap').filter(r => r.blog === blog._id ).length;
-    //var views = breactions.filter(r => r.category === 'View').filter(r => r.blog === blog._id);
-    //var viewsCount = views.length;
-     
-    if(filter==='Latest' || filter==='Claps'){
-    return(
-        <Fade in>
-                <ListGroup className='container blog-container'>
-                        <ListGroupItem className={class_Name+' list-item-style'}>
+function RenderMenuItem({
+	blog,
+	class_Name,
+	onClick,
+	auth,
+	deleteBlog,
+	breactions,
+	postBReaction,
+	filter,
+}) {
+	var likesCount = breactions
+		.filter((r) => r.category === "Like")
+		.filter((r) => r.blog === blog._id).length;
+	var views = breactions
+		.filter((r) => r.category === "View")
+		.filter((r) => r.blog === blog._id);
+	var viewsCount = views.length;
 
-                                <div className='row'>
-                                <div className='col-12 col-sm-8'>
-                                <ListGroupItemHeading className='blog-heading'>
-                                <Link className='blog-heading' 
-                                to={`/blog-${blog._id}-${blog.heading}`}
-                                //onClick={() => viewAdd(views, postBReaction, blog._id, auth.userId)}
-                                >
-                                    {blog.heading}
-                                </Link>
-                                {
-                                        auth.userId === blog.author._id
-                                        ?
-                                    
-                                            <Button color='danger' onClick={() => deleteBlog(blog._id)}><span className='fa fa-lg fa-trash'></span></Button>
-                                    
-                                        :
-                                        <></>
-                                    }   
-                                </ListGroupItemHeading>
-                                    <RenderTags blog={blog} />
-                                    <ListGroupItemText className='blog-text'>
-                                        Posted by :-  {blog.author.user_name}
-                                    </ListGroupItemText>
-                                    <ListGroupItemText className='blog-text'>
-                                        Posted at :- {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(blog.createdAt)))}
-                                    </ListGroupItemText>
-
-                                </div>
-                                <div className='col-12 col-sm-4'>
-                                    <div className='prop-div'>
-                                        <Badge className='prop' color='light'>{0}</Badge>
-                                        <p>views</p>
-                                    </div>
-                                    <div className='prop-div'>
-                                        <Badge className='prop' color='light'>{0}</Badge>
-                                        <p>claps</p>
-                                    </div>
-                                </div>
-                                </div>
-                        
-                        </ListGroupItem>
-                </ListGroup>
-            </Fade>
-        );
-    }
-    
+	if (filter === "Latest" || filter === "Likes") {
+		return (
+			<ListGroup className="container blog-container">
+				<ListGroupItem className={class_Name + " list-item-style"}>
+					<div className="row">
+						<div className="col-12 col-sm-8">
+							<ListGroupItemHeading className="blog-heading">
+								<Link
+									className="blog-heading"
+									to={`/blog-${blog._id}-${blog.heading}`}
+									onClick={() =>
+										viewAdd(views, postBReaction, blog._id, auth.userId)
+									}
+								>
+									{blog.heading}
+								</Link>
+								{auth.userId === blog.author._id ? (
+									<Button color="danger" onClick={() => deleteBlog(blog._id)}>
+										<span className="fa fa-lg fa-trash"></span>
+									</Button>
+								) : (
+									<></>
+								)}
+							</ListGroupItemHeading>
+							<RenderTags blog={blog} />
+							<ListGroupItemText className="blog-text">
+								Posted by :- {blog.author.user_name}
+							</ListGroupItemText>
+							<ListGroupItemText className="blog-text">
+								Posted at :-{" "}
+								{new Intl.DateTimeFormat("en-US", {
+									year: "numeric",
+									month: "short",
+									day: "2-digit",
+								}).format(new Date(Date.parse(blog.createdAt)))}
+							</ListGroupItemText>
+						</div>
+						<div className="col-12 col-sm-4">
+							<div className="prop-div">
+								<Badge className="prop" color="light">
+									{viewsCount}
+								</Badge>
+								<p>Views</p>
+							</div>
+							<div className="prop-div">
+								<Badge className="prop" color="light">
+									{likesCount}
+								</Badge>
+								<p>Likes</p>
+							</div>
+							<div className="prop-div">
+								<Badge className="prop" color="light">
+									{blog.duration}
+								</Badge>
+								<p>minutes</p>
+							</div>
+						</div>
+					</div>
+				</ListGroupItem>
+			</ListGroup>
+		);
+	}
 }
 
  class Blogs extends Component {
@@ -200,49 +216,61 @@ function RenderMenuItem({blog, class_Name,
         
         return !error;
     }
-    // handleSearch(event) {
+   
+	onLatestSelect() {
+		this.setState({
+			filter: "Latest",
+			latestActive: true,
+			clapsActive: false,
+		});
+	}
 
-    //     this.searchFilterFunction(this.searchBlog.value)
-    //     event.preventDefault();
-    // }
-    // componentDidMount() {
-    //     this.setState({
-    //         data: this.props.blogs.blogs
-    //     });
+	onClapsSelect() {
+		this.setState({
+			filter: "Likes",
+			latestActive: false,
+			clapsActive: true,
+		});
+	}
+	render() {
+		var count = -1;
+		const MenuDate = this.props.blogs
+			.sort((a, b) => b.dateNum - a.dateNum)
+			.map((blog) => {
+				count += 1;
+				return (
+					<div className="col-12" key={blog._id}>
+						<RenderMenuItem
+							blog={blog}
+							class_Name={count % 2 == 0 ? "blogEven" : "blogOdd"}
+							onClick={this.props.onClick}
+							auth={this.props.auth}
+							deleteBlog={this.props.deleteBlog}
+							breactions={this.props.reactions}
+							postBReaction={this.props.postReaction}
+							filter={this.state.filter}
+						/>
+					</div>
+				);
+			});
 
-       // this.arrayHolder = this.props.blogs.blogs
-   // }
-
-    // searchFilterFunction = text => {
-        
-    //     const newData = this.arrayHolder.filter(item => {
-    //       const itemData = [`${item.blog.toUpperCase()}`];
-    //       const textData = text.toUpperCase();
-    
-    //       return [itemData.indexOf(textData) > -1];
-    //     })
-
-    //     this.setState({
-    //       data: newData,
-    //     });
-    // };
-
-    onLatestSelect() {
-        this.setState({
-            filter:'Latest',
-            latestActive:true,
-            clapsActive: false,
-        })
-    }
-
-    onClapsSelect(){
-        this.setState({
-            filter:'Claps',
-            latestActive:false,
-            clapsActive:true,
-        })
-    }
-    render() {
+		const MenuLikes = this.props.blogs.map((blog) => {
+			count += 1;
+			return (
+				<div className="col-12" key={blog._id}>
+					<RenderMenuItem
+						blog={blog}
+						class_Name={count % 2 == 0 ? "blogEven" : "blogOdd"}
+						onClick={this.props.onClick}
+						auth={this.props.auth}
+						deleteBlog={this.props.deleteBlog}
+						breactions={this.props.breactions}
+						postBReaction={this.props.postBReaction}
+						filter={this.state.filter}
+					/>
+				</div>
+			);
+		});
 
 
       // let addModalClose=()=>this.setState({addModalShow:false})
@@ -257,87 +285,26 @@ function RenderMenuItem({blog, class_Name,
         //         </div>
         //     );
         // });
+		if (this.props.isLoading || this.props.reactionsIsLoading) {
+			return <Loading type="spokes" color="grey" />;
+		} else if (this.props.errMess || this.props.reactionsIsLoading) {
+			return (
+				<div className="container spaces">
+					<div className="row">
+						<div className="col-12">
+							<h4>{this.props.errMess}</h4>
+						</div>
+					</div>
+				</div>
+			);
+		} else {
+			var renderBlogs;
 
-       
-        
-        var count = -1;
-        const MenuDate = this.props.blogs.sort((a,b) => b.dateNum-a.dateNum).map((blog) => {
-
-            count += 1;
-            return(
-                <div className="col-12" key={blog._id}>
-                   
-                        <RenderMenuItem 
-                            blog={blog} 
-                            // spaceId={this.props.space._id} 
-                            class_Name={count%2 == 0 ? 'blogEven' : 'blogOdd'} 
-                            onClick={this.props.onClick}
-                           // spaceId={this.spaceId}
-                            auth={this.props.auth}
-                            deleteBlog={this.props.deleteBlog}
-                           // answers={this.props.answers}
-                            //breactions={this.props.breactions}
-                            postBReaction={this.props.postBReaction}
-                            filter={this.state.filter}
-                            //spaceId={this.props.space.stringId}
-                             />
-                
-                </div>
-            );
-        }) 
-
-
-        const MenuClaps = this.props.blogs.map((blog) => {
-
-            count += 1;
-            return(
-                <div className="col-12" key={blog._id}>
-                    
-                        <RenderMenuItem 
-                            blog={blog} 
-                            // spaceId={this.props.space._id} 
-                            class_Name={count%2 == 0 ? 'blogEven' : 'blogOdd'} 
-                            onClick={this.props.onClick}
-                            auth={this.props.auth}
-                            deleteBlog={this.props.deleteBlog}
-                            //answers={this.props.answers}
-                            //breactions={this.props.breactions}
-                            postBReaction={this.props.postBReaction}
-                            filter={this.state.filter}
-                            />
-                   
-                </div>
-            );
-        })
-
-        
-        if(this.props.isLoading || this.props.blogsIsLoading|| this.props.reactionsIsLoading) {
-            return(
-                <Loading type="spokes" color="grey"/>       
-            );
-        }
-        else if(this.props.errMess || this.props.blogsErrMess|| this.props.reactionsIsLoading) {
-            return(
-                <div className="container spaces">
-                    <div className="row"> 
-                        <div className="col-12">
-                            <h4>{this.props.errMess}</h4>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
-        else{
-
-            var renderBlogs;
-
-            if(this.state.filter === 'Latest') {
-                renderBlogs = MenuDate;
-            }
-            else if(this.state.filter === 'Claps') {
-                renderBlogs = MenuClaps;
-            }
-            
+			if (this.state.filter === "Latest") {
+				renderBlogs = MenuDate;
+			} else if (this.state.filter === "Likes") {
+				renderBlogs = MenuLikes;
+            }    
         return (
             
             <div className='container questions'>

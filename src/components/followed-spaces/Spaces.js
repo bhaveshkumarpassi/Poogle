@@ -7,12 +7,9 @@ import ReactImageAppear from 'react-image-appear';
 import Loading from '../loading';
 import { baseUrl } from '../../shared/baseUrl'
 import './Spaces.css'
-import { fetchSpaces } from '../../redux/ActionCreators';
-import { connect } from "react-redux";
-import { BsArrowBarRight } from 'react-icons/bs';
 
 
-    function RenderMenuItem ({space, onClick}) {
+    function RenderMenuItem ({space, onClick, auth}) {
 
         return ( 
         <FadeTransform
@@ -26,11 +23,13 @@ import { BsArrowBarRight } from 'react-icons/bs';
             </CardBody>
                 <CardImg className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}/>
             <CardBody>
-                <CardSubtitle tag="h6" className="mb-4 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {space.questions.length} Questions</CardSubtitle>
+                <CardSubtitle tag="h6" className="mb-4 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {space.questions.length} Questions<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/questions`}>view</Link></CardSubtitle>
                 <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-users fa-lg follower-icon'/>    {space.followers.length} followers</CardSubtitle>
+                <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-star mt-3 fa-lg question-icon'/>    {space.followers.length} Blogs<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/blogs`}>view</Link></CardSubtitle>
                 <div className='row mt-4'>
-                    <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view</Link>
-                    <Button className='col-12 mt-3' color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Follow</Button>
+                    {/* <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view Ques</Link>
+                    <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view Blogs</Link> */}
+                    <Button className='col-12 mt-3' color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Unfollow</Button>
                 </div>
             </CardBody>
           </Card>
@@ -47,8 +46,6 @@ import { BsArrowBarRight } from 'react-icons/bs';
             this.handleSearch = this.handleSearch.bind(this);
             this.state = {
                 data: [],
-                limit: 4,  
-                skip: 0,
             }
 
             this.arrayHolder = [];
@@ -69,33 +66,6 @@ import { BsArrowBarRight } from 'react-icons/bs';
             this.arrayHolder = this.props.spaces.spaces
         }
 
-        /*nextPage() {
-            this.setState({
-                skip: this.state.skip + this.state.limit,
-            })
-        }
-        previousPage() {
-            if(this.state.skip > 0) {
-                this.setState({
-                    skip: this.state.skip - this.state.limit,
-                })
-            }
-        }*/
-
-        /*componentDidUpdate = async (prevProps, prevState) => {
-
-            if(this.state.skip !== prevState.skip){
-                await this.props.fetchSpaces(this.state.limit, this.state.skip);
-
-                this.setState({
-                    data: this.props.spaces.spaces
-                });
-    
-                this.arrayHolder = this.props.spaces.spaces
-            }
-
-            
-        }*/
 
         searchFilterFunction = text => {
         
@@ -114,8 +84,8 @@ import { BsArrowBarRight } from 'react-icons/bs';
         render() {
             const menu = this.state.data.map((space) => {  
                 return (
-                    <div className="col-12 col-lg-3 col-md-6 col-sm-6 mt-1 mb-4"  key={space.id}>
-                        <RenderMenuItem space={space} onClick={this.props.onClick} />
+                    <div className="col-12 col-lg-3 col-md-6 col-sm-6 mt-1 mb-4"  key={space._id}>
+                        <RenderMenuItem space={space} onClick={this.props.onClick} auth={this.props.auth} />
                     </div>
                 );
             });
@@ -173,19 +143,5 @@ import { BsArrowBarRight } from 'react-icons/bs';
         }
     }
 
-
-/*const mapStateToProps = (state, ownProps) => {
-    return {
-        spaces: state.spaces
-    };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-	fetchSpaces: () => {
-		dispatch(fetchSpaces());
-	}
-});*/
-
-//export default connect(mapStateToProps, mapDispatchToProps)(Spaces);
 
 export default Spaces;

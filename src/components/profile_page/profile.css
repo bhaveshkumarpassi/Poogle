@@ -123,6 +123,10 @@
     color:#efefef;
     background-color: #0289c7;
 }
+.interest__count{
+    margin-left:15px;
+    color: #ddd;
+}
 .page__navigation__breadCrump{
     display: inline-block;
     padding:0.8rem;

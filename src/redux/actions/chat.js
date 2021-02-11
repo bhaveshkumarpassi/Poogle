@@ -3,7 +3,6 @@ const axios = require("axios");
 
 export const getChats = (token) => async (dispatch) => {
 	try {
-		console.log(token);
 		const bearer_token = "Bearer " + token;
 		const payload = await axios({
 			method: "get",
@@ -13,7 +12,6 @@ export const getChats = (token) => async (dispatch) => {
 				Authorization: bearer_token,
 			},
 		});
-		console.log(payload);
 		dispatch({ type: "GET_CHAT", payload: payload.data });
 	} catch (e) {
 		dispatch({ type: "CHAT_ERROR", payload: e });

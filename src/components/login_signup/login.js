@@ -150,7 +150,7 @@ class login extends Component {
                                 <div className="social__icons__container">
                                     <div className="social__icon__unique">
                                         <span className="social__icon">
-                                           <Link to="#"><Image src={GoogleIcon}/></Link> 
+                                            <Link to="#"><Image src={GoogleIcon}/></Link> 
                                         </span>
                                     </div>
                                     <div className="social__icon__unique">
@@ -159,6 +159,8 @@ class login extends Component {
                                         </span>
                                     </div>
                                 </div>
+
+
                             </Form>
                     
                         </Jumbotron>

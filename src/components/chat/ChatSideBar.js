@@ -9,36 +9,74 @@ const ChatSideBar = (props) => {
 	console.log(props);
 	const { person, setPerson, chats, chat, setChat } = props;
 
+	const [search, setSearch] = useState("");
+
 	useEffect(() => {
 		const currChat = chats.filter(({ name }) => name === person);
 		if (currChat.length !== 0) setChat(currChat[0].chat);
-	}, [person]);
+	}, [person, chats]);
 
 	return (
-		<Col xs={6} md={4}>
-			<Row style={{ margin: "10px", backgroundColor: "bisque" }}>
+		<Col xs={6} md={4} style={{ maxHeight: "60%" }}>
+			<Row style={{ width: "100%" }}>
 				<FaSearch style={{ margin: "12px" }} />
 				<input
 					type="text"
 					placeholder="Search person"
+					value={search}
 					style={{
 						border: "none",
 						outlineWidth: "0",
 						background: "transparent",
 						padding: "10px",
 					}}
+					onChange={(e) => {
+						setSearch(e.target.value);
+					}}
 				></input>
+				{
+					// <div
+					// 	style={{
+					// 		background: "white",
+					// 		width: "70%",
+					// 		position: "absolute",
+					// 		top: "40px",
+					// 		left: "40px",
+					// 		zIndex: "100",
+					// 		border: "2px solid black",
+					// 		borderRadius: "2px",
+					// 	}}
+					// >
+					// 	<p>Hello</p>
+					// 	<p>Hello</p>
+					// 	<p>Hello</p>
+					// </div>
+				}
 			</Row>
-			<Row style={{ margin: "10px", overflow: "scroll", height: "70vh" }}>
-				<ListGroup>
-					{chats.map(({ name, chat }) => (
-						<PersonChatProfile
-							name={name}
-							chat={chat}
-							setPerson={setPerson}
-							person={person}
-						/>
-					))}
+			<h1>Chats</h1>
+			<Row style={{ overflow: "scroll", height: "70vh", width: "100%" }}>
+				<ListGroup style={{ width: "100%" }}>
+					{search === ""
+						? chats.map(({ name, chat }) => (
+								<PersonChatProfile
+									name={name}
+									chat={chat}
+									setPerson={setPerson}
+									person={person}
+								/>
+						  ))
+						: chats
+								.filter(({ name }) =>
+									name.toLowerCase().includes(search.toLowerCase())
+								)
+								.map(({ name, chat }) => (
+									<PersonChatProfile
+										name={name}
+										chat={chat}
+										setPerson={setPerson}
+										person={person}
+									/>
+								))}
 				</ListGroup>
 			</Row>
 		</Col>

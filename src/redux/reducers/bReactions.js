@@ -13,7 +13,7 @@ export const Breactions = (
 				...state,
 				isLoading: false,
 				errMess: null,
-				Breactions: action.payload,
+				breactions: action.payload,
 			};
 
 		case ActionTypes.REACTIONS_BFAILED:
