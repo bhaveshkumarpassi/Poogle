@@ -13,8 +13,18 @@ export const signIn = (userDetails) => async (dispatch, getState) => {
 
 		if (response.ok) {
 			response = await response.json();
+
+			var interests = "";
+			for(var i=0;i<response.user.interests.length;i++){
+				interests += response.user.interests[i].interest;
+				interests += "*";
+			}
+
 			localStorage.setItem("isSignedIn", true);
 			localStorage.setItem("userId", response.user._id);
+			localStorage.setItem("interests", interests);
+			//localStorage.setItem("interests", JSON.stringify(response.user.interests));
+			//localStorage.setItem("interests", response.user.interests);
 			localStorage.setItem("token", response.token);
 			dispatch({ type: ActionTypes.SIGN_IN, payload: response });
 		} else {
@@ -38,8 +48,17 @@ export const signUp = (userDetails) => async (dispatch, getState) => {
 
 		if (response.ok) {
 			response = await response.json();
+			var interests = "";
+			for(var i=0;i<response.user.interests.length;i++){
+				interests += response.user.interests[i].interest;
+				interests += "*";
+			}
+
 			localStorage.setItem("isSignedIn", true);
 			localStorage.setItem("userId", response.user._id);
+			localStorage.setItem("interests", interests);
+			//localStorage.setItem("interests", JSON.stringify(response.user.interests));
+			//localStorage.setItem("interests", response.user.interests);
 			localStorage.setItem("token", response.token);
 			dispatch({ type: ActionTypes.SIGN_UP, payload: response });
 		} else {
@@ -68,6 +87,7 @@ export const logOut = (userToken) => async (dispatch, getState) => {
 			response = await response.text();
 			localStorage.removeItem("isSignedIn");
 			localStorage.removeItem("userId");
+			localStorage.removeItem("interests");
 			localStorage.removeItem("token");
 			dispatch({ type: ActionTypes.SIGN_OUT, payload: response });
 		} else {
@@ -82,11 +102,37 @@ export const logOut = (userToken) => async (dispatch, getState) => {
 //**************************************************************************** */
 // ------------------------------------ SPACES -------------------------------/
 
-export const fetchSpaces = (limit, skip) => (dispatch) => {
+export const fetchFollowSpaces = (interests) => (dispatch) => {
 	// redux thunk allows to pass an action method instead of just action object and automayically recieves dispatch parameter.
 
 	dispatch(spacesLoading(true)); // could do this or anything at anytime as middleware operation.
-	//&skip=${skip}
+	return fetch(baseUrl + `followedSpaces?interests=${interests}`)
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				var errmess = new Error(error.message);
+				throw errmess;
+			}
+		)
+		.then((response) => response.json())
+		.then((spaces) => dispatch(addSpaces(spaces))) // perform certain operations only when certain condition is met like only without err and json format dispatch to store.
+		.catch((error) => dispatch(spacesFailed(error.message))); // else dispatch for err.
+};
+
+export const fetchSpaces = () => (dispatch) => {
+	// redux thunk allows to pass an action method instead of just action object and automayically recieves dispatch parameter.
+
+	dispatch(spacesLoading(true)); // could do this or anything at anytime as middleware operation.
 	return fetch(baseUrl + 'spaces')
 		.then(
 			(response) => {
@@ -169,7 +215,31 @@ export const postQuestion = (question) => (dispatch) => {
 		});
 };
 
+export const fetchHomeFeed = (interests) => (dispatch) => {
+	dispatch(questionsLoading(true));
 
+	return fetch(baseUrl + `homeFeed?interests=${interests}`)
+		.then(
+			(response) => {
+				if (response.ok) {
+					return response;
+				} else {
+					var error = new Error(
+						"Error " + response.status + ": " + response.statusText
+					);
+					error.response = response;
+					throw error;
+				}
+			},
+			(error) => {
+				var errmess = new Error(error.message);
+				throw errmess;
+			}
+		)
+		.then((response) => response.json())
+		.then((questions) => dispatch(addQuestions(questions)))
+		.catch((error) => dispatch(questionsFailed(error.message)));
+}
 
 export const fetchQuestions = () => (dispatch) => {
 	dispatch(questionsLoading(true));

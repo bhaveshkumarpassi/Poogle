@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchSpaces, fetchQuestions, fetchUser,
+import { fetchSpaces, fetchQuestions, fetchUser, fetchHomeFeed, fetchFollowSpaces,
 	fetchAnswers, fetchComments, postComment, fetchBlogs,
 	deleteComment, postQuestion, deleteQuestion, postReaction, fetchReactions, deleteReaction,
 	postAnswer, deleteAnswer, postAReaction, fetchAReactions, deleteAReaction,postBlog,deleteBlog,
 	postBComment,fetchBComments,fetchBReactions,postBReaction,deleteBComment,deleteBReaction} from "../redux/ActionCreators";
 import Home from "./home_page/home";
-import Spaces from "./spaces_page/Spaces";
+import Spaces from "./followed-spaces/Spaces";
 import Questions from "./all_ques_page/questions";
 import Blogs from "./all_blog_page/blogs";
 import Profile_page from "./profile_page/profile";
@@ -87,7 +87,9 @@ const mapDispatchToProps = (dispatch) => ({
 	postBComment : (blogId,author,comment) => dispatch(postBComment(blogId,author,comment)),
 	deleteBComment : (commentId) => dispatch(deleteBComment(commentId)),
 	postBReaction : (reac) => dispatch(postBReaction(reac)),
-	deleteBReaction: (reacId) => dispatch(deleteBReaction(reacId))
+	deleteBReaction: (reacId) => dispatch(deleteBReaction(reacId)),
+	fetchHomeFeed: (interests) => dispatch(fetchHomeFeed(interests)),
+	fetchFollowSpaces: (interests) => dispatch(fetchFollowSpaces(interests))
 });
 
 class Main extends Component {
@@ -95,17 +97,22 @@ class Main extends Component {
 		super(props);
 	}
 
-	componentDidMount = () => {
-		this.props.fetchSpaces();
-		this.props.fetchQuestions();
-		this.props.fetchBlogs();
-		this.props.fetchReactions();
-		this.props.fetchUser(this.props.auth.userId);
-		this.props.fetchAReactions();
-		this.props.fetchAnswers();
-		this.props.fetchComments();
-		this.props.fetchBComments();
-		this.props.fetchBReactions();
+	componentDidMount = async () => {
+
+		var interests = this.props.auth.interests.split('*');
+		interests.pop();
+		
+		await this.props.fetchHomeFeed(interests);
+		await this.props.fetchReactions();
+		await this.props.fetchAnswers();
+		await this.props.fetchAReactions();
+		await this.props.fetchComments();
+		await this.props.fetchFollowSpaces(interests);
+
+		await this.props.fetchBlogs();
+		await this.props.fetchBReactions();
+		await this.props.fetchBComments();
+
 	}
 
 	render() {
@@ -146,11 +153,16 @@ class Main extends Component {
 					questions={this.props.questions.questions}
 					isLoading={this.props.questions.isLoading}
 					errMess={this.props.questions.errMess}
-					spaces={this.props.spaces}
-					blogs={this.props.blogs.blogs}
-					blogsLoading={this.props.blogs.isLoading}
-                    blogsErrMess={this.props.blogs.errMess}
-		
+					auth={this.props.auth}
+					deleteQuestion={this.props.deleteQuestion}
+					answers={this.props.answers.answers}
+					answersIsLoading = {this.props.answers.isLoading}
+					answersErrMess = {this.props.answers.errMess}
+					reactions={this.props.qreactions.qreactions}
+					reactionsIsLoading={this.props.qreactions.isLoading}
+					reactionsErrMess = {this.props.qreactions.errMess}
+					postReaction={this.props.postReaction}
+
 				/>
 			);
 		}
@@ -168,7 +180,6 @@ class Main extends Component {
 					}
 					answersIsLoading = {this.props.answers.isLoading}
 					answersErrMess = {this.props.answers.errMess}
-					//spaceId={match.params.spaceId}
 					comments = {this.props.comments.comments.filter((comm) => comm.question === match.params.quesId)}
 					commentsErrMess={this.props.comments.errMess}
 					postComment={this.props.postComment}
@@ -198,7 +209,6 @@ class Main extends Component {
 					}
 					isLoading={this.props.blogs.isLoading}
 					errMess={this.props.blogs.errMess}
-					//bcomments={this.props.bcomments.bcomments}
 					bcomments = {this.props.bcomments.bcomments.filter((comm) => comm.blog === match.params.blogId)}
 					bcommentsErrMess={this.props.bcomments.errMess}
 					postBComment={this.props.postBComment}
@@ -210,6 +220,31 @@ class Main extends Component {
 					reactionsIsLoading={this.props.breactions.isLoading}
 					reactionsErrMess = {this.props.breactions.errMess}
 				/>
+			);
+		}
+
+		const AllBlogs = ({match}) => {
+			return(
+				<Blogs 
+					space={
+						this.props.spaces.spaces.filter(
+							(space) => space._id === match.params.spaceId
+						)[0]
+					}
+					blogs={this.props.blogs.blogs.filter(
+						(blog) =>
+							blog.tagIds.indexOf(match.params.stringId) > -1
+					)}
+					isLoading={this.props.blogs.isLoading}
+					errMess={this.props.errMess}
+					auth={this.props.auth}
+					deleteBlog={this.props.deleteBlog}
+					reactions={this.props.breactions.breactions}
+					reactionsIsLoading={this.props.breactions.isLoading}
+					reactionsErrMess = {this.props.breactions.errMess}
+					postReaction={this.props.postBReaction}
+				/>
+
 			);
 		}
 
@@ -234,16 +269,19 @@ class Main extends Component {
 						exact
 						path="/spaces"
 						//component={Spaces}
-						component={() => <Spaces spaces={this.props.spaces} fetchSpaces={this.props.fetchSpaces} />}
+						component={() => <Spaces spaces={this.props.spaces} 
+						auth={this.props.auth}
+						fetchSpaces={this.props.fetchSpaces} />}
 					/>
-					<PrivateRoute exact path="/spaces/:spaceId/:stringId" component={SpaceWithId} />
+					<PrivateRoute exact path="/spaces/:spaceId/:stringId/questions" component={SpaceWithId} />
+					<PrivateRoute exact path="/spaces/:spaceId/:stringId/blogs" component={AllBlogs} />
 					<PrivateRoute
 						exact
 						path="/question-:quesId-:question"
 						//path="/space-:spaceId/question-:quesId-:question"
 						component={QuestionWithId}
 					/>
-					<PrivateRoute 
+					{/* <PrivateRoute 
 						exact
 						path="/blogs"
 						component={()=><Blogs 
@@ -257,7 +295,7 @@ class Main extends Component {
 						 reactionsIsLoading={this.props.breactions.isLoading}
 						 reactionsErrMess = {this.props.breactions.errMess}
 						 postReaction={this.props.postBReaction}
-						 />}/>
+						 />}/> */}
 
 					<PrivateRoute 
 						exact

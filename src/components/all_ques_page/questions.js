@@ -175,12 +175,8 @@ class Questions extends Component {
             latestActive: true,
             votesActive: false,
             unansweredActive: false,
+            data: []
         }
-        this.spaceId = null;
-    }
-
-    componentDidMount() {
-        this.spaceId = this.props.space.stringId;
     }
 
     onLatestSelect() {
@@ -214,7 +210,7 @@ class Questions extends Component {
     render() {
         
         var count = -1;
-        const MenuDate = this.props.questions.sort((a,b) => b.dateNum-a.dateNum).map((question) => {
+        const MenuDate = this.props.questions ? this.props.questions.sort((a,b) => b.dateNum-a.dateNum).map((question) => {
 
             count += 1;
             return(
@@ -222,24 +218,21 @@ class Questions extends Component {
                    
                         <RenderMenuItem 
                             question={question} 
-                            // spaceId={this.props.space._id} 
                             class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} 
                             onClick={this.props.onClick}
-                            spaceId={this.spaceId}
                             auth={this.props.auth}
                             deleteQuestion={this.props.deleteQuestion}
                             answers={this.props.answers}
                             reactions={this.props.reactions}
                             postReaction={this.props.postReaction}
                             filter={this.state.filter}
-                            //spaceId={this.props.space.stringId}
                              />
                 
                 </div>
             );
-        }) 
+        }) : <p>Be first one to add a question to this space!!</p>
 
-        const MenuVotes = this.props.questions.sort((a,b) => 
+        const MenuVotes = this.props.questions ? this.props.questions.sort((a,b) => 
         ((this.props.reactions.filter(r => (r.category === 'UpVote' && r.question === b._id)).length)-
         (this.props.reactions.filter(r => (r.category === 'UpVote' && r.question === a._id)).length))
         ).map((question) => {
@@ -250,7 +243,6 @@ class Questions extends Component {
                     
                         <RenderMenuItem 
                             question={question} 
-                            // spaceId={this.props.space._id} 
                             class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} 
                             onClick={this.props.onClick}
                             auth={this.props.auth}
@@ -258,16 +250,14 @@ class Questions extends Component {
                             answers={this.props.answers}
                             reactions={this.props.reactions}
                             postReaction={this.props.postReaction}
-                            // spaceId={this.props.space.stringId}
-                            spaceId={this.spaceId}
                             filter={this.state.filter}
                             />
                    
                 </div>
             );
-        }) 
+        }) : <p>Be first one to add a question to this space!!</p>
 
-        const MenuUnanswered = this.props.questions.map((question) => {
+        const MenuUnanswered = this.props.questions ? this.props.questions.map((question) => {
 
             count += 1;
             return(
@@ -275,7 +265,6 @@ class Questions extends Component {
                    
                         <RenderMenuItem 
                             question={question} 
-                            // spaceId={this.props.space._id} 
                             class_Name={count%2 == 0 ? 'questionEven' : 'questionOdd'} 
                             onClick={this.props.onClick}
                             auth={this.props.auth}
@@ -284,12 +273,12 @@ class Questions extends Component {
                             reactions={this.props.reactions}
                             postReaction={this.props.postReaction}
                             filter={this.state.filter}
-                            // spaceId={this.props.space.stringId}
-                            spaceId={this.spaceId} />
+                
+                            />
                             
                 </div>
             );
-        }) 
+        }) : <p>Be first one to add a question to this space!!</p>
 
 
         if(this.props.isLoading || this.props.questionsIsLoading || this.props.answersIsLoading || this.props.reactionsIsLoading) {
@@ -334,7 +323,7 @@ class Questions extends Component {
                         <div className='container category-div '>
                             <h4 className='row all-ques-heading justify-content-center'>All Questions</h4>
                             <div className='row justify-content-center mt-4'>
-                    
+
                                     <Button className='col-8 col-md-4 col-lg-3 mb-4 m-2 add-blog-btn' color='danger'>
                                         <Link style={{color: 'white'}} to='/addQuestion'><span className='fa fa-lg fa-plus mr-2 ml-2'>QUESTION</span></Link>
                                     </Button>
@@ -350,7 +339,6 @@ class Questions extends Component {
                                         </Button>
                                     </ButtonGroup>
                                     <Button className='col-8 col-md-4 col-lg-3 mb-4 add-ques-btn' color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />FOLLOW</Button>
-                                    {/* <Button outline className='col-8 col-lg-3 mb-4 follower-btn' color='primary'><span className='fa fa-lg fa-users mr-2 ml-2' />{this.props.space.followers} FOLLOWERS</Button> */}
                             </div>
                             <div className='row ml-1 mt-3 mr-1'>
                                 <Nav className='col-12 ' tabs>

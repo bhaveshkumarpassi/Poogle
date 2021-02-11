@@ -110,11 +110,10 @@ function RenderMenuItem({blog, class_Name,
             filter: 'Latest',
             latestActive: true,
             clapsActive:false,
-
         }
 
     }
-   
+
     onLatestSelect() {
         this.setState({
             filter:'Latest',
@@ -135,7 +134,7 @@ function RenderMenuItem({blog, class_Name,
        
         
         var count = -1;
-        const MenuDate = this.props.blogs.sort((a,b) => b.dateNum-a.dateNum).map((blog) => {
+        const MenuDate = this.props.blogs ? this.props.blogs.sort((a,b) => b.dateNum-a.dateNum).map((blog) => {
 
             count += 1;
             return(
@@ -154,10 +153,10 @@ function RenderMenuItem({blog, class_Name,
                 
                 </div>
             );
-        }) 
+        }) : <p>Be first one to post a blog for this space!!</p>
 
 
-        const MenuLikes = this.props.blogs.map((blog) => {
+        const MenuLikes = this.props.blogs ? this.props.blogs.map((blog) => {
 
             count += 1;
             return(
@@ -176,7 +175,7 @@ function RenderMenuItem({blog, class_Name,
                    
                 </div>
             );
-        })
+        }) : <p>Be first one to post a blog for this space!!</p>
 
         
         if(this.props.isLoading || this.props.reactionsIsLoading) {
@@ -212,7 +211,7 @@ function RenderMenuItem({blog, class_Name,
             <div className='row'>
                 <Breadcrumb className='mt-3 ml-3'>
                     <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
-                    <BreadcrumbItem active>Blogs</BreadcrumbItem>
+                    <BreadcrumbItem active>{this.props.space.name}</BreadcrumbItem>
                 </Breadcrumb>
             </div>
             <div className='row'>
