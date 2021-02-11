@@ -9,34 +9,8 @@ import { baseUrl } from '../../shared/baseUrl'
 import './Spaces.css'
 import { fetchSpaces } from '../../redux/ActionCreators';
 import { connect } from "react-redux";
+import { fetchUser } from "../../redux/ActionCreators";
 import { BsArrowBarRight } from 'react-icons/bs';
-
-
-    function RenderMenuItem ({space, onClick}) {
-
-        return ( 
-        <FadeTransform
-        in
-        transformProps={{
-            exitTransform: 'scale(0.5) translateY(-50%)'
-        }}>
-            <Card className='space'>
-            <CardBody>
-                <CardTitle tag="h6">{space.name}</CardTitle>
-            </CardBody>
-                <CardImg className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}/>
-            <CardBody>
-                <CardSubtitle tag="h6" className="mb-4 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {space.questions.length} Questions</CardSubtitle>
-                <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-users fa-lg follower-icon'/>    {space.followers.length} followers</CardSubtitle>
-                <div className='row mt-4'>
-                    <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view</Link>
-                    <Button className='col-12 mt-3' color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Follow</Button>
-                </div>
-            </CardBody>
-          </Card>
-        </FadeTransform>
-        );
-    }
 
     class Spaces extends Component {
 
@@ -54,21 +28,140 @@ import { BsArrowBarRight } from 'react-icons/bs';
             this.arrayHolder = [];
         }
 
-        handleSearch(event) {
-
-            this.searchFilterFunction(this.searchSpace.value)
-            event.preventDefault();
-        }
-
         componentDidMount() {
+            const authId= this.props.auth.userId
+            const user= this.props.user.user;
+            let userId;
+            if(user){
+                userId = user.userId;
+            }
+            if(authId){
+                if(!user||userId!=authId){
+                    this.props.fetchUser(authId);
+                }
+            }
+            console.log("Authentication", this.props.auth);
+            console.log("Fetched User ",this.props.user);
+            // if(this.props.auth && this.props.auth.userId){
+            //     const {userId} = this.props.auth
+            //     const user = this.props.user;
+            //     if(!(user.user && user.user==userId)){
+            //         this.props.fetchUser(userId);//backend Call
+            //     } 
+            // }
 
             this.setState({
                 data: this.props.spaces.spaces
             });
 
             this.arrayHolder = this.props.spaces.spaces
+            
         }
 
+        handleSearch(event) {
+
+            this.searchFilterFunction(this.searchSpace.value)
+            event.preventDefault();
+        }
+
+        searchFilterFunction = text => {
+        
+            const newData = this.arrayHolder.filter(item => {
+              const itemData = `${item.name.toUpperCase()}`;
+              const textData = text.toUpperCase();
+        
+              return itemData.indexOf(textData) > -1;
+            });
+    
+            this.setState({
+              data: newData,
+            });
+        };
+
+        UnfollowSpace = (e)=>{
+            e.preventDefault();
+            let type = "unfollow";
+            let spaceId = e.target.value;
+            const data = {type, spaceId};
+            console.log(data);
+            //call to backend
+        }
+        
+        FollowSpace = (e)=>{
+            e.preventDefault();
+            let type = "follow";
+            let spaceId = e.target.value;
+            const data = {type, spaceId};
+            console.log(data);
+            //call to backend
+        }
+        
+        renderButton = (stringId, user)=>{
+            console.log(stringId);
+            if(!user){
+                return(
+                    <>
+                        <Button className='col-12 mt-3' color='danger' value={stringId} onClick={this.FollowSpace}>
+                            <span className='fa fa-lg fa-bookmark mr-2 ml-2' />Follow
+                        </Button>
+                    </>
+                )
+            }
+            const userInterests= user.interests;           
+            if(userInterests){
+                let isPresent =false; 
+                userInterests.map(({interest})=>{
+                    if(interest===stringId){
+                        isPresent = true;
+                    }
+                })
+                if(isPresent){
+                    return(
+                        <>
+                            <Button className='col-12 mt-3' color='danger' value={stringId} onClick={this.UnfollowSpace}>
+                                <span className='fa fa-lg fa-bookmark mr-2 ml-2' />Unfollow
+                            </Button>
+                        </>
+                    )
+                }
+                return(
+                    <>
+                        <Button className='col-12 mt-3' color='danger' value={stringId} onClick={this.FollowSpace}>
+                            <span className='fa fa-lg fa-bookmark mr-2 ml-2' />Follow
+                        </Button>
+                    </>
+                )
+            }
+        
+        }
+
+        
+        RenderMenuItem  = (space, user)=>{
+
+            return ( 
+            <FadeTransform
+            in
+            transformProps={{
+                exitTransform: 'scale(0.5) translateY(-50%)'
+            }}>
+                <Card className='space'>
+                <CardBody>
+                    <CardTitle tag="h6">{space.name}</CardTitle>
+                </CardBody>
+                    <CardImg className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}/>
+                <CardBody>
+                    <CardSubtitle tag="h6" className="mb-4 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {space.questions.length} Questions</CardSubtitle>
+                    <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-users fa-lg follower-icon'/>    {space.followers.length} followers</CardSubtitle>
+                    <div className='row mt-4'>
+                        <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view</Link>
+                        {this.renderButton(space.stringId, user)}
+                        {/* <Button className='col-12 mt-3' color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Follow</Button> */}
+                    </div>
+                </CardBody>
+            </Card>
+            </FadeTransform>
+            );
+        }
         /*nextPage() {
             this.setState({
                 skip: this.state.skip + this.state.limit,
@@ -97,25 +190,11 @@ import { BsArrowBarRight } from 'react-icons/bs';
             
         }*/
 
-        searchFilterFunction = text => {
-        
-            const newData = this.arrayHolder.filter(item => {
-              const itemData = `${item.name.toUpperCase()}`;
-              const textData = text.toUpperCase();
-        
-              return itemData.indexOf(textData) > -1;
-            });
-    
-            this.setState({
-              data: newData,
-            });
-        };
-
         render() {
             const menu = this.state.data.map((space) => {  
                 return (
                     <div className="col-12 col-lg-3 col-md-6 col-sm-6 mt-1 mb-4"  key={space.id}>
-                        <RenderMenuItem space={space} onClick={this.props.onClick} />
+                        {this.RenderMenuItem(space, this.props.user.user)}
                     </div>
                 );
             });
@@ -185,7 +264,13 @@ const mapDispatchToProps = (dispatch) => ({
 		dispatch(fetchSpaces());
 	}
 });*/
-
+const mapStateToProps = (state, ownProps) => {
+	return {
+		user:state.user,
+		auth:state.auth
+	};
+};
+export default connect(mapStateToProps, {fetchUser})(Spaces)
 //export default connect(mapStateToProps, mapDispatchToProps)(Spaces);
-
-export default Spaces;
+// const mapStateToProps
+// export default Spaces;
