@@ -267,7 +267,7 @@ class home extends Component {
 						/>
 					</div>
 				);
-			});
+	});
 
 		const MenuUnanswered = this.props.questions
 			.map((question) => {

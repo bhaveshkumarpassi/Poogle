@@ -5,7 +5,7 @@ import { fetchSpaces, fetchQuestions, fetchUser, fetchHomeFeed, fetchFollowSpace
 	fetchAnswers, fetchComments, postComment, fetchBlogs,
 	deleteComment, postQuestion, deleteQuestion, postReaction, fetchReactions, deleteReaction,
 	postAnswer, deleteAnswer, postAReaction, fetchAReactions, deleteAReaction,postBlog,deleteBlog,
-	postBComment,fetchBComments,fetchBReactions,postBReaction,deleteBComment,deleteBReaction} from "../redux/ActionCreators";
+	postBComment,fetchBComments,fetchBReactions,postBReaction,deleteBComment,deleteBReaction, fetchBlogDemands, postBlogDemand, deleteBlogDemand} from "../redux/ActionCreators";
 import Home from "./home_page/home";
 import Spaces from "./followed-spaces/Spaces";
 import Questions from "./all_ques_page/questions";
@@ -32,6 +32,7 @@ const mapStateToProps = (state) => {
 		blogs:state.blogs,
 		breactions:state.breactions,
 		bcomments:state.bcomments,
+		blogDemands:state.blogDemands,
 		qreactions: state.qreactions,
 		answers: state.answers,
 		areactions: state.areactions,
@@ -56,6 +57,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	fetchBReactions: () =>{
         dispatch(fetchBReactions());
+	},
+	fetchBlogDemands:()=>{
+		dispatch(fetchBlogDemands());
 	},
 	fetchReactions: () => {
 		dispatch(fetchReactions());
@@ -85,6 +89,8 @@ const mapDispatchToProps = (dispatch) => ({
 	deleteBComment : (commentId) => dispatch(deleteBComment(commentId)),
 	postBReaction : (reac) => dispatch(postBReaction(reac)),
 	deleteBReaction: (reacId) => dispatch(deleteBReaction(reacId)),
+	postBlogDemand:(blogDemand,userToken)=>dispatch(postBlogDemand(blogDemand,userToken)),
+	deleteBlogDemand:(blogDemandId)=>dispatch(deleteBlogDemand(blogDemandId)),
 	fetchHomeFeed: (interests) => dispatch(fetchHomeFeed(interests)),
 	fetchFollowSpaces: (interests) => dispatch(fetchFollowSpaces(interests)),
 	fetchUser: (userId) => dispatch(fetchUser(userId))
@@ -143,7 +149,9 @@ class Main extends Component {
 			await this.props.fetchBReactions();
 			await this.props.fetchBComments();
 			await this.props.fetchBlogs();
+			await this.props.fetchBlogDemands();
 		}
+		
 	}
 
 	render() {
@@ -270,6 +278,7 @@ class Main extends Component {
 					errMess={this.props.errMess}
 					auth={this.props.auth}
 					deleteBlog={this.props.deleteBlog}
+					postBlogDemand={this.props.postBlogDemand}
 					reactions={this.props.breactions.breactions}
 					reactionsIsLoading={this.props.breactions.isLoading}
 					reactionsErrMess = {this.props.breactions.errMess}
@@ -349,6 +358,7 @@ class Main extends Component {
 					<Route path="/login" component={Login} />
 					<PrivateRoute exact path="/addQuestion" component={() => <AddQuestion postQuestion={this.props.postQuestion} auth={this.props.auth}/>}/>
 					<PrivateRoute path="/addBlog" component={() => <AddBlog postBlog={this.props.postBlog} auth={this.props.auth}/>} />
+                    
 					<Route path="/signup" component={Signup} />
 					<Route path="/logout" component={Logout}/>
 					<Redirect to="/home" />
