@@ -325,9 +325,11 @@ class home extends Component {
 
 									<h4>We've got you covered</h4>
 									<br />
+									<Link to='/addQUestion'>
 									<button className="header__btn__link btn--text btn--scroll-to">
 										Ask Here&rarr;{" "}
 									</button>
+									</Link>
 								</Col>
 								<Col sm={4}>
 									<div className="header__side__image">

@@ -81,19 +81,19 @@ return(
       Home <Link to="/home"/>
     </MenuItem>
     
-    <MenuItem icon={<FaStickyNote />}>
+    <MenuItem icon={<span className='fa fa-lg fa-scribd mr-2'></span>}>
       Spaces <Link to="/spaces"/>
     </MenuItem>
 
     {renderSignInTop(auth)}
     
-    <SubMenu title="Top Categories" icon={<FaGem />}>
+    {/* <SubMenu title="Top Categories" icon={<FaGem />}>
       <MenuItem>Top Questions</MenuItem>
       <MenuItem>Top Blogs</MenuItem>
       <MenuItem>Top Answers</MenuItem>
-    </SubMenu>
+    </SubMenu> */}
     
-    <SubMenu title="Questions" icon={<FaQuestionCircle />}>
+    <SubMenu title="All Categories" icon={<FaQuestionCircle />}>
       <MenuItem>Latest questions</MenuItem>
       <MenuItem>Unanswered</MenuItem>
       <MenuItem>Most viewed</MenuItem>
