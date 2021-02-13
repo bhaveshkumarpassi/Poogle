@@ -253,8 +253,10 @@ function RenderMenuItem({
 					</div>
 				);
 			});
-
-		const MenuLikes = this.props.blogs.map((blog) => {
+		
+		
+		const MenuLikes = this.props.blogs
+		.map((blog) => {
 			count += 1;
 			return (
 				<div className="col-12" key={blog._id}>
@@ -287,7 +289,7 @@ function RenderMenuItem({
         // });
 		if (this.props.isLoading || this.props.reactionsIsLoading) {
 			return <Loading type="spokes" color="grey" />;
-		} else if (this.props.errMess || this.props.reactionsIsLoading) {
+		} else if (this.props.errMess || this.props.reactionsErrMess) {
 			return (
 				<div className="container spaces">
 					<div className="row">

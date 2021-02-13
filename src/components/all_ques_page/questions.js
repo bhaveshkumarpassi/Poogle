@@ -232,10 +232,7 @@ class Questions extends Component {
             );
         }) : <p>Be first one to add a question to this space!!</p>
 
-        const MenuVotes = this.props.questions ? this.props.questions.sort((a,b) => 
-        ((this.props.reactions.filter(r => (r.category === 'UpVote' && r.question === b._id)).length)-
-        (this.props.reactions.filter(r => (r.category === 'UpVote' && r.question === a._id)).length))
-        ).map((question) => {
+        const MenuVotes = this.props.questions ? this.props.questions.map((question) => {
 
             count += 1;
             return(
@@ -329,16 +326,16 @@ class Questions extends Component {
                                     </Button>
                             
                                     <ButtonGroup className='mb-4 button-grp col-8 col-md-4 col-lg-3'>
-                                        <Button outline color='info'>
+                                        <Button disabled outline color='info'>
                                             <span className='fa fa-lg fa-question-circle mr-2' />
-                                            {this.props.questions.length}
+                                            {this.props.questions.length} Questions
                                         </Button>
-                                        <Button outline color='info'>
-                                            <span className='fa fa-lg fa-users mr-2'></span>
+                                        <Button disabled outline color='info'>
+                                            <span className='fa fa-lg fa-scribd mr-2'></span>
                                             {this.props.space.followers}
                                         </Button>
                                     </ButtonGroup>
-                                    <Button className='col-8 col-md-4 col-lg-3 mb-4 add-ques-btn' color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />FOLLOW</Button>
+                                    <Button className='col-8 col-md-4 col-lg-3 mb-4 add-ques-btn' color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />UNFOLLOW</Button>
                             </div>
                             <div className='row ml-1 mt-3 mr-1'>
                                 <Nav className='col-12 ' tabs>

@@ -37,7 +37,8 @@ const mapStateToProps = (state) => {
 		answers: state.answers,
 		areactions: state.areactions,
 		comments: state.comments,
-		auth: state.auth
+		auth: state.auth,
+		user: state.user
 	};
 };
 
@@ -91,7 +92,8 @@ const mapDispatchToProps = (dispatch) => ({
 	postBlogDemand:(blogDemand,userToken)=>dispatch(postBlogDemand(blogDemand,userToken)),
 	deleteBlogDemand:(blogDemandId)=>dispatch(deleteBlogDemand(blogDemandId)),
 	fetchHomeFeed: (interests) => dispatch(fetchHomeFeed(interests)),
-	fetchFollowSpaces: (interests) => dispatch(fetchFollowSpaces(interests))
+	fetchFollowSpaces: (interests) => dispatch(fetchFollowSpaces(interests)),
+	fetchUser: (userId) => dispatch(fetchUser(userId))
 });
 
 class Main extends Component {
@@ -101,20 +103,55 @@ class Main extends Component {
 
 	componentDidMount = async () => {
 
-		var interests = this.props.auth.interests.split('*');
-		interests.pop();
-		
-		await this.props.fetchHomeFeed(interests);
-		await this.props.fetchReactions();
-		await this.props.fetchAnswers();
-		await this.props.fetchAReactions();
-		await this.props.fetchComments();
-		await this.props.fetchFollowSpaces(interests);
+		if(this.props.auth && this.props.auth.interests.length) {
 
-		await this.props.fetchBlogs();
-		await this.props.fetchBReactions();
-		await this.props.fetchBComments();
-		await this.props.fetchBlogDemands();
+			//console.log(this.props.auth);
+			//console.log(this.props.auth.interests);
+			var interests = this.props.auth.interests.split('*');
+			interests.pop();
+
+			await this.props.fetchHomeFeed(interests);
+			await this.props.fetchReactions();
+			await this.props.fetchAnswers();
+			await this.props.fetchAReactions();
+			await this.props.fetchComments();
+			await this.props.fetchFollowSpaces(interests);
+			await this.props.fetchUser(this.props.auth.userId);
+
+			await this.props.fetchBReactions();
+			await this.props.fetchBComments();
+			await this.props.fetchBlogs();
+		}
+		
+	}
+
+	componentDidUpdate = async (prevProps) => {
+		var l1 = this.props.auth.interests.length;
+	
+		console.log(l1);
+		if(l1 && this.props.auth.userId !== prevProps.auth.userId){
+
+			console.log("called this !!")
+			console.log(this.props.auth.interests)
+			var interests = [];
+			for(var i=0;i<this.props.auth.interests.length;i++){
+				interests.push(this.props.auth.interests[i].interest);
+			}
+
+			await this.props.fetchHomeFeed(interests);
+			await this.props.fetchReactions();
+			await this.props.fetchAnswers();
+			await this.props.fetchAReactions();
+			await this.props.fetchComments();
+			await this.props.fetchFollowSpaces(interests);
+			await this.props.fetchUser(this.props.auth.userId);
+
+			await this.props.fetchBReactions();
+			await this.props.fetchBComments();
+			await this.props.fetchBlogs();
+			await this.props.fetchBlogDemands();
+		}
+		
 	}
 
 	render() {
@@ -268,13 +305,17 @@ class Main extends Component {
 				<ScrollToTop/>
 				<Switch>
 					<PrivateRoute path="/home" component={HomeQuestions} />
-					<Route
+					<PrivateRoute
 						exact
 						path="/spaces"
 						//component={Spaces}
 						component={() => <Spaces spaces={this.props.spaces} 
 						auth={this.props.auth}
-						fetchSpaces={this.props.fetchSpaces} />}
+						fetchSpaces={this.props.fetchSpaces}
+						user={this.props.user.user}
+						questions={this.props.questions.questions}
+						blogs={this.props.blogs.blogs}
+						/>}
 					/>
 					<PrivateRoute exact path="/spaces/:spaceId/:stringId/questions" component={SpaceWithId} />
 					<PrivateRoute exact path="/spaces/:spaceId/:stringId/blogs" component={AllBlogs} />
