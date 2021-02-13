@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { Card, Button, FormGroup, Label, Input,
     CardTitle, Breadcrumb, BreadcrumbItem, CardBody, CardSubtitle, CardImg} from 'reactstrap';
-import { FadeTransform } from 'react-animation-components';
 import {Link} from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Select from 'react-select'
@@ -26,11 +25,7 @@ import './Spaces.css'
 
         // var questions = questions.filter((q) => )
         return ( 
-        <FadeTransform
-        in
-        transformProps={{
-            exitTransform: 'scale(0.5) translateY(-50%)'
-        }}>
+    
             <Card className='space'>
             <CardBody>
                 <CardTitle tag="h6">{space.name}</CardTitle>
@@ -46,7 +41,6 @@ import './Spaces.css'
                 </div>
             </CardBody>
           </Card>
-        </FadeTransform>
         );
     }
 

@@ -73,7 +73,10 @@ class login extends Component {
     }
 
 
-    notify = (message) => toast(message);
+    notifyS = (message) => toast.success(message);
+    notifyF = (message) => toast.error(message);
+    notifyI = (message) => toast.info(message);
+
 
     handleSubmit = async (event) => {
         event.preventDefault();
@@ -87,13 +90,12 @@ class login extends Component {
 
             if(this.props.auth.err)
             {
-                this.notify(this.props.auth.err.message);
-                this.notify("Login Unsuccesful!!");
+                this.notifyI(this.props.auth.err.message);
+                this.notifyF("Login Unsuccesful!!");
             }    
             else 
             {
-                this.notify("Login Succesful!!")
-
+                this.notifyS("Login Succesful!!")
                 setTimeout(() => {
                     let { from } = this.props.location.state || { from: { pathname: "/" } };
                     this.props.history.push(from.pathname);

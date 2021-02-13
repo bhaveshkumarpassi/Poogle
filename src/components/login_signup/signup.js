@@ -172,7 +172,9 @@ class Signup extends Component {
         })
     }
 
-    notify = (message) => toast(message);
+    notifyS = (message) => toast.success(message);
+    notifyF = (message) => toast.error(message);
+    notifyI = (message) => toast.info(message);
 
     handleSubmit = async (event) => {
     event.preventDefault();
@@ -192,12 +194,12 @@ class Signup extends Component {
         
         if(this.props.auth.err)
         {
-            this.notify("SignUp Unsuccesful!!");
-            this.notify("Either the email or username is already in use.");
+            this.notifyF("SignUp Unsuccesful!!");
+            this.notifyI("Either the email or username is already in use.");
         }    
         else 
         {
-            this.notify("Signup Succesful!!")
+            this.notifyS("Signup Succesful!!")
 
             setTimeout(() => {
                 let { from } = this.props.location.state || { from: { pathname: "/" } };

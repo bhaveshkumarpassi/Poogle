@@ -94,10 +94,9 @@ return(
     </SubMenu> */}
     
     <SubMenu title="All Categories" icon={<FaQuestionCircle />}>
-      <MenuItem>Latest questions</MenuItem>
-      <MenuItem>Unanswered</MenuItem>
-      <MenuItem>Most viewed</MenuItem>
-      <MenuItem>All questions</MenuItem>
+      <MenuItem>Latest questions <Link to={`/all-categories/${'Latest'}`} /></MenuItem>
+      <MenuItem>Unanswered <Link to={`/all-categories/${'Unanswered'}`} /></MenuItem>
+      <MenuItem>Most Liked <Link to={`/all-categories/${'Votes'}`} /></MenuItem>
     </SubMenu>
     
     <MenuItem icon={<HiChat />}>

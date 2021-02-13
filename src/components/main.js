@@ -7,6 +7,7 @@ import { fetchSpaces, fetchQuestions, fetchUser, fetchHomeFeed, fetchFollowSpace
 	postAnswer, deleteAnswer, postAReaction, fetchAReactions, deleteAReaction,postBlog,deleteBlog,
 	postBComment,fetchBComments,fetchBReactions,postBReaction,deleteBComment,deleteBReaction, fetchBlogDemands, postBlogDemand, deleteBlogDemand} from "../redux/ActionCreators";
 import Home from "./home_page/home";
+import AllCategory from "./all-category/all-category";
 import Spaces from "./followed-spaces/Spaces";
 import Questions from "./all_ques_page/questions";
 import Blogs from "./all_blog_page/blogs";
@@ -206,6 +207,27 @@ class Main extends Component {
 			);
 		}
 
+		const AllQuestions = ({match}) => {
+			return(
+				<AllCategory
+			
+					questions={this.props.questions.questions}
+					isLoading={this.props.questions.isLoading}
+					errMess={this.props.questions.errMess}
+					auth={this.props.auth}
+					deleteQuestion={this.props.deleteQuestion}
+					answers={this.props.answers.answers}
+					answersIsLoading = {this.props.answers.isLoading}
+					answersErrMess = {this.props.answers.errMess}
+					reactions={this.props.qreactions.qreactions}
+					reactionsIsLoading={this.props.qreactions.isLoading}
+					reactionsErrMess = {this.props.qreactions.errMess}
+					postReaction={this.props.postReaction}
+					filter={match.params.filter}
+				/>
+			);
+		}
+
 		const QuestionWithId = ({ match }) => {
 			return(
 				<SingleQuestion
@@ -325,21 +347,11 @@ class Main extends Component {
 						//path="/space-:spaceId/question-:quesId-:question"
 						component={QuestionWithId}
 					/>
-					{/* <PrivateRoute 
+					<PrivateRoute
 						exact
-						path="/blogs"
-						component={()=><Blogs 
-						 blogs={this.props.blogs.blogs}
-						 //fetchBlogs= {this.props.fetchBlogs} 
-						 isLoading={this.props.blogs.isLoading}
-						 errMess={this.props.errMess}
-						 auth={this.props.auth}
-						 deleteBlog={this.props.deleteBlog}
-						 reactions={this.props.breactions.breactions}
-						 reactionsIsLoading={this.props.breactions.isLoading}
-						 reactionsErrMess = {this.props.breactions.errMess}
-						 postReaction={this.props.postBReaction}
-						 />}/> */}
+						path='/all-categories/:filter'
+						component={AllQuestions}
+					/>
 
 					<PrivateRoute 
 						exact

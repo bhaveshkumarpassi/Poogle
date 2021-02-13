@@ -19,7 +19,7 @@ import { Row, Col, Container,
         Card, CardBody, CardTitle, CardSubtitle, CardText, Collapse,
         ButtonGroup, Button, CardImg, Badge, Modal, ModalHeader, ModalBody, ModalFooter, Media, Label, Jumbotron} from "reactstrap";
 import {LocalForm, Control, Errors} from 'react-redux-form';
-import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Loading from "../loading";
 import { baseUrl } from "../../shared/baseUrl";
 import profilePic from '../../Images/profile_pic.png';
@@ -370,7 +370,9 @@ class RenderQuestionAnswers extends Component {
                 <Row>
                     <Col className='mb-3 single-question-profile' xs={5} sm={4} md={3} lg={2}>
                         <CardImg className='single-question-profile-pic' src={profilePic}/>
-                        <CardText className='single-question-profile-name'>@{this.props.question.author.user_name} has a question ????</CardText>
+                        <CardSubtitle  className='single-question-profile-name'><Link to={`/profile/${this.props.question.author._id}`}>@{this.props.question.author.user_name}</Link></CardSubtitle>
+                        <CardText  className='single-question-profile-name text-muted'> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(this.props.question.createdAt)))}</CardText>
+                        {/* <CardText className='single-question-profile-name'>@{this.props.question.author.user_name} has a question ????</CardText> */}
                     </Col>
                     <Col xs={12} md={9} lg={10}>
                         <Row>

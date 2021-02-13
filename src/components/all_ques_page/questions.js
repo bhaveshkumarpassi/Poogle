@@ -322,9 +322,9 @@ class Questions extends Component {
                             <div className='row justify-content-center mt-4'>
 
                                     <Button className='col-8 col-md-4 col-lg-3 mb-4 m-2 add-blog-btn' color='danger'>
-                                        <Link style={{color: 'white'}} to='/addQuestion'><span className='fa fa-lg fa-plus mr-2 ml-2'>QUESTION</span></Link>
+                                        <Link style={{color: 'white'}} to='/addQuestion'><span className='fa fa-lg fa-plus mr-2 ml-2'/>QUESTION</Link>
                                     </Button>
-                            
+
                                     <ButtonGroup className='mb-4 button-grp col-8 col-md-4 col-lg-3'>
                                         <Button disabled outline color='info'>
                                             <span className='fa fa-lg fa-question-circle mr-2' />
