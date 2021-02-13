@@ -84,6 +84,17 @@ export const spaces = [
     {value:"Metallurgy-Others",label:"Metallurgy Others"},
     {value:"Civil-Engineering-Others",label:"Civil Engineering Others"},
     {value:"Mechanical-Engineering-Others",label:"Mechanical Engineering Others"},
+    {value:"Advanced-Aerodynamics-(AEN-421)",label:"Advanced Aerodynamics (AEN 421)"},
+    {value:"Aero-Engine-Design-(AEN-207)",label:"Aero Engine Design (AEN 207)"},
+    {value:"Aircraft-Propulsion-(AEN-202)",label:"Aircraft Propulsion (AEN 202)"},
+    {value:"Aircraft-Systems-And-Instrumentation-(AEN-203)",label:"Aircraft Systems And Instrumentation (AEN 203)"},
+    {value:"Airplane-Design-(AEN-303)",label:"Airplane Design (AEN 303)"},
+    {value:"Automatic-Flight-Control-(AEN-422)",label:"Automatic Flight Control (AEN 422)"},
+    {value:"Elements-Of-Aerodynamics-(AEN-102)",label:"Elements Of Aerodynamics (AEN 102)"},
+    {value:"Space-Dynamics-(AEN-305)",label:"Space Dynamics (AEN 305)"},
+    {value:"Vibrations-And-Aeroelasticity-(AEN-301)",label:"Vibrations And Aeroelasticity (AEN 301)"},
+    {value:"Aircraft-Structures-(AEN-204)",label:"Aircraft Structures (AEN 204)"},
+    {value:"Aerospace-Engineering-Others",label:"Aerospace Engineering Others"}
 ];
 
 export const fields = [{value:'Computer Science', label:'Computer Science'}, 
