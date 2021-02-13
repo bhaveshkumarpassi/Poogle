@@ -68,7 +68,22 @@ export const spaces = [
     {value:"IOT", label:"IOT"},
     {value:"Rasberry-Pi", label:"Rasberry Pi"},
     {value:"Robotics", label:"Robotics"},
-    {value:"Electronics-and-Communication-Engineering-others", label:"Electronics and Communication Engineering others"}
+    {value:"Electronics-and-Communication-Engineering-others", label:"Electronics and Communication Engineering others"},
+    {value:"Analog-And-Digital-Electronics-(EEN-204)",label:"Analog And Digital Electronics (EEN 204)"},
+    {value:"Control-Systems-(EEN-210)",label:"Control Systems (EEN 210)"},
+    {value:"Electrical-Machines-(EEN-203)",label:"Electrical Machines (EEN 203)"},
+    {value:"Electrical-Measurements-And-Instrumentation-(EEN-103)",label:"Electrical Measurements And Instrumentation (EEN 103)"},
+    {value:"Electrical-Power-Systems-(EEN-202)",label:"Electrical Power Systems (EEN 202)"},
+    {value:"High-Voltage-Engineering-(EEN-315)",label:"High Voltage Engineering (EEN 315)"},
+    {value:"Power-Electronics-(EEN-207)",label:"Power Electronics (EEN 207)"},
+    {value:"Introduction-To-Electrical-Engineering-(EEN-101)",label:"Introduction To Electrical Engineering (EEN 101)"},
+    {value:"Microprocessors-And-Peripheral-Devices-(EEN-208)",label:"Microprocessors And Peripheral Devices (EEN 208)"},
+    {value:"Networks-And-Systems(EEN-102)",label:"Networks And Systems (EEN 102)"},
+    {value:"Production-Engineering-Others",label:"Production Engineering Others"},
+    {value:"Electrical-Engineering-Others",label:"Electrical Engineering Others"},
+    {value:"Metallurgy-Others",label:"Metallurgy Others"},
+    {value:"Civil-Engineering-Others",label:"Civil Engineering Others"},
+    {value:"Mechanical-Engineering-Others",label:"Mechanical Engineering Others"},
 ];
 
 export const fields = [{value:'Computer Science', label:'Computer Science'}, 
