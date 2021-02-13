@@ -11,7 +11,7 @@ import {Blogs} from './reducers/blogs'
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import authReducer from "./reducers/authReducer";
-import contact from './reducers/contactUs'
+import {contact} from './reducers/contactUs'
 import { Breactions } from "./reducers/bReactions";
 import { Bcomments } from "./reducers/bComments";
 import { BlogDemands } from "./reducers/blogDemands";
