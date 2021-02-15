@@ -15,6 +15,7 @@ import {contact} from './reducers/contactUs'
 import { Breactions } from "./reducers/bReactions";
 import { Bcomments } from "./reducers/bComments";
 import { BlogDemands } from "./reducers/blogDemands";
+import {updateUser} from './reducers/updateUser';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const ConfigureStore = () => {
 	const store = createStore(
@@ -32,7 +33,8 @@ export const ConfigureStore = () => {
 			user,
 			auth: authReducer,
 			chats: Chat,
-			contact
+			contact,
+			updateUser
 		}),
 		composeEnhancers(applyMiddleware(thunk, logger))
 	);
