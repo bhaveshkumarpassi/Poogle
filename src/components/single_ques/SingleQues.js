@@ -43,10 +43,20 @@ const RenderTags = ({question}) => question.tagNames.map((tag) => {
     );
 })
 
+const voteCount = (reactions, answer) => {
+
+    var uvotesCount = reactions.filter(r => r.category === 'UpVote');
+    uvotesCount = uvotesCount.length ? uvotesCount.filter(r => r.answer === answer._id).length : 0;
+    var dvotesCount = reactions.filter(r => r.category === 'DownVote');
+    dvotesCount = dvotesCount.length ? dvotesCount.filter(r => r.answer === answer._id).length : 0;
+
+    return(
+        uvotesCount-dvotesCount
+    );
+}
 
 
-
-const RenderAnswers = ({answers, deleteAnswer, auth, areactions, postAReaction, deleteAReaction}) => answers.sort((a,b) => b.votes-a.votes).map((ans) => {
+const RenderAnswers = ({answers, deleteAnswer, auth, areactions, postAReaction, deleteAReaction}) => answers.sort((a,b) => voteCount(areactions, b)-voteCount(areactions, a)).map((ans) => {
 
     var uvotes = areactions.filter((reac) => reac.answer === ans._id && reac.category === "UpVote");
     var dvotes = areactions.filter((reac) => reac.answer === ans._id && reac.category === "DownVote");
@@ -193,6 +203,7 @@ function RenderComments({commentsArray, isOpen, postComment, deleteComment, ques
                     <ul className="list-unstyled" >
                         <Stagger in>
                         {
+                        commentsArray.length ?
                         commentsArray.sort((a,b) => b.dateNum-a.dateNum).map((comm) => {
                             return (
                                 <Fade in>
@@ -224,6 +235,7 @@ function RenderComments({commentsArray, isOpen, postComment, deleteComment, ques
                                 </Fade>
                                 );
                             })
+                            :  <p className='mt-5' >Currently no comments. be first one to comment!!</p>
                         }
                         </Stagger>    
                     </ul>
@@ -427,12 +439,16 @@ class RenderQuestionAnswers extends Component {
                     </Button>
                 </div>
                 <hr></hr>
+                {
+                this.props.answers.length ?
                 <RenderAnswers answers = {this.props.answers}
-                 deleteAnswer={this.props.deleteAnswer}
-                 areactions={this.props.areactions}
-                 postAReaction={this.props.postAReaction}
-                 deleteAReaction={this.props.deleteAReaction}
-                 auth={this.props.auth} />
+                    deleteAnswer={this.props.deleteAnswer}
+                    areactions={this.props.areactions}
+                    postAReaction={this.props.postAReaction}
+                    deleteAReaction={this.props.deleteAReaction}
+                    auth={this.props.auth} />
+                : <p className='mt-5' >Be first one to contribute an answer to this question.</p>
+                }
             </CardBody>
         </Card>
         <Modal isOpen={this.state.shareModalOpen} toggle={() => this.onShareClicked()}>

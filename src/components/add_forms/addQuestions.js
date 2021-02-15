@@ -10,7 +10,10 @@ import {Quill} from 'react-quill'
 import 'react-quill/dist/quill.snow.css'; 
 import ImageCompress from 'quill-image-compress';
 import {spaces,toolbarOptions, formats} from '../variables'; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 Quill.register('modules/imageCompress', ImageCompress);
+
 
 class addQuestions extends Component {
     constructor(props) {
@@ -59,31 +62,43 @@ class addQuestions extends Component {
         this.setState({ description: value })
       }
 
+      notify = (message) => toast.warning(message);
+
       handleSubmit = (event) => {
         event.preventDefault();
         const isValid = this.formValidation();
         console.log(this.state);
         
         if(isValid){
-            window.alert("Form Submitted");
             
             var tagNames = [];
             var tagIds = [];
             var len = this.state.category.length;
+            var flag = false;
              for(var i=0;i<len;i++)
             {
               tagNames.push(this.state.category[i].label);
               tagIds.push(this.state.category[i].value);
-            }
-            const newQuestion = {
-              heading: this.state.title,
-              tagNames: tagNames,
-              tagIds: tagIds,
-              description: this.state.description,
-              author: this.props.auth.userId
-            };
 
-            this.props.postQuestion(newQuestion);
+              if(this.props.auth.interests.indexOf(this.state.category[i].value)>-1)
+                flag = true;
+            }
+
+            if(flag) {
+              const newQuestion = {
+                heading: this.state.title,
+                tagNames: tagNames,
+                tagIds: tagIds,
+                description: this.state.description,
+                author: this.props.auth.userId
+              };
+  
+              this.props.postQuestion(newQuestion);
+            }
+            else {
+              this.notify("Atleast one category should be in your followed spaces list . you can follow required space to add this question!!");
+            }
+            
         }
       }
       
@@ -159,7 +174,9 @@ class addQuestions extends Component {
                 </Col>
                 
                 </Container>
-            
+                <ToastContainer
+                  autoClose={false}
+                />
           </div>
         )
       }

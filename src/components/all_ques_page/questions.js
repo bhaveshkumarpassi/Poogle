@@ -208,6 +208,18 @@ class Questions extends Component {
     }
 
     render() {
+
+        const voteCount = (reactions, question) => {
+
+            var uvotesCount = reactions.filter(r => r.category === 'UpVote');
+            uvotesCount = uvotesCount.length ? uvotesCount.filter(r => r.question === question._id).length : 0;
+            var dvotesCount = reactions.filter(r => r.category === 'DownVote');
+            dvotesCount = dvotesCount.length ? dvotesCount.filter(r => r.question === question._id).length : 0;
+
+            return(
+                uvotesCount-dvotesCount
+            );
+        }
         
         var count = -1;
         const MenuDate = this.props.questions ? this.props.questions.sort((a,b) => b.dateNum-a.dateNum).map((question) => {
@@ -232,7 +244,7 @@ class Questions extends Component {
             );
         }) : <p>Be first one to add a question to this space!!</p>
 
-        const MenuVotes = this.props.questions ? this.props.questions.map((question) => {
+        const MenuVotes = this.props.questions ? this.props.questions.sort((a,b) => voteCount(this.props.reactions, b)-voteCount(this.props.reactions, a)).map((question) => {
 
             count += 1;
             return(
@@ -358,7 +370,7 @@ class Questions extends Component {
                     <div id='all-questions-id' className="row justify-content-center">
                         
                             {
-                                renderQuestions
+                                this.props.questions.length ? renderQuestions : <p className='mt-5' >Currently no questions for this space. be first one to contribute a question to this space</p>
                             }
                         
                     </div>

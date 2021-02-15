@@ -226,8 +226,21 @@ class home extends Component {
 	}
 
 	render() {
+
+		const voteCount = (reactions, question) => {
+
+            var uvotesCount = reactions.filter(r => r.category === 'UpVote');
+            uvotesCount = uvotesCount.length ? uvotesCount.filter(r => r.question === question._id).length : 0;
+            var dvotesCount = reactions.filter(r => r.category === 'DownVote');
+            dvotesCount = dvotesCount.length ? dvotesCount.filter(r => r.question === question._id).length : 0;
+
+            return(
+                uvotesCount-dvotesCount
+            );
+        }
+
 		var count = -1;
-		const MenuDate = this.props.questions
+		const MenuDate = this.props.questions ? this.props.questions
 			.sort((a, b) => b.dateNum - a.dateNum)
 			.map((question) => {
 				count += 1;
@@ -246,10 +259,10 @@ class home extends Component {
 						/>
 					</div>
 				);
-			});
+			}) : <p>No current feed for this category. You can explore blogs or start discussion for your followed spaces by posting new questions.</p>;
 
 		const MenuVotes = this.props.questions
-			.sort((a, b) => b.votes - a.votes)
+			.sort((a,b) => voteCount(this.props.reactions, b)-voteCount(this.props.reactions, a))
 			.map((question) => {
 				count += 1;
 				return (

@@ -192,6 +192,7 @@ class AllCategory extends Component {
 			votesActive: false,
 			unansweredActive: false,
 			suggetsedActive: false,
+			viewActive: false
 		};
 	}
 
@@ -202,6 +203,7 @@ class AllCategory extends Component {
 			votesActive: false,
 			unansweredActive: false,
 			suggetsedActive: false,
+
 		});
 	}
 
@@ -225,7 +227,41 @@ class AllCategory extends Component {
 		});
 	}
 
+	onViewsSelect() {
+		this.setState({
+			filter: "Views",
+			latestActive: false,
+			votesActive: false,
+			unansweredActive: false,
+			suggetsedActive: false,
+			viewActive: true
+		});
+	}
+
 	render() {
+
+		const voteCount = (reactions, question) => {
+
+            var uvotesCount = reactions.filter(r => r.category === 'UpVote');
+            uvotesCount = uvotesCount.length ? uvotesCount.filter(r => r.question === question._id).length : 0;
+            var dvotesCount = reactions.filter(r => r.category === 'DownVote');
+            dvotesCount = dvotesCount.length ? dvotesCount.filter(r => r.question === question._id).length : 0;
+
+            return(
+                uvotesCount-dvotesCount
+            );
+        }
+
+		const viewCount = (reactions, question) => {
+
+            var uvotesCount = reactions.filter(r => r.category === 'View');
+            uvotesCount = uvotesCount.length ? uvotesCount.filter(r => r.question === question._id).length : 0;
+
+            return(
+                uvotesCount
+            );
+        }
+
 		var count = -1;
 		const MenuDate = this.props.questions
 			.sort((a, b) => b.dateNum - a.dateNum)
@@ -249,7 +285,7 @@ class AllCategory extends Component {
 			});
 
 		const MenuVotes = this.props.questions
-			.sort((a, b) => b.votes - a.votes)
+			.sort((a,b) => voteCount(this.props.reactions, b)-voteCount(this.props.reactions, a))
 			.map((question) => {
 				count += 1;
 				return (
@@ -268,6 +304,27 @@ class AllCategory extends Component {
 					</div>
 				);
 	});
+
+			const MenuViews = this.props.questions
+			.sort((a,b) => viewCount(this.props.reactions, b)-viewCount(this.props.reactions, a))
+			.map((question) => {
+				count += 1;
+				return (
+					<div className="col-12" key={question.id}>
+						<RenderMenuItem
+							question={question}
+							class_Name={count % 2 == 0 ? "questionEven" : "questionOdd"}
+							onClick={this.props.onClick}
+							auth={this.props.auth}
+							deleteQuestion={this.props.deleteQuestion}
+							answers={this.props.answers}
+							reactions={this.props.reactions}
+							postReaction={this.props.postReaction}
+							filter={this.state.filter}
+						/>
+					</div>
+				);
+		});
 
 		const MenuUnanswered = this.props.questions
 			.map((question) => {
@@ -310,11 +367,14 @@ class AllCategory extends Component {
 				renderQuestions = MenuVotes;
 			} else if (this.state.filter === "Unanswered")
 				renderQuestions = MenuUnanswered;
+			  else if (this.state.filter === "Views")
+				renderQuestions = MenuViews;
 
 			return (
 				<>
 					<div>
 						<section className="new_section">
+
 							<div className="container col-12 home-questions">
 								<div className="row">
 									<div className="container category-div ">
@@ -336,6 +396,15 @@ class AllCategory extends Component {
 														onClick={() => this.onVotesSelect()}
 													>
 														Votes
+													</NavLink>
+												</NavItem>
+												<NavItem className="mb-4 filters">
+													<NavLink
+														href="#"
+														active={this.state.filter === 'Views' ? true : false}
+														onClick={() => this.onViewsSelect()}
+													>
+														Views
 													</NavLink>
 												</NavItem>
 												<NavItem className="mb-4 filters">

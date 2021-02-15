@@ -96,6 +96,7 @@ function RenderComments({commentsArray, isOpen, postBComment, deleteBComment, bl
                 <ul className="list-unstyled" >
                     <Stagger in>
                     {
+                    commentsArray.length ?
                     commentsArray.sort((a,b) => b.dateNum-a.dateNum).map((comm) => {
                         return (
                             <Fade in>
@@ -127,6 +128,7 @@ function RenderComments({commentsArray, isOpen, postBComment, deleteBComment, bl
                             </Fade>
                             );
                         })
+                        : <p className='mt-5' >Currently no comments. be first one to comment!!</p>
                     }
                     </Stagger>    
                 </ul>
@@ -253,8 +255,7 @@ class SingleBlog extends Component {
                     deleteBComment={this.props.deleteBComment} 
                     blogId={this.props.blog._id} 
                     author={this.props.auth.userId}
-                    isOpen={this.state.showComments}>
-                </RenderComments>
+                    isOpen={this.state.showComments}/>
                 <Modal isOpen={this.state.shareModalOpen} toggle={() => this.onShareClicked()}>
                     <ModalHeader toggle={() => this.onShareClicked()}>Let's Share this !!</ModalHeader>
                     <ModalBody>

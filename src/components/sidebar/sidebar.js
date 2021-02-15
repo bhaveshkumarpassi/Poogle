@@ -97,6 +97,7 @@ return(
       <MenuItem>Latest questions <Link to={`/all-categories/${'Latest'}`} /></MenuItem>
       <MenuItem>Unanswered <Link to={`/all-categories/${'Unanswered'}`} /></MenuItem>
       <MenuItem>Most Liked <Link to={`/all-categories/${'Votes'}`} /></MenuItem>
+      <MenuItem>Most Viewed <Link to={`/all-categories/${'Views'}`} /></MenuItem>
     </SubMenu>
     
     <MenuItem icon={<HiChat />}>

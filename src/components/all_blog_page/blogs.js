@@ -16,6 +16,9 @@ import Loading from '../loading';
 import '../all_blog_page/blogs.css';
 import Select from 'react-select';
 import {spaces} from '../variables';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const RenderTags = ({blog}) => blog.tagNames.map((tag) => {
     
     return(
@@ -45,6 +48,12 @@ function RenderMenuItem({
 	postBReaction,
 	filter,
 }) {
+    /*var lCount = breactions.filter(r => r.category === 'Like');
+        lCount = lCount.length ? lCount.filter(r => r.blog === blog._id).length : 0;
+    var likesCount = lCount;
+
+    var vCount = breactions.filter(r => r.category === 'View');
+    var viewsCount = vCount.length ? vCount.filter(r => r.blog === blog._id).length : 0;*/
 	var likesCount = breactions
 		.filter((r) => r.category === "Like")
 		.filter((r) => r.blog === blog._id).length;
@@ -161,6 +170,8 @@ function RenderMenuItem({
       handleMultiSelectChange = category => {
       this.setState({ category:category });
       }
+
+      notify = (message) => toast.warning(message);
       
       handleSubmit(event){
         event.preventDefault();
@@ -168,25 +179,35 @@ function RenderMenuItem({
         console.log(this.state);
         
         if(isValid){
-            window.alert("Form Submitted");
           
   
             var tagNames = [];
             var tagIds = [];
             var len = this.state.category.length;
+            var flag = false;
              for(var i=0;i<len;i++)
             {
               tagNames.push(this.state.category[i].label);
               tagIds.push(this.state.category[i].value);
+
+              if(this.props.auth.interests.indexOf(this.state.category[i].value)>-1)
+                flag = true;
             }
-            const newBlogDemand = {
-              title: this.state.title,
-              tagNames: tagNames,
-              tagIds: tagIds,
-              author: this.props.auth.userId,
-            };
-  
-            this.props.postBlogDemand(newBlogDemand);
+
+            if(flag) {
+                const newBlogDemand = {
+                    title: this.state.title,
+                    tagNames: tagNames,
+                    tagIds: tagIds,
+                    author: this.props.auth.userId,
+                  };
+        
+                  this.props.postBlogDemand(newBlogDemand);
+            }
+            else {
+                this.notify("Atleast one category should be in your followed spaces list . you can follow required space to add this demand!!");
+            }
+        
         }
       
       }
@@ -233,6 +254,17 @@ function RenderMenuItem({
 		});
 	}
 	render() {
+
+        const likeCount = (reactions, blog) => {
+
+            var lCount = reactions.filter(r => r.category === 'Like');
+            lCount = lCount.length ? lCount.filter(r => r.blog === blog._id).length : 0;
+
+            return(
+                lCount
+            );
+        }
+
 		var count = -1;
 		const MenuDate = this.props.blogs
 			.sort((a, b) => b.dateNum - a.dateNum)
@@ -252,10 +284,11 @@ function RenderMenuItem({
 						/>
 					</div>
 				);
-			});
+			}) ;
 		
 		
 		const MenuLikes = this.props.blogs
+        .sort((a,b) => likeCount(this.props.reactions, b)-likeCount(this.props.reactions, a))
 		.map((blog) => {
 			count += 1;
 			return (
@@ -266,7 +299,7 @@ function RenderMenuItem({
 						onClick={this.props.onClick}
 						auth={this.props.auth}
 						deleteBlog={this.props.deleteBlog}
-						breactions={this.props.breactions}
+						breactions={this.props.reactions}
 						postBReaction={this.props.postBReaction}
 						filter={this.state.filter}
 					/>
@@ -299,7 +332,7 @@ function RenderMenuItem({
 					</div>
 				</div>
 			);
-		} else {
+		} else{
 			var renderBlogs;
 
 			if (this.state.filter === "Latest") {
@@ -345,7 +378,7 @@ function RenderMenuItem({
                                 <NavLink href='#' active={this.state.latestActive} onClick={() => this.onLatestSelect()}>Latest</NavLink>
                             </NavItem>
                             <NavItem className='mb-6 filters'>
-                                <NavLink href='#' active={this.state.clapsActive} onClick={() => this.onClapsSelect()}>Claps</NavLink>
+                                <NavLink href='#' active={this.state.clapsActive} onClick={() => this.onClapsSelect()}>Likes</NavLink>
                             </NavItem>
                         </Nav>
                     </div>
@@ -355,7 +388,7 @@ function RenderMenuItem({
             <div id='all-blogs-id' className="row justify-content-center">
                 
                     {
-                        renderBlogs
+                        this.props.blogs.length ? renderBlogs : <p className='mt-5' >Currently no blogs for this space. be the first one to post a blog for this space.</p>
                     }
                 
             </div>
@@ -382,11 +415,15 @@ function RenderMenuItem({
 
            </ModalFooter>
         </Modal>
+        <ToastContainer 
+            autoClose={false}
+        />
         </div> 
         
     
         );
     }
+    
 }
 }
 

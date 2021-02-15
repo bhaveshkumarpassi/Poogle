@@ -104,6 +104,8 @@ class Main extends Component {
 
 	componentDidMount = async () => {
 
+		console.log(this.props.auth.interests)
+
 		if(this.props.auth && this.props.auth.interests.length) {
 
 			//console.log(this.props.auth);

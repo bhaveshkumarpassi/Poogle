@@ -186,25 +186,14 @@ import './Spaces.css'
                             <div className='row'>
                                 <h3 className='col-12 col-md-4 mb-2 mt-2 space-heading'>Spaces</h3>
                                 
-                                    {/* <Form className='col-12 col-md-8' inline onSubmit={this.handleSearch}>
-                                    <FormGroup className='row m-1'>
-                                        <Label htmlFor="searchSpace" hidden>Search</Label>
-                                        <Button className='col-2 searchbtn' type="submit" value="submit"><span className='fa fa-search'></span></Button>
-                                        <Input className='col-8' type="text" name="searchSpace" id="searchSpace"  placeholder="Search Spaces ... " 
-                                            innerRef={(input) => this.searchSpace = input}
-                                        />
-                                        <Button className='col-2 cancelbtn' type='reset' value='reset' color='danger' onClick={() => this.setState({ data : this.props.spaces.spaces })}><span className='fa fa-times'></span></Button>
-                                    </FormGroup>
-                                    </Form> */}
-                                <Form className='col-12 col-md-8'>
-                                <Form.Group controlId="formBasicDropdown">
-                                    <Form.Label><span className="form__icon"></span>Follow more spaces</Form.Label>
-                                    <div><Select name="category" options={spaces} className="basic-multi-select" value={this.state.category} onChange={this.handleMultiSelectChange} classNamePrefix="select"/></div>
-                                    <div className="invalid__feedback">{this.state.errors.category}</div>
-                                </Form.Group>
-                                <Button onClick={this.handleSubmit} variant="info"><span className='fa fa-paper-plane mr-3' />Submit</Button>
-                                </Form>
-                                {/* <Button onClick={() => this.handleScroll()} >Load more</Button> */}
+                                    <Form className='col-12 col-md-8'>
+                                        <Form.Group controlId="formBasicDropdown">
+                                            <Form.Label><span className="form__icon"></span>Follow more spaces</Form.Label>
+                                            <div><Select name="category" options={spaces} className="basic-multi-select" value={this.state.category} onChange={this.handleMultiSelectChange} classNamePrefix="select"/></div>
+                                            <div className="invalid__feedback">{this.state.errors.category}</div>
+                                        </Form.Group>
+                                        <Button onClick={this.handleSubmit} variant="info"><span className='fa fa-paper-plane mr-3' />Submit</Button>
+                                    </Form>
                             </div>
                             <hr style={{marginBottom: 25, marginTop: 25}} />
                         </div>  
@@ -213,8 +202,7 @@ import './Spaces.css'
                     <div className="row justify-content-center" >
                         {menu}
                     </div>
-                    {/* <div onClick={this.nextPage}> Previous Page </div>
-                    <div onClick={this.previousPage}> Next Page </div>  */}
+                    
                 </div>
             );}            
         }

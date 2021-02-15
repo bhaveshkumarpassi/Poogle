@@ -10,6 +10,8 @@ import {Quill} from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; 
 import ImageCompress from 'quill-image-compress';
 import {spaces, toolbarOptions, formats} from '../variables'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 Quill.register('modules/imageCompress', ImageCompress);
 
 
@@ -63,33 +65,46 @@ class addBlogs extends Component {
       handleEditorChange(value) {
         this.setState({ description: value })
       }
+
+      notify = (message) => toast.warning(message);
+
       handleSubmit(event){
         event.preventDefault();
         const isValid = this.formValidation();
         console.log(this.state);
         
         if(isValid){
-            window.alert("Form Submitted");
           
 
             var tagNames = [];
             var tagIds = [];
             var len = this.state.category.length;
+            var flag = false;
              for(var i=0;i<len;i++)
             {
               tagNames.push(this.state.category[i].label);
               tagIds.push(this.state.category[i].value);
-            }
-            const newBlog = {
-              heading: this.state.title,
-              tagNames: tagNames,
-              tagIds: tagIds,
-              description: this.state.description,
-              author: this.props.auth.userId,
-              duration:this.state.duration
-            };
 
-            this.props.postBlog(newBlog);
+              if(this.props.auth.interests.indexOf(this.state.category[i].value)>-1)
+                flag = true;
+            }
+
+            if(flag) {
+              const newBlog = {
+                heading: this.state.title,
+                tagNames: tagNames,
+                tagIds: tagIds,
+                description: this.state.description,
+                author: this.props.auth.userId,
+                duration:this.state.duration
+              };
+  
+              this.props.postBlog(newBlog);
+            }
+            else{
+              this.notify("Atleast one category should be in your followed spaces list . you can follow required space to publish this blog!!");
+            }
+            
         }
       
       }
@@ -178,7 +193,9 @@ class addBlogs extends Component {
                 
                 </Col>
                 </Container>
-            
+                <ToastContainer 
+                  autoClose={false}
+                  />
           </div>
         )
       }
