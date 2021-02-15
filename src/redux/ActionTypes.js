@@ -63,7 +63,8 @@ export const SIGN_UP = "SIGN_UP";
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
 export const AUTH_FAILED = "AUTH_FAILED";
-
+export const UPDATE_USER = "UPDATE_USER";
+export const UPDATE_FAILED = "UPDATE_FAILED";
 //Contact US form
 export const CONTACT_US= "CONTACT_US";
 export const FORM_FAILED = "FORM_FAILED";

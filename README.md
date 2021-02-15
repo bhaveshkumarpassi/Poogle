@@ -1,8 +1,5 @@
-# To run temporary backend
-go to json server directory and run following commands
-1. npm i
-2. npm run json__server
-Your server will automatically run on port 3001
+# Poogle_Backend repository link
+-> https://github.com/ultimatecoder2/Poogle__Backend
 
 ## Redux developer tools are working on this project.
 To use them, you can install following chrome extension

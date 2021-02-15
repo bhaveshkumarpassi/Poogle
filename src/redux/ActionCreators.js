@@ -1,104 +1,21 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
-
-
+import {logOut, signIn, signUp} from './actions/auth'
+import {contactUs} from './actions/contact'
+import {fetchUser, updateUser} from './actions/user';
 //--------------------------AUTHENTICATION-----------------------------------/
+export {logOut};
+export {signIn};
+export {signUp};
 
-export const signIn = (userDetails) => async (dispatch, getState) => {
-	try {
-		let response = await fetch(baseUrl + "users/login", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(userDetails),
-		});
+/*************************************************************** */
+/*------------CONTACT US FORM----------------------------*/
+export {contactUs};
 
-		if (response.ok) {
-			response = await response.json();
-
-			var interests = "";
-			for(var i=0;i<response.user.interests.length;i++){
-				interests += response.user.interests[i].interest;
-				interests += "*";
-			}
-
-			localStorage.setItem("isSignedIn", true);
-			localStorage.setItem("userId", response.user._id);
-			localStorage.setItem("interests", interests);
-			//localStorage.setItem("interests", JSON.stringify(response.user.interests));
-			//localStorage.setItem("interests", response.user.interests);
-			localStorage.setItem("token", response.token);
-			dispatch({ type: ActionTypes.SIGN_IN, payload: response });
-		} else {
-			response = await response.text();
-			throw new Error(response);
-		}
-	} catch (err) {
-		dispatch({ type: ActionTypes.AUTH_FAILED, payload: { error: err } });
-	}
-};
-
-export const signUp = (userDetails) => async (dispatch, getState) => {
-	try {
-		console.log(userDetails);
-		let response = await fetch(baseUrl + "users", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(userDetails),
-		});
-		console.log(response);
-
-		if (response.ok) {
-			response = await response.json();
-			var interests = "";
-			for(var i=0;i<response.user.interests.length;i++){
-				interests += response.user.interests[i].interest;
-				interests += "*";
-			}
-
-			localStorage.setItem("isSignedIn", true);
-			localStorage.setItem("userId", response.user._id);
-			localStorage.setItem("interests", interests);
-			//localStorage.setItem("interests", JSON.stringify(response.user.interests));
-			//localStorage.setItem("interests", response.user.interests);
-			localStorage.setItem("token", response.token);
-			dispatch({ type: ActionTypes.SIGN_UP, payload: response });
-		} else {
-			response = await response.text();
-			console.log("Eror", response);
-			throw new Error(response);
-		}
-	} catch (err) {
-		dispatch({ type: ActionTypes.AUTH_FAILED, payload: { error: err } });
-	}
-};
-
-// Add authorization header in request and modify the logout
-export const logOut = (userToken) => async (dispatch, getState) => {
-	try {
-		let bearer_token = "Bearer " + userToken.token;
-		let response = await fetch(baseUrl + "users/logout", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: bearer_token,
-			},
-		});
-
-		if (response.ok) {
-			response = await response.text();
-			localStorage.removeItem("isSignedIn");
-			localStorage.removeItem("userId");
-			localStorage.removeItem("interests");
-			localStorage.removeItem("token");
-			dispatch({ type: ActionTypes.SIGN_OUT, payload: response });
-		} else {
-			response = await response.text();
-			throw new Error(response);
-		}
-	} catch (err) {
-		dispatch({ type: ActionTypes.SIGN_OUT, payload: { error: err } });
-	}
-};
+/******************************************************************* */
+/*------------FETCH USER----------------------------*/
+export {fetchUser}
+export {updateUser};
 
 //**************************************************************************** */
 // ------------------------------------ SPACES -------------------------------/
@@ -807,57 +724,12 @@ export const removeComment = (commentId) => ({
 	type: ActionTypes.DELETE_COMMENT,
 	payload: commentId,
 });
-/******************************************************************* */
-/*------------FETCH USER----------------------------*/
-export const fetchUser = (userId) => async (dispatch, getState) => {
-	console.log("Got fet user request for userId"+ userId);
-	try {
-		console.log(userId);
-		let response = await fetch(baseUrl + "users/"+userId, {
-			method: "GET",
-			headers: { "Content-Type": "application/json" },
-		});
-		console.log(response);
-
-		if (response.ok) {
-			response = await response.json();
-			dispatch({ type: ActionTypes.GET_USER, payload: response });
-		} else {
-			response = await response.text();
-			console.log("Error", response);
-			throw new Error(response);
-		}
-	} catch (err) {
-		console.log("err", err);
-		dispatch({ type: ActionTypes.USER_FAILED, payload: { errmess: err } });
-	}
-};
 
 
-/*************************************************************** */
-/*------------CONTACT US FORM----------------------------*/
-export const contactUs = (formDetails) => async (dispatch, getState) => {
-	try {
-		console.log(formDetails);
-		let response = await fetch(baseUrl + "contactUs", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(formDetails),
-		});
-		console.log(response);
 
-		if (response.ok) {
-			response = await response.json();
-			dispatch({ type: ActionTypes.CONTACT_US, payload: response });
-		} else {
-			response = await response.json();
-			console.log("Error", response);
-			throw new Error(response);
-		}
-	} catch (err) {
-		dispatch({ type: ActionTypes.FORM_FAILED, payload: { error: err } });
-	}
-};
+
+
+
 
 //----------------BLOGS---------------------------------//
 

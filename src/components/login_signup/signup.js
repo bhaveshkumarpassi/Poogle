@@ -10,7 +10,7 @@ import Form from 'react-bootstrap/Form';
 import './login_signup.css';
 import GoogleIcon from '../../Images/google_color.svg';
 import FacebookIcon from '../../Images/facebook_color.svg';
-import {FaUserAlt, FaRegCalendarAlt} from 'react-icons/fa'
+import {FaUserAlt} from 'react-icons/fa'
 import {AiOutlineMail} from 'react-icons/ai';
 import {RiLockPasswordFill} from 'react-icons/ri';
 import {FiUserPlus} from 'react-icons/fi';
