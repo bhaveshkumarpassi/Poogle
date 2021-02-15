@@ -20,6 +20,9 @@ import {AiOutlineMail} from 'react-icons/ai';
 import {RiLockPasswordFill} from 'react-icons/ri';
 import {FiUserPlus} from 'react-icons/fi';
 import {fields} from '../variables';
+import {updateUser} from '../../redux/ActionCreators'
+import {baseUrl} from '../../shared/baseUrl'
+
 
 class profile extends Component {
 	constructor(props){
@@ -45,9 +48,7 @@ class profile extends Component {
 			errors:{
 				email:"",
             	password:"",
-				about:{
-					graduation_year:""
-				},
+				graduation_year:"",
 				image:""
 			}	    
 		}       
@@ -122,6 +123,14 @@ class profile extends Component {
             [name]: event.target.value
         });
     }
+	handleSelectField = field =>{
+        this.setState(prevState =>({
+            about:{
+                ...prevState.about,
+                field:field
+            }
+        }))
+    }
     
     handleAboutChange = (event)=> {
       const target = event.target;
@@ -146,9 +155,9 @@ class profile extends Component {
 		})
 	}
 	formValidation = () =>{
-        const{password, email,about} = this.state;
+        const{password, email,about,image} = this.state;
 		const {graduation_year} = about;
-        let emailError="",passwordError="",graduationError="",error;
+        let emailError="",passwordError="",graduationError="", imageError, error;
 		if(email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)){
             emailError = "Email address is Invalid";
             error= true;
@@ -157,41 +166,67 @@ class profile extends Component {
             passwordError="Length of password must be 4 characters or more"
             error= true;
         }
-		if(graduation_year<1940 || graduation_year>2055){
+		if(graduation_year&&(graduation_year<1940 || graduation_year>2055)){
 			graduationError = "Please enter a valid graduation year";
             error= true;
+		}
+		if(image){
+			if(image.type!="image/jpeg"&&image.type!="image/png"){
+				imageError="You must upoad a valid jpeg/png image file";
+				error = true;
+			}else if(image.size>=1000000){
+				imageError="Maximum permissible size of an image is 1Mb";
+				error = true;
+			}
 		}
         this.setState(prevState => ({
             errors:{
                 email:emailError,
                 password:passwordError,
-				about:{
-					graduation_year:graduationError
-				}
+				graduation_year:graduationError,
+				image:imageError
             }
         }))
         
         return !error;
     }
-	handleSubmit=(e)=>{
+	handleSubmit=async(e)=>{
 		e.preventDefault();
 		const isValid = this.formValidation();
 		if(isValid){
-			const{email, Uname, password, about}=this.state;
-			const{graduation_year, field, description} = about;
+			const{email, Uname, password, about, image}=this.state;
+			let{graduation_year, field, description} = about;
+			if(field){
+				field = field.value;
+			}
 			const token = this.props.auth.token;
-			let data = {}
-
-
+			let data = {token,image, email, password, Uname, graduation_year, field, description};
+			
+			await this.props.updateUser(data);
+			if(this.props.updatedUser.user&&this.props.updatedUser.user.message){
+				window.alert("Details updated successfully");
+			}else if(this.props.updatedUser.errMess){
+				window.alert("Either this email is already in use or there is some problem with the server.");
+			}
+			
 		}
 		
 	}
 	handleImageUpload = (e)=>{
 		e.preventDefault();
 		this.setState({
-			image:e.target.files[0]
+			image:e.target.files[0],
+			errors:{
+				image:""
+			}
 		})
 		console.log(e.target.files[0]);
+	}
+	setAlternateImage = (e)=>{
+		console.log(e.target);
+		e.target.src=profilePic;
+		console.log("Done task");
+
 	}
 	renderUpdateModal = ()=>{
 		return(
@@ -203,7 +238,7 @@ class profile extends Component {
             <ModalHeader style={{backgroundColor: 'darkgray'}} toggle={() => this.changeModalState()}>Update Profile</ModalHeader>
             <ModalBody>
 				<div className="invalid__feedback user__notice">**Please fill only those fields that you want to update</div>
-                <Form>
+                <Form enctype="multipart/formdata">
 					<Form.Group controlId="formBasicInput">
                         <Form.Label><span className="form__icon"><FaUserAlt/></span>Name</Form.Label>
                             <input name="Uname"  className="form-control" type="text"  placeholder="Enter name" value = {this.state.Uname} onChange={this.handleChange}/>
@@ -224,7 +259,7 @@ class profile extends Component {
 					<Form.Group controlId="formBasicInput">
                         <Form.Label><span className="form__icon"><SiGooglescholar/></span>Graduation Year</Form.Label>
                             <input name="graduation_year"  className="form-control" type="number" min={1940} max={2050}  placeholder="Enter Year" value = {this.state.about.graduation_year} onChange={this.handleAboutChange}/>
-							<div className="invalid__feedback">{this.state.errors.about.graduation_year}</div>
+							<div className="invalid__feedback">{this.state.errors.graduation_year}</div>
 					</Form.Group>
                     
                     <Form.Group controlId="formBasicName">
@@ -238,6 +273,7 @@ class profile extends Component {
 					<Form.Group controlId="formBasicEmail">
                         <Form.Label><span className="form__icon"><MdDescription/></span>Change Profile Picture</Form.Label>
                             <div><input type="file" name="image"  onChange={this.handleImageUpload} /></div>
+							<div className="invalid__feedback">{this.state.errors.image}</div>
                     </Form.Group>
 
                 </Form>
@@ -263,13 +299,15 @@ class profile extends Component {
 	}
 	renderMainProfile() {
 		const { user } = this.props.user;
+		let url=baseUrl+"users/"+this.state.user+"/image"
+		// console.log("Image Status", imageExists(url));
 		return (
 			<div className="profile__header">
 				<Row>
 					<Col xs={8} className="profile__header__column">
 						<Row>
 							<Image
-								src={profilePic}
+								src={url} onError={this.setAlternateImage}
 								className="user__profile__pic"
 								roundedCircle
 							/>
@@ -541,8 +579,9 @@ const mapStateToProps = (state, ownProps) => {
 		questions:state.questions.questions, 
 		answers: state.answers.answers,
 		blogs:state.blogs.blogs,
-		qreactions: state.qreactions.qreactions
+		qreactions: state.qreactions.qreactions,
+		updatedUser: state.updateUser
 	};
 };
 
-export default connect(mapStateToProps, { fetchUser, deleteQuestion, deleteBlog })(profile);
+export default connect(mapStateToProps, { fetchUser, deleteQuestion, deleteBlog, updateUser })(profile);
