@@ -13,27 +13,40 @@ class Notification extends Component {
     constructor(props){
         super(props);
         this.state = {
-            showSpaces:true,
+            showQues:true,
+            showBlogs:false,
             showContent:false,
         }
-        this.activateSpaces = this.activateSpaces.bind(this);
+        this.activateSpaces = this.activateQues.bind(this);
         this.activateContent = this.activateContent.bind(this);
+        this.activateSpaces = this.activateBlogs.bind(this);
+
     }
-    activateSpaces(){
+    activateQues(){
         this.setState({
-            showSpaces:true,
-            showContent:false
+            showQues:true,
+            showContent:false,
+            showBlogs: false
         })
     }
 
     activateContent(){
         this.setState({
-            showSpaces:false,
-            showContent:true
+            showQues:false,
+            showContent:true,
+            showBlogs: false
         })
     }
 
-    renderSpaces(){
+    activateBlogs(){
+        this.setState({
+            showQues:false,
+            showContent:false,
+            showBlogs: true
+        })
+    }
+
+    renderQues(){
         let Description="I’m a 2019 computer science graduate, now it’s been more than a year since I’ve been looking for a fresher job in IT. What are ..."
         return(
             <>
@@ -76,17 +89,21 @@ class Notification extends Component {
                             <div className='row ml-1 mr-1 notifications__nav'>
                                 <Nav className='col-12' tabs>  
                                     <NavItem className='notification__filters'>
-                                        <NavLink href='#' active={this.state.showSpaces} onClick={() => this.activateSpaces()}>Spaces</NavLink>
+                                        <NavLink href='#' active={this.state.showQues} onClick={() => this.activateQues()}>Questions</NavLink>
                                     </NavItem>
                                     <NavItem className='notification__filters'>
-                                        <NavLink href='#' active={this.state.showContent} onClick={() => this.activateContent()}>Your Content</NavLink>
+                                        <NavLink href='#' active={this.state.showBlogs} onClick={() => this.activateBlogs()}>Blogs</NavLink>
+                                    </NavItem>
+                                    <NavItem className='notification__filters'>
+                                        <NavLink href='#' active={this.state.showContent} onClick={() => this.activateContent()}>Yours</NavLink>
                                     </NavItem>
                                 </Nav>
                             </div>
                         </Row>
 
                         <div className="notifications__content">
-                           {this.state.showSpaces && this.renderSpaces()}
+                           {this.state.showQues && this.renderQues()}
+                           {this.state.showBlogs && this.renderQues()}
                            {this.state.showContent && this.renderPersonal()}
                         </div>
 

@@ -20,6 +20,7 @@ import { Row, Col, Container,
     Card, CardBody, CardTitle, CardSubtitle, CardText, Collapse,
     ButtonGroup, Button, CardImg, Badge, Modal, ModalHeader, ModalBody, 
     ModalFooter, Media, Label, Jumbotron, CardHeader} from "reactstrap";
+import { baseUrl } from "../../shared/baseUrl";
 import Loading from '../loading';
 import {LocalForm, Control, Errors} from 'react-redux-form';
 import { Fade, Stagger } from 'react-animation-components';
@@ -50,6 +51,14 @@ function RenderComments({commentsArray, isOpen, postBComment, deleteBComment, bl
             comment: values.comment
         });
     };
+
+    let url=baseUrl+"users/"+author+"/image"
+        const setAlternateImage = (e)=>{
+            console.log(e.target);
+            e.target.src=profilePic;
+            console.log("Done task");
+
+        }
 
     return(
     <Collapse isOpen={isOpen}>
@@ -103,7 +112,7 @@ function RenderComments({commentsArray, isOpen, postBComment, deleteBComment, bl
                                 <li key={comm._id}>
                                     <Media className='row mt-4'>
                                         <Media left className='mr-0 col-4 col-md-2' >
-                                            <Media object className='ml-0 comments-profile-pic' src = {profilePic} alt={comm.author.user_name} />
+                                            <Media object className='ml-0 comments-profile-pic' onError={setAlternateImage} src = {url} alt={comm.author.user_name} />
                                             <br/>
                                             <p className='comments-data'><b>{comm.author.user_name}</b> at {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comm.createdAt)))}</p>
                                         </Media>
@@ -185,6 +194,14 @@ class SingleBlog extends Component {
         var likes = this.props.reactions.filter((reac) => reac.category === "Like");
         var ilike = likes.filter((uv) => uv.user === this.props.auth.userId)[0];
 
+        let url=baseUrl+"users/"+this.props.blog.author._id+"/image"
+        const setAlternateImage = (e)=>{
+            console.log(e.target);
+            e.target.src=profilePic;
+            console.log("Done task");
+
+        }
+
         if(this.props.isLoading || this.props.reactionIsLoading) {
             return(
                 <Loading type="spokes" color="grey"/>       
@@ -208,8 +225,7 @@ class SingleBlog extends Component {
                     <CardBody>
                         <Row>
                             <Col className='mb-3 single-question-profile' xs={4} md={3} lg={2}>
-                                <CardImg className='single-question-profile-pic' src={profilePic}/>
-                    
+                                <CardImg onError={setAlternateImage} className='single-question-profile-pic' src={url}/>
                                 <CardSubtitle  className='single-question-profile-name'><Link to={`/profile/${this.props.blog.author._id}`}>@{this.props.blog.author.user_name}</Link></CardSubtitle>
                                 <CardText  className='single-question-profile-name text-muted'> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(this.props.blog.createdAt)))}</CardText>
                                 <CardText className='single-question-profile-name text-muted'> {this.props.blog.duration} min read </CardText>

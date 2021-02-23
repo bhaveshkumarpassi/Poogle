@@ -22,6 +22,7 @@ import {FiUserPlus} from 'react-icons/fi';
 import {fields} from '../variables';
 import {updateUser} from '../../redux/ActionCreators'
 import {baseUrl} from '../../shared/baseUrl'
+import { ToastContainer, toast } from 'react-toastify';
 
 
 class profile extends Component {
@@ -190,6 +191,10 @@ class profile extends Component {
         
         return !error;
     }
+
+	notifyS = (message) => toast.success(message);
+    notifyF = (message) => toast.error(message);
+
 	handleSubmit=async(e)=>{
 		e.preventDefault();
 		const isValid = this.formValidation();
@@ -204,9 +209,14 @@ class profile extends Component {
 			
 			await this.props.updateUser(data);
 			if(this.props.updatedUser.user&&this.props.updatedUser.user.message){
-				window.alert("Details updated successfully");
+				this.notifyS("Details updated successfully");
+
+				setTimeout( async () => {
+					await this.props.fetchUser(this.props.auth.userId);
+				}, 3000);
+
 			}else if(this.props.updatedUser.errMess){
-				window.alert("Either this email is already in use or there is some problem with the server.");
+				this.notifyF("Either this email is already in use or there is some problem with the server.");
 			}
 			
 		}
@@ -280,7 +290,7 @@ class profile extends Component {
             </ModalBody>
             <ModalFooter style={{backgroundColor: 'lightgray'}}>
                 <Button onClick={this.handleSubmit} color='info'><span className='fa fa-paper-plane mr-3' />Submit</Button>
-                <Button color="danger" onClick={() => this.changeModalState()}>Cancel</Button>
+                <Button color='danger' onClick={() => this.changeModalState()}>Cancel</Button>
             </ModalFooter>
         </Modal>
 		)
@@ -566,6 +576,8 @@ class profile extends Component {
 							<Col md={1}></Col>
 						</Row>
 					</Container>
+					<ToastContainer
+					/>
 				</section>
 			</div>
 		);

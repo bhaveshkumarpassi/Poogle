@@ -3,6 +3,8 @@ import { baseUrl } from "../shared/baseUrl";
 import {logOut, signIn, signUp} from './actions/auth'
 import {contactUs} from './actions/contact'
 import {fetchUser, updateUser} from './actions/user';
+
+
 //--------------------------AUTHENTICATION-----------------------------------/
 export {logOut};
 export {signIn};
@@ -16,6 +18,9 @@ export {contactUs};
 /*------------FETCH USER----------------------------*/
 export {fetchUser}
 export {updateUser};
+
+
+
 
 //**************************************************************************** */
 // ------------------------------------ SPACES -------------------------------/

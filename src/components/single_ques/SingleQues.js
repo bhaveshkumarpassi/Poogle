@@ -97,14 +97,26 @@ const RenderAnswers = ({answers, deleteAnswer, auth, areactions, postAReaction, 
         }
         
     }
-    
+
+    let url=baseUrl+"users/"+ans.author._id+"/image"
+    const setAlternateImage = (e)=>{
+		console.log(e.target);
+		e.target.src=profilePic;
+		console.log("Done task");
+
+	}
+
     return(
         <Card id={ans.id}>
             <CardBody>
                 <Row>
                     <Col className='mb-3 single-question-profile' xs={4} md={3} lg={2}>
-                        <CardImg className='single-question-profile-pic' src={profilePic}/>
-                        <CardText className='single-question-profile-name'>@{ans.author.user_name} got an answer !!!</CardText>
+                        {   
+                            <CardImg onError={setAlternateImage} className='single-question-profile-pic' src={url}/>
+                        }
+                        <CardSubtitle  className='single-question-profile-name'><Link to={`/profile/${ans.author._id}`}>@{ans.author.user_name}</Link></CardSubtitle>
+                        <CardText  className='single-question-profile-name text-muted'> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(ans.createdAt)))}</CardText>
+                        {/* <CardText className='single-question-profile-name'>@{ans.author.user_name} got an answer !!!</CardText> */}
                     </Col>
                     <Col xs={12} md={9} lg={10}>
                         <Row>
@@ -158,6 +170,14 @@ function RenderComments({commentsArray, isOpen, postComment, deleteComment, ques
             });
         };
 
+        let url=baseUrl+"users/"+author+"/image"
+        const setAlternateImage = (e)=>{
+            console.log(e.target);
+            e.target.src=profilePic;
+            console.log("Done task");
+
+        }
+
         return(
         <Collapse isOpen={isOpen}>
             <Card>
@@ -210,7 +230,7 @@ function RenderComments({commentsArray, isOpen, postComment, deleteComment, ques
                                     <li key={comm._id}>
                                         <Media className='row mt-4'>
                                             <Media left className='mr-0 col-4 col-md-2' >
-                                                <Media object className='ml-0 comments-profile-pic' src = {profilePic} alt={comm.author.user_name} />
+                                                <Media object className='ml-0 comments-profile-pic' src = {url} onError={setAlternateImage} alt={comm.author.user_name} />
                                                 <br/>
                                                 <p className='comments-data'><b>{comm.author.user_name}</b> at {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comm.createdAt)))}</p>
                                             </Media>
@@ -373,6 +393,14 @@ class RenderQuestionAnswers extends Component {
     var ivote = uvotes.filter((uv) => uv.user === this.props.auth.userId)[0];
     var idvote = dvotes.filter((dv) => dv.user === this.props.auth.userId)[0];
 
+    let url=baseUrl+"users/"+this.props.question.author._id+"/image"
+    const setAlternateImage = (e)=>{
+		console.log(e.target);
+		e.target.src=profilePic;
+		console.log("Done task");
+
+	}
+
     return(
     <div>
         <Card>
@@ -381,7 +409,7 @@ class RenderQuestionAnswers extends Component {
                 <hr></hr>
                 <Row>
                     <Col className='mb-3 single-question-profile' xs={5} sm={4} md={3} lg={2}>
-                        <CardImg className='single-question-profile-pic' src={profilePic}/>
+                        <CardImg onError={setAlternateImage} className='single-question-profile-pic' src={url}/>
                         <CardSubtitle  className='single-question-profile-name'><Link to={`/profile/${this.props.question.author._id}`}>@{this.props.question.author.user_name}</Link></CardSubtitle>
                         <CardText  className='single-question-profile-name text-muted'> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(this.props.question.createdAt)))}</CardText>
                         {/* <CardText className='single-question-profile-name'>@{this.props.question.author.user_name} has a question ????</CardText> */}
