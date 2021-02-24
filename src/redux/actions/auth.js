@@ -99,3 +99,29 @@ export const logOut = (userToken) => async (dispatch, getState) => {
 		dispatch({ type: ActionTypes.SIGN_OUT, payload: { error: err } });
 	}
 };
+
+export const ChangeSpaces = (data)=>async(dispatch, getState)=>{
+	const {token} = data;
+    try {
+		let bearer_token = "Bearer " + token;
+		let response = await fetch(baseUrl + "follow/space", {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: bearer_token,
+			},
+			body: JSON.stringify(data),
+		});
+
+		if (response.ok) {
+			response = await response.text();
+			// dispatch({ type: ActionTypes.SPACE_FOLLOW, payload: response });
+		} else {
+			response = await response.text();
+			throw new Error(response);
+		}
+	} catch (err) {
+		// dispatch({ type: ActionTypes.SIGN_OUT, payload: { error: err } });
+	}
+
+}

@@ -14,8 +14,8 @@ import { fetchUser } from "../../redux/ActionCreators";
 import "./profile.css";
 import Loading from "../loading";
 import {spaces} from '../variables';
-import {Questions, Blogs} from './about'
-import {deleteQuestion, deleteBlog} from '../../redux/ActionCreators';
+import {Questions, Blogs, Answers} from './about'
+import {deleteQuestion, deleteBlog, deleteAnswer} from '../../redux/ActionCreators';
 import {AiOutlineMail} from 'react-icons/ai';
 import {RiLockPasswordFill} from 'react-icons/ri';
 import {FiUserPlus} from 'react-icons/fi';
@@ -29,6 +29,9 @@ class profile extends Component {
 	constructor(props){
         super(props);
         this.state = {
+			blogsCount:0,
+			answersCount:0,
+			questionsCount:0,
 			owner:this.props.auth.userId,
 			user:this.props.match.params.userId,
 			showAbout:true,
@@ -54,7 +57,7 @@ class profile extends Component {
 			}	    
 		}       
     }
-	componentDidMount() {
+	componentDidMount = async()=>{
 		const authId= this.props.auth.userId
         const user= this.props.user.user;
 		const reqId = this.props.match.params.userId;
@@ -73,13 +76,41 @@ class profile extends Component {
         }
 		if(reqId){
 			if(authId){
-				if(!user||userId!=reqId){
-					this.props.fetchUser(reqId);
+				if(!user||userId!==reqId){
+					await this.props.fetchUser(reqId);
 				}
 			}else{
-				this.props.fetchUser(reqId);
+				await this.props.fetchUser(reqId);
 			}
 		}
+		const {questions, answers, blogs} = this.props;
+		let cntQues=0, cntBlogs = 0, cntAnswers=0;
+		if(questions){
+			questions.forEach((question)=>{
+				if(question.author._id===this.props.auth.userId){
+					cntQues=cntQues+1;
+				}		
+			})
+		}
+		if(answers){
+			answers.forEach((answer)=>{
+				if(answer.author._id===this.props.auth.userId){
+					cntAnswers=cntAnswers+1;
+				}
+			})
+		}
+		if(blogs){
+			blogs.forEach((blog)=>{
+				if(blog.author._id===this.props.auth.userId){
+					cntBlogs=cntBlogs+1;
+				}
+			})
+		}
+		this.setState({
+			blogsCount:cntBlogs,
+			answersCount:cntAnswers,
+			questionsCount:cntQues,
+		})
 	}
 	activateAbout = (e)=>{
 		e.preventDefault();
@@ -296,70 +327,6 @@ class profile extends Component {
 		)
 	}
 
-	renderButtons=()=>{
-		const { user } = this.props.user;
-		return (
-			<div className="user__account__buttons">
-				<Row>
-					{/* {this.state.owner===this.state.user && <span className="user__btn userbtn--1"><input type="file"/>Change Pic</span>} */}
-					{this.state.owner===this.state.user && <button className="user__btn userbtn--2" onClick={this.updateProfile}>Update Details</button>}
-				</Row>
-			</div>
-		);
-	}
-	renderMainProfile() {
-		const { user } = this.props.user;
-		let url=baseUrl+"users/"+this.state.user+"/image"
-		// console.log("Image Status", imageExists(url));
-		return (
-			<div className="profile__header">
-				<Row>
-					<Col xs={8} className="profile__header__column">
-						<Row>
-							<Image
-								src={url} onError={this.setAlternateImage}
-								className="user__profile__pic"
-								roundedCircle
-							/>
-						</Row>
-						<Row>
-							<div className="user__profile__name">
-								<Row>
-									<h3>{user.name}</h3>
-								</Row>
-								<Row>@{user.user_name}</Row>
-							</div>
-						</Row>
-					</Col>
-					<Col xs={4} className="profile__header__column">
-						<Row>
-							<div className="user__posts__details">
-								<Row>
-									<span className="user__icon">
-										<RiQuestionAnswerFill />
-										<span className="icon__title">  {user.answers.length} answers</span>
-									</span>
-								</Row>
-								<Row>
-									<span className="user__icon">
-										<FaBlog />
-										<span className="icon__title"> {user.blogs.length} blogs</span>
-									</span>
-								</Row>
-								<Row>
-									<span className="user__icon">
-										<FaQuestionCircle />
-										<span className="icon__title"> {user.questions.length} questions</span>
-									</span>
-								</Row>
-							</div>
-						</Row>
-						<Row>{this.renderButtons()}</Row>
-					</Col>
-				</Row>
-			</div>
-		);
-	}
 
 	renderInterestList() {
 		let { interests } = this.props.user.user;
@@ -499,12 +466,32 @@ class profile extends Component {
 			)
 		}
 	}
+	renderAnswerArray = (answers)=>{
+		return answers.map((answer, key)=>{
+			if(answer.author._id===this.props.auth.userId){
+				let quesId = answer.question; 
+				let heading=this.props.questions.map((ques)=>{
+					if(ques._id==quesId)
+						return ques.heading;
+				})
+				let ques = {quesId, heading}
+				return <Answers answer = {answer}
+								question = {ques}
+								valu = {key}
+								key={key}
+								deleteAnswer = {this.props.deleteAnswer}
+							/>	
+
+			}
+		})
+	}
 	renderAnswers(){
-		const {answers} = this.props.user.user
+		const {answers} = this.props;
 		if(answers.length){
 			return(
 				<div className="profile__section">
 					<h2>Answers</h2>
+					{this.renderAnswerArray(answers)||<p>You have not answered any question</p>}
 				</div>
 			)
 		}else{
@@ -536,6 +523,7 @@ class profile extends Component {
 			</div>
 		)
 	}
+	
 	render() {
 		if (this.props.user.isLoading) {
 			return <Loading type="spokes" color="grey" />;
@@ -550,7 +538,11 @@ class profile extends Component {
 				</div>
 			);
 		}
+		const { user } = this.props.user;
+		let url=baseUrl+"users/"+this.state.user+"/image"	
+
 		return (
+			<>
 			<div>
 				<section className="top_section">
 					<Container>
@@ -565,7 +557,57 @@ class profile extends Component {
 									<BreadcrumbItem active>Profile</BreadcrumbItem>
 										{/************--ADD CONDITION FOR OTHER USER LEFT--***************************/}
 								</Breadcrumb>
-								{this.renderMainProfile()}
+								
+								<div className="profile__header">
+									<Row>
+										<Col xs={8} className="profile__header__column">
+											<Row>
+												<Image
+													src={url} onError={this.setAlternateImage}
+													className="user__profile__pic"
+													roundedCircle
+												/>
+											</Row>
+											<Row>
+												<div className="user__profile__name">
+													<Row><h3>{user.name}</h3></Row>
+													<Row>@{user.user_name}</Row>
+												</div>
+											</Row>
+										</Col>
+										<Col xs={4} className="profile__header__column">
+										{this.state.owner===this.state.user && <Row>
+											<div className="user__posts__details">
+												<Row>
+													<span className="user__icon"><RiQuestionAnswerFill />
+														<span className="icon__title">  {this.state.answersCount} answers</span>
+													</span>
+												</Row>
+												<Row>
+													<span className="user__icon"><FaBlog />
+														<span className="icon__title"> {this.state.blogsCount} blogs</span>
+													</span>
+												</Row>
+										
+												<Row>
+													<span className="user__icon">
+														<FaQuestionCircle />
+														<span className="icon__title"> {this.state.questionsCount} questions</span>
+													</span>
+												</Row>
+											</div>
+										</Row>}
+
+									<Row>{this.state.owner===this.state.user && <div className="user__account__buttons">
+												<Row>
+													<button className="user__btn userbtn--2" onClick={this.updateProfile}>Update Details</button>
+												</Row>
+											</div>
+										}
+									</Row>
+							</Col>
+						</Row>
+					</div>
 								{this.state.isAuth && this.renderNavigation()}
 								{this.state.showAbout && this.renderAbout()}
 								{this.state.isAuth&&this.renderUpdateModal()}
@@ -580,11 +622,13 @@ class profile extends Component {
 					/>
 				</section>
 			</div>
+			</>
 		);
 	}
 }
 const mapStateToProps = (state, ownProps) => {
 	return {
+		...ownProps,
 		spaces: state.spaces.spaces,
 		user:state.user,
 		auth:state.auth,
@@ -596,4 +640,4 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
-export default connect(mapStateToProps, { fetchUser, deleteQuestion, deleteBlog, updateUser })(profile);
+export default connect(mapStateToProps, { fetchUser, deleteQuestion, deleteBlog, updateUser, deleteAnswer })(profile);

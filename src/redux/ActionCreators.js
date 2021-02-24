@@ -1,6 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
-import {logOut, signIn, signUp} from './actions/auth'
+import {logOut, signIn, signUp, ChangeSpaces} from './actions/auth'
 import {contactUs} from './actions/contact'
 import {fetchUser, updateUser} from './actions/user';
 
@@ -24,7 +24,7 @@ export {updateUser};
 
 //**************************************************************************** */
 // ------------------------------------ SPACES -------------------------------/
-
+export {ChangeSpaces};
 export const fetchFollowSpaces = (interests) => (dispatch) => {
 	// redux thunk allows to pass an action method instead of just action object and automayically recieves dispatch parameter.
 

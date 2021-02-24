@@ -5,7 +5,6 @@ const axios = require("axios");
 export const fetchUser = (userId) => async (dispatch, getState) => {
 	console.log("Got fet user request for userId"+ userId);
 	try {
-		console.log(userId);
 		let response = await fetch(baseUrl + "users/"+userId, {
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -53,3 +52,4 @@ export const updateUser = (data) => async(dispatch, getState)=>{
         dispatch({ type: ActionTypes.UPDATE_FAILED, payload: err });
     }  
 }
+

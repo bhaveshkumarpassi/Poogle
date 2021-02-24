@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Image } from 'react-bootstrap'
-import { ListGroup, List, ListGroupItemHeading,ListGroupItemText, ListGroupItem, Card, CardBody, CardTitle, CardSubtitle,
-	Badge, Nav, NavItem, NavLink, Button, Jumbotron, Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption,
+import { ListGroup, List, ListGroupItemHeading,ListGroupItemText, ListGroupItem, Card, CardBody,CardText, CardTitle, CardSubtitle,
+	Badge, Nav, NavItem, NavLink, Button, Jumbotron, Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption, CardFooter,
 } from "reactstrap";
 import {Link} from 'react-router-dom';
 
@@ -14,6 +14,42 @@ const RenderTags = ({ tagNames}) =>
 		);
 	});
 
+export class Answers extends Component{
+	render(){
+		let {answer, question,valu,deleteAnswer} = this.props;
+		console.log(answer);
+		const class_Name=valu % 2 == 0 ? "questionEven" : "questionOdd"
+		return(
+			<div>
+				<Card className={'container question-container '+class_Name+' list-item-style'}>
+						<div className='row'>
+							<div className='col-12'>
+								<CardTitle className='question-heading'>
+									<Link className='question-heading' to={`/question-${question._id}-${question.heading}`}>
+										{question.heading}
+									</Link>
+								</CardTitle>
+								<CardSubtitle><CardText  className='single-question-profile-name text-muted'> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(answer.createdAt)))}</CardText></CardSubtitle>
+								<CardBody>
+									<div>
+									<div className="editor__content" dangerouslySetInnerHTML={{ __html: answer.description }} />
+									</div>
+								</CardBody>
+								<CardFooter>
+									<Row>
+										<Button color='danger' onClick={() => deleteAnswer(answer._id)} >
+											<span className='fa fa-lg fa-trash'></span>
+										</Button>
+									</Row>
+								</CardFooter>
+							</div>
+						</div>
+				</Card>
+
+			</div>
+		)
+	}
+}
 
 export class Questions extends Component {
     render() {
@@ -34,8 +70,8 @@ export class Questions extends Component {
 								    {question.heading}
 								</Link>
                             <Button color='danger' style={{marginTop: 6}} onClick={() => deleteQuestion(question._id)}><span className='fa fa-trash'></span></Button>
-						   
 							</ListGroupItemHeading>
+
 								<RenderTags tagNames={question.tagNames} />
 								<ListGroupItemText className='question-text'>
 									Posted by :-  {question.author.user_name}
