@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Card, Button, FormGroup, Label, Input,
     CardTitle, Breadcrumb, BreadcrumbItem, CardBody, CardSubtitle, CardImg} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import { connect } from "react-redux";
 import Form from 'react-bootstrap/Form';
 import Select from 'react-select'
 import ReactImageAppear from 'react-image-appear';
@@ -9,40 +10,41 @@ import Loading from '../loading';
 import {spaces} from '../variables'; 
 import { baseUrl } from '../../shared/baseUrl'
 import './Spaces.css'
+import {ChangeSpaces} from '../../redux/ActionCreators'
 
-
-    function RenderMenuItem ({space, onClick, auth, questions, blogs}) {
-
-        var questions=questions.filter(
-            (question) =>
-                question.tagIds.indexOf(space.stringId) > -1
-        );
-
-        var blogs=blogs.filter(
-            (blog) =>
-                blog.tagIds.indexOf(space.stringId) > -1
-        );
-
-        // var questions = questions.filter((q) => )
-        return ( 
     
-            <Card className='space'>
-            <CardBody>
-                <CardTitle tag="h6">{space.name}</CardTitle>
-            </CardBody>
-                <CardImg className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}/>
-            <CardBody>
-                <CardSubtitle tag="h6" className="mb-2 mt-2 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {questions.length} Questions<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/questions`}>view</Link></CardSubtitle>
-                <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-star mt-3 fa-lg follower-icon'/>    {blogs.length} Blogs<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/blogs`}>view</Link></CardSubtitle>
-                <div className='row mt-4'>
-                    {/* <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view Ques</Link>
-                    <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view Blogs</Link> */}
-                    <Button className='col-12 mt-3' color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Unfollow</Button>
-                </div>
-            </CardBody>
-          </Card>
-        );
-    }
+
+    // function RenderMenuItem ({space, onClick, auth, questions, blogs}) {
+    //     var questions=questions.filter(
+    //         (question) =>
+    //             question.tagIds.indexOf(space.stringId) > -1
+    //     );
+
+    //     var blogs=blogs.filter(
+    //         (blog) =>
+    //             blog.tagIds.indexOf(space.stringId) > -1
+    //     );
+
+    //     // var questions = questions.filter((q) => )
+    //     return ( 
+    
+    //         <Card className='space'>
+    //         <CardBody>
+    //             <CardTitle tag="h6">{space.name}</CardTitle>
+    //         </CardBody>
+    //             <CardImg className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}/>
+    //         <CardBody>
+    //             <CardSubtitle tag="h6" className="mb-2 mt-2 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {questions.length} Questions<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/questions`}>view</Link></CardSubtitle>
+    //             <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-star mt-3 fa-lg follower-icon'/>    {blogs.length} Blogs<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/blogs`}>view</Link></CardSubtitle>
+    //             <div className='row mt-4'>
+    //                 {/* <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view Ques</Link>
+    //                 <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view Blogs</Link> */}
+    //                 <Button className='col-12 mt-3' onclick={()=>onClick()} value = {space.stringId} color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Unfollow</Button>
+    //             </div>
+    //         </CardBody>
+    //       </Card>
+    //     );
+    // }
 
     class Spaces extends Component {
 
@@ -53,7 +55,7 @@ import './Spaces.css'
             this.handleSearch = this.handleSearch.bind(this);
             this.state = {
 
-                category:[],
+                category:"",
                 errors:{
                     category:'',
                   },
@@ -69,7 +71,6 @@ import './Spaces.css'
             }
 
         handleSearch(event) {
-
             this.searchFilterFunction(this.searchSpace.value)
             event.preventDefault();
         }
@@ -134,29 +135,100 @@ import './Spaces.css'
               categoryError = "You must select at least one space";
               error = true;            
             }
-            
-            
             this.setState(prevState => ({
                 errors:{
-                   
                     category:categoryError
                 }
             }))
             
             return !error;
-        }    
+        }
+        
+        handleAddSpace = async(e)=>{
+            e.preventDefault();
+            const type="follow";
+            const token = this.props.auth.token;
+            let {category} = this.state;
+            if(category&&token){
+                try{
+                    category = category.value;
+                    console.log(category);
+                    if(category){
+                        const data = {token, type, spaceId:category};
+                        console.log(data);
+                        await this.props.ChangeSpaces(data);
+                    }
+                }catch(e){
+                    console.log(e);
+                }
+            }
+        }
+        unfollowSpace =(e)=>{
+            if(e)
+                e.preventDefault();
+            console.log("in");
+            const type = "unfollow";
+            const spaceId=e.target.value;
+            const token = this.props.auth.token;
+            try{
+                if(spaceId&&token){
+                    
+                    const data = {token, spaceId, type}
+                    console.log(data);
+                    this.props.ChangeSpaces(data);
+                }
+            }catch(e){
+                console.log(e);
+            }
+        }
 
-        render() {
-            const menu = this.state.data.map((space) => {  
+        RenderMenuItem = (space, auth, questions, blogs)=>{
+            var blogs=blogs, questions=questions;
+            if(questions){
+                questions=questions.filter(
+                    (question) =>
+                        question.tagIds.indexOf(space.stringId) > -1
+                );
+            }
+            if(blogs){
+                blogs=blogs.filter(
+                    (blog) =>
+                        blog.tagIds.indexOf(space.stringId) > -1
+                );
+            }
+    
+            // var questions = questions.filter((q) => )
+            return ( 
+        
+                <Card className='space'>
+                <CardBody>
+                    <CardTitle tag="h6">{space.name}</CardTitle>
+                </CardBody>
+                    <CardImg className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}/>
+                <CardBody>
+                    <CardSubtitle tag="h6" className="mb-2 mt-2 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {questions.length} Questions<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/questions`}>view</Link></CardSubtitle>
+                    <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-star mt-3 fa-lg follower-icon'/>    {blogs.length} Blogs<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/blogs`}>view</Link></CardSubtitle>
+                    <div className='row mt-4'>
+                        {/* <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view Ques</Link>
+                        <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view Blogs</Link> */}
+                        <Button className='col-12 mt-3' onClyick={this.unfollowSpace} value = {space.stringId} color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Unfollow</Button>
+                    </div>
+                </CardBody>
+              </Card>
+            );
+        }
+        renderCardList = ()=>{
+            return this.state.data.map((space) => {  
                 return (
                     <div className="col-12 col-lg-3 col-md-6 col-sm-6 mt-1 mb-4"  key={space._id}>
-                        <RenderMenuItem space={space} onClick={this.props.onClick} 
-                        auth={this.props.auth}
-                        questions={this.props.questions}
-                        blogs={this.props.blogs} />
+                        {this.RenderMenuItem(space, this.props.auth, this.props.questions, this.props.blogs)}
                     </div>
                 );
             });
+        }
+
+        render() {
+            
 
             if (this.props.spaces.isLoading) {
                 return(
@@ -192,7 +264,7 @@ import './Spaces.css'
                                             <div><Select name="category" options={spaces} className="basic-multi-select" value={this.state.category} onChange={this.handleMultiSelectChange} classNamePrefix="select"/></div>
                                             <div className="invalid__feedback">{this.state.errors.category}</div>
                                         </Form.Group>
-                                        <Button onClick={this.handleSubmit} variant="info"><span className='fa fa-paper-plane mr-3' />Submit</Button>
+                                        <Button onClick={this.handleAddSpace} variant="info"><span className='fa fa-paper-plane mr-3' />Submit</Button>
                                     </Form>
                             </div>
                             <hr style={{marginBottom: 25, marginTop: 25}} />
@@ -200,7 +272,7 @@ import './Spaces.css'
                                       
                     </div>
                     <div className="row justify-content-center" >
-                        {menu}
+                        {this.renderCardList()}
                     </div>
                     
                 </div>
@@ -208,5 +280,10 @@ import './Spaces.css'
         }
     }
 
-
-export default Spaces;
+    const mapStateToProps = (state, ownProps) => {
+        return {
+            ...ownProps,
+            auth:state.auth,
+        };
+    };
+export default connect(mapStateToProps,{ChangeSpaces})(Spaces);
