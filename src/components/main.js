@@ -94,7 +94,7 @@ const mapDispatchToProps = (dispatch) => ({
 	deleteBlogDemand:(blogDemandId)=>dispatch(deleteBlogDemand(blogDemandId)),
 	fetchHomeFeed: (interests) => dispatch(fetchHomeFeed(interests)),
 	fetchFollowSpaces: (interests) => dispatch(fetchFollowSpaces(interests)),
-	fetchUser: (userId) => dispatch(fetchUser(userId))
+	fetchUser: (userId) => dispatch(fetchUser(userId)),
 });
 
 class Main extends Component {
