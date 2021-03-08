@@ -4,11 +4,19 @@ import { Container, Row, Col, ListGroup, Form } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import PersonChatProfile from "./PersonChatProfile";
 import { connect } from "react-redux";
+import { BsChatDots } from "react-icons/bs";
 
 const ChatSideBar = (props) => {
 	console.log(props);
-	const { person, setPerson, chats, chat, setChat } = props;
-
+	const {
+		person,
+		setPerson,
+		chats,
+		chat,
+		setChat,
+		modalOpen,
+		setModalOpen,
+	} = props;
 	const [search, setSearch] = useState("");
 
 	useEffect(() => {
@@ -34,24 +42,6 @@ const ChatSideBar = (props) => {
 						setSearch(e.target.value);
 					}}
 				></input>
-				{
-					// <div
-					// 	style={{
-					// 		background: "white",
-					// 		width: "70%",
-					// 		position: "absolute",
-					// 		top: "40px",
-					// 		left: "40px",
-					// 		zIndex: "100",
-					// 		border: "2px solid black",
-					// 		borderRadius: "2px",
-					// 	}}
-					// >
-					// 	<p>Hello</p>
-					// 	<p>Hello</p>
-					// 	<p>Hello</p>
-					// </div>
-				}
 			</Row>
 			<h1>Chats</h1>
 			<Row style={{ overflow: "scroll", height: "70vh", width: "100%" }}>
@@ -78,6 +68,23 @@ const ChatSideBar = (props) => {
 									/>
 								))}
 				</ListGroup>
+				<button
+					style={{
+						position: "absolute",
+						bottom: "50px",
+						right: "90px",
+						fontSize: "50px",
+						border: "none",
+						background: "none",
+					}}
+					onClick={() => {
+						setModalOpen(true);
+					}}
+				>
+					<span>
+						<BsChatDots />
+					</span>
+				</button>
 			</Row>
 		</Col>
 	);

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./Chat.css";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Tab, Tabs, Nav } from "react-bootstrap";
 import ChatSideBar from "./ChatSideBar";
 import { getChats, sendMessage } from "../../redux/actions/chat";
 import { baseUrl } from "../../shared/baseUrl";
 import { connect } from "react-redux";
 import background from "../../Images/chat_back.jpg";
+import Modal from "react-modal";
+import { spaces } from "../variables";
 const axios = require("axios");
 const Pusher = require("pusher-js");
 
@@ -14,6 +16,10 @@ const Chat = ({ chats, token, dispatch }) => {
 	const [person, setPerson] = useState("");
 	const [chat, setChat] = useState([]);
 	const [msg, setMsg] = useState("");
+	const [modalOpen, setModalOpen] = useState(false);
+	const [currSpace, setCurrSpace] = useState("");
+	const [newPerson, setNewPerson] = useState("");
+	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
 		const pusher = new Pusher("563987a4f9fd4750ba5e", {
@@ -53,8 +59,34 @@ const Chat = ({ chats, token, dispatch }) => {
 		setMsg(e.target.value);
 	};
 
+	const handleCurrSpace = async (e) => {
+		setCurrSpace(e.target.innerHTML);
+		const user = await axios({
+			method: "get",
+			url: baseUrl + "users",
+			params: {
+				interests: e.target.innerHTML,
+			},
+		});
+		console.log(user);
+		setUsers(user.data);
+	};
+
 	return (
 		<Container style={{ height: "80vh", marginTop: "20px" }}>
+			<Modal isOpen={modalOpen} style={{ overlay: { zIndex: 1000010 } }}>
+				<Nav variant="tabs" activeKey={currSpace} onSelect={handleCurrSpace}>
+					{spaces.map((space) => (
+						<Nav.Item>
+							<Nav.Link onClick={handleCurrSpace}>{space.value}</Nav.Link>
+						</Nav.Item>
+					))}
+				</Nav>
+				{currSpace === "" ? <p /> : <p>Showing results for, {currSpace}</p>}
+				{users.map((user) => (
+					<p>{user.name}</p>
+				))}
+			</Modal>
 			<Row style={{ maxHeight: "60vh" }}>
 				{/*Chat sidebar*/}
 				<ChatSideBar
@@ -62,8 +94,9 @@ const Chat = ({ chats, token, dispatch }) => {
 					setPerson={setPerson}
 					chat={chat}
 					setChat={setChat}
+					modalOpen={modalOpen}
+					setModalOpen={setModalOpen}
 				/>
-
 				{/*Chat section*/}
 				<Col xs={6} md={8}>
 					{person === "" ? (
