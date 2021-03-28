@@ -18,12 +18,12 @@ import Chat from "./chat/Chat";
 import Login from './login_signup/login';
 import Signup from './login_signup/signup'; 
 import Contact from './ContactUs/contact';
-import Notifications from './notifications/notification';
 import AddQuestion from './add_forms/addQuestions';
 import AddBlog from './add_forms/addBlogs';
 import Logout from './login_signup/logout';
 import AboutUs from './aboutUs/aboutUs';
 import SingleBlog from './single-blog/SingleBlog';
+import BlogDemands from "./all_blogDemands_page/all_blogDemands";
 
 
 const mapStateToProps = (state) => {
@@ -124,6 +124,7 @@ class Main extends Component {
 			await this.props.fetchBReactions();
 			await this.props.fetchBComments();
 			await this.props.fetchBlogs();
+			await this.props.fetchBlogDemands();
 		}
 		
 	}
@@ -301,8 +302,8 @@ class Main extends Component {
 					isLoading={this.props.blogs.isLoading}
 					errMess={this.props.errMess}
 					auth={this.props.auth}
-					deleteBlog={this.props.deleteBlog}
-					postBlogDemand={this.props.postBlogDemand}
+					// deleteBlog={this.props.deleteBlog}
+					// postBlogDemand={this.props.postBlogDemand}
 					reactions={this.props.breactions.breactions}
 					reactionsIsLoading={this.props.breactions.isLoading}
 					reactionsErrMess = {this.props.breactions.errMess}
@@ -310,9 +311,23 @@ class Main extends Component {
 				/>
 
 			);
+					}
+
+        const AllBlogDemands = () =>{
+			return(
+				<BlogDemands 
+				
+				blogDemands={this.props.blogDemands.blogDemands}
+				isLoading={this.props.blogDemands.isLoading}
+				errMess={this.props.blogDemands.errMess}
+				auth={this.props.auth}
+				deleteBlog={this.props.deleteBlog}
+				postBlogDemand={this.props.postBlogDemand}
+				//deleteBlogDemand={this.props.deleteBlogDemand}
+
+				/>
+			)
 		}
-
-
 		const PrivateRoute = ({ component: Component, ...rest }) => (
 			<Route {...rest} render={(props) => (
 			  this.props.auth.isSignedIn
@@ -366,11 +381,13 @@ class Main extends Component {
 						isLoading={this.props.user.isLoading}
 						errMess={this.props.user.errMess} />}/> */}
 					<PrivateRoute path="/chat" component={Chat} />
+					<PrivateRoute path="/blogDemands" component={AllBlogDemands} />
 					<Route path="/aboutUs" component={() => <AboutUs/>} />
 					<Route path="/contact" component={Contact} />
-					<PrivateRoute path="/notifications" component={Notifications}/>
 					<Route path="/login" component={Login} />
-					<PrivateRoute exact path="/addQuestion" component={() => <AddQuestion postQuestion={this.props.postQuestion} auth={this.props.auth}/>}/>
+					<PrivateRoute exact path="/addQuestion" component={() => <AddQuestion 
+					postQuestion={this.props.postQuestion} 
+					auth={this.props.auth}/>}/>
 					<PrivateRoute path="/addBlog" component={() => <AddBlog postBlog={this.props.postBlog} auth={this.props.auth}/>} />
                     
 					<Route path="/signup" component={Signup} />

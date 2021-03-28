@@ -129,114 +129,18 @@ function RenderMenuItem({
  class Blogs extends Component {
     
     constructor(props){
-        super(props);
-        this.toggleModal = this.toggleModal.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this)
-        this.handleMultiSelectChange = this.handleMultiSelectChange.bind(this)
-        this.handleSubmit= this.handleSubmit.bind(this)
-       // this.handleSearch = this.handleSearch.bind(this);   
+        super(props);   
         this.state={
             filter: 'Latest',
             latestActive: true,
             clapsActive:false,
-            isModalOpen: false,
-             title:'',
-             category:[],
-             errors:{
-              category:'',
-              title:'',
-            }  
-          //  data:[]
         
         }     
         
-        // this.closeModal = this.closeModal.bind(this);
-        // // this.arrayHolder = [];
+        
     }
 
-    toggleModal(){
-        this.setState({
-            isModalOpen: !this.state.isModalOpen
-        })
-    }
-
-    handleInputChange(event) {
-        const target = event.target;
-        const name = target.name;
-        this.setState({
-          [name]: event.target.value
-        });
-      }
-      handleMultiSelectChange = category => {
-      this.setState({ category:category });
-      }
-
-      notify = (message) => toast.warning(message);
-      
-      handleSubmit(event){
-        event.preventDefault();
-        const isValid = this.formValidation();
-        console.log(this.state);
-        
-        if(isValid){
-          
-  
-            var tagNames = [];
-            var tagIds = [];
-            var len = this.state.category.length;
-            var flag = false;
-             for(var i=0;i<len;i++)
-            {
-              tagNames.push(this.state.category[i].label);
-              tagIds.push(this.state.category[i].value);
-
-              if(this.props.auth.interests.indexOf(this.state.category[i].value)>-1)
-                flag = true;
-            }
-
-            if(flag) {
-                const newBlogDemand = {
-                    title: this.state.title,
-                    tagNames: tagNames,
-                    tagIds: tagIds,
-                    author: this.props.auth.userId,
-                  };
-        
-                  this.props.postBlogDemand(newBlogDemand);
-            }
-            else {
-                this.notify("Atleast one category should be in your followed spaces list . you can follow required space to add this demand!!");
-            }
-        
-        }
-      
-      }
-      
-      formValidation = () =>{
-        const{title, category} = this.state;
-        let titleError="", categoryError = "", error;
-        if(!title.trim()){
-            titleError = "Title is required";
-            error = true;            
-        }
-  
-        if(!category.length){
-          categoryError = "You must select at least one category";
-          error = true;            
-        }
-        
-        
-        this.setState(prevState => ({
-            errors:{
-                title:titleError,
-                //description: descriptionError,
-                category:categoryError,
-                //duration: durationError
-            }
-        }))
-        
-        return !error;
-    }
+    
    
 	onLatestSelect() {
 		this.setState({
@@ -308,18 +212,7 @@ function RenderMenuItem({
 		});
 
 
-      // let addModalClose=()=>this.setState({addModalShow:false})
-        // const menu = this.state.data.map((blog) => {  
-        //     return (
-        //         <div className="col-12 col-lg-3 col-md-6 col-sm-6 mt-1 mb-4"  key={blog.id}>
-        //             <RenderMenuItem 
-        //             blog={blog} 
-        //             class_Name={count%2==0 ? 'blogEven' : 'blogOdd'}
-        //             onClick={this.props.onClick}
-        //              />
-        //         </div>
-        //     );
-        // });
+      
 		if (this.props.isLoading || this.props.reactionsIsLoading) {
 			return <Loading type="spokes" color="grey" />;
 		} else if (this.props.errMess || this.props.reactionsErrMess) {
@@ -360,13 +253,10 @@ function RenderMenuItem({
                                 <Link style={{color: 'white'}} to='/addBlog'><span className='fa fa-lg fa-plus mr-2 ml-2' />BLOG</Link>
                                 </Button>
           
-    
-                               <Button className='col-8 col-md-4 col-lg-3 mb-4 m-2 add-blog-btn' 
-                               color='info'
-                               onClick={this.toggleModal}>
-                               <span className='fa fa-lg fa-plus mr-2 ml-2'/> Add Blog Demand
-                                </Button>
-                            
+
+                               <Button className='col-8 col-md-4 col-lg-3 mb-4 add-ques-btn' color='danger'>
+                               <Link style={{color:'white'}} to='/blogDemands'>
+                               <span className='fa fa-lg fa-plus mr-2 ml-2' />BlogDemands</Link></Button>
                             <Button className='col-8 col-md-4 col-lg-3 mb-4 ml-4 add-blog-btn' color='danger'>
                             <span className='fa fa-lg fa-bookmark mr-2 ml-2'/>FOLLOW</Button>
                             {/* <Button outline className='col-8 col-lg-3 mb-4 follower-btn' color='primary'><span className='fa fa-lg fa-users mr-2 ml-2' />{this.props.space.followers} FOLLOWERS</Button> */}
@@ -392,32 +282,7 @@ function RenderMenuItem({
                     }
                 
             </div>
-            <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-            <ModalHeader toggle={this.toggleModal}>ADD BLOG DEMAND</ModalHeader>
-            <ModalBody>
-        <div className="container">
-             <Form.Group controlId="formBasicEmail">
-             <Form.Label><span className="form__icon"></span>Title</Form.Label>
-             <input name="title" className="form-control" type="text" value={this.state.title} placeholder="Give a descriptive title." onChange={this.handleInputChange} />
-              <div className="invalid__feedback">{this.state.errors.title}</div>
-              </Form.Group>
-          
-             <Form.Group controlId="formBasicDropdown">
-             <Form.Label><span className="form__icon"></span>Choose Category</Form.Label>
-              <div><Select isMulti name="category" options={spaces} className="basic-multi-select" value={this.state.category} onChange={this.handleMultiSelectChange} classNamePrefix="select"/></div>
-                 <div className="invalid__feedback">{this.state.errors.category}</div>
-               </Form.Group>
-                </div>
-          
-            </ModalBody>
-            <ModalFooter>
-           <Button onClick={this.handleSubmit} color="info"><span className=' mr-3' />Submit</Button>
-
-           </ModalFooter>
-        </Modal>
-        <ToastContainer 
-            autoClose={false}
-        />
+        //    
         </div> 
         
     
