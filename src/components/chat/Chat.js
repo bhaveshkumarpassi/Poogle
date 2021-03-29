@@ -97,6 +97,7 @@ const Chat = ({ chats, token, dispatch }) => {
     setCurrSpace("");
     setNewPerson(e.target.innerHTML);
     setChat([]);
+    setUsers([]);
     setPerson(e.target.innerHTML);
     setModalOpen(false);
   };
