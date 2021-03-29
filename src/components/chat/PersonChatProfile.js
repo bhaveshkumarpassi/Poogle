@@ -1,9 +1,10 @@
 import React from "react";
 import "./Chat.css";
 import { Row, Col, Image, ListGroupItem } from "react-bootstrap";
+import { baseUrl } from "../../shared/baseUrl";
 import profilePic from "../../Images/profile_pic.png";
 
-const PersonChatProfile = ({ name, chat, setPerson, person }) => {
+const PersonChatProfile = ({ name, chat, setPerson, person, id }) => {
   const color = name === person ? "#e5e5e5" : "white";
   return (
     <ListGroupItem
@@ -17,7 +18,7 @@ const PersonChatProfile = ({ name, chat, setPerson, person }) => {
       <Row>
         <Col>
           <Image
-            src={profilePic}
+            src={baseUrl + "users/" + id + "/image" || profilePic}
             className="user__profile__pic"
             roundedCircle
             style={{
@@ -37,7 +38,14 @@ const PersonChatProfile = ({ name, chat, setPerson, person }) => {
           <Row>
             {name === person ? <p>{person}: &nbsp; </p> : <p>You:&nbsp;</p>}
             {chat.length > 0 ? (
-              <p className="display__chat">{chat[chat.length - 1].msg}</p>
+              <div>
+                <p className="display__chat">
+                  <span>{chat[chat.length - 1].msg.substr(0, 10)}</span>
+                  <span>
+                    {chat[chat.length - 1].msg.length > 10 ? <p>...</p> : <p />}
+                  </span>
+                </p>
+              </div>
             ) : (
               <p></p>
             )}
