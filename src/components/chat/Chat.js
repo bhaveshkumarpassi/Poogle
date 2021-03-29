@@ -31,6 +31,7 @@ const Chat = ({ chats, token, dispatch }) => {
   const [currSpace, setCurrSpace] = useState("");
   const [newPerson, setNewPerson] = useState("");
   const [search, setSearch] = useState("");
+  const [newPersonId, setNewPersonId] = useState("");
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -61,7 +62,11 @@ const Chat = ({ chats, token, dispatch }) => {
     e.preventDefault();
     if (msg === "") return;
     setChat((chat) => [...chat, { msg, sender: "me" }]);
-    const id = chats.chats.filter(({ name }) => person === name)[0]._id;
+    const id =
+      newPerson === person
+        ? newPersonId
+        : chats.chats.filter(({ name }) => person === name)[0]._id;
+    console.log(token, msg, id);
     dispatch(sendMessage(token, msg, id));
     setMsg("");
   };
@@ -86,7 +91,13 @@ const Chat = ({ chats, token, dispatch }) => {
 
   const handleNewChat = (e) => {
     console.log(e.target.innerHTML);
+    console.log(e.target.getAttribute("id"));
+    setNewPersonId(e.target.getAttribute("id"));
+    console.log(e.target);
+    setCurrSpace("");
     setNewPerson(e.target.innerHTML);
+    setChat([]);
+    setPerson(e.target.innerHTML);
     setModalOpen(false);
   };
 
@@ -131,7 +142,9 @@ const Chat = ({ chats, token, dispatch }) => {
         <ListGroup>
           {users.map((user) => (
             <ListGroupItem>
-              <Nav.Link onClick={handleNewChat}>{user.name}</Nav.Link>
+              <Nav.Link onClick={handleNewChat} id={user._id}>
+                {user.name}
+              </Nav.Link>
             </ListGroupItem>
           ))}
         </ListGroup>
@@ -145,6 +158,7 @@ const Chat = ({ chats, token, dispatch }) => {
           setChat={setChat}
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
+          newPerson={newPerson}
         />
         {/*Chat section*/}
         <Col xs={6} md={8}>
