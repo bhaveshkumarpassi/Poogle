@@ -16,6 +16,7 @@ const ChatSideBar = (props) => {
     setChat,
     modalOpen,
     setModalOpen,
+    newPerson,
   } = props;
   const [search, setSearch] = useState("");
 
