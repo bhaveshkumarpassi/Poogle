@@ -50,9 +50,6 @@ const renderSignInTop = (status)=>{
         <MenuItem>Add Blog <Link to='/addBlog' /></MenuItem>
       </SubMenu>
     
-      <MenuItem icon={<span className='fa fa-bell'/>}>
-        Notifications <Link to="/notifications"/>
-      </MenuItem> 
       </>
     )
   }
@@ -100,6 +97,10 @@ return(
       <MenuItem>Most Viewed <Link to={`/all-categories/${'Views'}`} /></MenuItem>
     </SubMenu>
     
+    <MenuItem icon={<span className='fa fa-bell'/>}>
+        AllBlogDemands <Link to="/blogDemands"/>
+    </MenuItem> 
+
     <MenuItem icon={<HiChat />}>
       Get Assistance <Link to="/chat"/>
     </MenuItem>
