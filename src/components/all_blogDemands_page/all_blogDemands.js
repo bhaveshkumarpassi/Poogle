@@ -40,19 +40,18 @@ function RenderMenuItem({blogDemand, class_Name,auth,deleteBlogDemand, onClick})
                                 auth.userId === blogDemand.author._id
                                 ?
                             
-                                    <Button color='danger' onClick={() => deleteBlogDemand(blogDemand._id)}><span className='fa fa-lg fa-trash'></span></Button>
+                                    <Button color='danger' className="delete-blog-demand" onClick={() => deleteBlogDemand(blogDemand._id)}>
+                                    <span className='fa fa-lg fa-trash'></span></Button>
                             
                                 :
                                 <></>
                             }   
-                             
+                            <RenderTags  blogDemand={blogDemand} /> 
                             </ListGroupItemHeading>
-                            <RenderTags blogDemand={blogDemand} />
+                            
+                            
                             <ListGroupItemText className='blogDemand-text'>
                                 Posted by :-  {blogDemand.author.user_name}
-                            </ListGroupItemText>
-                            <ListGroupItemText className='blogDemand-text'>
-                                Posted at :- {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(blogDemand.createdAt)))}
                             </ListGroupItemText>
                         </div>
 
