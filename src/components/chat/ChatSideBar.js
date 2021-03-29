@@ -7,91 +7,93 @@ import { connect } from "react-redux";
 import { BsChatDots } from "react-icons/bs";
 
 const ChatSideBar = (props) => {
-	console.log(props);
-	const {
-		person,
-		setPerson,
-		chats,
-		chat,
-		setChat,
-		modalOpen,
-		setModalOpen,
-	} = props;
-	const [search, setSearch] = useState("");
+  console.log(props);
+  const {
+    person,
+    setPerson,
+    chats,
+    chat,
+    setChat,
+    modalOpen,
+    setModalOpen,
+    newPerson,
+  } = props;
+  const [search, setSearch] = useState("");
 
-	useEffect(() => {
-		const currChat = chats.filter(({ name }) => name === person);
-		if (currChat.length !== 0) setChat(currChat[0].chat);
-	}, [person, chats]);
+  useEffect(() => {
+    const currChat = chats.filter(({ name }) => name === person);
+    if (currChat.length !== 0) setChat(currChat[0].chat);
+  }, [person, chats]);
 
-	return (
-		<Col xs={6} md={4} style={{ maxHeight: "60%" }}>
-			<Row style={{ width: "100%" }}>
-				<FaSearch style={{ margin: "12px" }} />
-				<input
-					type="text"
-					placeholder="Search person"
-					value={search}
-					style={{
-						border: "none",
-						outlineWidth: "0",
-						background: "transparent",
-						padding: "10px",
-					}}
-					onChange={(e) => {
-						setSearch(e.target.value);
-					}}
-				></input>
-			</Row>
-			<h1>Chats</h1>
-			<Row style={{ overflow: "scroll", height: "70vh", width: "100%" }}>
-				<ListGroup style={{ width: "100%" }}>
-					{search === ""
-						? chats.map(({ name, chat }) => (
-								<PersonChatProfile
-									name={name}
-									chat={chat}
-									setPerson={setPerson}
-									person={person}
-								/>
-						  ))
-						: chats
-								.filter(({ name }) =>
-									name.toLowerCase().includes(search.toLowerCase())
-								)
-								.map(({ name, chat }) => (
-									<PersonChatProfile
-										name={name}
-										chat={chat}
-										setPerson={setPerson}
-										person={person}
-									/>
-								))}
-				</ListGroup>
-				<button
-					style={{
-						position: "absolute",
-						bottom: "50px",
-						right: "90px",
-						fontSize: "50px",
-						border: "none",
-						background: "none",
-					}}
-					onClick={() => {
-						setModalOpen(true);
-					}}
-				>
-					<span>
-						<BsChatDots />
-					</span>
-				</button>
-			</Row>
-		</Col>
-	);
+  return (
+    <Col xs={6} md={4} style={{ maxHeight: "60%" }}>
+      <Row style={{ width: "100%" }}>
+        <FaSearch style={{ margin: "12px" }} />
+        <input
+          type="text"
+          placeholder="Search person"
+          value={search}
+          style={{
+            border: "none",
+            outlineWidth: "0",
+            background: "transparent",
+            padding: "10px",
+          }}
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+        ></input>
+      </Row>
+      <h1>Chats</h1>
+      <Row style={{ overflow: "scroll", height: "70vh", width: "100%" }}>
+        <ListGroup style={{ width: "100%" }}>
+          {search === ""
+            ? chats.map(({ name, chat, _id }) => (
+                <PersonChatProfile
+                  name={name}
+                  chat={chat}
+                  setPerson={setPerson}
+                  person={person}
+                  id={_id}
+                />
+              ))
+            : chats
+                .filter(({ name }) =>
+                  name.toLowerCase().includes(search.toLowerCase())
+                )
+                .map(({ name, chat }) => (
+                  <PersonChatProfile
+                    name={name}
+                    chat={chat}
+                    setPerson={setPerson}
+                    person={person}
+                  />
+                ))}
+        </ListGroup>
+        <button
+          style={{
+            position: "absolute",
+            bottom: "50px",
+            right: "90px",
+            fontSize: "50px",
+            border: "none",
+            background: "none",
+          }}
+          onClick={() => {
+            setModalOpen(true);
+          }}
+        >
+          <span>
+            <BsChatDots />
+          </span>
+        </button>
+      </Row>
+    </Col>
+  );
 };
 
 const mapStateToProps = (state) => {
-	return { ...state.chats };
+  return { ...state.chats };
 };
 
 export default connect(mapStateToProps)(ChatSideBar);
