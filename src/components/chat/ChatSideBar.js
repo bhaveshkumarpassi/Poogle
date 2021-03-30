@@ -48,12 +48,13 @@ const ChatSideBar = (props) => {
       <Row style={{ overflow: "scroll", height: "70vh", width: "100%" }}>
         <ListGroup style={{ width: "100%" }}>
           {search === ""
-            ? chats.map(({ name, chat }) => (
+            ? chats.map(({ name, chat, _id }) => (
                 <PersonChatProfile
                   name={name}
                   chat={chat}
                   setPerson={setPerson}
                   person={person}
+                  id={_id}
                 />
               ))
             : chats

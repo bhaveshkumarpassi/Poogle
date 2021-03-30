@@ -321,7 +321,7 @@ class Main extends Component {
 				isLoading={this.props.blogDemands.isLoading}
 				errMess={this.props.blogDemands.errMess}
 				auth={this.props.auth}
-				deleteBlog={this.props.deleteBlog}
+				deleteBlogDemand={this.props.deleteBlogDemand}
 				postBlogDemand={this.props.postBlogDemand}
 				//deleteBlogDemand={this.props.deleteBlogDemand}
 

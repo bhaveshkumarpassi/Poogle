@@ -73,29 +73,30 @@
 } */
 /* .notfication__content #post__link{
     text-decoration: none;
+    //#a1c9f0
     color: #454545;
 }  */
 
 .blogDemandEven {
-    background-color: gainsboro;
+    background-color:#f5f7f8;
     padding: 1rem;
 }
 
 .blogDemandOdd {
-    background-color: white;
+    background-color:#a8acaf;
     padding: 1rem;
 }
 
 .blogDemand-heading {
     font-size: 1.1rem;
-    color: #532e1c;
+    color: rgb(235, 145, 145);
     margin: 1rem;
     line-height: 1.8rem;
-    margin-left: 0.4rem;
+    margin-left: 0.8rem;
 }
 
 .list-item-style {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 8px 0 rgba(226, 178, 21, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     margin: 1rem 1rem;
 }
 
@@ -106,13 +107,14 @@
 .tag {
     margin: 5px 0px 5px 0.7rem;
     height: 20px;
-    background-color: #c87941;
+    background-color:rgb(58, 135, 250);
 }
 
 .blogDemand-text {
     margin: 5px;
-    color:  #c87941;
-    font-size: 0.8rem;
+    color:  #5f3408;
+    font-size: 0.9rem;
+    font-weight: bold;
     margin: 1rem;
 }
 
@@ -122,7 +124,7 @@
     border-radius: 25px;
     padding-top: 20px;
     margin: 1rem 1rem;
-    border: solid 1.5px tomato;
+    border: solid 1.5px rgb(15, 17, 17);
     background-color: #ffec85;
 }
 
@@ -144,7 +146,7 @@
     height: 58px;
     padding-left: 5px;
     padding-right: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 8px 0 rgba(73, 3, 3, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     border-radius: 2rem;
     text-align: center;
     
@@ -155,7 +157,7 @@
 }
 
 .button-grp-button {
-    background-color: lightskyblue;
+    background-color: rgb(251, 254, 255);
 }
 
 .blogDemand-btn {
@@ -165,7 +167,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     border-radius: 2rem;
     text-align: center;
-    background-color: #a5ecd7;
+    background-color: #010c09;
 
 }
 
@@ -182,11 +184,14 @@
 
 .all-blogDemand-heading {
     vertical-align: middle;
-    color: rgb(49, 49, 49);
+    color: rgb(245, 149, 6);
     /* text-align: center; */
     margin: 0%;
 }
 
+.delete-blog-demand{
+    vertical-align: right;
+}
 
 
 
