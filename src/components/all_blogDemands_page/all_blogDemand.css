@@ -73,16 +73,17 @@
 } */
 /* .notfication__content #post__link{
     text-decoration: none;
+    //#a1c9f0
     color: #454545;
 }  */
 
 .blogDemandEven {
-    background-color:#a1c9f0;
+    background-color:#f5f7f8;
     padding: 1rem;
 }
 
 .blogDemandOdd {
-    background-color:#a1c9f0;
+    background-color:#a8acaf;
     padding: 1rem;
 }
 
