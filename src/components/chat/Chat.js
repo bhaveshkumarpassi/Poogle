@@ -10,7 +10,9 @@ import {
   Nav,
   ListGroup,
   ListGroupItem,
+  Image
 } from "react-bootstrap";
+import questionMan from "../../Images/chat-bubbles.webp";
 import ChatSideBar from "./ChatSideBar";
 import { getChats, sendMessage } from "../../redux/actions/chat";
 import { baseUrl } from "../../shared/baseUrl";
@@ -164,7 +166,14 @@ const Chat = ({ chats, token, dispatch }) => {
         {/*Chat section*/}
         <Col xs={6} md={8}>
           {person === "" ? (
-            <h1>Choose a person to chat</h1>
+            <div>
+              <h4>CHOOSE YOUR MENTOR</h4>
+              <Image
+                src={questionMan}
+                className="header__side__manimage"
+                fluid
+              />
+            </div>
           ) : (
             <div>
               <Row style={{ padding: "10px" }}>
@@ -213,7 +222,7 @@ const Chat = ({ chats, token, dispatch }) => {
                   onSubmit={handleMessageSent}
                 >
                   <Form.Control
-                    placeholder="Type your message"
+                    placeholder="Type your message (right click cursor to insert emojies)"
                     value={msg}
                     onChange={handleMsgChange}
                   />

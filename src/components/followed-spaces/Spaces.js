@@ -12,39 +12,6 @@ import { baseUrl } from '../../shared/baseUrl'
 import './Spaces.css'
 import {ChangeSpaces} from '../../redux/ActionCreators'
 
-    
-
-    // function RenderMenuItem ({space, onClick, auth, questions, blogs}) {
-    //     var questions=questions.filter(
-    //         (question) =>
-    //             question.tagIds.indexOf(space.stringId) > -1
-    //     );
-
-    //     var blogs=blogs.filter(
-    //         (blog) =>
-    //             blog.tagIds.indexOf(space.stringId) > -1
-    //     );
-
-    //     // var questions = questions.filter((q) => )
-    //     return ( 
-    
-    //         <Card className='space'>
-    //         <CardBody>
-    //             <CardTitle tag="h6">{space.name}</CardTitle>
-    //         </CardBody>
-    //             <CardImg className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}/>
-    //         <CardBody>
-    //             <CardSubtitle tag="h6" className="mb-2 mt-2 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {questions.length} Questions<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/questions`}>view</Link></CardSubtitle>
-    //             <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-star mt-3 fa-lg follower-icon'/>    {blogs.length} Blogs<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/blogs`}>view</Link></CardSubtitle>
-    //             <div className='row mt-4'>
-    //                 {/* <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view Ques</Link>
-    //                 <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view Blogs</Link> */}
-    //                 <Button className='col-12 mt-3' onclick={()=>onClick()} value = {space.stringId} color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Unfollow</Button>
-    //             </div>
-    //         </CardBody>
-    //       </Card>
-    //     );
-    // }
 
     class Spaces extends Component {
 
@@ -197,7 +164,6 @@ import {ChangeSpaces} from '../../redux/ActionCreators'
                 );
             }
     
-            // var questions = questions.filter((q) => )
             return ( 
         
                 <Card className='space'>
@@ -206,12 +172,16 @@ import {ChangeSpaces} from '../../redux/ActionCreators'
                 </CardBody>
                     <CardImg className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}/>
                 <CardBody>
-                    <CardSubtitle tag="h6" className="mb-2 mt-2 text-muted"><span className='fa fa-question-circle fa-lg question-icon'/>    {questions.length} Questions<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/questions`}>view</Link></CardSubtitle>
-                    <CardSubtitle tag="h6" className="mb-2 text-muted"><span className='fa fa-star mt-3 fa-lg follower-icon'/>    {blogs.length} Blogs<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/blogs`}>view</Link></CardSubtitle>
+                    <CardSubtitle tag="h6" className="mb-2 mt-2 text-muted">
+                        <span className='fa fa-question-circle fa-lg question-icon'/>    
+                        {questions.length} Questions<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/questions`}>view</Link>
+                    </CardSubtitle>
+                    <CardSubtitle tag="h6" className="mb-2 text-muted">
+                        <span className='fa fa-star mt-3 fa-lg follower-icon'/>    
+                        {blogs.length} Blogs<Link className='ml-3' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}/blogs`}>view</Link>
+                    </CardSubtitle>
                     <div className='row mt-4'>
-                        {/* <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view Ques</Link>
-                        <Link className='col-12' style={{textAlign: 'center'}} to={`/spaces/${space._id}/${space.stringId}`}>view Blogs</Link> */}
-                        <Button className='col-12 mt-3' onClyick={this.unfollowSpace} value = {space.stringId} color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Unfollow</Button>
+                        <Button className='col-12 mt-3' onClick={this.unfollowSpace} value = {space.stringId} color='danger'><span className='fa fa-lg fa-bookmark mr-2 ml-2' />Unfollow</Button>
                     </div>
                 </CardBody>
               </Card>

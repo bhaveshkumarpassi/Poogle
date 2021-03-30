@@ -44,7 +44,7 @@ const ChatSideBar = (props) => {
           }}
         ></input>
       </Row>
-      <h1>Chats</h1>
+      <h4 style={{marginTop: 10, marginBottom: 10}}>PREVIOUS CHATS</h4>
       <Row style={{ overflow: "scroll", height: "70vh", width: "100%" }}>
         <ListGroup style={{ width: "100%" }}>
           {search === ""

@@ -100,7 +100,7 @@ export const logOut = (userToken) => async (dispatch, getState) => {
 	}
 };
 
-export const ChangeSpaces = (data)=>async(dispatch, getState)=>{
+export const ChangeSpaces = (data) => async (dispatch, getState)=>{
 	const {token} = data;
     try {
 		let bearer_token = "Bearer " + token;

@@ -10,18 +10,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  FormGroup,
-  Label,
-  Input,
   Button,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  ButtonToolbar,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
 } from "reactstrap";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
@@ -63,12 +52,7 @@ function RenderMenuItem({
   postBReaction,
   filter,
 }) {
-  /*var lCount = breactions.filter(r => r.category === 'Like');
-        lCount = lCount.length ? lCount.filter(r => r.blog === blog._id).length : 0;
-    var likesCount = lCount;
 
-    var vCount = breactions.filter(r => r.category === 'View');
-    var viewsCount = vCount.length ? vCount.filter(r => r.blog === blog._id).length : 0;*/
   var likesCount = breactions
     .filter((r) => r.category === "Like")
     .filter((r) => r.blog === blog._id).length;
@@ -283,7 +267,6 @@ class Blogs extends Component {
                   <span className="fa fa-lg fa-bookmark mr-2 ml-2" />
                   FOLLOW
                 </Button>
-                {/* <Button outline className='col-8 col-lg-3 mb-4 follower-btn' color='primary'><span className='fa fa-lg fa-users mr-2 ml-2' />{this.props.space.followers} FOLLOWERS</Button> */}
               </div>
               <div className="row ml-1 mt-3 mr-1">
                 <Nav className="col-12 " tabs>
