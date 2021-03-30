@@ -77,12 +77,12 @@
 }  */
 
 .blogDemandEven {
-    background-color:#212529;
+    background-color:#a1c9f0;
     padding: 1rem;
 }
 
 .blogDemandOdd {
-    background-color:#212529;
+    background-color:#a1c9f0;
     padding: 1rem;
 }
 
@@ -106,12 +106,12 @@
 .tag {
     margin: 5px 0px 5px 0.7rem;
     height: 20px;
-    background-color:rgb(236, 173, 55);
+    background-color:rgb(58, 135, 250);
 }
 
 .blogDemand-text {
     margin: 5px;
-    color:  #ece6e2;
+    color:  #5f3408;
     font-size: 0.9rem;
     font-weight: bold;
     margin: 1rem;
@@ -145,7 +145,7 @@
     height: 58px;
     padding-left: 5px;
     padding-right: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 8px 0 rgba(73, 3, 3, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     border-radius: 2rem;
     text-align: center;
     
@@ -166,7 +166,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     border-radius: 2rem;
     text-align: center;
-    background-color: #a5ecd7;
+    background-color: #010c09;
 
 }
 
@@ -183,7 +183,7 @@
 
 .all-blogDemand-heading {
     vertical-align: middle;
-    color: rgb(5, 5, 5);
+    color: rgb(245, 149, 6);
     /* text-align: center; */
     margin: 0%;
 }
