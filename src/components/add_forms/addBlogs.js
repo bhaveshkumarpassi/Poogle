@@ -68,7 +68,7 @@ class addBlogs extends Component {
 
       notify = (message) => toast.warning(message);
 
-      handleSubmit(event){
+      handleSubmit = async (event)=>{
         event.preventDefault();
         const isValid = this.formValidation();
         console.log(this.state);
@@ -99,7 +99,7 @@ class addBlogs extends Component {
                 duration:this.state.duration
               };
   
-              this.props.postBlog(newBlog);
+              await this.props.postBlog(newBlog);
             }
             else{
               this.notify("Atleast one category should be in your followed spaces list . you can follow required space to publish this blog!!");

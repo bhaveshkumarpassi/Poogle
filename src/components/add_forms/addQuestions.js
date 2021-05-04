@@ -64,7 +64,7 @@ class addQuestions extends Component {
 
       notify = (message) => toast.warning(message);
 
-      handleSubmit = (event) => {
+      handleSubmit = async (event) => {
         event.preventDefault();
         const isValid = this.formValidation();
         console.log(this.state);
@@ -93,7 +93,8 @@ class addQuestions extends Component {
                 author: this.props.auth.userId
               };
   
-              this.props.postQuestion(newQuestion);
+              await this.props.postQuestion(newQuestion);
+              
             }
             else {
               this.notify("Atleast one category should be in your followed spaces list . you can follow required space to add this question!!");

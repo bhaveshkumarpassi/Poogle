@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Router } from "react-router-dom";
 import Main from "./components/main";
-import { Provider, connect } from "react-redux";
-import { ConfigureStore } from "./redux/configureStore";
 import history from './history';
 import {FaBars} from 'react-icons/fa';
 import Sidebar from './components/sidebar/sidebar'
@@ -22,10 +20,9 @@ function App(props) {
 	
 	
 	return (
-		// <Provider store={store}>
-			<BrowserRouter>
-				<Router history={history}>
-					<div className={`app  ${toggled? 'toggled':''}`}>
+		<BrowserRouter>
+			<Router history={history}>
+				<div className={`app  ${toggled? 'toggled':''}`}>
 					<Sidebar collapsed={collapsed} toggled={toggled} handleToggleSidebar={handleToggleSidebar}/>
 					<main>
 						<div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
@@ -36,9 +33,8 @@ function App(props) {
 							<Footer/>
 					</main>
 				</div>
-				</Router>
-			</BrowserRouter>
-		// </Provider>
+			</Router>
+		</BrowserRouter>
 	);
-}
+}	
 export default App;
