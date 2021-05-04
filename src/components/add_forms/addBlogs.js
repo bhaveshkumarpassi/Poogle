@@ -68,7 +68,7 @@ class addBlogs extends Component {
 
       notify = (message) => toast.warning(message);
 
-      handleSubmit(event){
+      handleSubmit = async (event)=>{
         event.preventDefault();
         const isValid = this.formValidation();
         console.log(this.state);
@@ -99,7 +99,7 @@ class addBlogs extends Component {
                 duration:this.state.duration
               };
   
-              this.props.postBlog(newBlog);
+              await this.props.postBlog(newBlog);
             }
             else{
               this.notify("Atleast one category should be in your followed spaces list . you can follow required space to publish this blog!!");
@@ -182,7 +182,7 @@ class addBlogs extends Component {
                                         <div className="invalid__feedback">{this.state.errors.description}</div>
                                     </Form.Group>
                                     <Form.Group controlId="formBasicEmail">
-                                    <Form.Label><span className="form__icon"></span>Read Duration</Form.Label>
+                                    <Form.Label><span className="form__icon"></span>Read Duration (in minutes)</Form.Label>
                                         <input name="duration" className="form-control" type="text" value={this.state.duration} placeholder="Expected read duration of Blog in minutes." onChange={this.handleInputChange} />
                                         <div className="invalid__feedback">{this.state.errors.duration}</div>
                                     </Form.Group>

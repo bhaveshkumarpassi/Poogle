@@ -22,7 +22,7 @@ import './all_blogDemand.css';
 
 const RenderTags = ({blogDemand}) => blogDemand.tagNames.map((tag) => {
     return(
-        <Badge pill className='tag'>{tag}</Badge>
+        <Badge pill className='blogdemand-tag'>{tag}</Badge>
     );
 })
 

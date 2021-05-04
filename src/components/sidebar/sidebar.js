@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, useDispatch, connect} from 'react-redux';
 import { ProSidebar, SidebarHeader,  SidebarFooter, SidebarContent,Menu, MenuItem, SubMenu} from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import '../main';
@@ -14,7 +14,7 @@ import './sidebar.css'
 
 
 const renderSignIn = (status)=>{
-  if(status.isSignedIn=="true"){
+  if(status.isSignedIn){
     return(
       <>
       <MenuItem icon={<span className='fa fa-user-circle'/>}>
@@ -42,7 +42,7 @@ const renderSignIn = (status)=>{
 }
 
 const renderSignInTop = (status)=>{
-  if(status.isSignedIn=="true"){
+  if(status.isSignedIn){
     return(
       <>
       <SubMenu title='Add' icon={<span className='fa fa-plus-circle'/>}>
@@ -59,9 +59,7 @@ const renderSignInTop = (status)=>{
   )
 }
 
-function Sidebar({collapsed, toggled, handleToggleSidebar}){
-  let auth = useSelector(state=> state.auth)||false;   
-
+function Sidebar({collapsed, toggled, handleToggleSidebar, auth}){
 return(
 <ProSidebar breakPoint='md' collapsed={collapsed} 
           toggled={toggled} onToggle={handleToggleSidebar}
@@ -125,5 +123,11 @@ return(
 </ProSidebar>
 )
 }
+const mapStateToProps = state =>{
+  return{
+    auth:state.auth
+  }
+}
 
-export default Sidebar;
+
+export default connect(mapStateToProps, null)(Sidebar);

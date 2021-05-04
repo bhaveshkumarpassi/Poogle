@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { BrowserRouter, Router } from "react-router-dom";
 import Main from "./components/main";
-import { Provider } from "react-redux";
-import { ConfigureStore } from "./redux/configureStore";
 import history from './history';
 import {FaBars} from 'react-icons/fa';
 import Sidebar from './components/sidebar/sidebar'
 import Header from './components/header_footer/header'
 import Footer from './components/header_footer/footer'
 import './App.css';
-const store = ConfigureStore();
 
-function App() {
+function App(props) {
 	const [collapsed, setCollapsed] = useState(false);
 	const [toggled, setToggled] = useState(false);
 	const handleCollapsedChange = (checked) => {
@@ -21,11 +18,11 @@ function App() {
 		setToggled(value);
 	};
 	
+	
 	return (
-		<Provider store={store}>
-			<BrowserRouter>
-				<Router history={history}>
-					<div className={`app  ${toggled? 'toggled':''}`}>
+		<BrowserRouter>
+			<Router history={history}>
+				<div className={`app  ${toggled? 'toggled':''}`}>
 					<Sidebar collapsed={collapsed} toggled={toggled} handleToggleSidebar={handleToggleSidebar}/>
 					<main>
 						<div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
@@ -36,10 +33,8 @@ function App() {
 							<Footer/>
 					</main>
 				</div>
-				</Router>
-			</BrowserRouter>
-		</Provider>
+			</Router>
+		</BrowserRouter>
 	);
-}
-
+}	
 export default App;
