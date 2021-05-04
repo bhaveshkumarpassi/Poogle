@@ -6,10 +6,15 @@ import "bootstrap-social/bootstrap-social.css";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { Provider} from "react-redux";
+import { ConfigureStore } from "./redux/configureStore";
+const store = ConfigureStore();
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<Provider store={store}>
+			<App />
+		</Provider>
 	</React.StrictMode>,
 	document.getElementById("root")
 );

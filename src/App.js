@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Router } from "react-router-dom";
 import Main from "./components/main";
-import { Provider } from "react-redux";
+import { Provider, connect } from "react-redux";
 import { ConfigureStore } from "./redux/configureStore";
 import history from './history';
 import {FaBars} from 'react-icons/fa';
@@ -9,9 +9,8 @@ import Sidebar from './components/sidebar/sidebar'
 import Header from './components/header_footer/header'
 import Footer from './components/header_footer/footer'
 import './App.css';
-const store = ConfigureStore();
 
-function App() {
+function App(props) {
 	const [collapsed, setCollapsed] = useState(false);
 	const [toggled, setToggled] = useState(false);
 	const handleCollapsedChange = (checked) => {
@@ -21,8 +20,9 @@ function App() {
 		setToggled(value);
 	};
 	
+	
 	return (
-		<Provider store={store}>
+		// <Provider store={store}>
 			<BrowserRouter>
 				<Router history={history}>
 					<div className={`app  ${toggled? 'toggled':''}`}>
@@ -38,8 +38,7 @@ function App() {
 				</div>
 				</Router>
 			</BrowserRouter>
-		</Provider>
+		// </Provider>
 	);
 }
-
 export default App;

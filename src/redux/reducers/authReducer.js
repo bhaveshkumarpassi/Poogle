@@ -1,9 +1,6 @@
 const INITIAL_STATE = {
     isSignedIn:localStorage.getItem('isSignedIn')||false,
     interests:localStorage.getItem('interests')||"",
-    //interests: JSON.parse(localStorage.getItem('interests'))||[],
-    //interests:localStorage.getItem('interests') || [],
-    //interests: JSON.parse(localStorage.getItem("interests") || "[]"),
     userId:localStorage.getItem('userId'),
     token: localStorage.getItem('token'),
     err:null

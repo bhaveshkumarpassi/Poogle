@@ -182,7 +182,7 @@ class addBlogs extends Component {
                                         <div className="invalid__feedback">{this.state.errors.description}</div>
                                     </Form.Group>
                                     <Form.Group controlId="formBasicEmail">
-                                    <Form.Label><span className="form__icon"></span>Read Duration</Form.Label>
+                                    <Form.Label><span className="form__icon"></span>Read Duration (in minutes)</Form.Label>
                                         <input name="duration" className="form-control" type="text" value={this.state.duration} placeholder="Expected read duration of Blog in minutes." onChange={this.handleInputChange} />
                                         <div className="invalid__feedback">{this.state.errors.duration}</div>
                                     </Form.Group>
