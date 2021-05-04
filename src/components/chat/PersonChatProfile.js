@@ -4,6 +4,12 @@ import { Row, Col, Image, ListGroupItem } from "react-bootstrap";
 import { baseUrl } from "../../shared/baseUrl";
 import profilePic from "../../Images/profile_pic.png";
 
+const setAlternateImage = (e)=>{
+  console.log(e.target);
+  e.target.src=profilePic;
+  console.log("Done task");
+}
+
 const PersonChatProfile = ({ name, chat, setPerson, person, id }) => {
   const color = name === person ? "#e5e5e5" : "white";
   return (
@@ -18,7 +24,8 @@ const PersonChatProfile = ({ name, chat, setPerson, person, id }) => {
       <Row>
         <Col>
           <Image
-            src={baseUrl + "users/" + id + "/image" || profilePic}
+            src={baseUrl + "users/" + id + "/image"}
+            onError={setAlternateImage}
             className="user__profile__pic"
             roundedCircle
             style={{
@@ -27,14 +34,17 @@ const PersonChatProfile = ({ name, chat, setPerson, person, id }) => {
           />
         </Col>
         <Col>
-          <h3
+          <h6
             style={{ cursor: "pointer" }}
             onClick={(e) => {
               setPerson(e.target.innerHTML);
             }}
           >
-            {name}
-          </h3>
+            <span>{name.substr(0, 12)}</span>
+            <span>
+              {name.length > 12 ? <p>...</p> : <p />}
+            </span>
+          </h6>
           <Row>
             {name === person ? <p>{person}: &nbsp; </p> : <p>You:&nbsp;</p>}
             {chat.length > 0 ? (

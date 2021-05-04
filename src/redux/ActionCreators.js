@@ -782,10 +782,10 @@ export const postBlog = (blog) => (dispatch) => {
 		});
 };
 
-export const fetchBlogs = () => (dispatch) => {
+export const fetchBlogs = (interests) => (dispatch) => {
 	dispatch(blogsLoading(true));
 
-	return fetch(baseUrl + "blogs")
+	return fetch(baseUrl + `blogs?interests=${interests}`)
 		.then(
 			(response) => {
 				if (response.ok) {

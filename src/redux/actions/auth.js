@@ -24,8 +24,6 @@ export const signIn = (userDetails) => async (dispatch, getState) => {
 			localStorage.setItem("isSignedIn", true);
 			localStorage.setItem("userId", response.user._id);
 			localStorage.setItem("interests", interests);
-			//localStorage.setItem("interests", JSON.stringify(response.user.interests));
-			//localStorage.setItem("interests", response.user.interests);
 			localStorage.setItem("token", response.token);
 			dispatch({ type: ActionTypes.SIGN_IN, payload: response });
 		} else {
@@ -100,8 +98,8 @@ export const logOut = (userToken) => async (dispatch, getState) => {
 	}
 };
 
-export const ChangeSpaces = (data) => async (dispatch, getState)=>{
-	const {token} = data;
+export const ChangeSpaces = (data, interests) => async (dispatch, getState)=>{
+	const {token, spaceId} = data;
     try {
 		let bearer_token = "Bearer " + token;
 		let response = await fetch(baseUrl + "follow/space", {
@@ -115,6 +113,10 @@ export const ChangeSpaces = (data) => async (dispatch, getState)=>{
 
 		if (response.ok) {
 			response = await response.text();
+
+			interests = interests + spaceId + '*';
+			localStorage.setItem("interests", interests);
+
 			// dispatch({ type: ActionTypes.SPACE_FOLLOW, payload: response });
 		} else {
 			response = await response.text();

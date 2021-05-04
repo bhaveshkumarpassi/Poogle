@@ -131,7 +131,7 @@ h4 {
 @media screen and (max-width:1080px){
   .header__side__manimage{
     margin-top: 2rem;
-    transform: translateX(2rem)
+    transform: translateX(3rem)
   }
   #main_text{
     font-size: 3.4rem;

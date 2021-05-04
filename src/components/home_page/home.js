@@ -1,387 +1,83 @@
 import React, { Component } from "react";
-import questionMan from "../../Images/questionMan3.jpg";
+import questionMan from "../../Images/question.jpg";
+import Blog from '../../Images/blog.png'
+import Chat from '../../Images/chat1.png'
+import signupBG from '../../Images/addJob.jpg';
 import { Row, Col, Image } from "react-bootstrap";
 import {
-  ListGroup,
-  List,
-  ListGroupItemHeading,
-  ListGroupItemText,
-  ListGroupItem,
-  Card,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Badge,
-  Nav,
-  NavItem,
-  NavLink,
-  Button,
   Jumbotron,
-  Carousel,
-  CarouselItem,
-  CarouselControl,
-  CarouselIndicators,
-  CarouselCaption,
+  Button
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import Loading from "../loading";
-import { baseUrl } from "../../shared/baseUrl";
 import "../followed-spaces/Spaces.css";
 import "./home.css";
 import "../all_ques_page/questions.css";
-
-const RenderTags = ({ question }) =>
-  question.tagNames.map((tag) => {
-    return (
-      <Badge pill className="tag">
-        {tag}
-      </Badge>
-    );
-  });
-
-async function viewAdd(views, postReaction, question, user) {
-  if (views && views.length && views.filter((v) => v.user === user)[0]) {
-    console.log("another view");
-  } else {
-    var reac = {
-      user: user,
-      question: question,
-      category: "View",
-    };
-    await postReaction(reac);
-  }
-}
-
-function RenderMenuItem({
-  question,
-  spaceId,
-  class_Name,
-  onClick,
-  auth,
-  deleteQuestion,
-  answers,
-  reactions,
-  postReaction,
-  filter,
-}) {
-  //var ans = answers.filter(a => a.question === question._id);
-  var ansCount = answers.filter((a) => a.question === question._id).length;
-  var uvotesCount = reactions
-    .filter((r) => r.category === "UpVote")
-    .filter((r) => r.question === question._id).length;
-  var dvotesCount = reactions
-    .filter((r) => r.category === "DownVote")
-    .filter((r) => r.question === question._id).length;
-  var views = reactions
-    .filter((r) => r.category === "View")
-    .filter((r) => r.question === question._id);
-  var viewsCount = views.length;
-
-  if (filter === "Unanswered") {
-    if (ansCount === 0) {
-      return (
-        <ListGroup className="container question-container">
-          <ListGroupItem className={class_Name + " list-item-style"}>
-            <div className="row">
-              <div className="col-12 col-sm-8">
-                <ListGroupItemHeading className="question-heading">
-                  <Link
-                    className="question-heading"
-                    to={`/question-${question._id}-${question.heading}`}
-                    onClick={() =>
-                      viewAdd(views, postReaction, question._id, auth.userId)
-                    }
-                  >
-                    {question.heading}
-                  </Link>
-                  {auth.userId === question.author._id ? (
-                    <Button
-                      color="danger"
-                      style={{ marginTop: 6 }}
-                      onClick={() => deleteQuestion(question._id)}
-                    >
-                      <span className="fa fa-trash"></span>
-                    </Button>
-                  ) : (
-                    <></>
-                  )}
-                </ListGroupItemHeading>
-                <RenderTags question={question} />
-                <ListGroupItemText className="question-text">
-                  Posted by :- {question.author.user_name}
-                </ListGroupItemText>
-                <ListGroupItemText className="question-text">
-                  Posted at :-{" "}
-                  {new Intl.DateTimeFormat("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "2-digit",
-                  }).format(new Date(Date.parse(question.createdAt)))}
-                </ListGroupItemText>
-              </div>
-              <div className="col-12 col-sm-4">
-                <div className="prop-div">
-                  <Badge className="prop" color="light">
-                    {viewsCount}
-                  </Badge>
-                  <p>views</p>
-                </div>
-                <div className="prop-div">
-                  <Badge className="prop" color="light">
-                    {ansCount}
-                  </Badge>
-                  <p>answers</p>
-                </div>
-                <div className="prop-div">
-                  <Badge className="prop" color="light">
-                    {uvotesCount - dvotesCount}
-                  </Badge>
-                  <p>votes</p>
-                </div>
-              </div>
-            </div>
-          </ListGroupItem>
-        </ListGroup>
-      );
-    } else return <></>;
-  } else {
-    return (
-      <ListGroup className="container question-container">
-        <ListGroupItem className={class_Name + " list-item-style"}>
-          <div className="row">
-            <div className="col-12 col-sm-8">
-              <ListGroupItemHeading className="question-heading">
-                <Link
-                  className="question-heading"
-                  to={`/question-${question._id}-${question.heading}`}
-                  onClick={() =>
-                    viewAdd(views, postReaction, question._id, auth.userId)
-                  }
-                >
-                  {question.heading}
-                </Link>
-                {auth.userId === question.author._id ? (
-                  <Button
-                    color="danger"
-                    onClick={() => deleteQuestion(question._id)}
-                  >
-                    <span className="fa fa-lg fa-trash"></span>
-                  </Button>
-                ) : (
-                  <></>
-                )}
-              </ListGroupItemHeading>
-              <RenderTags question={question} />
-              <ListGroupItemText className="question-text">
-                Posted by :- {question.author.user_name}
-              </ListGroupItemText>
-              <ListGroupItemText className="question-text">
-                Posted at :-{" "}
-                {new Intl.DateTimeFormat("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "2-digit",
-                }).format(new Date(Date.parse(question.createdAt)))}
-              </ListGroupItemText>
-            </div>
-            <div className="col-12 col-sm-4">
-              <div className="prop-div">
-                <Badge className="prop" color="light">
-                  {viewsCount}
-                </Badge>
-                <p>views</p>
-              </div>
-              <div className="prop-div">
-                <Badge className="prop" color="light">
-                  {ansCount}
-                </Badge>
-                <p>answers</p>
-              </div>
-              <div className="prop-div">
-                <Badge className="prop" color="light">
-                  {uvotesCount - dvotesCount}
-                </Badge>
-                <p>votes</p>
-              </div>
-            </div>
-          </div>
-        </ListGroupItem>
-      </ListGroup>
-    );
-  }
-}
 
 class home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      filter: "Latest",
-      latestActive: true,
-      votesActive: false,
-      unansweredActive: false,
-      suggetsedActive: false,
+      
     };
-  }
-
-  onLatestSelect() {
-    this.setState({
-      filter: "Latest",
-      latestActive: true,
-      votesActive: false,
-      unansweredActive: false,
-      suggetsedActive: false,
-    });
-  }
-
-  onVotesSelect() {
-    this.setState({
-      filter: "Votes",
-      latestActive: false,
-      votesActive: true,
-      unansweredActive: false,
-      suggetsedActive: false,
-    });
-  }
-
-  onUnansweredSelect() {
-    this.setState({
-      filter: "Unanswered",
-      latestActive: false,
-      votesActive: false,
-      unansweredActive: true,
-      suggetsedActive: false,
-    });
   }
 
   render() {
-    const voteCount = (reactions, question) => {
-      var uvotesCount = reactions.filter((r) => r.category === "UpVote");
-      uvotesCount = uvotesCount.length
-        ? uvotesCount.filter((r) => r.question === question._id).length
-        : 0;
-      var dvotesCount = reactions.filter((r) => r.category === "DownVote");
-      dvotesCount = dvotesCount.length
-        ? dvotesCount.filter((r) => r.question === question._id).length
-        : 0;
-
-      return uvotesCount - dvotesCount;
-    };
-
-    var count = -1;
-    const MenuDate = this.props.questions ? (
-      this.props.questions
-        .sort((a, b) => b.dateNum - a.dateNum)
-        .map((question) => {
-          count += 1;
-          return (
-            <div className="col-12" key={question.id}>
-              <RenderMenuItem
-                question={question}
-                class_Name={count % 2 == 0 ? "questionEven" : "questionOdd"}
-                onClick={this.props.onClick}
-                auth={this.props.auth}
-                deleteQuestion={this.props.deleteQuestion}
-                answers={this.props.answers}
-                reactions={this.props.reactions}
-                postReaction={this.props.postReaction}
-                filter={this.state.filter}
-              />
-            </div>
-          );
-        })
-    ) : (
-      <p>
-        No current feed for this category. You can explore blogs or start
-        discussion for your followed spaces by posting new questions.
-      </p>
-    );
-
-    const MenuVotes = this.props.questions
-      .sort(
-        (a, b) =>
-          voteCount(this.props.reactions, b) -
-          voteCount(this.props.reactions, a)
-      )
-      .map((question) => {
-        count += 1;
-        return (
-          <div className="col-12" key={question.id}>
-            <RenderMenuItem
-              question={question}
-              class_Name={count % 2 == 0 ? "questionEven" : "questionOdd"}
-              onClick={this.props.onClick}
-              auth={this.props.auth}
-              deleteQuestion={this.props.deleteQuestion}
-              answers={this.props.answers}
-              reactions={this.props.reactions}
-              postReaction={this.props.postReaction}
-              filter={this.state.filter}
-            />
-          </div>
-        );
-      });
-
-    const MenuUnanswered = this.props.questions.map((question) => {
-      count += 1;
-      return (
-        <div className="col-12" key={question.id}>
-          <RenderMenuItem
-            question={question}
-            class_Name={count % 2 == 0 ? "questionEven" : "questionOdd"}
-            onClick={this.props.onClick}
-            auth={this.props.auth}
-            deleteQuestion={this.props.deleteQuestion}
-            answers={this.props.answers}
-            reactions={this.props.reactions}
-            postReaction={this.props.postReaction}
-            filter={this.state.filter}
-          />
-        </div>
-      );
-    });
-
-    if (
-      this.props.isLoading ||
-      this.props.answersIsLoading ||
-      this.props.reactionsIsLoading
-    ) {
-      return <Loading type="spokes" color="grey" />;
-    } else if (
-      this.props.errMess ||
-      this.props.answersErrMess ||
-      this.props.reactionsErrMess
-    ) {
-      return (
-        <div className="container spaces">
-          <div className="row">
-            <div className="col-12">
-              <h4>{this.props.errMess}</h4>
-            </div>
-          </div>
-        </div>
-      );
-    } else if (this.props.questions) {
-      var renderQuestions;
-
-      if (this.state.filter === "Latest") {
-        renderQuestions = MenuDate;
-      } else if (this.state.filter === "Votes") {
-        renderQuestions = MenuVotes;
-      } else if (this.state.filter === "Unanswered")
-        renderQuestions = MenuUnanswered;
 
 			return (
-				<>	
-					<Jumbotron className="mb-0">
-						<div className="header__title">
-							<Row className="row">
-								<Col sm={8} className="mainsection__row">
-									<h1 id="main_text">
+				<div>	
+          			<div>
+						<div 
+							className='row mt-0 justify-content-center' style={{
+							backgroundImage : `url(${signupBG})`,
+							backgroundSize : "cover",
+							padding : "5%",
+							marginTop:'3rem',
+							marginBottom: '3rem',
+							borderRadius:'0.8px'
+						}}>
+						<Jumbotron style={{opacity:0.9}} mt-2 mr-2>
+							<div>
+							<Row>
+							<h4 className="display-8" style={{marginLeft: '1rem', marginRight: '1rem', fontStyle:'oblique',fontWeight:'bolder',color:'black'}}>POOGLE-Personalized Quora for PEC</h4>
+							</Row>
+							<Row>
+							<p className="lead" style={{marginLeft: '1rem', marginRight: '1rem'}}>
+								Poogle aims at providing Quora-like features to Pecobians. It has personalized spaces designed for the essential subjects of each branch at PEC to help students out when they need it. 
+								You can interact with other members by posting questions, answers, comments, blogs, upvotes and downvotes and alot more. 
+								Not just that one can even post a Blog-demand demanding a blog on a specific topic related to that space from other members of that space. 
+								You can even get guidance about a space by chating with its proficient members on Poogle.
+							</p>
+							<p className="lead" style={{marginLeft: '1rem', marginRight: '1rem'}}>
+								Thus poogle allows students to connect with each other and allows students to help each other out in a more efficient and organic form	
+							</p>
+							</Row>
+							<hr className="my-2" />
+							<p >To have a wonderful experience about your placement process connect with us NOW!!.</p>
+							<p className="lead">
+								<Button color="primary" to="/login"><span className='fa fa-lg fa-sign-in mr-2 ml-2' /><Link to="/Login"><b style={{color:'white'}}>Login</b></Link></Button>
+							</p>
+							</div>
+						</Jumbotron>
+					</div>
+					<div 
+							className='row mt-0 justify-content-center' style={{
+							backgroundImage : `url(${questionMan})`,
+							backgroundSize : "cover",
+							padding : "5%",
+							marginTop:'4rem',
+							marginBottom: '4rem',
+							//marginLeft: '3rem',
+							//marginRight: '3rem',
+							borderRadius:'0.8px'
+						}}>
+						<Jumbotron style={{opacity:0.9}} mt-2 mr-2>
+						<Col sm={12} className="mainsection__row">
+									<h2 id="main_text">
 										Have a Question?
 										<br />
 										<br />
-									</h1>
+									</h2>
 
 									<h4>We've got you covered</h4>
 									<br/>
@@ -392,70 +88,81 @@ class home extends Component {
 									<button className="header__btn__link btn--text btn--scroll-to">
 										Ask Here&rarr;{" "}
 									</button>
+									</Link>
+								</Col>
+						</Jumbotron>
+					</div>
+					<div 
+							className='row mt-0 justify-content-center' style={{
+							backgroundImage : `url(${Blog})`,
+							backgroundSize : "cover",
+							padding : "5%",
+							marginTop:'4rem',
+							marginBottom: '4rem',
+							//marginLeft: '3rem',
+							//marginRight: '3rem',
+							borderRadius:'0.8px'
+						}}>
+						<Jumbotron style={{opacity:0.9}} mt-2 mr-2>
+						<Col sm={12} className="mainsection__row">
+									<h2 id="main_text">
+										Didn't get the concept?
+										<br />
+										<br />
+									</h2>
+
+									<h4>We've got you covered</h4>
+									<br/>
+									<h7 className='dev-name' >EPXPLORE EXISTING BLOGS ON THE TOPIC OR</h7>
+									<br />
+									<br/>
+									<Link to='/blogDemands'>
+									<button className="header__btn__link btn--text btn--scroll-to">
+										Add Blog Demand&rarr;{" "}
+									</button>
 										</Link>
 								</Col>
-								<Col sm={4}>
-									<div className="header__side__image">
-										<Image
-											src={questionMan}
-											className="header__side__manimage"
-											fluid
-										/>
-									</div>
-								</Col>
-							</Row>
-						</div>
-					</Jumbotron>
-					<div>
-						<section className="new_section">
-							<div className="container col-12 home-questions">
-								<div className="row">
-									<div className="container category-div ">
-										<div className="row ml-1 mt-2 mr-1">
-											<Nav className="col-12 " tabs>
-												<NavItem className="mb-4 filters">
-													<NavLink
-														href="#"
-														active={this.state.latestActive}
-														onClick={() => this.onLatestSelect()}
-													>
-														Latest
-													</NavLink>
-												</NavItem>
-												<NavItem className="mb-4 filters">
-													<NavLink
-														href="#"
-														active={this.state.votesActive}
-														onClick={() => this.onVotesSelect()}
-													>
-														Votes
-													</NavLink>
-												</NavItem>
-												<NavItem className="mb-4 filters">
-													<NavLink
-														href="#"
-														active={this.state.unansweredActive}
-														onClick={() => this.onUnansweredSelect()}
-													>
-														Unanswered
-													</NavLink>
-												</NavItem>
-											</Nav>
-										</div>
-									</div>
-								</div>
-								<div
-									id="all-questions-id"
-									className="row mt-4 justify-content-center"
-								>
-									{renderQuestions}
-								</div>
-							</div>
-						</section>
+					
+						</Jumbotron>
 					</div>
-				</>
+					<div 
+							className='row mb-6 justify-content-center' style={{
+							backgroundImage : `url(${Chat})`,
+							backgroundSize : "cover",
+							padding : "5%",
+							marginTop:'0rem',
+							marginBottom: '5rem',
+							//marginLeft: '3rem',
+							//marginRight: '3rem',
+							borderRadius:'0.8px'
+						}}>
+						<Jumbotron style={{opacity:0.9}} mt-2 mr-2>
+						<Col sm={12} className="mainsection__row">
+									<h2 id="main_text">
+										Do you need assistance?
+										<br />
+										<br />
+									</h2>
+
+									<h4>We've got you covered</h4>
+									<br/>
+									<h7 className='dev-name' >CHAT WITH PROFICIENT MEMBERS OF THAT TOPIC</h7>
+									<br />
+									<br/>
+									<Link to='/chat'>
+									<button className="header__btn__link btn--text btn--scroll-to">
+										Chat&rarr;{" "}
+									</button>
+										</Link>
+								</Col>
+	
+						</Jumbotron>
+					</div>
+					</div>
+						
+			</div>
 			);
 		}
 	}
-}
+
 export default home;

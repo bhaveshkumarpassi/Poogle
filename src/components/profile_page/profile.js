@@ -267,7 +267,6 @@ class profile extends Component {
 		console.log(e.target);
 		e.target.src=profilePic;
 		console.log("Done task");
-
 	}
 	renderUpdateModal = ()=>{
 		return(

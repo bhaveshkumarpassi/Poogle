@@ -65,6 +65,7 @@ export const SIGN_OUT = "SIGN_OUT";
 export const AUTH_FAILED = "AUTH_FAILED";
 export const UPDATE_USER = "UPDATE_USER";
 export const UPDATE_FAILED = "UPDATE_FAILED";
+export const CHANGE_FOLLOW = 'CHANGE_FOLLOW';
 //Contact US form
 export const CONTACT_US= "CONTACT_US";
 export const FORM_FAILED = "FORM_FAILED";
