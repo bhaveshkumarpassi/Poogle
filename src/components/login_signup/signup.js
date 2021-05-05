@@ -239,23 +239,7 @@ class Signup extends Component {
                         Already have an account? <Link to="/login">Login</Link>
                     </div>
                                 
-                    <div className="social-login-label">
-                        <span className="label-text">
-                            or connect with
-                        </span>
-                    </div>
-                    <div className="social__icons__container">
-                        <div className="social__icon__unique">
-                            <span className="social__icon">
-                                <Link to="#"><Image src={GoogleIcon}/></Link> 
-                            </span>
-                        </div>
-                        <div className="social__icon__unique">
-                            <span className="social__icon">
-                                <Link to="#"><Image src={FacebookIcon}/></Link> 
-                            </span>
-                        </div>
-                    </div>
+                    
                   </>
               )
           }

@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import {Container, Row, Col, Image} from 'react-bootstrap';
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
-import Jumbotron from 'react-bootstrap/Jumbotron';
-import Form from 'react-bootstrap/Form';
+
 import {Link} from 'react-router-dom';
-import {AiOutlineMail} from 'react-icons/ai';
-import {RiLockPasswordFill} from 'react-icons/ri';
+
 import './login_signup.css';
-import GoogleIcon from '../../Images/google_color.svg';
-import FacebookIcon from '../../Images/facebook_color.svg';
+
+import Logout1 from '../../Images/logout1.jpg'
+import Logout2 from '../../Images/logout2.jpg'
 import {logOut} from '../../redux/ActionCreators';
 import {connect} from 'react-redux';
 
@@ -28,15 +27,16 @@ class Logout extends Component {
         let message="";
         if(this.state.isSignedIn){
             this.props.logOut({token:this.state.token});
-            message = "Logout req sent. Hope it gets accepted soon." 
+            this.props.history.push('home');
+
+            message = "Logging You out ..... " 
         }
         else{
-            message = "Are you kidding me? You are not logged In"
+            message = "Quite Clever hann !!"
         }
         this.setState({
             message
         })
-
     }
 
     handleSubmit=(event)=> {
@@ -58,9 +58,12 @@ class Logout extends Component {
                             </Breadcrumb>            
                         </Row>
                         <div>
-
-                            <h2>{this.state.message}</h2>
-
+                        {this.state.message === 'Quite Clever hann !!'
+                        ?
+                        <Image src={Logout1} width='100%' height='auto' />
+                        :
+                        <Image src={Logout2} width='100%' height='auto' />
+                        }
                         </div>
                     </Col>
                 </Container>

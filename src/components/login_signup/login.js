@@ -143,24 +143,6 @@ class login extends Component {
                                 <div className="form__other__text">
                                     New user? <Link to="/signup">Sign Up</Link>
                                 </div>
-                                
-                                <div className="social-login-label">
-                                    <span className="label-text">
-                                        or connect with
-                                    </span>
-                                </div>
-                                <div className="social__icons__container">
-                                    <div className="social__icon__unique">
-                                        <span className="social__icon">
-                                            <Link to="#"><Image src={GoogleIcon}/></Link> 
-                                        </span>
-                                    </div>
-                                    <div className="social__icon__unique">
-                                        <span className="social__icon">
-                                            <Link to="#"><Image src={FacebookIcon}/></Link> 
-                                        </span>
-                                    </div>
-                                </div>
 
 
                             </Form>

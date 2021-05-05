@@ -341,7 +341,7 @@ class Main extends Component {
 			<div>
 				<ScrollToTop/>
 				<Switch>
-					<PrivateRoute path="/home" component={HomeQuestions} />
+					<Route path="/home" component={HomeQuestions} />
 					<PrivateRoute
 						exact
 						path="/spaces"
