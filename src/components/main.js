@@ -300,8 +300,7 @@ class Main extends Component {
 					isLoading={this.props.blogs.isLoading}
 					errMess={this.props.errMess}
 					auth={this.props.auth}
-					// deleteBlog={this.props.deleteBlog}
-					// postBlogDemand={this.props.postBlogDemand}
+					deleteBlog={this.props.deleteBlog}
 					reactions={this.props.breactions.breactions}
 					reactionsIsLoading={this.props.breactions.isLoading}
 					reactionsErrMess = {this.props.breactions.errMess}
@@ -385,8 +384,12 @@ class Main extends Component {
 					<Route path="/login" component={Login} />
 					<PrivateRoute exact path="/addQuestion" component={() => <AddQuestion 
 					postQuestion={this.props.postQuestion} 
+					questions={this.props.questions}
 					auth={this.props.auth}/>}/>
-					<PrivateRoute path="/addBlog" component={() => <AddBlog postBlog={this.props.postBlog} auth={this.props.auth}/>} />
+					<PrivateRoute path="/addBlog" component={() => <AddBlog 
+					blogs={this.props.blogs}
+					postBlog={this.props.postBlog} 
+					auth={this.props.auth}/>} />
                     
 					<Route path="/signup" component={Signup} />
 					<Route path="/logout" component={Logout}/>

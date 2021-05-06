@@ -12,6 +12,7 @@ import ImageCompress from 'quill-image-compress';
 import {spaces,toolbarOptions, formats} from '../variables'; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { message } from 'antd';
 Quill.register('modules/imageCompress', ImageCompress);
 
 
@@ -63,6 +64,8 @@ class addQuestions extends Component {
       }
 
       notify = (message) => toast.warning(message);
+      notifyS = (message) => toast.success(message);
+      notifyF = (message) => toast.error(message);
 
       handleSubmit = async (event) => {
         event.preventDefault();
@@ -95,6 +98,11 @@ class addQuestions extends Component {
   
               await this.props.postQuestion(newQuestion);
               
+              if(this.props.questions.postFail)
+                this.notifyF("Some Error occured while posting try again.");
+              else
+                this.notifyS('Question posted successfully!!')
+
             }
             else {
               this.notify("Atleast one category should be in your followed spaces list . you can follow required space to add this question!!");

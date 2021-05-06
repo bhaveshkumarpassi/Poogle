@@ -49,6 +49,8 @@ import ReactQuill from "react-quill";
 import { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { toolbarOptions, formats } from "../variables";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ImageCompress from "quill-image-compress";
 Quill.register("modules/imageCompress", ImageCompress);
 
@@ -251,6 +253,9 @@ function RenderComments({
 }) {
   const [formOpen, setIsOpen] = useState(false);
 
+  const notifyS = (message) => toast.success(message);
+  const notifyF = (message) => toast.error(message);
+
   const toggle = () => setIsOpen(!formOpen);
 
   const handleSubmit = async (values) => {
@@ -259,6 +264,12 @@ function RenderComments({
       question: questionId,
       comment: values.comment,
     });
+
+    if(commentsArray.postFail)
+      notifyF("Some Error occured while posting try again.");
+    else
+      notifyS('Comment posted successfully!!')    
+
   };
 
   let url = baseUrl + "users/" + author + "/image";
@@ -442,19 +453,26 @@ class RenderQuestionAnswers extends Component {
     this.setState({ description: value });
   }
 
+  notifyS = (message) => toast.success(message);
+  notifyF = (message) => toast.error(message);
+
   handleSubmit = async (event) => {
     event.preventDefault();
     const isValid = this.formValidation();
     console.log(this.state);
 
     if (isValid) {
-      window.alert("Form Submitted");
       var answer = {
         question: this.props.question._id,
         description: this.state.description,
         author: this.props.auth.userId,
       };
       await this.props.postAnswer(answer);
+
+      if(this.props.answers.postFail)
+        this.notifyF("Some Error occured while posting try again.");
+      else
+        this.notifyS('Answer posted successfully!!')
     }
   };
 
@@ -873,7 +891,6 @@ class SingleQuestion extends Component {
                 question={this.props.question}
                 answers={this.props.answers}
                 comments={this.props.comments}
-                //spaceId={this.props.spaceId}
                 postComment={this.props.postComment}
                 deleteComment={this.props.deleteComment}
                 onClick={this.props.onClick}
@@ -889,6 +906,8 @@ class SingleQuestion extends Component {
               />
             </Col>
           </Row>
+          <ToastContainer
+            />
         </Container>
       );
     }

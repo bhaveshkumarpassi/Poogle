@@ -100,6 +100,11 @@ export const addQuestion = (question) => ({
 	payload: question,
 });
 
+export const postFail = (errormess) => ({
+	type: ActionTypes.POST_FAIL,
+	payload: errormess,
+});
+
 export const postQuestion = (question) => (dispatch) => {
 	const newQuestion = question;
 	newQuestion.dateNum = Date.now();
@@ -133,8 +138,9 @@ export const postQuestion = (question) => (dispatch) => {
 		.then((response) => response.json())
 		.then((response) => dispatch(addQuestion(response)))
 		.catch((error) => {
+			dispatch(postFail(error.message))
 			console.log("post questions", error.message);
-			alert("Your question could not be posted\nError: " + error.message);
+			//alert("Your question could not be posted\nError: " + error.message);
 		});
 };
 
@@ -401,8 +407,9 @@ export const postAnswer = (answer) => (dispatch) => {
 		.then((response) => response.json())
 		.then((response) => dispatch(addAnswer(response)))
 		.catch((error) => {
+			dispatch(postFail(error.message))
 			console.log("post answers", error.message);
-			alert("Your answer could not be posted\nError: " + error.message);
+			//alert("Your answer could not be posted\nError: " + error.message);
 		});
 };
 
@@ -627,7 +634,6 @@ export const postComment = (comment) => (dispatch) => {
 			"Content-Type": "application/json",
 			Authorization: bearer,
 		},
-		//credentials: "same-origin",
 	})
 		.then(
 			(response) => {
@@ -648,8 +654,8 @@ export const postComment = (comment) => (dispatch) => {
 		.then((response) => response.json())
 		.then((response) => dispatch(addComment(response)))
 		.catch((error) => {
+			dispatch(postFail(error.message))
 			console.log("post comments", error.message);
-			alert("Your comment could not be posted\nError: " + error.message);
 		});
 };
 
@@ -777,8 +783,8 @@ export const postBlog = (blog) => (dispatch) => {
 		.then((response) => response.json())
 		.then((response) => dispatch(addBlog(response)))
 		.catch((error) => {
+			dispatch(postFail(error.message))
 			console.log("post blogs", error.message);
-			alert("Your blog could not be posted\nError: " + error.message);
 		});
 };
 
@@ -1021,8 +1027,8 @@ export const postBComment = (comment) => (dispatch) => {
 		.then((response) => response.json())
 		.then((response) => dispatch(addBComment(response)))
 		.catch((error) => {
+			dispatch(postFail(error.message))
 			console.log("post comments", error.message);
-			alert("Your comment could not be posted\nError: " + error.message);
 		});
 };
 

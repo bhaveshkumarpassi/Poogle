@@ -232,7 +232,7 @@ class Blogs extends Component {
               <BreadcrumbItem>
                 <Link to="/home">Home</Link>
               </BreadcrumbItem>
-              <BreadcrumbItem active>BLOGS</BreadcrumbItem>
+              <BreadcrumbItem active>Blogs</BreadcrumbItem>
             </Breadcrumb>
           </div>
           <div className="row">
@@ -242,7 +242,7 @@ class Blogs extends Component {
               </h4>
               <div className="row justify-content-center mt-4">
                 <Button
-                  className="col-8 col-md-4 col-lg-3 mb-4 m-2 add-blog-btn"
+                  className="col-8 col-md-4 col-lg-3 mb-4 mt-0 m-2 add-blog-btn"
                   color="danger"
                 >
                   <Link style={{ color: "white" }} to="/addBlog">
@@ -257,11 +257,11 @@ class Blogs extends Component {
                 >
                   <Link style={{ color: "white" }} to="/blogDemands">
                     <span className="fa fa-lg fa-plus mr-2 ml-2" />
-                    BlogDemands
+                    Blog Demand
                   </Link>
                 </Button>
                 <Button
-                  className="col-8 col-md-4 col-lg-3 mb-4 ml-4 add-blog-btn"
+                  className="col-8 col-md-4 col-lg-3 mb-4 ml-2 add-blog-btn"
                   color="danger"
                 >
                   <span className="fa fa-lg fa-bookmark mr-2 ml-2" />

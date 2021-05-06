@@ -12,6 +12,7 @@ import FacebookIcon from '../../Images/facebook_color.svg';
 import {signIn} from '../../redux/ActionCreators';
 import {connect} from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
+import LoginCorousel from  "./loginCorousel";
 import 'react-toastify/dist/ReactToastify.css';
 
 class login extends Component {
@@ -111,7 +112,7 @@ class login extends Component {
         return (
             <div className="forms__section">
                 <Container>
-                    <Col md={9} className="contact__main__content">
+                    <Col md={12} className="contact__main__content">
                         <Row>
                             <Breadcrumb className="mb-4 page__navigation__breadCrump">
                                 <BreadcrumbItem>
@@ -121,6 +122,9 @@ class login extends Component {
                             </Breadcrumb>            
                         </Row>
                         <div>
+                        <Row md={12}>
+                        
+                        <Col xl={6}>
                         <Jumbotron className="form__content__div form__content__div--login">
                             <Form validated={this.state.validated}>
                                 <Form.Group controlId="formBasicEmail">
@@ -148,6 +152,11 @@ class login extends Component {
                             </Form>
                     
                         </Jumbotron>
+                        </Col>
+                        <Col xl={6}>
+                        <LoginCorousel/>
+                        </Col>
+                        </Row>
                         </div>
                     </Col>
                 </Container>

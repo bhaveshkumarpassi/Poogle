@@ -42,6 +42,8 @@ import {
 import { baseUrl } from "../../shared/baseUrl";
 import Loading from "../loading";
 import { LocalForm, Control, Errors } from "react-redux-form";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import profilePic from "../../Images/profile_pic.png";
 import "../single-blog/SingleBlog.css";
 
@@ -69,12 +71,20 @@ function RenderComments({
 
   const toggle = () => setIsOpen(!formOpen);
 
+  const notifyS = (message) => toast.success(message);
+  const notifyF = (message) => toast.error(message);
+
   const handleSubmit = async (values) => {
     await postBComment({
       author: author,
       blog: blogId,
       comment: values.comment,
     });
+
+    if(commentsArray.postFail)
+      notifyF("Some Error occured while posting try again.");
+    else
+      notifyS('Comment posted successfully!!')    
   };
 
   let url = baseUrl + "users/" + author + "/image";
@@ -365,6 +375,7 @@ class SingleBlog extends Component {
           author={this.props.auth.userId}
           isOpen={this.state.showComments}
         />
+        <ToastContainer/>
         <Modal
           isOpen={this.state.shareModalOpen}
           toggle={() => this.onShareClicked()}

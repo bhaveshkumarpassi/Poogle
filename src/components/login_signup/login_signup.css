@@ -84,3 +84,33 @@
     text-align: center;
     color:#888;
 }
+
+.LoginCorousel{
+    height: 0px;
+}
+
+.LoginCorouselDiv{
+    width: 0%;
+}
+
+@media screen and (min-width:900px)
+{
+    
+.LoginCorousel{
+    height: 350px;
+    background-size: contain;
+    overflow: hidden;
+    box-shadow: 0 0 25px black;
+    border-radius: 30px;
+}
+
+.LoginCorouselDiv{
+    width: 100%;
+    margin: 5% 10% 5% 10%;
+    margin-left: 0;
+    margin-top: 6%;
+}
+
+}
+
+

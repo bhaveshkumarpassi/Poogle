@@ -67,6 +67,8 @@ class addBlogs extends Component {
       }
 
       notify = (message) => toast.warning(message);
+      notifyS = (message) => toast.success(message);
+      notifyF = (message) => toast.error(message, );
 
       handleSubmit = async (event)=>{
         event.preventDefault();
@@ -100,6 +102,11 @@ class addBlogs extends Component {
               };
   
               await this.props.postBlog(newBlog);
+
+              if(this.props.blogs.postFail)
+                this.notifyF("Some Error occured while posting try again.");
+              else
+                this.notifyS('Blog posted successfully!!')
             }
             else{
               this.notify("Atleast one category should be in your followed spaces list . you can follow required space to publish this blog!!");

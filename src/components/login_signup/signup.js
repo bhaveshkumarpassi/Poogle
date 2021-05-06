@@ -20,6 +20,7 @@ import {GiSelfLove} from 'react-icons/gi';
 import { HiOutlineUserGroup } from "react-icons/hi";
 import {spaces, fields} from '../variables';
 import { ToastContainer, toast } from 'react-toastify';
+import LoginCorousel from  "./loginCorousel";
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -307,6 +308,37 @@ class Signup extends Component {
         return (
             <div className="forms__section">
                 <Container>
+                    {this.state.currentStep===1 
+                    ?
+                    <Col md={12} className="contact__main__content">
+                        <Row>
+                            <Breadcrumb className="mb-4 page__navigation__breadCrump">
+                                <BreadcrumbItem>
+                                    <Link to="/home">Home</Link>
+                                </BreadcrumbItem>
+                                <BreadcrumbItem active>SignUp</BreadcrumbItem>
+                            </Breadcrumb>
+                        </Row>
+                        <div>
+                            <Row md={12}>
+                            
+                            <Col xl={6}>
+                            <Jumbotron className="form__content__div form__content__div--login">
+                                <br/>
+                                <Form>
+                                    <span className="form__number"><p>Step {this.state.currentStep} of 2</p></span>
+                                    {this.state.currentStep===1 && this.firstPage()}
+                                    {this.state.currentStep===2 && this.secondPage() } 
+                                </Form>
+                            </Jumbotron>
+                            </Col>
+                            <Col xl={6}>
+                            <LoginCorousel/>
+                            </Col>
+                            </Row>
+                        </div>
+                    </Col>
+                    :
                     <Col md={9} className="contact__main__content">
                         <Row>
                             <Breadcrumb className="mb-4 page__navigation__breadCrump">
@@ -325,9 +357,9 @@ class Signup extends Component {
                                     {this.state.currentStep===2 && this.secondPage() } 
                                 </Form>
                             </Jumbotron>
-                            
                         </div>
                     </Col>
+                    }
                 </Container>
             </div>
         )
