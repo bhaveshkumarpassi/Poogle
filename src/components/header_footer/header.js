@@ -13,11 +13,9 @@ class header extends Component {
         return (
             <div className="header__section">
             <header className = "header page__navigation">
-
                     <Link to="/">
                         <Image src={Logo} className="d-inline-block align-top" id ="CompanyImage" alt="company_logo"/>
                     </Link>
-               
             </header>
         </div>
         )

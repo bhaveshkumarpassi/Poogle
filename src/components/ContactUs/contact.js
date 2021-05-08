@@ -104,7 +104,7 @@ class Contact extends Component {
                     </Row>
                     
                     <div>
-                        <p className="contact__text">
+                        <p className="contact__text info-text">
                         We strongly believe in improving our products and services. Any queries, feedback or suggestion are more than welcome.
                         Please feel free to fill the given form and write to us. It will really help us to improve.
                         </p>

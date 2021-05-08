@@ -1,4 +1,7 @@
 import * as ActionTypes from "../ActionTypes";
+import {fetchFollowSpaces, fetchHomeFeed, fetchUser, fetchBlogs,fetchReactions, fetchAnswers
+	, fetchAReactions, fetchComments, fetchBReactions,
+	fetchBComments, fetchBlogDemands,  postFail} from '../ActionCreators'
 import { baseUrl } from "../../shared/baseUrl";
 
 
@@ -98,8 +101,8 @@ export const logOut = (userToken) => async (dispatch, getState) => {
 	}
 };
 
-export const ChangeSpaces = (data, interests) => async (dispatch, getState)=>{
-	const {token, spaceId} = data;
+export const ChangeSpaces = (data) => async (dispatch, getState)=>{
+	const {token, spaceId, interests, userId, type} = data;
     try {
 		let bearer_token = "Bearer " + token;
 		let response = await fetch(baseUrl + "follow/space", {
@@ -114,8 +117,38 @@ export const ChangeSpaces = (data, interests) => async (dispatch, getState)=>{
 		if (response.ok) {
 			response = await response.text();
 
-			interests = interests + spaceId + '*';
-			localStorage.setItem("interests", interests);
+			var interestslocal = localStorage.getItem("interests"); 
+
+			var interests_;
+			var _interests;
+			if(type == 'follow'){
+				interests_ = interestslocal+spaceId+'*';
+				localStorage.setItem("interests", interests_);
+	
+				_interests = interests_.split('*');
+				_interests.pop();
+			}
+			else{
+				interests_ = interestslocal.replace(spaceId, '');
+				localStorage.setItem("interests", interests_);
+
+				_interests = interests_.split('*');
+				_interests.pop();
+			}
+
+			dispatch(fetchFollowSpaces(_interests));
+			dispatch(fetchHomeFeed(_interests));
+			dispatch(fetchBlogs(_interests));
+			dispatch(fetchAnswers());
+			dispatch(fetchReactions());
+			dispatch(fetchBReactions());
+			dispatch(fetchAReactions());
+			dispatch(fetchComments());
+			dispatch(fetchBComments());
+			dispatch(fetchBlogDemands());
+			dispatch(fetchUser(userId));
+
+			//dispatch(fetchUser(userId));
 
 			// dispatch({ type: ActionTypes.SPACE_FOLLOW, payload: response });
 		} else {
@@ -123,6 +156,7 @@ export const ChangeSpaces = (data, interests) => async (dispatch, getState)=>{
 			throw new Error(response);
 		}
 	} catch (err) {
+		dispatch(postFail(err.message));
 		// dispatch({ type: ActionTypes.SIGN_OUT, payload: { error: err } });
 	}
 

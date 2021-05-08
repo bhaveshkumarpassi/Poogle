@@ -11,6 +11,8 @@ import {spaces} from '../variables';
 import { baseUrl } from '../../shared/baseUrl'
 import './Spaces.css'
 import {ChangeSpaces} from '../../redux/ActionCreators'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
     class Spaces extends Component {
@@ -66,7 +68,11 @@ import {ChangeSpaces} from '../../redux/ActionCreators'
             });
         };
 
-        handleSubmit = (event) => {
+        notifyS = (message) => toast.success(message);
+        notifyF = (message) => toast.error(message);
+        notifyI = (message) => toast.info(message);
+
+        handleSubmit = async (event) => {
             event.preventDefault();
             const isValid = this.formValidation();
             console.log(this.state);
@@ -90,7 +96,9 @@ import {ChangeSpaces} from '../../redux/ActionCreators'
                   author: this.props.auth.userId
                 };
     
-                this.props.postQuestion(newQuestion);
+                await this.props.postQuestion(newQuestion);
+
+   
             }
           }
 
@@ -115,34 +123,44 @@ import {ChangeSpaces} from '../../redux/ActionCreators'
             e.preventDefault();
             const type="follow";
             const token = this.props.auth.token;
+            const interests = this.props.auth.interests;
+            const userId = this.props.auth.userId;
             let {category} = this.state;
             if(category&&token){
                 try{
                     category = category.value;
                     console.log(category);
                     if(category){
-                        const data = {token, type, spaceId:category};
+                        const data = {token, type, spaceId:category, interests, userId};
                         console.log(data);
                         await this.props.ChangeSpaces(data);
+
+                        if(this.props.auth.postFail)
+                            this.notifyF("Some Error occured while updating interests try again.");
                     }
                 }catch(e){
                     console.log(e);
                 }
             }
         }
-        unfollowSpace =(e)=>{
+        unfollowSpace = async(e)=>{
             if(e)
                 e.preventDefault();
             console.log("in");
             const type = "unfollow";
             const spaceId=e.target.value;
             const token = this.props.auth.token;
+            const interests = this.props.auth.interests;
+            const userId = this.props.auth.userId;
             try{
                 if(spaceId&&token){
                     
-                    const data = {token, spaceId, type}
+                    const data = {token, spaceId, type, interests, userId}
                     console.log(data);
-                    this.props.ChangeSpaces(data);
+                    await this.props.ChangeSpaces(data);
+
+                    if(this.props.auth.postFail)
+                        this.notifyF("Some Error occured while updating interests try again.");
                 }
             }catch(e){
                 console.log(e);
@@ -217,7 +235,10 @@ import {ChangeSpaces} from '../../redux/ActionCreators'
                 );
             }
             else 
-            {return (
+            {
+                var interests_ = localStorage.getItem('interests');
+                var spaces_ = spaces.filter((s) => interests_.indexOf(s.value)<0);
+                return (
                 <div className="container spaces">
                     <div className="row">
                         <Breadcrumb className='mt-3 ml-3'>
@@ -231,7 +252,7 @@ import {ChangeSpaces} from '../../redux/ActionCreators'
                                     <Form className='col-12 col-md-8'>
                                         <Form.Group controlId="formBasicDropdown">
                                             <Form.Label><span className="form__icon"></span>Follow more spaces</Form.Label>
-                                            <div><Select name="category" options={spaces} className="basic-multi-select" value={this.state.category} onChange={this.handleMultiSelectChange} classNamePrefix="select"/></div>
+                                            <div><Select name="category" options={spaces_} className="basic-multi-select" value={this.state.category} onChange={this.handleMultiSelectChange} classNamePrefix="select"/></div>
                                             <div className="invalid__feedback">{this.state.errors.category}</div>
                                         </Form.Group>
                                         <Button onClick={this.handleAddSpace} variant="info"><span className='fa fa-paper-plane mr-3' />Submit</Button>
@@ -244,7 +265,9 @@ import {ChangeSpaces} from '../../redux/ActionCreators'
                     <div className="row justify-content-center" >
                         {this.renderCardList()}
                     </div>
-                    
+                    <ToastContainer 
+                        autoClose={false}
+                    />
                 </div>
             );}            
         }

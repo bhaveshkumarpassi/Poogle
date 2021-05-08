@@ -11,7 +11,9 @@ import {
   NavItem,
   NavLink,
   Button,
+  ButtonGroup
 } from "reactstrap";
+import { FaBlog, FaQuestionCircle, FaUserAlt } from "react-icons/fa";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import Loading from "../loading";
@@ -230,9 +232,9 @@ class Blogs extends Component {
           <div className="row">
             <Breadcrumb className="mt-3 ml-3">
               <BreadcrumbItem>
-                <Link to="/home">Home</Link>
+                <Link to="/spaces">Spaces</Link>
               </BreadcrumbItem>
-              <BreadcrumbItem active>Blogs</BreadcrumbItem>
+              <BreadcrumbItem active>{this.props.space.name}</BreadcrumbItem>
             </Breadcrumb>
           </div>
           <div className="row">
@@ -241,32 +243,25 @@ class Blogs extends Component {
                 All Blogs
               </h4>
               <div className="row justify-content-center mt-4">
-                <Button
-                  className="col-8 col-md-4 col-lg-3 mb-4 mt-0 m-2 add-blog-btn"
-                  color="danger"
-                >
-                  <Link style={{ color: "white" }} to="/addBlog">
+                  <ButtonGroup className="mb-4 button-grp col-8 col-md-4 col-lg-3">
+                      <Button disabled outline color="info">
+                        <FaBlog className='mr-2' />
+                        {this.props.blogs.length} Blogs
+                      </Button>
+                      <Button disabled outline color="info">
+                        <span className="fa fa-lg fa-scribd mr-2"></span>
+                        {this.props.space.followers}
+                      </Button>
+                  </ButtonGroup>
+                  <Button
+                    className="col-8 col-md-4 col-lg-3 mb-4 add-ques-btn"
+                    color="danger"
+                  >
+                    <Link style={{ color: "white" }} to="/addBlog">
                     <span className="fa fa-lg fa-plus mr-2 ml-2" />
                     BLOG
-                  </Link>
-                </Button>
-
-                <Button
-                  className="col-8 col-md-4 col-lg-3 mb-4 add-ques-btn"
-                  color="danger"
-                >
-                  <Link style={{ color: "white" }} to="/blogDemands">
-                    <span className="fa fa-lg fa-plus mr-2 ml-2" />
-                    Blog Demand
-                  </Link>
-                </Button>
-                <Button
-                  className="col-8 col-md-4 col-lg-3 mb-4 ml-2 add-blog-btn"
-                  color="danger"
-                >
-                  <span className="fa fa-lg fa-bookmark mr-2 ml-2" />
-                  FOLLOW
-                </Button>
+                    </Link>
+                  </Button>
               </div>
               <div className="row ml-1 mt-3 mr-1">
                 <Nav className="col-12 " tabs>
@@ -302,7 +297,6 @@ class Blogs extends Component {
               </p>
             )}
           </div>
-          //
         </div>
       );
     }

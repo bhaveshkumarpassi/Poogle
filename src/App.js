@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Router } from "react-router-dom";
 import Main from "./components/main";
+import ScrollToTop from './components/scroll-to-top/scroll-to-top';
 import history from './history';
 import {FaBars} from 'react-icons/fa';
 import Sidebar from './components/sidebar/sidebar'
@@ -21,6 +22,7 @@ function App(props) {
 	
 	return (
 		<BrowserRouter>
+			<ScrollToTop>
 			<Router history={history}>
 				<div className={`app  ${toggled? 'toggled':''}`}>
 					<Sidebar collapsed={collapsed} toggled={toggled} handleToggleSidebar={handleToggleSidebar}/>
@@ -34,6 +36,7 @@ function App(props) {
 					</main>
 				</div>
 			</Router>
+			</ScrollToTop>
 		</BrowserRouter>
 	);
 }	

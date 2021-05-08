@@ -67,7 +67,7 @@ return(
 
     <SidebarHeader>
         Poogle
-        <Image src={Logo} className="ml-2 d-inline-block align-top" id ="CompanyImage" alt="company_logo"/>
+        {/* <Image src={Logo} className="ml-2 d-inline-block align-top" id ="CompanyImage" alt="company_logo"/> */}
     </SidebarHeader>
     
     <SidebarContent>
@@ -96,7 +96,7 @@ return(
     </SubMenu>
     
     <MenuItem icon={<span className='fa fa-bell'/>}>
-        AllBlogDemands <Link to="/blogDemands"/>
+        Blog Demands <Link to="/blogDemands"/>
     </MenuItem> 
 
     <MenuItem icon={<HiChat />}>

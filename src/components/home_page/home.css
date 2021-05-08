@@ -1,3 +1,10 @@
+.info-text {
+  font-size: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  font-family: 'Anton', sans-serif;
+  font-family: 'Source Code Pro', monospace;
+}
 
 .filters {
   background-color: #c6f1e7;

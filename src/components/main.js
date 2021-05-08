@@ -338,13 +338,12 @@ class Main extends Component {
 
 		return (
 			<div>
-				<ScrollToTop/>
+				{/* <ScrollToTop/> */}
 				<Switch>
 					<Route path="/home" component={HomeQuestions} />
 					<PrivateRoute
 						exact
 						path="/spaces"
-						//component={Spaces}
 						component={() => <Spaces spaces={this.props.spaces} 
 						auth={this.props.auth}
 						fetchSpaces={this.props.fetchSpaces}
@@ -358,7 +357,6 @@ class Main extends Component {
 					<PrivateRoute
 						exact
 						path="/question-:quesId-:question"
-						//path="/space-:spaceId/question-:quesId-:question"
 						component={QuestionWithId}
 					/>
 					<PrivateRoute
@@ -374,9 +372,6 @@ class Main extends Component {
 						/>
 				
 					<PrivateRoute exact path="/profile/:userId" component={Profile_page} deleteQuestion={this.props.deleteQuestion}/>
-					{/* <PrivateRoute exact path="/profile" component={() => <Profile_page user={this.props.user} 
-						isLoading={this.props.user.isLoading}
-						errMess={this.props.user.errMess} />}/> */}
 					<PrivateRoute path="/chat" component={Chat} />
 					<PrivateRoute path="/blogDemands" component={AllBlogDemands} />
 					<Route path="/aboutUs" component={() => <AboutUs/>} />

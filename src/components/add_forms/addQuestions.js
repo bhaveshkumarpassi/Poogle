@@ -82,8 +82,9 @@ class addQuestions extends Component {
             {
               tagNames.push(this.state.category[i].label);
               tagIds.push(this.state.category[i].value);
-
-              if(this.props.auth.interests.indexOf(this.state.category[i].value)>-1)
+          
+              var interests_ = localStorage.getItem('interests');
+              if(interests_.indexOf(this.state.category[i].value)>-1)
                 flag = true;
             }
 

@@ -1,12 +1,15 @@
 import * as ActionTypes from "../ActionTypes";
 
 export const Answers = (
-	state = { isLoading: true, errMess: null, answers: [], postFail: false, postFailMess: '' },
+	state = { isLoading: true, errMess: null, answers: []
+		, postFail: false, postFailMess: '' 
+	},
 	action
 ) => {
 	switch (action.type) {
 		case ActionTypes.ADD_ANSWERS:
 			return {
+
 				...state,
 				isLoading: false,
 				errMess: null,
@@ -15,17 +18,25 @@ export const Answers = (
 			};
 
 		case ActionTypes.ANSWERS_FAILED:
-			return { ...state, isLoading: false, errMess: action.payload, postFail: false, postFailMess: '' };
+			return { ...state, isLoading: false, errMess: action.payload, 
+				postFail: false, postFailMess: '' 
+			};
 
 		case ActionTypes.ANSWERS_LOADING:
-			return { ...state, isLoading: true, errMess: null, answers: [], postFail: false, postFailMess: '' };
+			return { ...state, isLoading: true, errMess: null, answers: [],
+				postFail: false, postFailMess: '' 
+			};
 
 		case ActionTypes.ADD_ANSWER:
 			var answer = action.payload;
-			return { ...state, answers: state.answers.concat(answer), postFail: false, postFailMess: '' };
+			return { ...state, answers: state.answers.concat(answer), 
+				postFail: false, postFailMess: '' 
+		};
 
 		case ActionTypes.POST_FAIL:
-			return { ...state, postFail: true, postFailMess: action.payload}
+			return { ...state, 
+				postFail: true, postFailMess: action.payload
+			}
 
 		case ActionTypes.DELETE_ANSWER:
 			var answerId = action.payload;
