@@ -17,7 +17,6 @@ const RenderTags = ({ tagNames}) =>
 export class Answers extends Component{
 	render(){
 		let {answer, question,valu,deleteAnswer} = this.props;
-		console.log(answer);
 		const class_Name=valu % 2 == 0 ? "questionEven" : "questionOdd"
 		return(
 			<div>

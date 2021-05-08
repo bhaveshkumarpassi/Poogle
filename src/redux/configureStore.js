@@ -1,8 +1,8 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Comments } from "./reducers/comments";
 import { Spaces } from "./reducers/spaces";
-import { Questions } from "./reducers/questions";
-import { Answers } from "./reducers/answers";
+import { Questions, userQuestions } from "./reducers/questions";
+import { Answers, userAnswers } from "./reducers/answers";
 import { user } from "./reducers/user_reducer";
 import { Chat } from "./reducers/chat";
 import { Qreactions } from "./reducers/qReactions";
@@ -34,7 +34,9 @@ export const ConfigureStore = () => {
 			auth: authReducer,
 			chats: Chat,
 			contact,
-			updateUser
+			updateUser,
+			userQuestions,
+			userAnswers
 		}),
 		composeEnhancers(applyMiddleware(thunk, logger))
 	);
