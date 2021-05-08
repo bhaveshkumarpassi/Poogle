@@ -37,3 +37,18 @@ export const Questions = (
 			return state;
 	}
 };
+
+export const userQuestions = (state={isLoading: true, errMess: null, questions: []}, action)=>{
+	switch(action.type){
+		case ActionTypes.GET_USER_QUESTIONS:
+			return {...state, isLoading:false, errMess:null, questions:action.payload}
+		case ActionTypes.USER_QUESTIONS_LOADING:
+			return {...state, isLoading:true, errMess:null, questions:[]}
+		case ActionTypes.USER_QUESTIONS_FAILED:
+			return {...state, isLoading:false, errMess:action.payload.err, questions:[]}
+		default:
+			return state;
+
+	}
+
+};

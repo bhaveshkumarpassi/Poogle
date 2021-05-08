@@ -3,7 +3,8 @@ import { baseUrl } from "../shared/baseUrl";
 import {logOut, signIn, signUp, ChangeSpaces} from './actions/auth'
 import {contactUs} from './actions/contact'
 import {fetchUser, updateUser} from './actions/user';
-
+import {userQuestions} from './actions/questions';
+import {userAnswers} from './actions/answers';
 
 //--------------------------AUTHENTICATION-----------------------------------/
 export {logOut};
@@ -94,6 +95,7 @@ export const addSpaces = (spaces) => ({
 });
 //************************************************************************************/
 //--------------------------------------  QUESTIONS  ------------------------------- /
+export {userQuestions};
 
 export const addQuestion = (question) => ({
 	type: ActionTypes.ADD_QUESTION,
@@ -368,7 +370,7 @@ export const removeReaction = (reacId) => ({
 
 
 // --------------------------      ANSWERES ----------------------------------/
-
+export {userAnswers};
 export const addAnswer = (answer) => ({
 	type: ActionTypes.ADD_ANSWER,
 	payload: answer,

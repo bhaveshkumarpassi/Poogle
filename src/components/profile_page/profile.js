@@ -10,20 +10,17 @@ import { FaBlog, FaQuestionCircle, FaUserAlt } from "react-icons/fa";
 import { SiGooglescholar } from "react-icons/si";
 import { MdDescription } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { fetchUser } from "../../redux/ActionCreators";
 import "./profile.css";
 import Loading from "../loading";
 import {spaces} from '../variables';
 import {Questions, Blogs, Answers} from './about'
-import {deleteQuestion, deleteBlog, deleteAnswer} from '../../redux/ActionCreators';
+import {deleteQuestion, deleteBlog, deleteAnswer, fetchUser, updateUser, userQuestions, userAnswers} from '../../redux/ActionCreators';
 import {AiOutlineMail} from 'react-icons/ai';
 import {RiLockPasswordFill} from 'react-icons/ri';
 import {FiUserPlus} from 'react-icons/fi';
 import {fields} from '../variables';
-import {updateUser} from '../../redux/ActionCreators'
 import {baseUrl} from '../../shared/baseUrl'
 import { ToastContainer, toast } from 'react-toastify';
-
 
 class profile extends Component {
 	constructor(props){
@@ -58,6 +55,7 @@ class profile extends Component {
 		}       
     }
 	componentDidMount = async()=>{
+		window.scrollTo("0px", "0px");
 		const authId= this.props.auth.userId
         const user= this.props.user.user;
 		const reqId = this.props.match.params.userId;
@@ -70,6 +68,8 @@ class profile extends Component {
 				isAuth:false
 			})
 		}
+		await this.props.userQuestions({userId: reqId, token:this.props.auth.token})
+		await this.props.userAnswers({userId: reqId, token:this.props.auth.token})
 		let userId;
         if(user){
             userId = user.userId;
@@ -261,12 +261,9 @@ class profile extends Component {
 				image:""
 			}
 		})
-		console.log(e.target.files[0]);
 	}
 	setAlternateImage = (e)=>{
-		console.log(e.target);
 		e.target.src=profilePic;
-		console.log("Done task");
 	}
 	renderUpdateModal = ()=>{
 		return(
@@ -416,7 +413,7 @@ class profile extends Component {
 	}
 	renderQuestions(){
 		const questions = this.props.questions
-		if(questions.length>0){
+		if(questions&&questions.length>0){
 			return(
 				<div className="profile__section">
 				<h2>Questions</h2>
@@ -631,7 +628,7 @@ const mapStateToProps = (state, ownProps) => {
 		spaces: state.spaces.spaces,
 		user:state.user,
 		auth:state.auth,
-		questions:state.questions.questions, 
+		questions:state.userQuestions.questions, 
 		answers: state.answers.answers,
 		blogs:state.blogs.blogs,
 		qreactions: state.qreactions.qreactions,
@@ -639,4 +636,4 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
-export default connect(mapStateToProps, { fetchUser, deleteQuestion, deleteBlog, updateUser, deleteAnswer })(profile);
+export default connect(mapStateToProps, { fetchUser, deleteQuestion, deleteBlog, updateUser, deleteAnswer, userQuestions, userAnswers })(profile);
