@@ -14,7 +14,7 @@ import "./profile.css";
 import Loading from "../loading";
 import {spaces} from '../variables';
 import {Questions, Blogs, Answers} from './about'
-import {deleteQuestion, deleteBlog, deleteAnswer, fetchUser, updateUser, userQuestions, userAnswers} from '../../redux/ActionCreators';
+import {deleteQuestion, deleteBlog, deleteAnswer, fetchUser, updateUser, userQuestions, userAnswers, userBlogs} from '../../redux/ActionCreators';
 import {AiOutlineMail} from 'react-icons/ai';
 import {RiLockPasswordFill} from 'react-icons/ri';
 import {FiUserPlus} from 'react-icons/fi';
@@ -35,6 +35,7 @@ class profile extends Component {
 			showQuestions:false,
 			showAnswers:false,
 			showBlogs:false,
+			showBlogDemands:false,
 			isAuth: false, 
 			profileModelOpen: false,
 			email:"",
@@ -55,7 +56,6 @@ class profile extends Component {
 		}       
     }
 	componentDidMount = async()=>{
-		window.scrollTo("0px", "0px");
 		const authId= this.props.auth.userId
         const user= this.props.user.user;
 		const reqId = this.props.match.params.userId;
@@ -70,6 +70,7 @@ class profile extends Component {
 		}
 		await this.props.userQuestions({userId: reqId, token:this.props.auth.token})
 		await this.props.userAnswers({userId: reqId, token:this.props.auth.token})
+		await this.props.userBlogs({userId: reqId, token:this.props.auth.token});
 		let userId;
         if(user){
             userId = user.userId;
@@ -99,7 +100,7 @@ class profile extends Component {
 				}
 			})
 		}
-		if(blogs){
+		if(blogs&& blogs.length>0){
 			blogs.forEach((blog)=>{
 				if(blog.author._id===this.props.auth.userId){
 					cntBlogs=cntBlogs+1;
@@ -148,6 +149,18 @@ class profile extends Component {
 			showBlogs:true	
 		})
 	}
+
+	activateBlogDemand = (e)=>{
+		e.preventDefault();
+		this.setState({
+			showAbout:false,
+			showQuestions:false,
+			showAnswers:false,
+			showBlogs:false,
+			showBlogDemands:true	
+		})
+	}
+
 	handleChange = (event)=> {
         const target = event.target;
         const name = target.name;
@@ -465,11 +478,8 @@ class profile extends Component {
 	renderAnswerArray = (answers)=>{
 		return answers.map((answer, key)=>{
 			if(answer.author._id===this.props.auth.userId){
-				let quesId = answer.question; 
-				let heading=this.props.questions.map((ques)=>{
-					if(ques._id==quesId)
-						return ques.heading;
-				})
+				let quesId = answer.question._id; 
+				let heading=answer.question.heading
 				let ques = {quesId, heading}
 				return <Answers answer = {answer}
 								question = {ques}
@@ -481,7 +491,7 @@ class profile extends Component {
 			}
 		})
 	}
-	renderAnswers(){
+	renderAnswers=()=>{
 		const {answers} = this.props;
 		if(answers.length){
 			return(
@@ -495,6 +505,24 @@ class profile extends Component {
 				<div className="profile__section">
 					<h2>Answers</h2>
 					<p>You have not answered any question</p>
+				</div>
+			)
+		}
+	}
+	renderBlogDemands=()=>{
+		const {blogDemands} = this.props;
+		if(blogDemands.length){
+			return(
+				<div className="profile__section">
+					<h2>Blog Demands</h2>
+					{/* {this.renderBlogDemandsArray(blogDemands)||<p>You have no pending blog demand</p>} */}
+				</div>
+			)
+		}else{
+			return(
+				<div className="profile__section">
+					<h2>Blog Demands</h2>
+					<p>You have no pending blog demand</p>
 				</div>
 			)
 		}
@@ -514,6 +542,9 @@ class profile extends Component {
 					</Link>
 					<Link to="#" onClick={this.activateBlogs} className="user__navigation--link">
 						Blogs
+					</Link>
+					<Link to="#" onClick={this.activateBlogDemand} className="user__navigation--link">
+						Blogs Demands
 					</Link>
 				</Row>
 			</div>
@@ -610,6 +641,7 @@ class profile extends Component {
 								{this.state.isAuth&&this.state.showQuestions && this.renderQuestions()}
 								{this.state.isAuth&&this.state.showAnswers && this.renderAnswers()}
 								{this.state.isAuth&&this.state.showBlogs && this.renderBlogs()}
+								{this.state.isAuth&&this.state.showBlogDemands && this.renderBlogDemands()}
 							</Col>
 							<Col md={1}></Col>
 						</Row>
@@ -629,11 +661,11 @@ const mapStateToProps = (state, ownProps) => {
 		user:state.user,
 		auth:state.auth,
 		questions:state.userQuestions.questions, 
-		answers: state.answers.answers,
-		blogs:state.blogs.blogs,
+		answers: state.userAnswers.answers,
+		blogs:state.userBlogs.blogs,
 		qreactions: state.qreactions.qreactions,
 		updatedUser: state.updateUser
 	};
 };
 
-export default connect(mapStateToProps, { fetchUser, deleteQuestion, deleteBlog, updateUser, deleteAnswer, userQuestions, userAnswers })(profile);
+export default connect(mapStateToProps, { fetchUser, deleteQuestion, deleteBlog, updateUser, deleteAnswer, userQuestions, userAnswers, userBlogs })(profile);
