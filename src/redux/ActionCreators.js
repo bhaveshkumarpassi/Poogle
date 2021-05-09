@@ -5,6 +5,7 @@ import {contactUs} from './actions/contact'
 import {fetchUser, updateUser} from './actions/user';
 import {userQuestions} from './actions/questions';
 import {userAnswers} from './actions/answers';
+import {userBlogs} from './actions/blogs';
 
 //--------------------------AUTHENTICATION-----------------------------------/
 export {logOut};
@@ -745,7 +746,7 @@ export const removeComment = (commentId) => ({
 
 
 //----------------BLOGS---------------------------------//
-
+export{userBlogs};
 
 export const addBlog = (blog) => ({
 	type: ActionTypes.ADD_BLOG,

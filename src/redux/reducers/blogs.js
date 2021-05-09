@@ -37,3 +37,18 @@ export const Blogs = (
 			return state;
 	}
 };
+
+export const userBlogs = (state={isLoading: true, errMess: null, blogs: []}, action)=>{
+	switch(action.type){
+		case ActionTypes.GET_USER_BLOGS:
+			return {...state, isLoading:false, errMess:null, blogs:action.payload}
+		case ActionTypes.USER_BLOGS_LOADING:
+			return {...state, isLoading:true, errMess:null, blogs:[]}
+		case ActionTypes.USER_BLOGS_FAILED:
+			return {...state, isLoading:false, errMess:action.payload.err, blogs:[]}
+		default:
+			return state;
+
+	}
+
+};

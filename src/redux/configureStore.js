@@ -7,7 +7,7 @@ import { user } from "./reducers/user_reducer";
 import { Chat } from "./reducers/chat";
 import { Qreactions } from "./reducers/qReactions";
 import { Areactions } from "./reducers/aReactions";
-import {Blogs} from './reducers/blogs'
+import {Blogs, userBlogs} from './reducers/blogs'
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import authReducer from "./reducers/authReducer";
@@ -36,9 +36,10 @@ export const ConfigureStore = () => {
 			contact,
 			updateUser,
 			userQuestions,
-			userAnswers
+			userAnswers,
+			userBlogs
 		}),
-		composeEnhancers(applyMiddleware(thunk, logger))
+		composeEnhancers(applyMiddleware(thunk))
 	);
 
 	return store;
