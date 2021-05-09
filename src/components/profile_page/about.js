@@ -17,6 +17,7 @@ const RenderTags = ({ tagNames}) =>
 export class Answers extends Component{
 	render(){
 		let {answer, question,valu,deleteAnswer} = this.props;
+		console.log("HI", question);
 		const class_Name=valu % 2 == 0 ? "questionEven" : "questionOdd"
 		return(
 			<div>
@@ -24,11 +25,11 @@ export class Answers extends Component{
 						<div className='row'>
 							<div className='col-12'>
 								<CardTitle className='question-heading'>
-									<Link className='question-heading' to={`/question-${question._id}-${question.heading}`}>
-										{question.heading}
+									<Link className='question-heading' to={`/question-${question.quesId}-${question.heading}`}>
+										<b>{question.heading}</b>
 									</Link>
 								</CardTitle>
-								<CardSubtitle><CardText  className='single-question-profile-name text-muted'> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(answer.createdAt)))}</CardText></CardSubtitle>
+								<CardSubtitle><CardText  className='single-question-profile-name text-muted' style={{textAlign:"left"}}> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(answer.createdAt)))}</CardText></CardSubtitle>
 								<CardBody>
 									<div>
 									<div className="editor__content" dangerouslySetInnerHTML={{ __html: answer.description }} />

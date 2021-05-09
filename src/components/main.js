@@ -129,8 +129,6 @@ class Main extends Component {
 
 	componentDidUpdate = async (prevProps) => {
 		var l1 = this.props.auth.interests.length;
-	
-		console.log(l1);
 		if(l1 && this.props.auth.userId !== prevProps.auth.userId){
 
 			console.log("called this !!")
