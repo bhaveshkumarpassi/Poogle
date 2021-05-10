@@ -169,4 +169,40 @@ export class Blogs extends Component{
     }
 }
 
+export class BlogDemands extends Component{
+	render(){
+		const {blogDemand, auth, deleteBlogDemand} = this.props;
+		return(
+		<ListGroup className='container blogDemand-container'>
+                <ListGroupItem className={' list-item-style'}>
+                        <div className='row'>
+                        <div className='col-12 col-sm-8'>
+                            <ListGroupItemHeading className='blogDemand-heading'>
+                             <h4 style={{color:"#5a5a5a"}}>{blogDemand.title}</h4>
+                             {
+                                auth.userId === blogDemand.author._id
+                                ?
+                            
+                                    <Button color='danger' className="delete-blog-demand" onClick={() => deleteBlogDemand(blogDemand._id)}>
+                                    <span className='fa fa-lg fa-trash'></span></Button>
+                            
+                                :
+                                <></>
+                            }   
+                            <RenderTags tagNames={blogDemand.tagNames} />
+                            </ListGroupItemHeading>
+                            
+                            
+                            <ListGroupItemText className='blogDemand-text'>
+                                Posted by :-  {blogDemand.author.user_name}
+                            </ListGroupItemText>
+                        </div>
 
+                        </div>
+                </ListGroupItem>
+        </ListGroup>
+		)
+
+
+	}
+}

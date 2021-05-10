@@ -13,8 +13,9 @@ import { Link } from "react-router-dom";
 import "./profile.css";
 import Loading from "../loading";
 import {spaces} from '../variables';
-import {Questions, Blogs, Answers} from './about'
-import {deleteQuestion, deleteBlog, deleteAnswer, fetchUser, updateUser, userQuestions, userAnswers, userBlogs} from '../../redux/ActionCreators';
+import {Questions, Blogs, Answers, BlogDemands} from './about'
+import {deleteQuestion, deleteBlog, deleteBlogDemand, deleteAnswer, fetchUser, userBlogDemands,
+	updateUser, userQuestions, userAnswers, userBlogs} from '../../redux/ActionCreators';
 import {AiOutlineMail} from 'react-icons/ai';
 import {RiLockPasswordFill} from 'react-icons/ri';
 import {FiUserPlus} from 'react-icons/fi';
@@ -29,6 +30,7 @@ class profile extends Component {
 			blogsCount:0,
 			answersCount:0,
 			questionsCount:0,
+			blogDemandCount:0,
 			owner:this.props.auth.userId,
 			user:this.props.match.params.userId,
 			showAbout:true,
@@ -71,6 +73,7 @@ class profile extends Component {
 		await this.props.userQuestions({userId: reqId, token:this.props.auth.token})
 		await this.props.userAnswers({userId: reqId, token:this.props.auth.token})
 		await this.props.userBlogs({userId: reqId, token:this.props.auth.token});
+		await this.props.userBlogDemands({userId: reqId, token:this.props.auth.token})
 		let userId;
         if(user){
             userId = user.userId;
@@ -84,8 +87,8 @@ class profile extends Component {
 				await this.props.fetchUser(reqId);
 			}
 		}
-		const {questions, answers, blogs} = this.props;
-		let cntQues=0, cntBlogs = 0, cntAnswers=0;
+		const {questions, answers, blogs, blogDemands} = this.props;
+		let cntQues=0, cntBlogs = 0, cntAnswers=0, cntBlogDemand=0;
 		if(questions){
 			questions.forEach((question)=>{
 				if(question.author._id===this.props.auth.userId){
@@ -107,10 +110,18 @@ class profile extends Component {
 				}
 			})
 		}
+		if(blogDemands&& blogDemands.length>0){
+			blogDemands.forEach((blog)=>{
+				if(blog.author._id===this.props.auth.userId){
+					cntBlogDemand=cntBlogDemand+1;
+				}
+			})
+		}
 		this.setState({
 			blogsCount:cntBlogs,
 			answersCount:cntAnswers,
 			questionsCount:cntQues,
+			blogDemandCount:cntBlogDemand
 		})
 	}
 	activateAbout = (e)=>{
@@ -509,13 +520,28 @@ class profile extends Component {
 			)
 		}
 	}
+
+	renderBlogDemandsArray = (blogDemands)=>{
+		console.log(blogDemands);
+		return blogDemands.map((blogDemand, key)=>{
+			if(blogDemand.author._id === this.props.auth.userId){
+				return <BlogDemands blogDemand = {blogDemand}
+								auth= {this.props.auth}
+								deleteBlogDemand = {this.props.deleteBlogDemand}
+							/>	
+
+			}
+		})
+		
+	}
+
 	renderBlogDemands=()=>{
 		const {blogDemands} = this.props;
-		if(blogDemands.length){
+		if(blogDemands&&blogDemands.length){
 			return(
 				<div className="profile__section">
 					<h2>Blog Demands</h2>
-					{/* {this.renderBlogDemandsArray(blogDemands)||<p>You have no pending blog demand</p>} */}
+					{this.renderBlogDemandsArray(blogDemands)||<p>You have no pending blog demand</p>}
 				</div>
 			)
 		}else{
@@ -664,8 +690,10 @@ const mapStateToProps = (state, ownProps) => {
 		answers: state.userAnswers.answers,
 		blogs:state.userBlogs.blogs,
 		qreactions: state.qreactions.qreactions,
-		updatedUser: state.updateUser
+		updatedUser: state.updateUser,
+		blogDemands: state.userBlogDemands.blogDemands
 	};
 };
 
-export default connect(mapStateToProps, { fetchUser, deleteQuestion, deleteBlog, updateUser, deleteAnswer, userQuestions, userAnswers, userBlogs })(profile);
+export default connect(mapStateToProps, { fetchUser, deleteQuestion, deleteBlogDemand, deleteBlog, updateUser, userBlogDemands, 
+	deleteAnswer, userQuestions, userAnswers, userBlogs })(profile);
