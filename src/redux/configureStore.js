@@ -14,7 +14,7 @@ import authReducer from "./reducers/authReducer";
 import {contact} from './reducers/contactUs'
 import { Breactions } from "./reducers/bReactions";
 import { Bcomments } from "./reducers/bComments";
-import { BlogDemands } from "./reducers/blogDemands";
+import { BlogDemands, userBlogDemands } from "./reducers/blogDemands";
 import {updateUser} from './reducers/updateUser';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const ConfigureStore = () => {
@@ -37,7 +37,8 @@ export const ConfigureStore = () => {
 			updateUser,
 			userQuestions,
 			userAnswers,
-			userBlogs
+			userBlogs, 
+			userBlogDemands
 		}),
 		composeEnhancers(applyMiddleware(thunk))
 	);

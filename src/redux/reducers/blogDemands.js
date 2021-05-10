@@ -33,3 +33,18 @@ export const BlogDemands = (
 			return state;
 	}
 };
+
+export const userBlogDemands = (state={isLoading: true, errMess: null, blogDemands: []}, action)=>{
+	switch(action.type){
+		case ActionTypes.GET_USER_BLOG_DEMANDS:
+			return {...state, isLoading:false, errMess:null, blogDemands:action.payload}
+		case ActionTypes.USER_BLOG_DEMAND_LOADING:
+			return {...state, isLoading:true, errMess:null, blogDemands:[]}
+		case ActionTypes.USER_BLOG_DEMANDS_FAILED:
+			return {...state, isLoading:false, errMess:action.payload.err, blogDemands:[]}
+		default:
+			return state;
+
+	}
+
+};
