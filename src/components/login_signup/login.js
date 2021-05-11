@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Container, Row, Col, Image} from 'react-bootstrap';
-import { Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { Breadcrumb, BreadcrumbItem, Button } from "reactstrap";
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Form from 'react-bootstrap/Form';
 import {Link, Redirect} from 'react-router-dom';
@@ -19,6 +19,7 @@ class login extends Component {
     constructor(props){
         super(props);
         this.state = {
+            passShow: "password",
             email:"",
             password:"",
             errors:{
@@ -107,6 +108,15 @@ class login extends Component {
         console.log(this.state);
     }
 
+    changePassShow(){
+        if(this.state.passShow==='password'){
+            this.setState({passShow: "text"});
+        }
+        else{
+            this.setState({passShow: "password"});
+        }
+    }
+
     render() {
 
         return (
@@ -135,7 +145,16 @@ class login extends Component {
 
                                 <Form.Group controlId="formBasicTextbox">
                                     <Form.Label><span className="form__icon"><RiLockPasswordFill/></span>Password</Form.Label>
-                                    <input name="password"  type="password" className="form-control"  value={this.state.name} placeholder="Enter password" onChange={this.handleInputChange} />
+                                    <input name="password"  type={this.state.passShow} className="form-control"  value={this.state.name} placeholder="Enter password" onChange={this.handleInputChange} />
+                                    <Link style={{fontSize: '0.9rem'}} onClick={() => this.changePassShow()}>
+                                        {
+                                            this.state.passShow === "password"
+                                            ?
+                                            "Show password"
+                                            :
+                                            "Hide password"
+                                        }
+                                    </Link>
                                     <div className="invalid__feedback">{this.state.errors.password}</div>
                                 </Form.Group>
 

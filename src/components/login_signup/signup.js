@@ -28,6 +28,7 @@ class Signup extends Component {
     constructor(props){
         super(props);
         this.state = {
+            passShow: "password",
             currentStep: 1,
             userName:"",
             email:"",
@@ -211,6 +212,16 @@ class Signup extends Component {
       
     }
 
+    changePassShow(){
+        if(this.state.passShow==='password'){
+            this.setState({passShow: "text"});
+        }
+        else{
+            this.setState({passShow: "password"});
+        }
+    }
+
+
       firstPage(){
           let {currentStep} = this.state;
           if(currentStep===1)
@@ -226,8 +237,17 @@ class Signup extends Component {
                     
                     <Form.Group controlId="formBasicPassword">
                             <Form.Label><span className="form__icon"><RiLockPasswordFill/></span>Password</Form.Label>
-                            <input name="password" className="form-control" type="password"  placeholder="Enter Password" 
+                            <input name="password" className="form-control" type={this.state.passShow}  placeholder="Enter Password" 
                             value = {this.state.password} onChange={this.handleChange}/>
+                            <Link style={{fontSize: '0.9rem'}} onClick={() => this.changePassShow()}>
+                                {
+                                    this.state.passShow === "password"
+                                    ?
+                                    "Show password"
+                                    :
+                                    "Hide password"
+                                }
+                            </Link>
                             <div className="invalid__feedback">{this.state.errors.password}</div>
                     </Form.Group>
                     <div>
