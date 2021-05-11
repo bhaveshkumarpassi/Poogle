@@ -39,19 +39,27 @@ class home extends Component {
 						<Jumbotron style={{opacity:0.9}} mt-2 mr-2>
 							<div>
 							<Row>
-							<h4 className="display-8" style={{marginLeft: '1rem', marginRight: '1rem', fontStyle:'oblique',fontWeight:'bolder',color:'black'}}>POOGLE-Personalized Quora for PEC</h4>
+							<h4 className="display-8" style={{marginLeft: '1rem', marginRight: '1rem', fontStyle:'oblique',fontWeight:'bolder',color:'black'}}>
+								POOGLE - Doubt solving platform for Pecobians
+							</h4>
 							</Row>
 							<Row>
 							<p className="lead info-text">
-								Poogle aims at providing Quora-like features to Pecobians. It has personalized spaces designed for the essential subjects of each branch at PEC to help students out when they need it. 
-								You can interact with other members by posting questions, answers, comments, blogs, upvotes and downvotes and alot more. 
+							Poogle is a personalized doubt solving platform for the students of PEC. It has spaces designed for all the essential subjects of each branch. 
+							You can personalize these spaces on the basis of your interests.
+							The main focus of Poogle is to help students with their academic queries and build a stronger community of students. You can interact with other members by posting questions, answers, comments, blogs, upvotes and downvotes and alot more stuff.
+
+
 							</p>
 							</Row>
 							{!this.props.auth.isSignedIn
 							?
 							<div>
 							<hr className="my-2" />
-							<p className='info-text'>So to ease out the learning process of your college life join Poogle!!.</p>
+							<p className='info-text'>
+								So, What are you waiting for? <br/>
+								Ease out the learning process of your college life by joining Poogle!!.
+							</p>
 							<p className="lead">
 								<Button color="primary" to="/login"><span className='fa fa-lg fa-sign-in mr-2 ml-2' /><Link to="/Login"><b style={{color:'white'}}>Login</b></Link></Button>
 							</p>
