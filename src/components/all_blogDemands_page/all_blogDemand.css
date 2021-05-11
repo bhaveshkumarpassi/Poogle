@@ -78,18 +78,18 @@
 }  */
 
 .blogDemandEven {
-    background-color:#f5f7f8;
+    background-color:#fff;
     padding: 1rem;
 }
 
 .blogDemandOdd {
-    background-color:#a8acaf;
+    background-color: #ccf2f4;
     padding: 1rem;
 }
 
 .blogDemand-heading {
     font-size: 1.1rem;
-    color: rgb(235, 145, 145);
+    color:  #693c72;
     margin: 1rem;
     line-height: 1.8rem;
     margin-left: 0.8rem;
@@ -107,14 +107,13 @@
 .blogdemand-tag {
     margin: 5px 0px 5px 0.7rem;
     height: 20px;
-    background-color:rgb(58, 135, 250);
+    background-color: #693c72;
 }
 
 .blogDemand-text {
     margin: 5px;
-    color:  #5f3408;
-    font-size: 0.9rem;
-    font-weight: bold;
+    color:  #693c72;
+    font-size: 0.8rem;
     margin: 1rem;
 }
 

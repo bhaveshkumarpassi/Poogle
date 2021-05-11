@@ -35,7 +35,7 @@ function RenderMenuItem({blogDemand, class_Name,auth,deleteBlogDemand, onClick})
                         <div className='row'>
                         <div className='col-12 col-sm-8'>
                             <ListGroupItemHeading className='blogDemand-heading'>
-                             <Link>{blogDemand.title}</Link>
+                             <Link className='blogDemand-heading'>{blogDemand.title}</Link>
                              {
                                 auth.userId === blogDemand.author._id
                                 ?
@@ -45,13 +45,22 @@ function RenderMenuItem({blogDemand, class_Name,auth,deleteBlogDemand, onClick})
                             
                                 :
                                 <></>
-                            }   
+                            }  
+                            <br></br> 
                             <RenderTags  blogDemand={blogDemand} /> 
                             </ListGroupItemHeading>
                             
                             
                             <ListGroupItemText className='blogDemand-text'>
                                 Posted by :-  {blogDemand.author.user_name}
+                            </ListGroupItemText>
+                            <ListGroupItemText className="blogDemand-text">
+                                Posted at :-{" "}
+                                {new Intl.DateTimeFormat("en-US", {
+                                year: "numeric",
+                                month: "short",
+                                day: "2-digit",
+                                }).format(new Date(Date.parse(blogDemand.createdAt)))}
                             </ListGroupItemText>
                         </div>
 
@@ -118,9 +127,13 @@ class BlogDemands extends Component{
               tagNames.push(this.state.category[i].label);
               tagIds.push(this.state.category[i].value);
 
-              if(this.props.auth.interests.indexOf(this.state.category[i].value)>-1)
+              var interests_ = localStorage.getItem('interests');
+
+              if(interests_.indexOf(this.state.category[i].value)>-1)
                 flag = true;
             }
+
+            console.log(this.props.auth.interests);
 
             if(flag) {
                 const newBlogDemand = {
@@ -227,12 +240,12 @@ class BlogDemands extends Component{
             <div className='row'>
                 <Breadcrumb className='mt-3 ml-3'>
                     <BreadcrumbItem><Link to="/Home">Home</Link></BreadcrumbItem>
-                    <BreadcrumbItem active>BlogDemands</BreadcrumbItem>
+                    <BreadcrumbItem active>Blog Demands</BreadcrumbItem>
                 </Breadcrumb>
             </div>
             <div className='row'>
                 <div className='container category-div '>
-                    <h4 className='row all-blogDemand-heading justify-content-center'>BlogDemands</h4>
+                    <h4 className='row all-blogDemand-heading justify-content-center'>Blog Demands</h4>
                     <div className='row justify-content-center mt-4'>
     
                     <Button className='col-8 col-md-4 col-lg-3 mb-4 m-2 add-blog-btn' color='danger'>

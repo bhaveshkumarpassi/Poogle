@@ -1159,10 +1159,10 @@ export const postBlogDemand = (blogDemand) => (dispatch) => {
 		});
 };
 
-export const fetchBlogDemands = () => (dispatch) => {
+export const fetchBlogDemands = (interests) => (dispatch) => {
 	dispatch(blogDemandsLoading(true));
 
-	return fetch(baseUrl + "blogDemands")
+	return fetch(baseUrl + "blogDemands?interests="+interests)
 		.then(
 			(response) => {
 				if (response.ok) {

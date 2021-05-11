@@ -59,8 +59,8 @@ const mapDispatchToProps = (dispatch) => ({
 	fetchBReactions: () =>{
         dispatch(fetchBReactions());
 	},
-	fetchBlogDemands:()=>{
-		dispatch(fetchBlogDemands());
+	fetchBlogDemands:(interests)=>{
+		dispatch(fetchBlogDemands(interests));
 	},
 	fetchReactions: () => {
 		dispatch(fetchReactions());
@@ -122,7 +122,7 @@ class Main extends Component {
 			await this.props.fetchBReactions();
 			await this.props.fetchBComments();
 			await this.props.fetchBlogs(interests);
-			await this.props.fetchBlogDemands();
+			await this.props.fetchBlogDemands(interests);
 		}
 		
 	}
@@ -149,7 +149,7 @@ class Main extends Component {
 			await this.props.fetchBReactions();
 			await this.props.fetchBComments();
 			await this.props.fetchBlogs(interests);
-			await this.props.fetchBlogDemands();
+			await this.props.fetchBlogDemands(interests);
 		}
 		
 	}

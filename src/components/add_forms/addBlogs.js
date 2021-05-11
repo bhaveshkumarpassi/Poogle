@@ -87,7 +87,9 @@ class addBlogs extends Component {
               tagNames.push(this.state.category[i].label);
               tagIds.push(this.state.category[i].value);
 
-              if(this.props.auth.interests.indexOf(this.state.category[i].value)>-1)
+              var interests = localStorage.getItem('interests');
+              
+              if(interests.indexOf(this.state.category[i].value)>-1)
                 flag = true;
             }
 
