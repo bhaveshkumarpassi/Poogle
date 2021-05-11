@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import {Link} from 'react-router-dom';
 import {AiOutlineMail} from 'react-icons/ai';
 import {FiPhoneCall} from 'react-icons/fi';
 import {FaFacebookSquare,FaTwitterSquare,FaLinkedin} from 'react-icons/fa';
@@ -13,38 +14,43 @@ class footer extends Component{
                     <Container>
                         <div className="footerSectionInner">
                             <Row>
-                                <Col md={4} className="footerColumn">
-                                    <div className="footerHeading"> About Us</div>
-                                    <div className  = "footerContent">We are students of PEC</div>
-                                </Col>
-
-                                <Col md={4} className="footerColumn">
+                            <Col md={6} className="footerColumn">
                                     <div className="footerHeading"> Contact Us</div>
                                     <div className  = "footerContent">
-                                    <Row><div id="address">
-                                            1215, Washington Avenue, North Suite 203, Western Coast, North-America NA <br/>
+                                    <Row>
+                                        <div id="address">
+                                        <p style={{textAlign:"left" ,fontSize:"1.1rem"}}>
+                                            We highly appreciate any kind of queries, suggestions or feedback regarding this platform.
+                                            Please feel free to write to us at <Link to="/contact">Contact Us</Link> page
+                                        </p>
                                         </div>
                                     </Row>
-                                    <Row><div><span className= "contact_icons"><FiPhoneCall/></span>+91-1234567890</div></Row>
-                                    <Row><div><span className= "contact_icons"><AiOutlineMail/></span> abc@gmail.com</div></Row>
                                     
                                     
                                     </div>
                                 </Col>
 
-                                <Col md={4} className="footerColumn">
-                                <div className="footerHeading">Get Social With Us</div>
-                                <div className  = "footerContent">
-                                    <Row><div><a href ="#" className ="social_links"><span className= "social_icons facebook"><FaFacebookSquare/></span> Facebook</a></div></Row>
-                                    <Row><div><a href ="#" className ="social_links"><span className= "social_icons linkedIn"><FaLinkedin/></span>LinkedIn</a></div></Row>
-                                    <Row><div><a href ="#" className ="social_links"><span className= "social_icons twitter"><FaTwitterSquare/></span> Twitter</a></div></Row>
-                                </div>
+                                <Col md={6} className="footerColumn">
+                                    <div className="footerHeading"> About Us</div>
+                                    <div className  = "footerContent">
+                                        <p style={{textAlign:"left" ,fontSize:"1.1rem"}}>
+                                            We are students of Punjab Engineering College, 2023 batch. You can find more about us at <Link to="/aboutUs">About Us</Link> page
+                                        </p>
+                                    </div>
                                 </Col>
+
+                                
+
                             </Row>
-                            <br/>
+                            {/* <br/>
                             <hr></hr>
+                            <br/> */}
+                            
                             <br/>
-                            <p>&#169;	2020. All rights Reserved.</p>
+                            <p>Made with ❤️ by the students of Punjab Engineering College, Chandigarh</p>
+                            <br/>
+                            <hr/>
+                            <p style={{fontSize:"1.1rem"}}>&#169;	2021. All rights Reserved.</p>
                         </div>    
                     </Container>
                 </div>
