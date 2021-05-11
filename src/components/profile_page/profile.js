@@ -27,10 +27,22 @@ class profile extends Component {
 	constructor(props){
         super(props);
         this.state = {
-			blogsCount:0,
-			answersCount:0,
-			questionsCount:0,
-			blogDemandCount:0,
+			questionsFetched:false,
+			answersFetched:false,
+			blogsFetched:false,
+			blogDemandsFetched:false,
+			questions_user:[],
+			answers_user:[],
+			blogs_user:[],
+			blogDemands_user:[],
+			skipQues:0,
+			limitQues:20,
+			skipAns:0,
+			limitAns:20,
+			skipBlog:0,
+			limitBlog:20,
+			skipBlogDemand:0,
+			limitBlogDemand:20,
 			owner:this.props.auth.userId,
 			user:this.props.match.params.userId,
 			showAbout:true,
@@ -57,7 +69,7 @@ class profile extends Component {
 			}	    
 		}       
     }
-	componentDidMount = async()=>{
+	componentDidMount(){
 		const authId= this.props.auth.userId
         const user= this.props.user.user;
 		const reqId = this.props.match.params.userId;
@@ -70,10 +82,10 @@ class profile extends Component {
 				isAuth:false
 			})
 		}
-		await this.props.userQuestions({userId: reqId, token:this.props.auth.token})
-		await this.props.userAnswers({userId: reqId, token:this.props.auth.token})
-		await this.props.userBlogs({userId: reqId, token:this.props.auth.token});
-		await this.props.userBlogDemands({userId: reqId, token:this.props.auth.token})
+		this.getUserQuestions({userId: reqId, token:this.props.auth.token});
+		this.getUserAnswers({userId: reqId, token:this.props.auth.token})
+		this.getUserBlogs({userId: reqId, token:this.props.auth.token})
+		this.getUserBlogDemand({userId: reqId, token:this.props.auth.token})
 		let userId;
         if(user){
             userId = user.userId;
@@ -81,56 +93,119 @@ class profile extends Component {
 		if(reqId){
 			if(authId){
 				if(!user||userId!==reqId){
-					await this.props.fetchUser(reqId);
+					this.getUserProfileDetails(reqId);
 				}
 			}else{
-				await this.props.fetchUser(reqId);
+				this.getUserProfileDetails(reqId);
 			}
 		}
-		const {questions, answers, blogs, blogDemands} = this.props;
-		let cntQues=0, cntBlogs = 0, cntAnswers=0, cntBlogDemand=0;
-		if(questions){
-			questions.forEach((question)=>{
-				if(question.author._id===this.props.auth.userId){
-					cntQues=cntQues+1;
-				}		
-			})
-		}
-		if(answers){
-			answers.forEach((answer)=>{
-				if(answer.author._id===this.props.auth.userId){
-					cntAnswers=cntAnswers+1;
-				}
-			})
-		}
-		if(blogs&& blogs.length>0){
-			blogs.forEach((blog)=>{
-				if(blog.author._id===this.props.auth.userId){
-					cntBlogs=cntBlogs+1;
-				}
-			})
-		}
-		if(blogDemands&& blogDemands.length>0){
-			blogDemands.forEach((blog)=>{
-				if(blog.author._id===this.props.auth.userId){
-					cntBlogDemand=cntBlogDemand+1;
-				}
-			})
-		}
-		this.setState({
-			blogsCount:cntBlogs,
-			answersCount:cntAnswers,
-			questionsCount:cntQues,
-			blogDemandCount:cntBlogDemand
-		})
 	}
+
+	getUserProfileDetails = async(reqId)=>{
+		await this.props.fetchUser(reqId);
+	}
+	getUserQuestions = async(details)=>{
+		let {skipQues, limitQues, questions_user} = this.state;
+		let {userId, token} = details;
+		if(this.state.questionsFetched===true) return;
+		await this.props.userQuestions({userId, token, Skip: skipQues, Limit: limitQues});
+		const {questions} = this.props;
+
+		if(questions){
+			if(questions.length==0){
+				this.setState({
+					questionsFetched: true
+				})
+				return;
+			}
+			this.setState({
+				questions_user:[...questions_user, questions],
+				skipQues: this.state.skipQues+1
+			})
+
+		}
+	}
+
+	getUserAnswers = async(details)=>{
+		let {skipAns, limitAns, answers_user} = this.state;
+		let {userId, token} = details;
+		if(this.state.answersFetched===true) return;
+		await this.props.userAnswers({userId, token, Skip: skipAns, Limit: limitAns});
+		const {answers} = this.props;
+
+		if(answers){
+			if(answers.length==0){
+				this.setState({
+					answersFetched: true
+				})
+				return;
+			}
+			this.setState({
+				answers_user:[...answers_user, answers],
+				skipAns: this.state.skipAns+1
+			})
+
+		}
+	}
+
+	getUserBlogs = async(details)=>{
+		let {skipBlog, limitBlog, blogs_user} = this.state;
+		let {userId, token} = details;
+		if(this.state.blogsFetched===true) return;
+		await this.props.userBlogs({userId, token, Skip: skipBlog, Limit: limitBlog});
+		const {blogs} = this.props;
+
+		if(blogs){
+			if(blogs.length==0){
+				this.setState({
+					blogsFetched: true
+				})
+				return;
+			}
+			this.setState({
+				blogs_user:[...blogs_user, blogs],
+				skipBlog: this.state.skipBlog+1
+			})
+
+		}
+
+	}
+
+	getUserBlogDemand = async(details)=>{
+		let {skipBlogDemand, limitBlogDemand, blogDemands_user} = this.state;
+		let {userId, token} = details;
+		if(this.state.blogDemandsFetched===true) return;
+		await this.props.userBlogDemands({userId, token, Skip: skipBlogDemand, Limit: limitBlogDemand});
+		const {blogDemands} = this.props;
+
+		if(blogDemands){
+			if(blogDemands.length==0){
+				this.setState({
+					blogDemandsFetched: true
+				})
+				return;
+			}
+			this.setState({
+				blogDemands_user:[...blogDemands_user, blogDemands],
+				skipBlogDemand: this.state.skipBlogDemand+1
+			})
+
+		}
+
+	}
+
+
+
+
+
 	activateAbout = (e)=>{
 		e.preventDefault();
 		this.setState({
 			showAbout:true,
 			showQuestions:false,
 			showAnswers:false,
-			showBlogs:false	
+			showBlogs:false,
+			showBlogDemands:false
 		})
 	}
 	activateQuestions = (e)=>{
@@ -139,7 +214,8 @@ class profile extends Component {
 			showAbout:false,
 			showQuestions:true,
 			showAnswers:false,
-			showBlogs:false	
+			showBlogs:false,
+			showBlogDemands:false	
 		})
 	}
 	activateAnswers = (e)=>{
@@ -148,7 +224,8 @@ class profile extends Component {
 			showAbout:false,
 			showQuestions:false,
 			showAnswers:true,
-			showBlogs:false	
+			showBlogs:false,
+			showBlogDemands:false
 		})
 	}
 	activateBlogs = (e)=>{
@@ -157,7 +234,8 @@ class profile extends Component {
 			showAbout:false,
 			showQuestions:false,
 			showAnswers:false,
-			showBlogs:true	
+			showBlogs:true,
+			showBlogDemands:false
 		})
 	}
 
@@ -592,7 +670,7 @@ class profile extends Component {
 			);
 		}
 		const { user } = this.props.user;
-		let url=baseUrl+"users/"+this.state.user+"/image"	
+		let url=baseUrl+"users/"+this.state.user+"/image";	
 
 		return (
 			<>
@@ -632,20 +710,28 @@ class profile extends Component {
 										{this.state.owner===this.state.user && <Row>
 											<div className="user__posts__details">
 												<Row>
-													<span className="user__icon"><RiQuestionAnswerFill />
-														<span className="icon__title">  {this.state.answersCount} answers</span>
+													<span className="user__icon">
+														<FaQuestionCircle />
+														<span className="icon__title"> {this.props.questionsCount} questions</span>
 													</span>
 												</Row>
+
+												<Row>
+													<span className="user__icon"><RiQuestionAnswerFill />
+														<span className="icon__title">  {this.props.answersCount} answers</span>
+													</span>
+												</Row>
+												
 												<Row>
 													<span className="user__icon"><FaBlog />
-														<span className="icon__title"> {this.state.blogsCount} blogs</span>
+														<span className="icon__title"> {this.props.blogsCount} blogs</span>
 													</span>
 												</Row>
 										
+												
 												<Row>
-													<span className="user__icon">
-														<FaQuestionCircle />
-														<span className="icon__title"> {this.state.questionsCount} questions</span>
+													<span className="user__icon"><FaBlog />
+														<span className="icon__title"> {this.props.blogDemandCount} blogs demands</span>
 													</span>
 												</Row>
 											</div>
@@ -686,12 +772,16 @@ const mapStateToProps = (state, ownProps) => {
 		spaces: state.spaces.spaces,
 		user:state.user,
 		auth:state.auth,
-		questions:state.userQuestions.questions, 
-		answers: state.userAnswers.answers,
-		blogs:state.userBlogs.blogs,
+		questions:state.userQuestions.questions.questions,
+		questionsCount: state.userQuestions.questions.count,
+		answers: state.userAnswers.answers.answers,
+		answersCount:state.userAnswers.answers.count,
+		blogs:state.userBlogs.blogs.blogs,
+		blogsCount:state.userBlogs.blogs.count,
+		blogDemands: state.userBlogDemands.blogDemands.blogDemands,
+		blogDemandCount:state.userBlogDemands.blogDemands.count,
 		qreactions: state.qreactions.qreactions,
-		updatedUser: state.updateUser,
-		blogDemands: state.userBlogDemands.blogDemands
+		updatedUser: state.updateUser
 	};
 };
 
