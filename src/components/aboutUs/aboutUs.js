@@ -11,7 +11,7 @@ import {
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./aboutUs.css";
-import Bhavesh from "../../Images/Bhavesh.jpeg";
+import BhaveshKumar from '../../Images/BhaveshKumar.png'
 import Nisha from "../../Images/Nisha.jpeg";
 import Utkarsh from "../../Images/utkarsh.jpeg";
 import Deepanshu from "../../Images/DeepanshuJindal.jfif";
@@ -42,7 +42,7 @@ function AboutUs() {
                 Bhavesh Kumar
               </CardTitle>
             </CardBody>
-            <CardImg className="space-img" src={Bhavesh} />
+            <CardImg className="space-img" src={BhaveshKumar} />
             <CardBody>
               <CardSubtitle tag="h6" className="mb-4 text-muted mt-2">
                 Roles
