@@ -1,9 +1,6 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
-import {AiOutlineMail} from 'react-icons/ai';
-import {FiPhoneCall} from 'react-icons/fi';
-import {FaFacebookSquare,FaTwitterSquare,FaLinkedin} from 'react-icons/fa';
-import {Container, Row, Col, Image} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
 import './header_footer.css';
 class footer extends Component{
     render(){
