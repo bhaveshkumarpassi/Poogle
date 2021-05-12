@@ -1,5 +1,6 @@
+/* eslint-disable no-useless-constructor */
 import React, { Component } from "react";
-import { Route, Router, Switch, Redirect, withRouter } from "react-router-dom";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchSpaces, fetchQuestions, fetchUser, fetchHomeFeed, fetchFollowSpaces,
 	fetchAnswers, fetchComments, postComment, fetchBlogs,
@@ -336,7 +337,7 @@ class Main extends Component {
 
 		return (
 			<div>
-				{/* <ScrollToTop/> */}
+				<ScrollToTop/>
 				<Switch>
 					<Route path="/home" component={HomeQuestions} />
 					<PrivateRoute
