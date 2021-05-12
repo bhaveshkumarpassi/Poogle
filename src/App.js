@@ -22,8 +22,8 @@ function App(props) {
 	
 	return (
 		<BrowserRouter>
-			<ScrollToTop>
 			<Router history={history}>
+			{/* <ScrollToTop> */}
 				<div className={`app  ${toggled? 'toggled':''}`}>
 					<Sidebar collapsed={collapsed} toggled={toggled} handleToggleSidebar={handleToggleSidebar}/>
 					<main>
@@ -35,8 +35,9 @@ function App(props) {
 							<Footer/>
 					</main>
 				</div>
+				{/* </ScrollToTop> */}
+
 			</Router>
-			</ScrollToTop>
 		</BrowserRouter>
 	);
 }	

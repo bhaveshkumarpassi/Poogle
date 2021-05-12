@@ -436,9 +436,9 @@ class profile extends Component {
 		
 		return interests.map((interestObj,key) => {
 			return (
-				<Link to={"/spaces/"+interestObj.interestId} className="interests__button" key={key}>
+				<Link to={"/spaces/"} className="interests__button" key={key}>
 					<span className="">{interestObj.interest}</span>
-					<span className="interest__count">{interestObj.voteCount}</span>
+					{/* <span className="interest__count">{interestObj.voteCount}</span> */}
 				</Link>
 			);
 		});

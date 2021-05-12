@@ -336,7 +336,6 @@ class Main extends Component {
 
 		return (
 			<div>
-				{/* <ScrollToTop/> */}
 				<Switch>
 					<Route path="/home" component={HomeQuestions} />
 					<PrivateRoute
@@ -387,6 +386,7 @@ class Main extends Component {
 					<Route path="/signup" component={Signup} />
 					<Route path="/logout" component={Logout}/>
 					<Redirect to="/home" />
+
 				</Switch>
 			</div>
 		);
