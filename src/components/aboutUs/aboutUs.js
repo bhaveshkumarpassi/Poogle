@@ -10,11 +10,32 @@ import {
 } from "reactstrap";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { zoomOut, slideInDown, slideInUp, bounce, flipInX, zoomIn } from 'react-animations';
+import Radium, {StyleRoot} from 'radium';
 import "./aboutUs.css";
 import BhaveshKumar from '../../Images/BhaveshKumar.png'
 import Nisha from "../../Images/Nisha.jpeg";
 import Utkarsh from "../../Images/utkarsh.jpeg";
 import Deepanshu from "../../Images/DeepanshuJindal.jfif";
+
+const styles = {
+  zoomIn: {
+    animation: 'x 1s',
+    animationName: Radium.keyframes(zoomIn, 'zoomIn')
+  },
+  slideInUp: {
+      animation: 'x 1s',
+      animationName: Radium.keyframes(slideInUp, 'slideInUp')
+    },
+    bounce: {
+      animation: 'x 1s',
+      animationName: Radium.keyframes(bounce, 'bounce')
+    },
+    flipInX: {
+      animation: 'x 1s',
+      animationName: Radium.keyframes(flipInX, 'flipInX')
+    },
+}
 
 function AboutUs() {
   return (

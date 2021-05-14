@@ -11,10 +11,29 @@ import 'react-quill/dist/quill.snow.css';
 import ImageCompress from 'quill-image-compress';
 import {spaces, toolbarOptions, formats} from '../variables'
 import { ToastContainer, toast } from 'react-toastify';
+import { zoomOut, slideInDown, slideInUp, bounce, flipInX, zoomIn } from 'react-animations';
+import Radium, {StyleRoot} from 'radium';
 import 'react-toastify/dist/ReactToastify.css';
 Quill.register('modules/imageCompress', ImageCompress);
 
-
+const styles = {
+  zoomIn: {
+    animation: 'x 1s',
+    animationName: Radium.keyframes(zoomIn, 'zoomIn')
+  },
+  slideInUp: {
+      animation: 'x 1s',
+      animationName: Radium.keyframes(slideInUp, 'slideInUp')
+    },
+    bounce: {
+      animation: 'x 1s',
+      animationName: Radium.keyframes(bounce, 'bounce')
+    },
+    flipInX: {
+      animation: 'x 1s',
+      animationName: Radium.keyframes(flipInX, 'flipInX')
+    },
+}
 
 class addBlogs extends Component {
     constructor(props) {
@@ -157,6 +176,7 @@ class addBlogs extends Component {
       
       render() {
         return (
+           
             <div className="forms__section">
                 <Container>
                 <Col md={12} className="contact__main__content">
@@ -206,6 +226,7 @@ class addBlogs extends Component {
                   autoClose={false}
                   />
           </div>
+         
         )
       }
 }

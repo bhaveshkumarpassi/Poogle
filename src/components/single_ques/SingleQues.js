@@ -50,9 +50,30 @@ import { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { toolbarOptions, formats } from "../variables";
 import { ToastContainer, toast } from 'react-toastify';
+import { zoomOut, slideInDown, slideInUp, bounce, flipInX, zoomIn } from 'react-animations';
+import Radium, {StyleRoot} from 'radium';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageCompress from "quill-image-compress";
 Quill.register("modules/imageCompress", ImageCompress);
+
+const styles = {
+  zoomIn: {
+    animation: 'x 1s',
+    animationName: Radium.keyframes(zoomIn, 'zoomIn')
+  },
+  slideInUp: {
+      animation: 'x 1s',
+      animationName: Radium.keyframes(slideInUp, 'slideInUp')
+    },
+    bounce: {
+      animation: 'x 1s',
+      animationName: Radium.keyframes(bounce, 'bounce')
+    },
+    flipInX: {
+      animation: 'x 1s',
+      animationName: Radium.keyframes(flipInX, 'flipInX')
+    },
+}
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -884,6 +905,7 @@ class SingleQuestion extends Component {
       );
     } else {
       return (
+  
         <Container className="single-question">
           <Row className="justify-content-center mt-5">
             <Col lg={10}>
@@ -909,6 +931,7 @@ class SingleQuestion extends Component {
           <ToastContainer
             />
         </Container>
+        
       );
     }
   }

@@ -43,9 +43,30 @@ import { baseUrl } from "../../shared/baseUrl";
 import Loading from "../loading";
 import { LocalForm, Control, Errors } from "react-redux-form";
 import { ToastContainer, toast } from 'react-toastify';
+import { zoomOut, slideInDown, slideInUp, bounce, flipInX, zoomIn } from 'react-animations';
+import Radium, {StyleRoot} from 'radium';
 import 'react-toastify/dist/ReactToastify.css';
 import profilePic from "../../Images/profile_pic.png";
 import "../single-blog/SingleBlog.css";
+
+const styles = {
+  zoomIn: {
+    animation: 'x 1s',
+    animationName: Radium.keyframes(zoomIn, 'zoomIn')
+  },
+  slideInUp: {
+      animation: 'x 1s',
+      animationName: Radium.keyframes(slideInUp, 'slideInUp')
+    },
+    bounce: {
+      animation: 'x 1s',
+      animationName: Radium.keyframes(bounce, 'bounce')
+    },
+    flipInX: {
+      animation: 'x 1s',
+      animationName: Radium.keyframes(flipInX, 'flipInX')
+    },
+}
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -285,6 +306,7 @@ class SingleBlog extends Component {
       </div>;
     }
     return (
+      
       <div>
         <Card>
           <CardHeader>
@@ -475,6 +497,7 @@ class SingleBlog extends Component {
           </ModalFooter>
         </Modal>
       </div>
+    
     );
   }
 }

@@ -239,6 +239,7 @@ import 'react-toastify/dist/ReactToastify.css';
                 var interests_ = localStorage.getItem('interests');
                 var spaces_ = spaces.filter((s) => interests_.indexOf(s.value)<0);
                 return (
+                
                 <div className="container spaces">
                     <div className="row">
                         <Breadcrumb className='mt-3 ml-3'>
@@ -265,10 +266,12 @@ import 'react-toastify/dist/ReactToastify.css';
                     <div className="row justify-content-center" >
                         {this.renderCardList()}
                     </div>
+                    
                     <ToastContainer 
                         autoClose={false}
                     />
                 </div>
+               
             );}            
         }
     }

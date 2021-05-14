@@ -9,9 +9,30 @@ import {
   Button
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { zoomOut, slideInDown, slideInUp, bounce, flipInX, zoomIn } from 'react-animations';
+import Radium, {StyleRoot} from 'radium';
 import "../followed-spaces/Spaces.css";
 import "./home.css";
 import "../all_ques_page/questions.css";
+
+const styles = {
+	zoomIn: {
+	  animation: 'x 1s',
+	  animationName: Radium.keyframes(zoomIn, 'zoomIn')
+	},
+	slideInUp: {
+		animation: 'x 1s',
+		animationName: Radium.keyframes(slideInUp, 'slideInUp')
+	  },
+	  bounce: {
+		animation: 'x 1s',
+		animationName: Radium.keyframes(bounce, 'bounce')
+	  },
+	  flipInX: {
+		animation: 'x 1s',
+		animationName: Radium.keyframes(flipInX, 'flipInX')
+	  },
+  }
 
 class home extends Component {
   constructor(props) {
@@ -26,6 +47,7 @@ class home extends Component {
 
 			return (
 				<div>	
+					
           			<div>
 						<div 
 							className='row mt-0 justify-content-center' style={{
@@ -70,6 +92,7 @@ class home extends Component {
 							</div>
 						</Jumbotron>
 					</div>
+					
 					<div 
 							className='row mt-0 justify-content-center' style={{
 							backgroundImage : `url(${questionMan})`,
