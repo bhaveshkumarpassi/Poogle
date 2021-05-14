@@ -188,7 +188,7 @@ class BlogDemands extends Component{
 
     render() {
         var count = -1;
-        const MenuDate = this.props.blogDemands.sort((a,b) => b.dateNum-a.dateNum).map((blogDemand) => {
+        const MenuDate = this.props.blogDemands.length ? this.props.blogDemands.sort((a,b) => b.dateNum-a.dateNum).map((blogDemand) => {
 
             count += 1;
             return(
@@ -206,7 +206,9 @@ class BlogDemands extends Component{
                 
                 </div>
             );
-        }) 
+        })
+        :
+        <p className='info-text'>No Blog Demands Matched your interests and query</p> 
 
         if(this.props.isLoading || this.props.blogDemandsIsLoading) {
             return(
@@ -278,7 +280,8 @@ class BlogDemands extends Component{
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
             <ModalHeader toggle={this.toggleModal}>ADD BLOG DEMAND</ModalHeader>
             <ModalBody>
-        <div className="container">
+            <p className='info-text' style={{color: 'red', fontSize: '0.8rem'}}>*Do delete the Blog Demand once you have received your blog.</p>
+            <div className="container">
              <Form.Group controlId="formBasicEmail">
              <Form.Label><span className="form__icon"></span>Title</Form.Label>
              <input name="title" className="form-control" type="text" value={this.state.title} placeholder="Give a descriptive title." onChange={this.handleInputChange} />

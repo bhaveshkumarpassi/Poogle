@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Chat.css";
+import { Button } from 'reactstrap';
 import {
   Container,
   Row,
@@ -37,6 +38,15 @@ const Chat = ({ chats, token, dispatch }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+
+    const width  = window.innerWidth || document.documentElement.clientWidth || 
+    document.body.clientWidth;
+    const height = window.innerHeight|| document.documentElement.clientHeight|| 
+    document.body.clientHeight;
+
+    if(width <= 1200)
+      alert("Chat is preferred to be used on large screen for better experience");
+
     const pusher = new Pusher("563987a4f9fd4750ba5e", {
       cluster: "ap2",
     });
@@ -46,6 +56,10 @@ const Chat = ({ chats, token, dispatch }) => {
       dispatch(getChats(token));
     });
   }, []);
+
+  const toggle = () => {
+    setModalOpen(false);
+  }
 
   useEffect(() => {
     dispatch(getChats(token));
@@ -151,6 +165,7 @@ const Chat = ({ chats, token, dispatch }) => {
             </ListGroupItem>
           ))}
         </ListGroup>
+        <Button onClick={toggle} color="danger" className='mt-2'><span className=' mr-3' />Close</Button>
       </Modal>
       <Row style={{ maxHeight: "60vh" }}>
         {/*Chat sidebar*/}

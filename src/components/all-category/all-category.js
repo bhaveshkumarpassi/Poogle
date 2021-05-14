@@ -290,7 +290,7 @@ class AllCategory extends Component {
     };
 
     var count = -1;
-    const MenuDate = this.props.questions
+    const MenuDate = this.props.questions.length ? this.props.questions
       .sort((a, b) => b.dateNum - a.dateNum)
       .map((question) => {
         count += 1;
@@ -309,9 +309,11 @@ class AllCategory extends Component {
             />
           </div>
         );
-      });
+      })
+      :
+      <p className='info-text'>No Questions Matched your interests and query</p>
 
-    const MenuVotes = this.props.questions
+    const MenuVotes = this.props.questions.length ? this.props.questions
       .sort(
         (a, b) =>
           voteCount(this.props.reactions, b) -
@@ -334,9 +336,11 @@ class AllCategory extends Component {
             />
           </div>
         );
-      });
+      })
+      :
+      <p className='info-text'>No Questions Matched your interests and query</p>
 
-    const MenuViews = this.props.questions
+    const MenuViews = this.props.questions.length ? this.props.questions
       .sort(
         (a, b) =>
           viewCount(this.props.reactions, b) -
@@ -359,9 +363,11 @@ class AllCategory extends Component {
             />
           </div>
         );
-      });
+      })
+      :
+      <p className='info-text'>No Questions Matched your interests and query</p>
 
-    const MenuUnanswered = this.props.questions.map((question) => {
+    const MenuUnanswered = this.props.questions.length ? this.props.questions.map((question) => {
       count += 1;
       return (
         <div className="col-12" key={question.id}>
@@ -378,7 +384,9 @@ class AllCategory extends Component {
           />
         </div>
       );
-    });
+    })
+    :
+      <p className='info-text'>No Questions Matched your interests and query</p>
 
     if (
       this.props.isLoading ||
@@ -395,7 +403,7 @@ class AllCategory extends Component {
         <div className="container spaces">
           <div className="row">
             <div className="col-12">
-              <h4>{this.props.errMess}</h4>
+              <h4>{this.props.errMess || this.props.answersErrMess || this.props.reactionsErrMess}</h4>
             </div>
           </div>
         </div>
