@@ -138,11 +138,6 @@ function AboutUs() {
                 />
                 <Button
                   target="new"
-                  href="https://www.instagram.com/deepanshujindal02/"
-                  className="col-2 fa fa-instagram insta"
-                />
-                <Button
-                  target="new"
                   href="mailto:deepu.jindal2002@gmail.com"
                   variant="success"
                   className="col-2 fa fa-envelope mail mr-2"
