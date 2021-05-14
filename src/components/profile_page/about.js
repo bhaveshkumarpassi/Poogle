@@ -18,7 +18,7 @@ export class Answers extends Component{
 	render(){
 		let {answer, question,valu,deleteAnswer} = this.props;
 		console.log("HI", question);
-		const class_Name=valu % 2 == 0 ? "questionEven" : "questionOdd"
+		const class_Name=valu % 2 === 0 ? "questionEven" : "questionOdd"
 		return(
 			<div>
 				<Card className={'container question-container '+class_Name+' list-item-style'}>
@@ -34,14 +34,16 @@ export class Answers extends Component{
 									<div>
 									<div className="editor__content" dangerouslySetInnerHTML={{ __html: answer.description }} />
 									</div>
-								</CardBody>
-								<CardFooter>
+									<div>
+									<hr/>
 									<Row>
-										<Button color='danger' onClick={() => deleteAnswer(answer._id)} >
+										<Button color='danger'  onClick={() => deleteAnswer(answer._id)} >
 											<span className='fa fa-lg fa-trash'></span>
 										</Button>
 									</Row>
-								</CardFooter>
+
+									</div>
+								</CardBody>
 							</div>
 						</div>
 				</Card>
@@ -177,20 +179,35 @@ export class BlogDemands extends Component{
                 <ListGroupItem className={' list-item-style'}>
                         <div className='row'>
                         <div className='col-12 col-sm-8'>
-                            <ListGroupItemHeading className='blogDemand-heading'>
-                             <h4 style={{color:"#5a5a5a"}}>{blogDemand.title}</h4>
+						<ListGroupItemHeading className='question-heading'>
+                                <p className='question-heading'>
+								    <b>{blogDemand.title}</b>
+								</p>
+								<RenderTags tagNames={blogDemand.tagNames} />
+								<br/>
+                            <Button color='danger' style={{marginTop: 6}} onClick={() => deleteBlogDemand(blogDemand._id)}><span className='fa fa-trash'></span></Button>
+							<br/>
+							
+							</ListGroupItemHeading>
+							
+							{/* <ListGroupItemHeading className='question-heading'>
+                             <h4 style={{color:"#5a5a5a"}}><b>{blogDemand.title}</b></h4>
                              {
                                 auth.userId === blogDemand.author._id
                                 ?
                             
-                                    <Button color='danger' className="delete-blog-demand" onClick={() => deleteBlogDemand(blogDemand._id)}>
-                                    <span className='fa fa-lg fa-trash'></span></Button>
+                                    <>
+										<Button color='danger' className="delete-blog-demand" onClick={() => deleteBlogDemand(blogDemand._id)}>
+                                    		<span className='fa fa-lg fa-trash'></span>
+										</Button>
+										<br/>
+									</>
                             
                                 :
                                 <></>
                             }   
                             <RenderTags tagNames={blogDemand.tagNames} />
-                            </ListGroupItemHeading>
+                            </ListGroupItemHeading> */}
                             
                             
                             <ListGroupItemText className='blogDemand-text'>
