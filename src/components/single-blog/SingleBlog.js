@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link  } from "react-router-dom";
 import {
   FacebookIcon,
   FacebookShareButton,
@@ -39,7 +39,7 @@ import {
   Jumbotron,
   CardHeader,
 } from "reactstrap";
-import { baseUrl } from "../../shared/baseUrl";
+import { baseUrl, frontendBaseUrl } from "../../shared/baseUrl";
 import Loading from "../loading";
 import { LocalForm, Control, Errors } from "react-redux-form";
 import { ToastContainer, toast } from 'react-toastify';
@@ -408,7 +408,7 @@ class SingleBlog extends Component {
           <ModalBody>
             <FacebookShareButton
               url={
-                "http://localhost:3000/blog-" +
+                frontendBaseUrl+"blog-" +
                 this.props.blog._id +
                 "-" +
                 this.props.blog.heading
@@ -421,7 +421,7 @@ class SingleBlog extends Component {
             </FacebookShareButton>
             <WhatsappShareButton
               url={
-                "http://localhost:3000/blog-" +
+                frontendBaseUrl+"blog-" +
                 this.props.blog._id +
                 "-" +
                 this.props.blog.heading
@@ -433,7 +433,7 @@ class SingleBlog extends Component {
             </WhatsappShareButton>
             <TelegramShareButton
               url={
-                "http://localhost:3000/blog-" +
+                frontendBaseUrl+"blog-" +
                 this.props.blog._id +
                 "-" +
                 this.props.blog.heading
@@ -444,7 +444,7 @@ class SingleBlog extends Component {
             </TelegramShareButton>
             <LinkedinShareButton
               url={
-                "http://localhost:3000/blog-" +
+                frontendBaseUrl+"blog-" +
                 this.props.blog._id +
                 "-" +
                 this.props.blog.heading
@@ -456,7 +456,7 @@ class SingleBlog extends Component {
             </LinkedinShareButton>
             <TwitterShareButton
               url={
-                "http://localhost:3000/blog-" +
+                frontendBaseUrl+"blog-" +
                 this.props.blog._id +
                 "-" +
                 this.props.blog.heading
@@ -468,7 +468,7 @@ class SingleBlog extends Component {
             </TwitterShareButton>
             <RedditShareButton
               url={
-                "http://localhost:3000/blog-" +
+                frontendBaseUrl+"blog-" +
                 this.props.blog._id +
                 "-" +
                 this.props.blog.heading
@@ -479,7 +479,7 @@ class SingleBlog extends Component {
             </RedditShareButton>
             <PinterestShareButton
               url={
-                "http://localhost:3000/blog-" +
+                frontendBaseUrl+"blog-" +
                 this.props.blog._id +
                 "-" +
                 this.props.blog.heading
