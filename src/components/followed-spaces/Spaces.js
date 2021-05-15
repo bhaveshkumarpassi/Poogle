@@ -188,7 +188,7 @@ import 'react-toastify/dist/ReactToastify.css';
                 <CardBody>
                     <CardTitle tag="h6">{space.name}</CardTitle>
                 </CardBody>
-                    <CardImg className='space-img' src={'http://localhost:3001/spaces/'+space._id+'/image'}/>
+                    <CardImg className='space-img' src={baseUrl+'spaces/'+space._id+'/image'}/>
                 <CardBody>
                     <CardSubtitle tag="h6" className="mb-2 mt-2 text-muted">
                         <span className='fa fa-question-circle fa-lg question-icon'/>    
