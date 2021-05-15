@@ -738,7 +738,7 @@ class RenderQuestionAnswers extends Component {
           <ModalBody>
             <FacebookShareButton
               url={
-                "http://localhost:3000/question-" +
+                baseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
@@ -751,7 +751,7 @@ class RenderQuestionAnswers extends Component {
             </FacebookShareButton>
             <WhatsappShareButton
               url={
-                "http://localhost:3000/question-" +
+                baseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
@@ -763,7 +763,7 @@ class RenderQuestionAnswers extends Component {
             </WhatsappShareButton>
             <TelegramShareButton
               url={
-                "http://localhost:3000/question-" +
+                baseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
@@ -774,7 +774,7 @@ class RenderQuestionAnswers extends Component {
             </TelegramShareButton>
             <LinkedinShareButton
               url={
-                "http://localhost:3000/question-" +
+                baseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
@@ -786,7 +786,7 @@ class RenderQuestionAnswers extends Component {
             </LinkedinShareButton>
             <TwitterShareButton
               url={
-                "http://localhost:3000/question-" +
+                baseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
@@ -798,7 +798,7 @@ class RenderQuestionAnswers extends Component {
             </TwitterShareButton>
             <RedditShareButton
               url={
-                "http://localhost:3000/question-" +
+                baseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
@@ -809,7 +809,7 @@ class RenderQuestionAnswers extends Component {
             </RedditShareButton>
             <PinterestShareButton
               url={
-                "http://localhost:3000/question-" +
+                baseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading

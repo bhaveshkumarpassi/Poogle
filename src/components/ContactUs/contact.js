@@ -9,6 +9,7 @@ import {BsPencilSquare} from 'react-icons/bs';
 import './contact.css';
 import { connect } from 'react-redux';
 import {contactUs} from '../../redux/ActionCreators';
+import { ToastContainer, toast } from 'react-toastify';
 class Contact extends Component {
     constructor(props){
         super(props);
@@ -32,6 +33,9 @@ class Contact extends Component {
           [name]: event.target.value
         });
     }
+    notifyS = (message) => toast.success(message);
+    notifyF = (message) => toast.error(message);
+    
     formValidation = () =>{
         const{email, message} = this.state;
         let emailError="", messageError = "", error;
@@ -68,9 +72,9 @@ class Contact extends Component {
             try{
                 const {email, message} = this.state;
                 this.props.contactUs({email, message})
-                window.alert("Form Submitted")
+                this.notifyS("Your response has been recorded successfully.")
             }catch(e){
-                console.log("Contact ", e);
+                this.notifyF("Some error occured.");
             }
             
         }
@@ -135,7 +139,7 @@ class Contact extends Component {
                     </div>
                     </Col>
                 </Container>
-                
+                <ToastContainer/>
                 
             </div>
         )
