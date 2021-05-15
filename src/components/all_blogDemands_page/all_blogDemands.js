@@ -297,7 +297,7 @@ class BlogDemands extends Component{
           
             </ModalBody>
             <ModalFooter>
-           <Button onClick={this.handleSubmit} color="info"><span className=' mr-3' />Submit</Button>
+            <Button onClick={this.handleSubmit} color="info"><span className=' mr-3' />Submit</Button>
 
            </ModalFooter>
         </Modal>
