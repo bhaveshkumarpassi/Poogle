@@ -40,7 +40,7 @@ import {
 import { LocalForm, Control, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 import Loading from "../loading";
-import { baseUrl } from "../../shared/baseUrl";
+import { baseUrl, frontendBaseUrl } from "../../shared/baseUrl";
 import profilePic from "../../Images/profile_pic.png";
 import "../single_ques/SingleQues.css";
 import Form from "react-bootstrap/Form";
@@ -738,7 +738,7 @@ class RenderQuestionAnswers extends Component {
           <ModalBody>
             <FacebookShareButton
               url={
-                baseUrl+"question-" +
+                frontendBaseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
@@ -751,7 +751,7 @@ class RenderQuestionAnswers extends Component {
             </FacebookShareButton>
             <WhatsappShareButton
               url={
-                baseUrl+"question-" +
+                frontendBaseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
@@ -763,7 +763,7 @@ class RenderQuestionAnswers extends Component {
             </WhatsappShareButton>
             <TelegramShareButton
               url={
-                baseUrl+"question-" +
+                frontendBaseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
@@ -774,7 +774,7 @@ class RenderQuestionAnswers extends Component {
             </TelegramShareButton>
             <LinkedinShareButton
               url={
-                baseUrl+"question-" +
+                frontendBaseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
@@ -786,7 +786,7 @@ class RenderQuestionAnswers extends Component {
             </LinkedinShareButton>
             <TwitterShareButton
               url={
-                baseUrl+"question-" +
+                frontendBaseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
@@ -798,7 +798,7 @@ class RenderQuestionAnswers extends Component {
             </TwitterShareButton>
             <RedditShareButton
               url={
-                baseUrl+"question-" +
+                frontendBaseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
@@ -809,7 +809,7 @@ class RenderQuestionAnswers extends Component {
             </RedditShareButton>
             <PinterestShareButton
               url={
-                baseUrl+"question-" +
+                frontendBaseUrl+"question-" +
                 this.props.question._id +
                 "-" +
                 this.props.question.heading
