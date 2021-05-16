@@ -21,10 +21,16 @@ If running Locally replace <your_ip_address> in baseUrl.js file of the shared fo
 In the root directory use given  command to start application.<br />
 npm start <br />
 This will open a new tab in your browser scan the QR code shown there from the installed website. To use Poogle (Must ensure that backend server is already up and running backend_repo).<br />
-Debugging <br />
+
+**Debugging** <br />
 To use react developer tools run npm run react-dev tools. If you are using an emulator, then react developer tools will start instantly. <br />
 For more details, regarding developer tools, you can refer https://www.npmjs.com/package/react-devtools<br />
-Technologies used<br />
+
+**Technologies used** <br/>
+[image](https://user-images.githubusercontent.com/60098687/118387946-018aca80-b63f-11eb-871a-d28fc5b4c709.png)https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg
+<br />
+
   <br />
+  
 Show your support<br/>
 Give a ⭐️ if this project helped you!<br/>
