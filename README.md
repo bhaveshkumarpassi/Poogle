@@ -14,9 +14,9 @@ It has spaces designed for all the essential subjects of each branch. You can pe
 ## Getting Started <br/>
 > Clone the following repositories. <br />
 Frontend: <br />
-npm clone https://github.com/bhaveshkumarpassi/Poogle.git <br />
+git clone https://github.com/bhaveshkumarpassi/Poogle.git <br />
 Backend: <br />
-npm clone https://github.com/ultimatecoder2/Poogle__Backend.git <br />
+git clone https://github.com/ultimatecoder2/Poogle__Backend.git <br />
 
 ## Install<br/>
 > In root directory use given command to install packages and dependencies.<br />
